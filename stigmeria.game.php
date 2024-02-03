@@ -17,11 +17,33 @@
   */
 
 
+$swdNamespaceAutoload = function ($class) {
+    $classParts = explode('\\', $class);
+    if ($classParts[0] == 'STIG') {
+      array_shift($classParts);
+      $file = dirname(__FILE__) . '/modules/php/' . implode(DIRECTORY_SEPARATOR, $classParts) . '.php';
+      if (file_exists($file)) {
+        require_once $file;
+      } else {
+        var_dump('Cannot find file : ' . $file);
+      }
+    }
+};
+spl_autoload_register($swdNamespaceAutoload, true, true);
+  
 require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 
+use STIG\Managers\Players;
+use STIG\Core\Globals;
+use STIG\Core\Preferences;
+use STIG\Core\Stats;
 
 class Stigmeria extends Table
 {
+    use STIG\DebugTrait;
+    use STIG\States\SetupTrait;
+
+    public static $instance = null;
 	function __construct( )
 	{
         // Your global variables labels:
@@ -31,70 +53,25 @@ class Stigmeria extends Table
         //  the corresponding ID in gameoptions.inc.php.
         // Note: afterwards, you can get/set the global variables with getGameStateValue/setGameStateInitialValue/setGameStateValue
         parent::__construct();
+        self::$instance = $this;
         
         self::initGameStateLabels( array( 
-            //    "my_first_global_variable" => 10,
-            //    "my_second_global_variable" => 11,
-            //      ...
+            'logging' => 10,
             //    "my_first_game_variant" => 100,
             //    "my_second_game_variant" => 101,
             //      ...
         ) );        
 	}
+    public static function get()
+    {
+      return self::$instance;
+    }
 	
     protected function getGameName( )
     {
 		// Used for translations and stuff. Please do not modify.
         return "stigmeria";
     }	
-
-    /*
-        setupNewGame:
-        
-        This method is called only once, when a new game is launched.
-        In this method, you must setup the game according to the game rules, so that
-        the game is ready to be played.
-    */
-    protected function setupNewGame( $players, $options = array() )
-    {    
-        // Set the colors of the players with HTML color code
-        // The default below is red/green/blue/orange/brown
-        // The number of colors defined here must correspond to the maximum number of players allowed for the gams
-        $gameinfos = self::getGameinfos();
-        $default_colors = $gameinfos['player_colors'];
- 
-        // Create players
-        // Note: if you added some extra field on "player" table in the database (dbmodel.sql), you can initialize it there.
-        $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
-        $values = array();
-        foreach( $players as $player_id => $player )
-        {
-            $color = array_shift( $default_colors );
-            $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
-        }
-        $sql .= implode( $values, ',' );
-        self::DbQuery( $sql );
-        self::reattributeColorsBasedOnPreferences( $players, $gameinfos['player_colors'] );
-        self::reloadPlayersBasicInfos();
-        
-        /************ Start the game initialization *****/
-
-        // Init global values with their initial values
-        //self::setGameStateInitialValue( 'my_first_global_variable', 0 );
-        
-        // Init game statistics
-        // (note: statistics used in this file must be defined in your stats.inc.php file)
-        //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
-        //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
-
-        // TODO: setup the initial game situation here
-       
-
-        // Activate first player (which is in general a good idea :) )
-        $this->activeNextPlayer();
-
-        /************ End of the game initialization *****/
-    }
 
     /*
         getAllDatas: 
@@ -107,18 +84,15 @@ class Stigmeria extends Table
     */
     protected function getAllDatas()
     {
-        $result = array();
-    
-        $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
-    
-        // Get information about players
-        // Note: you can retrieve some extra field you added for "player" table in "dbmodel.sql" if you need it.
-        $sql = "SELECT player_id id, player_score score FROM player ";
-        $result['players'] = self::getCollectionFromDb( $sql );
-  
-        // TODO: Gather all information about current game situation (visible by player $current_player_id).
-  
-        return $result;
+        // !! We must only return informations visible by this player !!
+        $current_player_id = self::getCurrentPId();
+        // Gather all information about current game situation (visible by player $current_player_id).
+        return [
+          'prefs' => Preferences::getUiData($current_player_id),
+          'players' => Players::getUiData($current_player_id),
+          'turn' => Globals::getTurn(),
+          'firstPlayer' => Globals::getFirstPlayer(),
+        ];
     }
 
     /*
@@ -317,4 +291,20 @@ class Stigmeria extends Table
 
 
     }    
+    
+    /////////////////////////////////////////////////////////////
+    // Exposing protected methods, please use at your own risk //
+    /////////////////////////////////////////////////////////////
+
+    // Exposing protected method getCurrentPlayerId
+    public static function getCurrentPId()
+    {
+        return self::getCurrentPlayerId();
+    }
+
+    // Exposing protected method translation
+    public static function translate($text)
+    {
+        return self::_($text);
+    }
 }
