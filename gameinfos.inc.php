@@ -13,36 +13,36 @@
 $gameinfos = array( 
 
 // Name of the game in English (will serve as the basis for translation) 
-'game_name' => "My Great Game",
+'game_name' => "Stigméria",
 
 // Game designer (or game designers, separated by commas)
-'designer' => 'John Doe',       
+'designer' => 'Gabriel Souleyre',       
 
 // Game artist (or game artists, separated by commas)
-'artist' => 'Jane Doe',         
+'artist' => 'David Cochard, Gabriel Souleyre',         
 
 // Year of FIRST publication of this game. Can be negative.
-'year' => 2000,                 
+'year' => 2023,                 
 
 // Game publisher (use empty string if there is no publisher)
-'publisher' => 'My Publishing Company',                     
+'publisher' => 'Editions Garajeux',                     
 
 // Url of game publisher website
-'publisher_website' => 'http://www.mypublishingcompany.com/',   
+'publisher_website' => 'https://www.garajeux.fr/',   
 
 // Board Game Geek ID of the publisher
-'publisher_bgg_id' => 1234,
+'publisher_bgg_id' => 53631,
 
 // Board game geek ID of the game
 'bgg_id' => 381860,
 
 
 // Players configuration that can be played (ex: 2 to 4 players)
-'players' => array( 2,3,4 ),    
+'players' => array( 1,2,3,4,5,6,7,8,9,10,11,12 ),    
 
 // Suggest players to play with this number of players. Must be null if there is no such advice, or if there is only one possible player configuration.
 // NB: the automatic lobby will try first the lowest number of players if this is not specified. So you _have to_ specify this parameter if the lowest player number is not compatible with the default options.
-'suggest_player_number' => null,
+'suggest_player_number' => 2,
 
 // Discourage players to play with these numbers of players. Must be null if there is no such advice.
 'not_recommend_player_number' => null,
@@ -88,19 +88,19 @@ $gameinfos = array(
 'language_dependency' => false,
 
 // Complexity of the game, from 0 (extremely simple) to 5 (extremely complex)
-'complexity' => 3,    
+'complexity' => 4,    
 
 // Luck of the game, from 0 (absolutely no luck in this game) to 5 (totally luck driven)
-'luck' => 3,    
+'luck' => 2,    
 
 // Strategy of the game, from 0 (no strategy can be setup) to 5 (totally based on strategy)
-'strategy' => 3,    
+'strategy' => 5,    
 
 // Diplomacy of the game, from 0 (no interaction in this game) to 5 (totally based on interaction and discussion between players)
 'diplomacy' => 3,    
 
 // Colors attributed to players
-'player_colors' => array( "ff0000", "008000", "0000ff", "ffa500", "773300" ),
+'player_colors' => array( "ff0000", "008000", "0000ff", "ffa500","000000","ffffff", "e94190","982fff","72c3b1","f07f16","bdd002","7b7b7b", "773300" ),
 
 // Favorite colors support : if set to "true", support attribution of favorite colors based on player's preferences (see reattributeColorsBasedOnPreferences PHP method)
 // NB: this parameter is used only to flag games supporting this feature; you must use (or not use) reattributeColorsBasedOnPreferences PHP method to actually enable or disable the feature.
@@ -132,8 +132,18 @@ $gameinfos = array(
 // Each paragraph must be wrapped with totranslate() for translation and should not contain html (plain text without formatting).
 // A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
 'presentation' => array(
-//    totranslate("This wonderful game is about geometric shapes!"),
-//    totranslate("It was awarded best triangle game of the year in 2005 and nominated for the Spiel des Jahres."),
+    totranslate("Puzzle game and thinking game.
+        Bag building, pick and move primary color tokens on the game board with your 3 basic actions and unlock new abilities to create up to 6 new colors of pollen.
+        Anticipates wind movements and reproduces color flower patterns in fewer turns and actions.
+        Place your colored pollens on the appropriate pistils so that the flower produces its seeds with exceptional powers."),
+    //TODO JSA WHEN 3 modes are ready
+    //totranslate("3 game modes, solitaire and competitive with 3 difficulty levels."),
+    totranslate("The Stigmerians have saved you from the great cataclysm that has taken place on your land.
+        You were able to be reborn thanks to their fabulous bulbastigs and the amazing energy flow that connects and irrigate everything in your new world."),
+    totranslate("It's your turn to help the Stigmerians to feed you on your new planet: Stigmeria!
+        Go on an adventure!
+        Fly, land from pistil to pistil on the giant flowers.
+        Count on the help of the wind..."),
 //    ...
 ),
 
@@ -145,7 +155,7 @@ $gameinfos = array(
 //  IMPORTANT: this list should be ORDERED, with the most important tag first.
 //  NOTE: tags are only read during the first deploy from the file gameinfos.inc.php; afterwards, BGA is responsible for setting tags for a game.
 
-'tags' => array( 2 ),
+'tags' => array( 3, 100, 209, 227 ),
 
 
 //////// BGA SANDBOX ONLY PARAMETERS (DO NOT MODIFY)
