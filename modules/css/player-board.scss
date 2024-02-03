@@ -1,0 +1,35 @@
+
+.stig_player_board_container_wrapper{
+    margin-top: 20px;
+}
+
+.stig_player_board_container{
+    transform: scale(var(--stig_board_display_scale));
+    transform-origin: top left;
+}
+.stig_player_board{
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 1128px;
+    height: 1176px;
+}
+.stig_player_board[data_type='MARONNE']{
+    background-image: url('img/maronne.jpg');
+}
+
+.stig_turn_marker{
+    background-color: black;
+    width: 33px;
+    height: 33px;
+    border-radius: 100%;
+    position: absolute;
+}
+.stig_turn_marker[data_value='1']{
+    left: 556px;
+    top: 60px;
+}
+.stig_turn_marker[data_value='2']{
+    left: 830px;
+    top: 152px;
+}
+/** TODO JSA ALL TURNS*/

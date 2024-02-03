@@ -1,0 +1,27 @@
+/**
+ *------
+ * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
+ * Stigmeria implementation : © joesimpson <1324811+joesimpson@users.noreply.github.com>
+ *
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
+ * -----
+ *
+ * stigmeria.scss
+ *
+ * Stigmeria stylesheet
+ *
+ */
+
+@import "modules/css/variables";
+@import "modules/css/player-board";
+/**
+    PREFIX FOR THIS GAME PROJECT : "stig"
+*/
+#stig_main_zone{
+    text-align: center;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}

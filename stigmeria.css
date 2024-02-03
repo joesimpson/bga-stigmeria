@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  *------
  * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
@@ -7,92 +8,61 @@
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
  *
- * stigmeria.css
+ * stigmeria.scss
  *
  * Stigmeria stylesheet
  *
  */
-
-/*
-    This is the CSS stylesheet of your game User Interface.
-    
-    Styles defined on this file will be applied to the HTML elements you define in your
-    HTML template (stigmeria_stigmeria.tpl), and to HTML elements you create dynamically
-    (in stigmeria.js).
-    
-    Usually, you are using CSS to:
-    
-    1°) define the overall layout of your game
-        (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
-
-    2°) create your CSS-sprites:
-        All images of your games should be gathered into a small number of image files. Then, using
-        background-image and background-position CSS properties, you create HTML blocks that can 
-        display these images correctly (see example below).
-    
-    3°) ... anything else:
-        It is really easy to add and remove CSS classes dynamically from your Javascript with
-        dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
-        (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
-        very often, using CSS classes for the logic of your user interface allow you to do complex
-        thing easily.
-        
-        
-     Note: on the production platform, this file will be compressed and comments will be removed.
-           Consequently, don't hesitate to put as many comments as necessary.
-*/
-
-
-/* Note: you must not use any @import directive */
-
-
-/********* You can start writing your CSS below this line: **********/
 :root {
-    --stig_board_display_scale: 0.5;
+  --stig_board_display_scale: 0.5;
 }
 
+.stig_player_board_container_wrapper {
+  margin-top: 20px;
+}
+
+.stig_player_board_container {
+  transform: scale(var(--stig_board_display_scale));
+  transform-origin: top left;
+}
+
+.stig_player_board {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 1128px;
+  height: 1176px;
+}
+
+.stig_player_board[data_type=MARONNE] {
+  background-image: url("img/maronne.jpg");
+}
+
+.stig_turn_marker {
+  background-color: black;
+  width: 33px;
+  height: 33px;
+  border-radius: 100%;
+  position: absolute;
+}
+
+.stig_turn_marker[data_value="1"] {
+  left: 556px;
+  top: 60px;
+}
+
+.stig_turn_marker[data_value="2"] {
+  left: 830px;
+  top: 152px;
+}
+
+/** TODO JSA ALL TURNS*/
 /**
     PREFIX FOR THIS GAME PROJECT : "stig"
 */
-#stig_main_zone{
-    text-align: center;
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: center;
+#stig_main_zone {
+  text-align: center;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
 }
-
-.stig_player_board_container_wrapper{
-    margin-top: 20px;
-}
-
-.stig_player_board_container{
-    transform: scale(var(--stig_board_display_scale));
-    transform-origin: top left;
-}
-.stig_player_board{
-    background-size: 100%;
-    background-repeat: no-repeat;
-    width: 1128px;
-    height: 1176px;
-}
-.stig_player_board[data_type='MARONNE']{
-    background-image: url('img/maronne.jpg');
-}
-
-.stig_turn_marker{
-    background-color: black;
-    width: 33px;
-    height: 33px;
-    border-radius: 100%;
-    position: absolute;
-}
-.stig_turn_marker[data_value='1']{
-    left: 556px;
-    top: 60px;
-}
-.stig_turn_marker[data_value='2']{
-    left: 830px;
-    top: 152px;
-}
-/** TODO JSA ALL TURNS*/
