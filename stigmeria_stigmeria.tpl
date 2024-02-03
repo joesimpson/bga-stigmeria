@@ -9,25 +9,20 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -------
 
-    stigmeria_stigmeria.tpl
-    
-    This is the HTML template of your game.
-    
-    Everything you are writing in this file will be displayed in the HTML page of your game user interface,
-    in the "main game zone" of the screen.
-    
-    You can use in this template:
-    _ variables, with the format {MY_VARIABLE_ELEMENT}.
-    _ HTML block, with the BEGIN/END format
-    
-    See your "view" PHP file to check how to set variables and control blocks
-    
-    Please REMOVE this comment before publishing your game on BGA
 -->
 
+<div id="stig_game_container">
 
-This is your game interface. You can edit this HTML in your ".tpl" file.
+    <div id="stig_main_zone">
+        <div id="stig_player_board_container_wrapper_PLAYER_ID" class="stig_player_board_container_wrapper">
+            <div class="stig_player_board_container">
+                <div class="stig_player_board" data_type="MARONNE">
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>
 
 <script type="text/javascript">
 

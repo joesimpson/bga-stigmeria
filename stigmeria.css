@@ -47,26 +47,36 @@
 
 
 /********* You can start writing your CSS below this line: **********/
+:root {
+    --stig_board_display_scale: 0.5;
+}
 
-
-/*
-    Example of CSS sprites (a black token and a white token, 20x20px each, embedded in the same "tokens.png" 40x20px image):
-
-    .white_token {
-        background-image: url('img/tokens.png');
-        background-position: 0px 0px;
-    }
-    .black_token {
-        background-image: url('img/tokens.png');
-        background-position: -20px 0px;
-    }
-    .token {
-        width: 20px;
-        height: 20px;
-        background-repeat: none;
-    }
+/**
+    PREFIX FOR THIS GAME PROJECT : "stig"
 */
+#stig_main_zone{
+    text-align: center;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
 
+.stig_player_board_container_wrapper{
+    margin-top: 20px;
+}
 
-
+.stig_player_board_container{
+    transform: scale(var(--stig_board_display_scale));
+    transform-origin: top left;
+}
+.stig_player_board{
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 1128px;
+    height: 1176px;
+}
+.stig_player_board[data_type='MARONNE']{
+    background-image: url('img/maronne.jpg');
+}
 
