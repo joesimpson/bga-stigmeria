@@ -80,3 +80,19 @@
     background-image: url('img/maronne.jpg');
 }
 
+.stig_turn_marker{
+    background-color: black;
+    width: 33px;
+    height: 33px;
+    border-radius: 100%;
+    position: absolute;
+}
+.stig_turn_marker[data_value='1']{
+    left: 556px;
+    top: 60px;
+}
+.stig_turn_marker[data_value='2']{
+    left: 830px;
+    top: 152px;
+}
+/** TODO JSA ALL TURNS*/
