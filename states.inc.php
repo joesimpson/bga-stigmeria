@@ -113,7 +113,7 @@ $machinestates = array(
         "description" => clienttranslate('${actplayer} must choose a dice result'),
         "descriptionmyturn" => clienttranslate('${you} must choose a dice result'),
         "type" => "activeplayer",
-        "possibleactions" => ["cho", "relaunch", ],
+        "possibleactions" => ["actChooseDice", "actRerollDice", ],
         "transitions" => [ 
             "nextDice" => ST_GENERATE_WIND, 
             "windEffect" => ST_WIND_EFFECT,
@@ -133,18 +133,16 @@ $machinestates = array(
    
     ST_PLAYER_TURN => array(
         "name" => "playerTurn",
-        "description" => clienttranslate('${actplayer} may play 1 action or pass'),
-        //TODO JSA add remaining actions count in args
-        "descriptionmyturn" => clienttranslate('${you} may play 1 action or pass'),
+        "description" => clienttranslate('Players may play actions or pass'),
+        "descriptionmyturn" => clienttranslate('${you} may play actions or pass'),
         "type" => "multipleactiveplayer",
         "action" => "stPlayerturn",
         "args" => "argPlayerTurn",
-        //TODO JSA MULTIACTIVE with a button to let next player start : this is wanted by publisher to have a semi simultaneous play
         "possibleactions" => [ 
             //TODO JSA ALL ACTIONS
-            "pass",
-            "letNextPlay",
-            "end",
+            "actPass",
+            "actLetNextPlay",
+            "actEndTurn",
         ],
         "transitions" => [ 
             "end" => ST_WIND_EFFECT,

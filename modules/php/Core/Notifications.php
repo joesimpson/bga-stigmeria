@@ -5,13 +5,39 @@ namespace STIG\Core;
 use STIG\Managers\Players;
 use STIG\Helpers\Utils;
 use STIG\Core\Globals;
+use STIG\Models\Player;
 
 class Notifications
 { 
 
+  /**
+   * @param int $turn
+   */
   public static function newTurn($turn){
-    self::notifyAll('newTurn','Starting turn number ${n}',[ 
+    self::notifyAll('newTurn',clienttranslate('Starting turn number ${n}'),[ 
         'n' => $turn,
+      ],
+    );
+  }
+
+  /**
+   * @param Player $player1
+   * @param Player $player2
+   */
+  public static function letNextPlay($player1,$player2){
+    self::notifyAll('letNextPlay',clienttranslate('${player_name} lets ${player_name2} start to play for this turn'),[ 
+        'player' => $player1,
+        'player2' => $player2,
+      ],
+    );
+  }
+  
+  /**
+   * @param Player $player
+   */
+  public static function endTurn($player){
+    self::notifyAll('endTurn',clienttranslate('${player_name} ends his turn'),[ 
+        'player' => $player,
       ],
     );
   }

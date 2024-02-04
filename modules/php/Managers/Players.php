@@ -58,7 +58,7 @@ class Players extends \STIG\Helpers\DB_Manager
   /*
    * get : returns the Player object for the given player ID
    */
-  public function get($pId = null)
+  public static function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
     return self::DB()
@@ -76,7 +76,7 @@ class Players extends \STIG\Helpers\DB_Manager
     return self::get(self::getCurrentId());
   }
 
-  public function getNextId($player = null)
+  public static function getNextId($player = null)
   {
     $player = $player ?? Players::getCurrent();
     $pId = is_int($player) ? $player : $player->getId();
