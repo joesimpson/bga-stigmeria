@@ -52,6 +52,38 @@ $game_options = [
             ),
     'default' => OPTION_MODE_NORMAL,
   ),
+  OPTION_FLOWER => array(
+    'name' => totranslate('Flower type'),    
+    'values' => array(
+                OPTION_FLOWER_VERTIGHAINEUSE => array( 
+                  'name' => totranslate('VertigHaineuse'), 
+                  'description' => totranslate('Choose it for your first game ! Green, violet, and orange petals.'), 
+                  'tmdisplay' => totranslate('VertigHaineuse'),
+                ),
+                OPTION_FLOWER_MARONNE => array( 
+                  'name' => totranslate('MarOnne'), 
+                  'description' => totranslate('Brown petals.'), 
+                  'tmdisplay' => totranslate('MarOnne'),
+                ),
+                OPTION_FLOWER_SIFFLOCHAMP => array( 
+                  'name' => totranslate('SiffloChamp'), 
+                  'description' => totranslate('Black and white petals.'), 
+                  'tmdisplay' => totranslate('SiffloChamp'),
+                ),
+                OPTION_FLOWER_DENTDINE => array( 
+                  'name' => totranslate('DentDîne'), 
+                  'description' => totranslate('Pink petals and permanent moves.'), 
+                  'tmdisplay' => totranslate('DentDîne'),
+                ),
+                OPTION_FLOWER_INSPIRACTRICE => array( 
+                  'name' => totranslate('InspirActrice'), 
+                  'description' => totranslate('Each variety of petals.'), 
+                  'tmdisplay' => totranslate('InspirActrice'),
+                ),
+                  
+            ),
+    'default' => OPTION_FLOWER_VERTIGHAINEUSE,
+  ),
 ];
 
 $game_preferences = [
