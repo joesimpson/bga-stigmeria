@@ -80,9 +80,46 @@ $game_options = [
                   'description' => totranslate('Each variety of petals.'), 
                   'tmdisplay' => totranslate('InspirActrice'),
                 ),
-                  
+                OPTION_FLOWER_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random flower'), 
+                  'tmdisplay' => totranslate('Random flower'),
+                ),
             ),
     'default' => OPTION_FLOWER_VERTIGHAINEUSE,
+  ),
+  
+  OPTION_DIFFICULTY => array(
+    'name' => totranslate('Difficulty'),    
+    'values' => array(
+                OPTION_DIFFICULTY_1 => array( 
+                  'name' => totranslate('1 Star'), 
+                  'description' => totranslate('Normal'), 
+                  'tmdisplay' => totranslate('1 Star'),
+                ),
+                OPTION_DIFFICULTY_2 => array( 
+                  'name' => totranslate('2 Stars'), 
+                  'description' => totranslate('Difficult'), 
+                  'tmdisplay' => totranslate('2 Stars'),
+                ),
+                OPTION_DIFFICULTY_3 => array( 
+                  'name' => totranslate('3 Stars'), 
+                  'description' => totranslate('Very difficult'), 
+                  'tmdisplay' => totranslate('3 Stars'),
+                ),
+                OPTION_DIFFICULTY_4 => array( 
+                  'name' => totranslate('4 Stars'), 
+                  'description' => totranslate('No Limit'), 
+                  'tmdisplay' => totranslate('4 Stars'),
+                  //TODO JSA FILTER NO LIMIT ?
+                ),
+                OPTION_DIFFICULTY_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random difficulty'), 
+                  'tmdisplay' => totranslate('Random difficulty'),
+                ),
+            ),
+    'default' => OPTION_DIFFICULTY_1,
   ),
 ];
 
