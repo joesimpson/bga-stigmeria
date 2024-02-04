@@ -48,6 +48,7 @@ $game_options = [
                   'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns or more. Unleash the wind power. All actions are possible.'), 
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
+                  'premium' => true,
                   ),
             ),
     'default' => OPTION_MODE_NORMAL,
@@ -87,6 +88,15 @@ $game_options = [
                 ),
             ),
     'default' => OPTION_FLOWER_VERTIGHAINEUSE,
+    /*
+    'displaycondition'=> [
+      [
+        "type"=> "otheroptionisnot ",
+        "id"=> OPTION_MODE,
+        "value"=> [ 4 ],
+      ],
+    ],
+    */
   ),
   
   OPTION_DIFFICULTY => array(
@@ -120,6 +130,135 @@ $game_options = [
                 ),
             ),
     'default' => OPTION_DIFFICULTY_1,
+  ),
+  
+  OPTION_SCHEMA => array(
+    'name' => totranslate('Targeted schema'),    
+    'values' => array(
+                OPTION_SCHEMA_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random schema'), 
+                  'tmdisplay' => totranslate('Random schema'),
+                ),
+                OPTION_SCHEMA_1 => array( 
+                  'name' => '1', 
+                  'description' => '1', 
+                  'tmdisplay' => '1',
+                ),
+                OPTION_SCHEMA_2 => array( 
+                  'name' => '2', 
+                  'description' => '2', 
+                  'tmdisplay' => '2',
+                ),
+                OPTION_SCHEMA_3 => array( 
+                  'name' => '3', 
+                  'description' => '3', 
+                  'tmdisplay' => '3',
+                ),
+                OPTION_SCHEMA_4 => array( 
+                  'name' => '4', 
+                  'description' => '4', 
+                  'tmdisplay' => '4',
+                ),
+                OPTION_SCHEMA_5 => array( 
+                  'name' => '5', 
+                  'description' => '5', 
+                  'tmdisplay' => '5',
+                ),
+                OPTION_SCHEMA_6 => array( 
+                  'name' => '6', 
+                  'description' => '6', 
+                  'tmdisplay' => '6',
+                ),
+                OPTION_SCHEMA_7 => array( 
+                  'name' => '7', 
+                  'description' => '7', 
+                  'tmdisplay' => '7',
+                ),
+                OPTION_SCHEMA_8 => array( 
+                  'name' => '8', 
+                  'description' => '8', 
+                  'tmdisplay' => '8',
+                ),
+                OPTION_SCHEMA_9 => array( 
+                  'name' => '9', 
+                  'description' => '9', 
+                  'tmdisplay' => '9',
+                ),
+            ),
+    'default' => OPTION_SCHEMA_1,
+    'startcondition'=> [
+      OPTION_SCHEMA_RANDOM => [[
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_RANDOM,
+          "message" => totranslate("This schema can be played with Random flower only."),
+        ]
+      ],
+      OPTION_SCHEMA_1 => [[
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_VERTIGHAINEUSE,
+          "message" => totranslate("This schema can be played with VertigHaineuse only."),
+        ]
+      ],
+      OPTION_SCHEMA_2 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_VERTIGHAINEUSE,
+        "message" => totranslate("This schema can be played with VertigHaineuse only."),
+        ]
+      ],
+      OPTION_SCHEMA_3 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_VERTIGHAINEUSE,
+        "message" => totranslate("This schema can be played with VertigHaineuse only."),
+        ]
+      ],
+      OPTION_SCHEMA_4 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_VERTIGHAINEUSE,
+        "message" => totranslate("This schema can be played with VertigHaineuse only."),
+        ]
+      ],
+      OPTION_SCHEMA_5 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_VERTIGHAINEUSE,
+        "message" => totranslate("This schema can be played with VertigHaineuse only."),
+        ]
+      ],
+      OPTION_SCHEMA_6 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_VERTIGHAINEUSE,
+        "message" => totranslate("This schema can be played with VertigHaineuse only."),
+        ]
+      ],
+      OPTION_SCHEMA_7 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_MARONNE,
+        "message" => totranslate("This schema can be played with MarOnne only."),
+        ]
+      ],
+      OPTION_SCHEMA_8 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_MARONNE,
+        "message" => totranslate("This schema can be played with MarOnne only."),
+        ]
+      ],
+      OPTION_SCHEMA_9 => [[
+        "type"=> "otheroption",
+        "id"=> OPTION_FLOWER,
+        "value"=> OPTION_FLOWER_MARONNE,
+        "message" => totranslate("This schema can be played with MarOnne only."),
+        ]
+      ],
+    ],
   ),
 ];
 
