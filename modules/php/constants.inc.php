@@ -15,6 +15,11 @@ const STIG_COLORS = [STIG_COLOR_1, ];
 /*
  * Game options
  */ 
+const OPTION_MODE = 100;
+const OPTION_MODE_DISCOVERY = 1;
+const OPTION_MODE_NORMAL = 2;
+const OPTION_MODE_COMPETITIVE = 3;
+const OPTION_MODE_NOLIMIT = 4;
 
 /*
  * User preferences

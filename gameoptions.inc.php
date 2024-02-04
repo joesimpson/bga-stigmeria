@@ -20,6 +20,38 @@ namespace STIG;
 require_once 'modules/php/constants.inc.php';
 
 $game_options = [
+
+  OPTION_MODE => array(
+    'name' => totranslate('Game mode'),    
+    'values' => array(
+                OPTION_MODE_DISCOVERY => array( 
+                  'name' => totranslate('Discovery'), 
+                  'description' => totranslate('Learn to play progressively. Reach the goal in 10 turns or more.'), 
+                  'tmdisplay' => totranslate('Discovery'),
+                  'firstgameonly' => true, 
+                  ),
+                  
+                OPTION_MODE_NORMAL => array( 
+                  'name' => totranslate('Normal'), 
+                  'description' => totranslate('Learn to play progressively. Reach the goal in 10 turns.'), 
+                  'tmdisplay' => totranslate('Normal'),
+                  ),
+                
+                OPTION_MODE_COMPETITIVE => array( 
+                  'name' => totranslate('Competitive'), 
+                  'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns.'),
+                  'tmdisplay' => totranslate('Competitive'),
+                  'nobeginner' => true, 
+                  ),
+                OPTION_MODE_NOLIMIT => array( 
+                  'name' => totranslate('No Limit'), 
+                  'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns or more. Unleash the wind power. All actions are possible.'), 
+                  'tmdisplay' => totranslate('No Limit'),
+                  'nobeginner' => true, 
+                  ),
+            ),
+    'default' => OPTION_MODE_NORMAL,
+  ),
 ];
 
 $game_preferences = [
