@@ -8,6 +8,8 @@ const STIG_COLOR_1 = 'blue';
 const STIG_PRIMARY_COLORS = [STIG_COLOR_1, ];
 const STIG_COLORS = [STIG_COLOR_1, ];
 
+const TURN_MAX = 10;
+
 /* CARDS TYPES */
 
 /* CARDS LOCATIONS */ 
@@ -66,7 +68,14 @@ const OPTION_CONFIRM_ENABLED = 2;
  */
 const ST_GAME_SETUP = 1;
 
-const ST_NEXT_PLAYER = 10;
+const ST_GENERATE_WIND = 5;
+const ST_PLAYER_DICE = 6;
+
+const ST_NEXT_TURN = 10;
+
+const ST_PLAYER_TURN = 20;
+
+const ST_WIND_EFFECT = 80;
 
 const ST_END_SCORING = 90;
 const ST_PRE_END_OF_GAME = 98;

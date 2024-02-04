@@ -9,6 +9,13 @@ use STIG\Core\Globals;
 class Notifications
 { 
 
+  public static function newTurn($turn){
+    self::notifyAll('newTurn','Starting turn number ${n}',[ 
+        'n' => $turn,
+      ],
+    );
+  }
+
   /*************************
    **** GENERIC METHODS ****
    *************************/

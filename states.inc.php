@@ -1,4 +1,5 @@
 <?php
+
 /**
  *------
  * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
@@ -48,56 +49,141 @@
 */
 
 //    !! It is not a good idea to modify this file when a game is running !!
+/*
+    "Visual" States Diagram :
 
+        SETUP
+        |
+        v
+        generateWind <------\
+        |    |              |
+        |    v              /
+        |   playerDice  ----
+        | 
+        v
+    /-- nextTurn   <-------------------------------------------\
+    |     |                                                    |
+    |     v                                                    |
+    |   playerTurn                                             |
+    |   |    |          |                                      |
+    |   |    v          v                                      |
+    |   |commonBoard personalBoard                             |
+    |   |    |          |                                      |
+    |   v    v          v                                      |
+    |    --------------------\                                 |
+    |                        |                                 |
+    |                        v                                 |
+    |                      windEffect -------------------------/
+    |     
+    \-> endGameScoring
+        | 
+        v
+        preEndOfGame
+        | 
+        v
+        END
+*/
+
+require_once 'modules/php/constants.inc.php';
  
 $machinestates = array(
 
     // The initial state. Please do not modify.
-    1 => array(
+    ST_GAME_SETUP => array(
         "name" => "gameSetup",
         "description" => "",
         "type" => "manager",
         "action" => "stGameSetup",
-        "transitions" => array( "" => 2 )
+        "transitions" => array( "" => ST_GENERATE_WIND )
     ),
     
-    // Note: ID=2 => your first state
+    ST_GENERATE_WIND => array(
+        "name" => "generateWind",
+        "description" => clienttranslate('Computing Wind direction'),
+        "type" => "game",
+        "action" => "stGenerateWind",
+        "transitions" => [ 
+            "playerDice" => ST_PLAYER_DICE,
+            "next" => ST_NEXT_TURN,
+        ],
+    ),    
 
-    2 => array(
-    		"name" => "playerTurn",
-    		"description" => clienttranslate('${actplayer} must play a card or pass'),
-    		"descriptionmyturn" => clienttranslate('${you} must play a card or pass'),
-    		"type" => "activeplayer",
-    		"possibleactions" => array( "playCard", "pass" ),
-    		"transitions" => array( "playCard" => 2, "pass" => 2 )
+    ST_PLAYER_DICE => array(
+        "name" => "playerDice",
+        "description" => clienttranslate('${actplayer} must choose a dice result'),
+        "descriptionmyturn" => clienttranslate('${you} must choose a dice result'),
+        "type" => "activeplayer",
+        "possibleactions" => ["cho", "relaunch", ],
+        "transitions" => [ 
+            "nextDice" => ST_GENERATE_WIND, 
+            "windEffect" => ST_WIND_EFFECT,
+        ],
+    ),
+
+    ST_NEXT_TURN => array(
+        "name" => "nextTurn",
+        "description" => clienttranslate('Next turn'),
+        "type" => "game",
+        "action" => "stNextTurn",
+        "transitions" => [ 
+            "play" => ST_PLAYER_TURN,
+            "end" => ST_END_SCORING,
+        ],
+    ),    
+   
+    ST_PLAYER_TURN => array(
+        "name" => "playerTurn",
+        "description" => clienttranslate('${actplayer} may play 1 action or pass'),
+        //TODO JSA add remaining actions count in args
+        "descriptionmyturn" => clienttranslate('${you} may play 1 action or pass'),
+        "type" => "multipleactiveplayer",
+        "action" => "stPlayerturn",
+        "args" => "argPlayerTurn",
+        //TODO JSA MULTIACTIVE with a button to let next player start : this is wanted by publisher to have a semi simultaneous play
+        "possibleactions" => [ 
+            //TODO JSA ALL ACTIONS
+            "pass",
+            "letNextPlay",
+            "end",
+        ],
+        "transitions" => [ 
+            "end" => ST_WIND_EFFECT,
+        ],
+        //TODO JSA private parallel states "CommonBoard" (and related subactions), then "personalBoard" (and related subactions)
     ),
     
-/*
-    Examples:
-    
-    2 => array(
-        "name" => "nextPlayer",
+    ST_WIND_EFFECT => array(
+        "name" => "windEffect",
+        "description" => clienttranslate('Wind blows'),
+        "type" => "game",
+        "action" => "stWindEffect",
+        "transitions" => [ 
+            "next" => ST_NEXT_TURN,
+            "playerDice" => ST_PLAYER_DICE,
+        ],
+    ),    
+    ST_END_SCORING => array(
+        "name" => "scoring",
+        "description" => clienttranslate('Scoring'),
+        "type" => "game",
+        "action" => "stScoring",
+        "transitions" => [ 
+            "next" => ST_PRE_END_OF_GAME,
+        ],
+    ),
+    ST_PRE_END_OF_GAME => array(
+        "name" => "preEndOfGame",
         "description" => '',
         "type" => "game",
-        "action" => "stNextPlayer",
-        "updateGameProgression" => true,   
-        "transitions" => array( "endGame" => 99, "nextPlayer" => 10 )
+        "action" => "stPreEndOfGame",
+        "transitions" => [ 
+            "next" => ST_END_GAME,
+        ],
     ),
-    
-    10 => array(
-        "name" => "playerTurn",
-        "description" => clienttranslate('${actplayer} must play a card or pass'),
-        "descriptionmyturn" => clienttranslate('${you} must play a card or pass'),
-        "type" => "activeplayer",
-        "possibleactions" => array( "playCard", "pass" ),
-        "transitions" => array( "playCard" => 2, "pass" => 2 )
-    ), 
-
-*/    
    
     // Final state.
     // Please do not modify (and do not overload action/args methods).
-    99 => array(
+    ST_END_GAME => array(
         "name" => "gameEnd",
         "description" => clienttranslate("End of game"),
         "type" => "manager",

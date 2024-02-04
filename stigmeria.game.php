@@ -41,7 +41,13 @@ use STIG\Core\Stats;
 class Stigmeria extends Table
 {
     use STIG\DebugTrait;
+    use STIG\States\NextTurnTrait;
+    use STIG\States\PlayerDiceTrait;
+    use STIG\States\PlayerTurnTrait;
+    use STIG\States\ScoringTrait;
     use STIG\States\SetupTrait;
+    use STIG\States\WindEffectTrait;
+    use STIG\States\WindGenerationTrait;
 
     public static $instance = null;
 	function __construct( )
