@@ -6,6 +6,8 @@
 
 const TURN_MAX = 10;
 const TOKEN_SETUP_NB = 15;
+const MAX_COMMON_ACTIONS_BY_TURN = 2;
+const MAX_PERSONAL_ACTIONS_BY_TURN = TURN_MAX;
 
 /* TOKEN TYPES */
 const STIG_COLOR_1 = 'blue';

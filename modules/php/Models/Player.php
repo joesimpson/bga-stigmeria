@@ -71,4 +71,17 @@ class Player extends \STIG\Helpers\DB_Model
 
     Notifications::startTurn($this,$turnIndex);
   }
+
+  public function countRemainingCommonActions(){
+    $max = MAX_COMMON_ACTIONS_BY_TURN;
+    $done = $this->getNbCommonActionsDone();
+    return $max - $done;
+  }
+
+  public function countRemainingPersonalActions(){
+    $turn = Globals::getTurn();
+    $max = min(MAX_PERSONAL_ACTIONS_BY_TURN, $turn); //10 actions for turns 11,12,...
+    $done = $this->getNbPersonalActionsDone();
+    return $max - $done;
+  }
 }

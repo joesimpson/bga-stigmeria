@@ -149,7 +149,7 @@ $machinestates = array(
     
     ST_TURN_COMMON_BOARD => [
         "name" => "commonBoardTurn",
-        "descriptionmyturn" => clienttranslate('${you} must play 2 actions on the common board'), 
+        "descriptionmyturn" => clienttranslate('${you} must play ${n} actions on the common board'), 
         "type" => "private", // this state is reachable only as a private state
         "args" => "argCommonBoardTurn",
         "action" => "stCommonBoardTurn",
@@ -159,13 +159,14 @@ $machinestates = array(
             "actCommonJoker",
         ],
         "transitions" => [
-          'next' => ST_TURN_PERSONAL_BOARD, // transition to another private state
+            'continue' => ST_TURN_COMMON_BOARD,
+            'next' => ST_TURN_PERSONAL_BOARD, // transition to another private state
         ],
     ],
     
     ST_TURN_PERSONAL_BOARD => [
         "name" => "personalBoardTurn",
-        "descriptionmyturn" => clienttranslate('${you} may play n actions on your board or pass'), 
+        "descriptionmyturn" => clienttranslate('${you} may play ${n} actions on your board or pass'), 
         "type" => "private", // this state is reachable only as a private state
         "args" => "argPersonalBoardTurn",
         "action" => "stPersonalBoardTurn",
@@ -181,6 +182,7 @@ $machinestates = array(
             "actBackToCommon",
         ],
         "transitions" => [
+            'continue' => ST_TURN_PERSONAL_BOARD,
             'back' => ST_TURN_COMMON_BOARD,
         ],
     ],

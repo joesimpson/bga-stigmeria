@@ -41,6 +41,12 @@
   	
   	// TODO: defines your action entry points there
 
+    public function actCommonDrawAndLand()
+    {
+      self::setAjaxMode();
+      $this->game->actCommonDrawAndLand();
+      self::ajaxResponse();
+    }
     public function actCommonMove()
     {
       self::setAjaxMode();

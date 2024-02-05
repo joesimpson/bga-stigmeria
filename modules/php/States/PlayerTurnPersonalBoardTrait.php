@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Exceptions\UserException;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 
@@ -17,10 +18,11 @@ trait PlayerTurnPersonalBoardTrait
         
     }
 
-    public function argPersonalBoardTurn()
+    public function argPersonalBoardTurn($player_id)
     {
-
+        $player = Players::get($player_id);
         return [
+            'n'=> $player->countRemainingPersonalActions(),
         ];
     }
     
@@ -45,9 +47,14 @@ trait PlayerTurnPersonalBoardTrait
         $player = Players::getCurrent();
         $pId = $player->id;
 
+        $remaining = $player->countRemainingPersonalActions();
         $nbActionsDone = $player->getNbPersonalActionsDone();
-        $actionCost = 1;//TODO JSA ACTION MODEL
-        //TODO JSA CHECK REMAINING ACTIONS VS cost
+        $actionCost = 1;//TODO JSA ACTION MODEL ?
+
+        //CHECK REMAINING ACTIONS VS cost
+        if($remaining < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
         
         $player->setNbPersonalActionsDone($nbActionsDone + $actionCost);
         Notifications::useActions($player);
@@ -60,5 +67,7 @@ trait PlayerTurnPersonalBoardTrait
         }
 
         Notifications::drawToken($player,$token, $actionCost);
+
+        $this->gamestate->nextPrivateState($player->id, "continue");
     }
 }
