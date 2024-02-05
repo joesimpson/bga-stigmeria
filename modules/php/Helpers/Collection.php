@@ -8,6 +8,13 @@ class Collection extends \ArrayObject
         return array_keys($this->getArrayCopy());
     }
 
+    /**
+     * @return bool true is collection is empty
+     */
+    public function isEmpty()
+    {
+        return count($this->toArray()) == 0;
+    }
     public function empty()
     {
         return empty($this->getArrayCopy());

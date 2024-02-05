@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Exceptions\UserException;
+use STIG\Helpers\Utils;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 
@@ -23,6 +24,7 @@ trait PlayerTurnPersonalBoardTrait
         $player = Players::get($player_id);
         return [
             'n'=> $player->countRemainingPersonalActions(),
+            'p_places_p' => $this->listPossiblePlacesOnPersonalBoard($player_id),
         ];
     }
     
@@ -100,7 +102,9 @@ trait PlayerTurnPersonalBoardTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_RECRUIT ){
             throw new UnexpectedException(20,"You cannot place this token");
         }
-        //TODO JSA CHECK POSSIBLE MOVE $row, $column for this token (Empty spot : Either Line A or adjacent to another)
+        if(!$this->canPlaceOnPlayerBoard($pId,$row, $column)){
+            throw new UnexpectedException(30,"You cannot place this token at $row, $column");
+        }
 
         $player->setNbPersonalActionsDone($nbActionsDone + $actionCost);
         Notifications::useActions($player);
@@ -110,4 +114,44 @@ trait PlayerTurnPersonalBoardTrait
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
+
+    
+    /**
+     * @return bool TRUE if a token can be placed on this player board ( Empty spot + Either Line A or adjacent to another token),
+     *  FALSE otherwise
+     */
+    public function canPlaceOnPlayerBoard($playerId,$row, $column)
+    {
+        if($column > COLUMN_MAX) return false;
+        if($column < COLUMN_MIN) return false;
+        if($row > ROW_MAX) return false;
+        if($row < ROW_MIN) return false;
+
+        $existingToken = Tokens::findOnPersonalBoard($playerId,$row, $column);
+        if(isset($existingToken)) return false;//not empty
+
+        //TODO JSA PERFS We could read all tokens on personal board before calling this function if we want to loop on this func
+        if($row != ROW_START && Tokens::listAdjacentTokens($playerId,$row, $column)->isEmpty()){
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int $playerId
+     * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
+     */
+    public function listPossiblePlacesOnPersonalBoard($playerId){
+        $spots = [];
+        for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
+            for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
+                if($this->canPlaceOnPlayerBoard($playerId,$row, $column)){
+                    $spots[] = [ 'row' => $row, 'col' => $column ];
+                }
+            }
+        }
+        return $spots;
+    }
+
 }

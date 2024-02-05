@@ -9,6 +9,12 @@ const TOKEN_SETUP_NB = 15;
 const MAX_COMMON_ACTIONS_BY_TURN = 2;
 const MAX_PERSONAL_ACTIONS_BY_TURN = TURN_MAX;
 
+const COLUMN_MIN = 1;
+const COLUMN_MAX = 10;
+const ROW_MIN = 1;
+const ROW_MAX = 10;
+const ROW_START = ROW_MIN;
+
 /* TOKEN TYPES */
 const STIG_COLOR_1 = 'blue';
 const STIG_COLOR_2 = 'red';

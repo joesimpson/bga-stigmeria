@@ -17,8 +17,8 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     'state' => ['token_state', 'int'],
     'location' => 'token_location',
     'pId' => ['player_id', 'int'],
-    'row' => ['x', 'int'],
-    'col' => ['y', 'int'],
+    'col' => ['x', 'int'],
+    'row' => ['y', 'int'],
   ];
   
   protected $staticAttributes = [
@@ -63,6 +63,8 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     $this->setRow($row);
 
     Notifications::moveToPlayerBoard($player, $this);
-  }
 
+    //TODO JSA Check if right positioned => becomes pollen
+  }
+  
 }
