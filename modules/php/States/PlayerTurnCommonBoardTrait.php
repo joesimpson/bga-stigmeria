@@ -27,6 +27,7 @@ trait PlayerTurnCommonBoardTrait
     public function actCommonDrawAndLand()
     {
         self::checkAction( 'actCommonDrawAndLand' ); 
+        self::trace("actCommonDrawAndLand()");
         
         $player = Players::getCurrent();
         
@@ -50,6 +51,7 @@ trait PlayerTurnCommonBoardTrait
     public function actCommonMove()
     {
         self::checkAction( 'actCommonMove' ); 
+        self::trace("actCommonMove()");
         
         $player = Players::getCurrent();
         

@@ -40,14 +40,19 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   public function getUiData()
   {
     $data = parent::getUiData();
-    
+    $data['coord'] = $this->getCoordName();
     return $data;
   }
 
+  /**
+   * @return string Example "J5"
+   */
   public function getCoordName()
   {
-    //TODO JSA getCoordName
-    return "J5";
+    if($this->row == null || $this->col == null) return '';
+    $all_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $rowLetter = substr($all_letters, $this->row - 1, 1);
+    return $rowLetter.$this->col;
   }
 
   public function moveToPlayerBoard($player,$row,$column)
