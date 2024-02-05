@@ -54,6 +54,30 @@ class Notifications
   }
 
   /**
+   * Update number of actions
+   * @param Player $player
+   *///TODO JSA CHECK IF USELESS
+  public static function useActions($player){
+    self::notifyAll('useActions','',[ 
+        'player' => $player,
+        'nbCommonActionsDone' => $player->getNbCommonActionsDone(),
+        'nbPersonalActionsDone' => $player->getNbPersonalActionsDone(),
+      ],
+    );
+  }
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   */
+  public static function drawToken($player, $token, $actionCost){
+    self::notifyAll('drawToken',clienttranslate('${player_name} draws a new stigmerian to the recruitment zone (Cost : ${n} actions)'),[ 
+        'player' => $player,
+        'token' => $token->getUiData(),
+        'n' => $actionCost,
+      ],
+    );
+  }
+  /**
    * @param Player $player
    * @param StigmerianToken $token
    */
