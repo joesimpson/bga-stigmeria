@@ -126,7 +126,7 @@ function (dojo, declare) {
         //        
         onUpdateActionButtons: function( stateName, args )
         {
-            console.log( 'onUpdateActionButtons: '+stateName );
+            console.log( 'onUpdateActionButtons: '+stateName, args );
                       
             if( this.isCurrentPlayerActive() )
             {            

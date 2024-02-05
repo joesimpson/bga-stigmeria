@@ -74,6 +74,8 @@ const ST_PLAYER_DICE = 6;
 const ST_NEXT_TURN = 10;
 
 const ST_PLAYER_TURN = 20;
+const ST_TURN_COMMON_BOARD = 21;
+const ST_TURN_PERSONAL_BOARD = 22;
 
 const ST_WIND_EFFECT = 80;
 

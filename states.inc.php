@@ -134,21 +134,56 @@ $machinestates = array(
     ST_PLAYER_TURN => array(
         "name" => "playerTurn",
         "description" => clienttranslate('Players may play actions or pass'),
-        "descriptionmyturn" => clienttranslate('${you} may play actions or pass'),
+        "descriptionmyturn" => ('${you} may play actions or pass'), // Won't be displayed anyway since each private state has its own description
         "type" => "multipleactiveplayer",
+        "initialprivate" => ST_TURN_COMMON_BOARD,// This makes this state a master multiactive state and enables private states
         "action" => "stPlayerturn",
         "args" => "argPlayerTurn",
         "possibleactions" => [ 
-            //TODO JSA ALL ACTIONS
-            "actPass",
-            "actLetNextPlay",
-            "actEndTurn",
+            //this actions are possible if player is not in any private state which usually happens when they are inactive
         ],
         "transitions" => [ 
             "end" => ST_WIND_EFFECT,
         ],
-        //TODO JSA private parallel states "CommonBoard" (and related subactions), then "personalBoard" (and related subactions)
     ),
+    
+    ST_TURN_COMMON_BOARD => [
+        "name" => "commonBoardTurn",
+        "descriptionmyturn" => clienttranslate('${you} must play 2 actions on the common board'), 
+        "type" => "private", // this state is reachable only as a private state
+        "args" => "argCommonBoardTurn",
+        "action" => "stCommonBoardTurn",
+        "possibleactions" => [
+            "actCommonDrawAndLand",
+            "actCommonMove",
+            "actCommonJoker",
+        ],
+        "transitions" => [
+          'next' => ST_TURN_PERSONAL_BOARD, // transition to another private state
+        ],
+    ],
+    
+    ST_TURN_PERSONAL_BOARD => [
+        "name" => "personalBoardTurn",
+        "descriptionmyturn" => clienttranslate('${you} may play n actions on your board or pass'), 
+        "type" => "private", // this state is reachable only as a private state
+        "args" => "argPersonalBoardTurn",
+        "action" => "stPersonalBoardTurn",
+        "possibleactions" => [
+            "actDraw",
+            "actLand",
+            "actMove",
+            //TODO JSA ALL ACTIONS
+            "actJoker",
+            "actPass",
+            "actLetNextPlay",
+            "actEndTurn",
+            "actBackToCommon",
+        ],
+        "transitions" => [
+            'back' => ST_TURN_COMMON_BOARD,
+        ],
+    ],
     
     ST_WIND_EFFECT => array(
         "name" => "windEffect",

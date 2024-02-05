@@ -41,6 +41,20 @@
   	
   	// TODO: defines your action entry points there
 
+    public function actCommonMove()
+    {
+      self::setAjaxMode();
+      $this->game->actCommonMove();
+      self::ajaxResponse();
+    }
+    
+    public function actBackToCommon()
+    {
+      self::setAjaxMode();
+      $this->game->actBackToCommon();
+      self::ajaxResponse();
+    }
+    
     public function actLetNextPlay()
     {
       self::setAjaxMode();

@@ -21,6 +21,9 @@ trait PlayerTurnTrait
         //TODO JSA IN NORMAL MODE, we can activate every one
 
         $this->gamestate->setPlayersMultiactive( $playersToActive, 'end' );
+        
+        //this is needed when starting private parallel states; players will be transitioned to initialprivate state defined in master state
+        $this->gamestate->initializePrivateStateForAllActivePlayers(); 
     }
 
     public function argPlayerTurn()
@@ -52,6 +55,7 @@ trait PlayerTurnTrait
         Notifications::letNextPlay($player,$nextPlayer);
 
         $this->gamestate->setPlayersMultiactive( [$nextPlayer_id], 'end' );
+        $this->gamestate->initializePrivateState($nextPlayer_id); 
     }
     
     public function actEndTurn()
