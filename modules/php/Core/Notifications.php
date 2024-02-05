@@ -6,6 +6,7 @@ use STIG\Managers\Players;
 use STIG\Helpers\Utils;
 use STIG\Core\Globals;
 use STIG\Models\Player;
+use STIG\Models\StigmerianToken;
 
 class Notifications
 { 
@@ -48,6 +49,19 @@ class Notifications
   public static function endTurn($player){
     self::notifyAll('endTurn',clienttranslate('${player_name} ends his turn'),[ 
         'player' => $player,
+      ],
+    );
+  }
+
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   */
+  public static function moveToPlayerBoard($player, $token){
+    self::notifyAll('moveToPlayerBoard',clienttranslate('${player_name} places a new stigmerian at ${L}'),[ 
+        'player' => $player,
+        'token' => $token->getUiData(),
+        'L' => $token->getCoordName(),
       ],
     );
   }

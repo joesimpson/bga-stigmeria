@@ -40,7 +40,7 @@ class Players extends \STIG\Helpers\DB_Manager
 
   }
 
-  public function getActiveId()
+  public static function getActiveId()
   {
     return Game::get()->getActivePlayerId();
   }
@@ -50,7 +50,7 @@ class Players extends \STIG\Helpers\DB_Manager
     return (int) Game::get()->getCurrentPId();
   }
 
-  public function getAll()
+  public static function getAll()
   {
     return self::DB()->get(false);
   }

@@ -37,6 +37,7 @@ use STIG\Managers\Players;
 use STIG\Core\Globals;
 use STIG\Core\Preferences;
 use STIG\Core\Stats;
+use STIG\Managers\Tokens;
 
 class Stigmeria extends Table
 {
@@ -98,6 +99,7 @@ class Stigmeria extends Table
         return [
           'prefs' => Preferences::getUiData($current_player_id),
           'players' => Players::getUiData($current_player_id),
+          'tokens' => Tokens::getUiData($current_player_id),
           'turn' => Globals::getTurn(),
           'firstPlayer' => Globals::getFirstPlayer(),
         ];

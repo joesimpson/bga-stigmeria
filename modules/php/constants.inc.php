@@ -4,15 +4,24 @@
  * Game Constants
  */
 
-const STIG_COLOR_1 = 'blue';
-const STIG_PRIMARY_COLORS = [STIG_COLOR_1, ];
-const STIG_COLORS = [STIG_COLOR_1, ];
-
 const TURN_MAX = 10;
+const TOKEN_SETUP_NB = 15;
 
-/* CARDS TYPES */
+/* TOKEN TYPES */
+const STIG_COLOR_1 = 'blue';
+const STIG_COLOR_2 = 'red';
+const STIG_COLOR_3 = 'yellow';
+const STIG_PRIMARY_COLORS = [STIG_COLOR_1,STIG_COLOR_2,STIG_COLOR_3, ];
+const STIG_COLORS = [STIG_COLOR_1,STIG_COLOR_2,STIG_COLOR_3, ];
 
-/* CARDS LOCATIONS */ 
+/* TOKEN LOCATIONS */ 
+const TOKEN_LOCATION_PLAYER_DECK = 'player_deck_';//To be followed by pid in order to shuffle separately
+const TOKEN_LOCATION_PLAYER_RECRUIT = 'player_recruit';
+const TOKEN_LOCATION_PLAYER_BOARD = 'player_board';
+
+/* TOKEN STATES */ 
+const TOKEN_STATE_STIGMERIAN = 0;
+const TOKEN_STATE_POLLEN = 1;
 
 /*
  * Game options

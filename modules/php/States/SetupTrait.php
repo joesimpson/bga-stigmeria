@@ -9,6 +9,7 @@ use STIG\Core\Engine;
 use STIG\Core\Stats;
 use STIG\Core\Preferences;
 use STIG\Managers\Players;
+use STIG\Managers\Tokens;
 
 trait SetupTrait
 {
@@ -30,6 +31,7 @@ trait SetupTrait
       Players::get($player['id'])->initStats(count($players));
     }
     */
+    Tokens::setupNewGame($players, $options);
 
     $this->setGameStateInitialValue('logging', false);
     // Activate first player (which is in general a good idea :) )

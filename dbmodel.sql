@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS `token` (
   `token_location` varchar(32) NOT NULL,
   `player_id` int(10) NULL,
   `type` VARCHAR(32) NULL,
+  `x` int(10) NULL COMMENT 'Row when token is on a board grid',
+  `y` int(10) NULL COMMENT 'Column when token is on a board grid',
   PRIMARY KEY (`token_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
