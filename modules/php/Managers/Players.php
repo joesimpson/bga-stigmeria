@@ -83,6 +83,23 @@ class Players extends \STIG\Helpers\DB_Manager
     $table = Game::get()->getNextPlayerTable();
     return $table[$pId];
   }
+  
+  /**
+   * @param int $player_id
+   * @param int $turn current turn
+   * @return Player
+   */
+  public static function getNextInactivePlayerInTurn($player_id, $turn)
+  {
+    $nextPlayer_id = Players::getNextId($player_id);
+    $nextPlayer = Players::get($nextPlayer_id);
+    if(isset($nextPlayer) && !$nextPlayer->isMultiactive() && $nextPlayer->getLastTurn()< $turn ){
+      //CHECK nextPlayer not active
+      //nextPlayer already played this turn
+      return $nextPlayer;
+    }
+    return null;
+  }
 
   /*
    * Return the number of players
@@ -127,4 +144,17 @@ class Players extends \STIG\Helpers\DB_Manager
     Game::get()->gamestate->changeActivePlayer($pId);
   }
 
+  /**
+   * Sets player datas related to turn number $turn
+   * @param array $player_ids
+   * @param int $turn
+   */
+  public static function startTurn($player_ids,$turn)
+  {
+    foreach($player_ids as $player_id){
+      $player = self::get($player_id);
+      $player->startTurn($turn);
+    }
+    //TODO JSA reset others counters but not turn ?
+  }
 }

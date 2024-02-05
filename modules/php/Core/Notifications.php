@@ -31,7 +31,17 @@ class Notifications
       ],
     );
   }
-  
+  /**
+   * @param Player $player
+   * @param int $turn
+   */
+  public static function startTurn($player,$turn){
+    self::notifyAll('startTurn',clienttranslate('${player_name} starts turn #${n}'),[ 
+        'player' => $player,
+        'n' => $turn,
+      ],
+    );
+  }
   /**
    * @param Player $player
    */
@@ -69,6 +79,13 @@ class Notifications
     self::notify($pId, 'message', $txt, $args);
   }
 
+  /**
+   *  Empty notif to send after an action, to let framework works & refresh ui
+   * (Usually not needed if we send another notif or if we change state of a player)
+   * */
+  public static function emptyNotif(){
+    self::notifyAll('emptyNotif','',[],);
+  }
   /*********************
    **** UPDATE ARGS ****
    *********************/

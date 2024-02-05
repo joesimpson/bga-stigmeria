@@ -26,6 +26,11 @@ class Player extends \STIG\Helpers\DB_Model
     'score' => ['player_score', 'int'],
     'scoreAux' => ['player_score_aux', 'int'],
     'zombie' => 'player_zombie',
+    //GAME SPECIFIC :
+    'multiactive' => ['player_is_multiactive', 'bool'],
+    'lastTurn' => ['player_turn', 'int'],
+    'nbCommonActionsDone' => ['player_common_actions', 'int'],
+    'nbPersonalActionsDone' => ['player_personal_actions', 'int'],
   ];
 
   public function getUiData($currentPlayerId = null)
@@ -53,4 +58,17 @@ class Player extends \STIG\Helpers\DB_Model
     Stats::inc( "score", $this->id, $points );
   }
 
+  /**
+   * Sets player datas related to turn number $turnIndex
+   * @param int $turnIndex
+   */
+  public function startTurn($turnIndex)
+  {
+    //$this->incLastTurn();
+    $this->setLastTurn($turnIndex);
+    $this->setNbCommonActionsDone(0);
+    $this->setNbPersonalActionsDone(0);
+
+    Notifications::startTurn($this,$turnIndex);
+  }
 }

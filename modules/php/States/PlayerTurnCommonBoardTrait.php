@@ -26,6 +26,9 @@ trait PlayerTurnCommonBoardTrait
     {
         self::checkAction( 'actCommonMove' ); 
         
+        $player = Players::getCurrent();
+        $player->incNbCommonActionsDone();
+
         //TODO JSA IF NO MORE ACTIONS on common board, go to personal board actions :
         //moving current player to different state :
         $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "next");

@@ -18,6 +18,10 @@
 -- Note: The database schema is created from this file when the game starts. If you modify this file,
 --       you have to restart a game to see your changes in database.
 
+ALTER TABLE `player` ADD `player_turn` INT(5) NOT NULL DEFAULT 0 COMMENT 'Last turn played by this player';
+ALTER TABLE `player` ADD `player_common_actions` INT(1) NOT NULL DEFAULT 0 COMMENT 'actions played by this player on central board (during this turn)';
+ALTER TABLE `player` ADD `player_personal_actions` INT(2) NOT NULL DEFAULT 0 COMMENT 'actions played by this player on their board (during this turn)';
+
 CREATE TABLE IF NOT EXISTS `token` (
   `token_id` int(5) NOT NULL AUTO_INCREMENT,
   `token_state` int(10) DEFAULT 0,
