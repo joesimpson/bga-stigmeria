@@ -78,7 +78,13 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
         || $this->row == $row && $this->col == $column - 1;
   }
 
-  public function moveToPlayerBoard($player,$row,$column)
+  /**
+   * @param Player $player
+   * @param int $row
+   * @param int $column
+   * @param int $actionCost
+   */
+  public function moveToPlayerBoard($player,$row,$column,$actionCost)
   {
     $fromBoard = false;
     if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
@@ -91,10 +97,10 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     $this->setRow($row);
 
     if($fromBoard){
-      Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName());
+      Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
     }
     else {
-      Notifications::moveToPlayerBoard($player, $this);
+      Notifications::moveToPlayerBoard($player, $this,$actionCost);
     }
 
     //TODO JSA Check if right positioned => becomes pollen

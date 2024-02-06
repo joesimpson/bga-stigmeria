@@ -63,7 +63,7 @@ trait ChoiceTokenToMoveTrait
         Notifications::useActions($player);
 
         //EFFECT : MOVE the TOKEN 
-        $token->moveToPlayerBoard($player,$row,$column);
+        $token->moveToPlayerBoard($player,$row,$column,$actionCost);
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }

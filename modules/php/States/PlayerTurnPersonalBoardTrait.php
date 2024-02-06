@@ -110,7 +110,7 @@ trait PlayerTurnPersonalBoardTrait
         Notifications::useActions($player);
 
         //EFFECT : PLACE the TOKEN 
-        $token->moveToPlayerBoard($player,$row,$column);
+        $token->moveToPlayerBoard($player,$row,$column,$actionCost);
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }

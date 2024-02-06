@@ -68,9 +68,10 @@ class Notifications
   /**
    * @param Player $player
    * @param StigmerianToken $token
+   * @param int $actionCost
    */
   public static function drawToken($player, $token, $actionCost){
-    self::notifyAll('drawToken',clienttranslate('${player_name} draws a new stigmerian to the recruitment zone (Cost : ${n} actions)'),[ 
+    self::notifyAll('drawToken',clienttranslate('${player_name} draws a new stigmerian to the recruitment zone (cost : ${n} actions)'),[ 
         'player' => $player,
         'token' => $token->getUiData(),
         'n' => $actionCost,
@@ -80,12 +81,14 @@ class Notifications
   /**
    * @param Player $player
    * @param StigmerianToken $token
+   * @param int $actionCost
    */
-  public static function moveToPlayerBoard($player, $token){
-    self::notifyAll('moveToPlayerBoard',clienttranslate('${player_name} places a new stigmerian at ${L}'),[ 
+  public static function moveToPlayerBoard($player, $token, $actionCost){
+    self::notifyAll('moveToPlayerBoard',clienttranslate('${player_name} places a new stigmerian at ${L} (cost : ${n} actions)'),[ 
         'player' => $player,
         'token' => $token->getUiData(),
         'L' => $token->getCoordName(),
+        'n' => $actionCost,
       ],
     );
   }
@@ -94,13 +97,15 @@ class Notifications
    * @param StigmerianToken $token
    * @param string $from Coordinate name
    * @param string $to Coordinate name
+   * @param int $actionCost
    */
-  public static function moveOnPlayerBoard($player, $token,$from,$to){
-    self::notifyAll('moveOnPlayerBoard',clienttranslate('${player_name} moves a stigmerian from ${A} to ${B}'),[ 
+  public static function moveOnPlayerBoard($player, $token,$from,$to, $actionCost){
+    self::notifyAll('moveOnPlayerBoard',clienttranslate('${player_name} moves a stigmerian from ${A} to ${B} (cost : ${n} actions)'),[ 
         'player' => $player,
         'token' => $token->getId(),
         'A' => $from,
         'B' => $to,
+        'n' => $actionCost,
       ],
     );
   }
