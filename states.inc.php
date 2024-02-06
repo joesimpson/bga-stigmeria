@@ -157,6 +157,7 @@ $machinestates = array(
             "actCommonDrawAndLand",
             "actCommonMove",
             "actCommonJoker",
+            "actGoToNext",
         ],
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,

@@ -23,6 +23,16 @@ trait PlayerTurnCommonBoardTrait
             'n'=> $player->countRemainingCommonActions(),
         ];
     }
+    /**
+     * TODO JSA : FOR TESTING only : it is forbidden to go to next steps before ending this step
+     */
+    public function actGoToNext()
+    {
+        self::checkAction( 'actGoToNext' ); 
+        
+        //moving current player to different state :
+        $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "next");
+    }
 
     public function actCommonDrawAndLand()
     {

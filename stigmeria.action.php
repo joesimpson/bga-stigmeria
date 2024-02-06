@@ -54,6 +54,12 @@
       self::ajaxResponse();
     }
     
+    public function actGoToNext()
+    {
+      self::setAjaxMode();
+      $this->game->actGoToNext();
+      self::ajaxResponse();
+    }
     public function actBackToCommon()
     {
       self::setAjaxMode();

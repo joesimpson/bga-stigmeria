@@ -91,131 +91,33 @@ function (dojo, declare) {
         {
             debug( 'Entering state: '+stateName, args );
             
+            this.inherited(arguments);
+
+            let nbActions = 0;
             switch( stateName )
             {
             case 'commonBoardTurn':
-                this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
-                this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
+                nbActions = args.args.n;
+                if(nbActions>0){
+                    this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
+                    this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
+                }
+                this.addDangerActionButton('btnNext', 'Next', () => this.takeAction('actGoToNext', {}));
                 break;
             case 'personalBoardTurn':
-                this.addPrimaryActionButton('btnDraw', 'Draw', () => this.takeAction('actDraw', {}));
-                this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
-                this.addPrimaryActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
-                break;
-            }
-        },
-
-        // onLeavingState: this method is called each time we are leaving a game state.
-        //                 You can use this method to perform some user interface changes at this moment.
-        //
-        onLeavingState: function( stateName )
-        {
-            debug( 'Leaving state: '+stateName );
-            
-            switch( stateName )
-            {
-            
-            /* Example:
-            
-            case 'myGameState':
-            
-                // Hide the HTML block we are displaying only during this game state
-                dojo.style( 'my_html_block_id', 'display', 'none' );
-                
-                break;
-           */
-           
-           
-            case 'dummmy':
-                break;
-            }               
-        }, 
-
-        // onUpdateActionButtons: in this method you can manage "action buttons" that are displayed in the
-        //                        action status bar (ie: the HTML links in the status bar).
-        //        
-        onUpdateActionButtons: function( stateName, args )
-        {
-            debug( 'onUpdateActionButtons: '+stateName, args );
-                      
-            if( this.isCurrentPlayerActive() )
-            {            
-                switch( stateName )
-                {
-/*               
-                 Example:
- 
-                 case 'myGameState':
-                    
-                    // Add 3 action buttons in the action status bar:
-                    
-                    this.addActionButton( 'button_1_id', _('Button 1 label'), 'onMyMethodToCall1' ); 
-                    this.addActionButton( 'button_2_id', _('Button 2 label'), 'onMyMethodToCall2' ); 
-                    this.addActionButton( 'button_3_id', _('Button 3 label'), 'onMyMethodToCall3' ); 
-                    break;
-*/
+                nbActions = args.args.n;
+                if(nbActions>0){
+                    this.addPrimaryActionButton('btnDraw', 'Draw', () => this.takeAction('actDraw', {}));
+                    this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
                 }
+                this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
+                this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
+                break;
+            case 'choiceTokenToMove':
+                this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
+                break;
             }
-        },        
-
-        ///////////////////////////////////////////////////
-        //// Utility methods
-        
-        /*
-        
-            Here, you can defines some utility methods that you can use everywhere in your javascript
-            script.
-        
-        */
-
-        ///////////////////////////////////////////////////
-        //// Player's action
-        
-        /*
-        
-            Here, you are defining methods to handle player's action (ex: results of mouse click on 
-            game objects).
-            
-            Most of the time, these methods:
-            _ check the action is possible at this game state.
-            _ make a call to the game server
-        
-        */
-        
-        /* Example:
-        
-        onMyMethodToCall1: function( evt )
-        {
-            debug( 'onMyMethodToCall1' );
-            
-            // Preventing default browser reaction
-            dojo.stopEvent( evt );
-
-            // Check that this action is possible (see "possibleactions" in states.inc.php)
-            if( ! this.checkAction( 'myAction' ) )
-            {   return; }
-
-            this.ajaxcall( "/stigmeria/stigmeria/myAction.html", { 
-                                                                    lock: true, 
-                                                                    myArgument1: arg1, 
-                                                                    myArgument2: arg2,
-                                                                    ...
-                                                                 }, 
-                         this, function( result ) {
-                            
-                            // What to do after the server call if it succeeded
-                            // (most of the time: nothing)
-                            
-                         }, function( is_error) {
-
-                            // What to do after the server call in anyway (success or failure)
-                            // (most of the time: nothing)
-
-                         } );        
-        },        
-        
-        */
-
+        }, 
         
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications
@@ -264,6 +166,15 @@ function (dojo, declare) {
         */
 
 
+        ///////////////////////////////////////////////////
+        //// Utility methods
+        
+        /*
+        
+            Here, you can defines some utility methods that you can use everywhere in your javascript
+            script.
+        
+        */
             
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _

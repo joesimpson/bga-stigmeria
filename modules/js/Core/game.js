@@ -380,6 +380,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     },
 
     clearActionButtons() {
+      debug( "clearActionButtons()" );
       dojo.empty('customActions');
     },
 
