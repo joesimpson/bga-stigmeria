@@ -86,7 +86,24 @@ function (dojo, declare) {
         
         getSettingsConfig() {
             return {
+                boardWidth: {
+                  default: 90,
+                  name: _('Board width'),
+                  type: 'slider',
+                  sliderConfig: {
+                    step: 3,
+                    padding: 0,
+                    range: {
+                      min: [30],
+                      max: [100],
+                    },
+                  },
+                },
             };
+        },
+        
+        onChangeBoardWidthSetting(val) {
+            this.updateLayout();
         },
        
 
@@ -188,6 +205,26 @@ function (dojo, declare) {
             script.
         
         */
+        
+        onScreenWidthChange() {
+            if (this.settings) this.updateLayout();
+        },
+    
+        updateLayout() {
+            if (!this.settings) return;
+            const ROOT = document.documentElement;
+    
+            const WIDTH = $('stig_main_zone').getBoundingClientRect()['width'];
+            const HEIGHT = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 62;
+            const BOARD_WIDTH = 1650;
+            const BOARD_HEIGHT = 750;
+    
+            let widthScale = ((this.settings.boardWidth / 100) * WIDTH) / BOARD_WIDTH,
+            heightScale = HEIGHT / BOARD_HEIGHT,
+            scale = Math.min(widthScale, heightScale);
+            ROOT.style.setProperty('--stig_board_display_scale', scale);
+    
+        },
             
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _

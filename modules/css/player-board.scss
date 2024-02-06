@@ -1,14 +1,27 @@
 
-.stig_player_board_container_wrapper{
-    margin-top: 20px;
+#stig_main_zone{
+
+    .stig_resizable_board {
+        width: calc(var(--stig_board_display_scale) * 1127px);
+        height: calc(var(--stig_board_display_scale) * 1176px);
+        margin-bottom: 10px;
+    }
+
+    .stig_player_board {
+        transform: scale(var(--stig_board_display_scale));
+        transform-origin: top left;
+        border-radius: 10px;
+        border: 2px solid black;
+        box-shadow: 1px 1px 10px black;
+        position: relative;
+
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
-.stig_player_board_container{
-    transform: scale(var(--stig_board_display_scale));
-    transform-origin: top left;
-}
 .stig_player_board{
-    background-size: 100%;
+    background-size: 100% auto;
     background-repeat: no-repeat;
     width: 1127px;
     height: 1176px;

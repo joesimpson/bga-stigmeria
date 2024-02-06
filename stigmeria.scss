@@ -21,9 +21,8 @@
     PREFIX FOR THIS GAME PROJECT : "stig"
 */
 #stig_main_zone{
-    text-align: center;
+    
     display: flex;
-    flex-flow: row;
-    align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
