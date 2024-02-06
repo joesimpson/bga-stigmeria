@@ -14,21 +14,28 @@
  * In this file, you are describing the logic of your user interface, in Javascript language.
  *
  */
+//Tisaac way to debug ;)
+ var isDebug = window.location.host == 'studio.boardgamearena.com' || window.location.hash.indexOf('debug') > -1;
+ var debug = isDebug ? console.info.bind(window.console) : function () {};
 
 define([
     "dojo","dojo/_base/declare",
     "ebg/core/gamegui",
-    "ebg/counter"
+    "ebg/counter",
+    g_gamethemeurl + 'modules/js/Core/game.js',
+    g_gamethemeurl + 'modules/js/Core/modal.js',
 ],
 function (dojo, declare) {
-    return declare("bgagame.stigmeria", ebg.core.gamegui, {
+    return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
             console.log('stigmeria constructor');
               
+            // Fix mobile viewport (remove CSS zoom)
+            this.default_viewport = 'width=800';
+
             // Here, you can init the global variables of your user interface
             // Example:
             // this.myGlobalValue = 0;
-
         },
         
         /*
@@ -46,7 +53,7 @@ function (dojo, declare) {
         
         setup: function( gamedatas )
         {
-            console.log( "Starting game setup", gamedatas );
+            debug('SETUP', gamedatas);
             
             // Setting up player boards
             for( var player_id in gamedatas.players )
@@ -55,6 +62,7 @@ function (dojo, declare) {
                          
                 // TODO: Setting up players boards if needed
             }
+            this.setupInfoPanel();
             
             // TODO: Set up your game interface here, according to "gamedatas"
             
@@ -62,7 +70,14 @@ function (dojo, declare) {
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
-            console.log( "Ending game setup" );
+            console.log( "Ending specific game setup" );
+
+            this.inherited(arguments);
+        },
+        
+        getSettingsConfig() {
+            return {
+            };
         },
        
 
@@ -74,23 +89,18 @@ function (dojo, declare) {
         //
         onEnteringState: function( stateName, args )
         {
-            console.log( 'Entering state: '+stateName, args );
+            debug( 'Entering state: '+stateName, args );
             
             switch( stateName )
             {
-            
-            /* Example:
-            
-            case 'myGameState':
-            
-                // Show some HTML block at this game state
-                dojo.style( 'my_html_block_id', 'display', 'block' );
-                
+            case 'commonBoardTurn':
+                this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
+                this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
                 break;
-           */
-           
-           
-            case 'dummmy':
+            case 'personalBoardTurn':
+                this.addPrimaryActionButton('btnDraw', 'Draw', () => this.takeAction('actDraw', {}));
+                this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
+                this.addPrimaryActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
                 break;
             }
         },
@@ -100,7 +110,7 @@ function (dojo, declare) {
         //
         onLeavingState: function( stateName )
         {
-            console.log( 'Leaving state: '+stateName );
+            debug( 'Leaving state: '+stateName );
             
             switch( stateName )
             {
@@ -126,7 +136,7 @@ function (dojo, declare) {
         //        
         onUpdateActionButtons: function( stateName, args )
         {
-            console.log( 'onUpdateActionButtons: '+stateName, args );
+            debug( 'onUpdateActionButtons: '+stateName, args );
                       
             if( this.isCurrentPlayerActive() )
             {            
@@ -158,32 +168,6 @@ function (dojo, declare) {
         
         */
 
-        /*
-        * Make an AJAX call with automatic lock
-        */
-        takeAction(action, data, check = true, checkLock = true) {
-            if (check && !this.checkAction(action)) return false;
-            if (!check && checkLock && !this.checkLock()) return false;
-    
-            data = data || {};
-            if (data.lock === undefined) {
-            data.lock = true;
-            } else if (data.lock === false) {
-            delete data.lock;
-            }
-            return new Promise((resolve, reject) => {
-            this.ajaxcall(
-                '/' + this.game_name + '/' + this.game_name + '/' + action + '.html',
-                data,
-                this,
-                (data) => resolve(data),
-                (isError, message, code) => {
-                if (isError) reject(message, code);
-                }
-            );
-            });
-        },
-
         ///////////////////////////////////////////////////
         //// Player's action
         
@@ -202,7 +186,7 @@ function (dojo, declare) {
         
         onMyMethodToCall1: function( evt )
         {
-            console.log( 'onMyMethodToCall1' );
+            debug( 'onMyMethodToCall1' );
             
             // Preventing default browser reaction
             dojo.stopEvent( evt );
@@ -247,7 +231,7 @@ function (dojo, declare) {
         */
         setupNotifications: function()
         {
-            console.log( 'notifications subscriptions setup' );
+            debug( 'notifications subscriptions setup' );
             
             // TODO: here, associate your game notifications with local methods
             
@@ -278,5 +262,58 @@ function (dojo, declare) {
         },    
         
         */
+
+
+            
+        ////////////////////////////////////////////////////////
+        //  ___        __         ____                  _
+        // |_ _|_ __  / _| ___   |  _ \ __ _ _ __   ___| |
+        //  | || '_ \| |_ / _ \  | |_) / _` | '_ \ / _ \ |
+        //  | || | | |  _| (_) | |  __/ (_| | | | |  __/ |
+        // |___|_| |_|_|  \___/  |_|   \__,_|_| |_|\___|_|
+        ////////////////////////////////////////////////////////
+
+        updatePlayerOrdering() {
+            debug("updatePlayerOrdering");
+            this.inherited(arguments);
+            dojo.place('player_board_config', 'player_boards', 'first');
+        },
+        setupInfoPanel() {
+            debug("setupInfoPanel");
+            
+            dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
+            
+            this._settingsModal = new customgame.modal('showSettings', {
+                class: 'stig_popin',
+                closeIcon: 'fa-times',
+                title: _('Settings'),
+                closeAction: 'hide',
+                verticalAlign: 'flex-start',
+                contentsTpl: `<div id='stig_settings'>
+                    <div id='stig_settings_header'></div>
+                    <div id="settings-controls-container"></div>
+                </div>`,
+            });
+        },
+        
+        tplConfigPlayerBoard() {
+            return `
+            <div class='player-board' id="player_board_config">
+                <div id="player_config" class="player_board_content">
+                <div class="player_config_row">
+                    <div id="show-settings">
+                    <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                        <g>
+                        <path class="fa-secondary" fill="currentColor" d="M638.41 387a12.34 12.34 0 0 0-12.2-10.3h-16.5a86.33 86.33 0 0 0-15.9-27.4L602 335a12.42 12.42 0 0 0-2.8-15.7 110.5 110.5 0 0 0-32.1-18.6 12.36 12.36 0 0 0-15.1 5.4l-8.2 14.3a88.86 88.86 0 0 0-31.7 0l-8.2-14.3a12.36 12.36 0 0 0-15.1-5.4 111.83 111.83 0 0 0-32.1 18.6 12.3 12.3 0 0 0-2.8 15.7l8.2 14.3a86.33 86.33 0 0 0-15.9 27.4h-16.5a12.43 12.43 0 0 0-12.2 10.4 112.66 112.66 0 0 0 0 37.1 12.34 12.34 0 0 0 12.2 10.3h16.5a86.33 86.33 0 0 0 15.9 27.4l-8.2 14.3a12.42 12.42 0 0 0 2.8 15.7 110.5 110.5 0 0 0 32.1 18.6 12.36 12.36 0 0 0 15.1-5.4l8.2-14.3a88.86 88.86 0 0 0 31.7 0l8.2 14.3a12.36 12.36 0 0 0 15.1 5.4 111.83 111.83 0 0 0 32.1-18.6 12.3 12.3 0 0 0 2.8-15.7l-8.2-14.3a86.33 86.33 0 0 0 15.9-27.4h16.5a12.43 12.43 0 0 0 12.2-10.4 112.66 112.66 0 0 0 .01-37.1zm-136.8 44.9c-29.6-38.5 14.3-82.4 52.8-52.8 29.59 38.49-14.3 82.39-52.8 52.79zm136.8-343.8a12.34 12.34 0 0 0-12.2-10.3h-16.5a86.33 86.33 0 0 0-15.9-27.4l8.2-14.3a12.42 12.42 0 0 0-2.8-15.7 110.5 110.5 0 0 0-32.1-18.6A12.36 12.36 0 0 0 552 7.19l-8.2 14.3a88.86 88.86 0 0 0-31.7 0l-8.2-14.3a12.36 12.36 0 0 0-15.1-5.4 111.83 111.83 0 0 0-32.1 18.6 12.3 12.3 0 0 0-2.8 15.7l8.2 14.3a86.33 86.33 0 0 0-15.9 27.4h-16.5a12.43 12.43 0 0 0-12.2 10.4 112.66 112.66 0 0 0 0 37.1 12.34 12.34 0 0 0 12.2 10.3h16.5a86.33 86.33 0 0 0 15.9 27.4l-8.2 14.3a12.42 12.42 0 0 0 2.8 15.7 110.5 110.5 0 0 0 32.1 18.6 12.36 12.36 0 0 0 15.1-5.4l8.2-14.3a88.86 88.86 0 0 0 31.7 0l8.2 14.3a12.36 12.36 0 0 0 15.1 5.4 111.83 111.83 0 0 0 32.1-18.6 12.3 12.3 0 0 0 2.8-15.7l-8.2-14.3a86.33 86.33 0 0 0 15.9-27.4h16.5a12.43 12.43 0 0 0 12.2-10.4 112.66 112.66 0 0 0 .01-37.1zm-136.8 45c-29.6-38.5 14.3-82.5 52.8-52.8 29.59 38.49-14.3 82.39-52.8 52.79z" opacity="0.4"></path>
+                        <path class="fa-primary" fill="currentColor" d="M420 303.79L386.31 287a173.78 173.78 0 0 0 0-63.5l33.7-16.8c10.1-5.9 14-18.2 10-29.1-8.9-24.2-25.9-46.4-42.1-65.8a23.93 23.93 0 0 0-30.3-5.3l-29.1 16.8a173.66 173.66 0 0 0-54.9-31.7V58a24 24 0 0 0-20-23.6 228.06 228.06 0 0 0-76 .1A23.82 23.82 0 0 0 158 58v33.7a171.78 171.78 0 0 0-54.9 31.7L74 106.59a23.91 23.91 0 0 0-30.3 5.3c-16.2 19.4-33.3 41.6-42.2 65.8a23.84 23.84 0 0 0 10.5 29l33.3 16.9a173.24 173.24 0 0 0 0 63.4L12 303.79a24.13 24.13 0 0 0-10.5 29.1c8.9 24.1 26 46.3 42.2 65.7a23.93 23.93 0 0 0 30.3 5.3l29.1-16.7a173.66 173.66 0 0 0 54.9 31.7v33.6a24 24 0 0 0 20 23.6 224.88 224.88 0 0 0 75.9 0 23.93 23.93 0 0 0 19.7-23.6v-33.6a171.78 171.78 0 0 0 54.9-31.7l29.1 16.8a23.91 23.91 0 0 0 30.3-5.3c16.2-19.4 33.7-41.6 42.6-65.8a24 24 0 0 0-10.5-29.1zm-151.3 4.3c-77 59.2-164.9-28.7-105.7-105.7 77-59.2 164.91 28.7 105.71 105.7z"></path>
+                        </g>
+                    </svg>
+                    </div>
+                </div>
+            </div>
+            `;
+        },
+  
    });             
 });
+//# sourceURL=stigmeria.js
