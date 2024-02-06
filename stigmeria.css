@@ -29,12 +29,23 @@
 .stig_player_board {
   background-size: 100%;
   background-repeat: no-repeat;
-  width: 1128px;
+  width: 1127px;
   height: 1176px;
 }
-
-.stig_player_board[data_type=MARONNE] {
-  background-image: url("img/maronne.jpg");
+.stig_player_board[data_flower_type="1"] {
+  background-image: url("img/flower1.jpg");
+}
+.stig_player_board[data_flower_type="2"] {
+  background-image: url("img/flower2.jpg");
+}
+.stig_player_board[data_flower_type="3"] {
+  background-image: url("img/flower3.jpg");
+}
+.stig_player_board[data_flower_type="4"] {
+  background-image: url("img/flower4.jpg");
+}
+.stig_player_board[data_flower_type="5"] {
+  background-image: url("img/flower5.jpg");
 }
 
 .stig_turn_marker {
@@ -55,7 +66,11 @@
   top: 152px;
 }
 
-/** TODO JSA ALL TURNS*/
+/** TODO JSA ALL TURNS & actions done */
+/**
+ * Player panel settings
+ * AUTHOR : © Tisaac
+ */
 #player_board_config {
   position: relative;
   border-image: none;

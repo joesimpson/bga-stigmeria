@@ -16,7 +16,7 @@
     <div id="stig_main_zone">
         <div id="stig_player_board_container_wrapper_PLAYER_ID" class="stig_player_board_container_wrapper">
             <div class="stig_player_board_container">
-                <div class="stig_player_board" data_type="MARONNE">
+                <div class="stig_player_board" data_flower_type="1">
                     <div class="stig_turn_marker" data_value="1">
                     </div>
                 </div>
