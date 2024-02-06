@@ -131,6 +131,21 @@ function (dojo, declare) {
             debug( 'onEnteringStateChoiceTokenToLand() ', args );
             
             this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToLand', {}));
+            
+            let playerBoard = $(`stig_player_board_${this.player_id}`);
+            [...playerBoard.querySelectorAll('.stig_selectable')].forEach((o) => o.removeClass('stig_selectable'));
+            //possible places to play :
+            Object.values(args.p_places_p).forEach((coord) => {
+                let row = coord.row;
+                let column = coord.col;
+                this.addSelectableTokenCell(this.player_id,row, column);
+                this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, () =>
+                    //TODO JSA clientState ?
+                    this.clientState('chooseTokenType', _('Select which token you want to place'), {
+                        coord: coord,
+                    })
+                );
+            });
         }, 
         
         onEnteringStateChoiceTokenToMove: function(args)
@@ -278,12 +293,36 @@ function (dojo, declare) {
             let flowerType = 1;
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
             <div class='stig_player_board_container'>
-                <div class="stig_player_board" data_flower_type="${flowerType}">
+                <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
                     <div class="stig_turn_marker" data_value="${turnAction}">
+                    </div>
+                    <div id="stig_grid_${player.id}" class='stig_grid'>
                     </div>
                 </div>
             </div>
             </div>`;
+        },
+
+        ////////////////////////////////////////////////////////
+        //    _______    _                  
+        //   |__   __|  | |                 
+        //      | | ___ | | _____ _ __  ___ 
+        //      | |/ _ \| |/ / _ \ '_ \/ __|
+        //      | | (_) |   <  __/ | | \__ \
+        //      |_|\___/|_|\_\___|_| |_|___/
+        //                           
+        ////////////////////////////////////////////////////////       
+        addSelectableTokenCell(player_id, row, column) {
+            debug("addSelectableTokenCell",player_id, row, column);
+            let playerGrid = $(`stig_grid_${player_id}`);
+            if ( $(`stig_token_cell_${this.player_id}_${row}_${column}`) ) return;
+            
+            let token = this.place('tplTokenCell', {player_id:player_id, row:row, column:column}, playerGrid);
+    
+            return token;
+        },
+        tplTokenCell(token) {
+            return `<div class="stig_token_cell stig_selectable" id="stig_token_cell_${token.player_id}_${token.row}_${token.column}" data_row="${token.row}" data_col="${token.column}"></div>`;
         },
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
