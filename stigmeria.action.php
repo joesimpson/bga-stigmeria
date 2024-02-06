@@ -75,7 +75,28 @@
       $this->game->actLand($token_id, $row, $col);
       self::ajaxResponse();
     }
-    
+    public function actMove()
+    {
+      self::setAjaxMode();
+      $this->game->actMove();
+      self::ajaxResponse();
+    }
+    public function actChoiceTokenToMove()
+    {
+      self::setAjaxMode();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actChoiceTokenToMove($token_id, $row, $col);
+      self::ajaxResponse();
+    }
+    public function actCancelChoiceTokenToMove()
+    {
+      self::setAjaxMode();
+      $this->game->actCancelChoiceTokenToMove();
+      self::ajaxResponse();
+    }
+
     public function actLetNextPlay()
     {
       self::setAjaxMode();

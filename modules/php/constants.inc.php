@@ -31,6 +31,9 @@ const TOKEN_LOCATION_PLAYER_BOARD = 'player_board';
 const TOKEN_STATE_STIGMERIAN = 0;
 const TOKEN_STATE_POLLEN = 1;
 
+/** ACTIONS */
+const ACTION_COST_MOVE = 1;
+
 /*
  * Game options
  */ 
@@ -93,6 +96,7 @@ const ST_NEXT_TURN = 10;
 const ST_PLAYER_TURN = 20;
 const ST_TURN_COMMON_BOARD = 21;
 const ST_TURN_PERSONAL_BOARD = 22;
+const ST_TURN_CHOICE_TOKEN_MOVE = 24;
 
 const ST_WIND_EFFECT = 80;
 

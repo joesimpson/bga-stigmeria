@@ -114,6 +114,28 @@ trait PlayerTurnPersonalBoardTrait
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
+    
+    /**
+     * Basic Action 3 : Moving a stigmerian on your board
+     */
+    public function actMove()
+    {
+        self::checkAction( 'actMove' ); 
+        self::trace("actMove()");
+        
+        $player = Players::getCurrent();
+        $pId = $player->id;
+
+        $remaining = $player->countRemainingPersonalActions();
+        $actionCost = ACTION_COST_MOVE;
+
+        //CHECK REMAINING ACTIONS VS cost
+        if($remaining < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
+
+        $this->gamestate->nextPrivateState($player->id, "startMove");
+    }
 
     
     /**

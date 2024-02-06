@@ -89,6 +89,21 @@ class Notifications
       ],
     );
   }
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param string $from Coordinate name
+   * @param string $to Coordinate name
+   */
+  public static function moveOnPlayerBoard($player, $token,$from,$to){
+    self::notifyAll('moveOnPlayerBoard',clienttranslate('${player_name} moves a stigmerian from ${A} to ${B}'),[ 
+        'player' => $player,
+        'token' => $token->getId(),
+        'A' => $from,
+        'B' => $to,
+      ],
+    );
+  }
 
   /*************************
    **** GENERIC METHODS ****

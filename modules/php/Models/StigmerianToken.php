@@ -54,15 +54,48 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     $rowLetter = substr($all_letters, $this->row - 1, 1);
     return $rowLetter.$this->col;
   }
+  /**
+   * @param StigmerianToken $other
+   * @return bool
+   */
+  public function isAdjacentToken($other)
+  {
+    if(!isset($other)) return false;
+    return $this->isAdjacentCoord($other->row, $other->col);
+  }
+
+  /**
+   * @param int $row
+   * @param int $column
+   * @return bool
+   */
+  public function isAdjacentCoord($row, $column)
+  {
+    //KEEP 4 DIRECT NEIGHBORS (no diagonals) among the 9 
+    return $this->row == $row - 1 && $this->col == $column 
+        || $this->row == $row + 1 && $this->col == $column 
+        || $this->row == $row && $this->col == $column + 1
+        || $this->row == $row && $this->col == $column - 1;
+  }
 
   public function moveToPlayerBoard($player,$row,$column)
   {
+    $fromBoard = false;
+    if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
+      $fromBoard = true;
+      $fromCoord = $this->getCoordName();
+    }
     $this->setLocation(TOKEN_LOCATION_PLAYER_BOARD);
     $this->setPId($player->getId());
     $this->setCol($column);
     $this->setRow($row);
 
-    Notifications::moveToPlayerBoard($player, $this);
+    if($fromBoard){
+      Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName());
+    }
+    else {
+      Notifications::moveToPlayerBoard($player, $this);
+    }
 
     //TODO JSA Check if right positioned => becomes pollen
   }

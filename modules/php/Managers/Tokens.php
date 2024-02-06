@@ -61,6 +61,10 @@ class Tokens extends \STIG\Helpers\Pieces
   }
   
   /**
+   * 
+   * @param int $playerId
+   * @param int $row
+   * @param int $column
    * @return StigmerianToken if found at that location, null otherwise
    */
   public static function findOnPersonalBoard($playerId,$row, $column)
@@ -73,8 +77,23 @@ class Tokens extends \STIG\Helpers\Pieces
       ->where('x', $column)
       ->getSingle();
   }
+  /**
+   * @param int $playerId
+   * @return Collection of StigmerianToken found at that location
+   */
+  public static function getAllOnPersonalBoard($playerId)
+  { 
+    Game::get()->trace("getAllOnPersonalBoard($playerId)");
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
+      ->wherePlayer($playerId)
+      ->get();
+  }
   
   /**
+   * @param int $playerId
+   * @param int $row
+   * @param int $column
    * @return Collection of StigmerianToken
    */
   public static function listAdjacentTokens($playerId,$row, $column)
@@ -97,12 +116,7 @@ class Tokens extends \STIG\Helpers\Pieces
       */
       ->get()
       ->filter( function ($token) use ($row, $column) {
-        //Game::get()->trace("filter listAdjacentTokens($row, $column) for $token->row, $token->col");
-        //KEEP 4 DIRECT NEIGHBORS (no diagonals) among the 9 
-        return $token->row == $row - 1 && $token->col == $column 
-            || $token->row == $row + 1 && $token->col == $column 
-            || $token->row == $row  && $token->col == $column + 1
-            || $token->row == $row  && $token->col == $column - 1;
+          return $token->isAdjacentCoord($row, $column);
         }
       );
   }

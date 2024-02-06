@@ -184,6 +184,22 @@ $machinestates = array(
         "transitions" => [
             'continue' => ST_TURN_PERSONAL_BOARD,
             'back' => ST_TURN_COMMON_BOARD,
+            'startMove' => ST_TURN_CHOICE_TOKEN_MOVE,
+        ],
+    ],
+    
+    ST_TURN_CHOICE_TOKEN_MOVE => [
+        "name" => "choiceTokenToMove",
+        "descriptionmyturn" => clienttranslate('${you} must choose a token to move (cost : ${n} actions)'), 
+        "type" => "private",
+        "args" => "argChoiceTokenToMove",
+        "possibleactions" => [
+            "actChoiceTokenToMove",
+            "actCancelChoiceTokenToMove",
+        ],
+        "transitions" => [
+            'continue' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
     
