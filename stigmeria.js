@@ -36,6 +36,15 @@ function (dojo, declare) {
             // Here, you can init the global variables of your user interface
             // Example:
             // this.myGlobalValue = 0;
+
+            /*
+            this._activeStates = [
+                'playerTurn',
+                'commonBoardTurn',
+                'personalBoardTurn',
+                'choiceTokenToMove',
+            ];
+            */
         },
         
         /*
@@ -84,38 +93,42 @@ function (dojo, declare) {
         ///////////////////////////////////////////////////
         //// Game & client states
         
-        // onEnteringState: this method is called each time we are entering into a new game state.
-        //                  You can use this method to perform some user interface changes at this moment.
-        //
-        onEnteringState: function( stateName, args )
+        onEnteringStateCommonBoardTurn: function(args)
         {
-            debug( 'Entering state: '+stateName, args );
+            debug( 'onEnteringStateCommonBoardTurn() ', args );
             
-            this.inherited(arguments);
+            let nbActions = args.n;
+            if(nbActions>0){
+                this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
+                this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
+            }
+            this.addDangerActionButton('btnNext', 'Next', () => this.takeAction('actGoToNext', {}));
+        }, 
+        
+        onEnteringStatePersonalBoardTurn: function(args)
+        {
+            debug( 'onEnteringStatePersonalBoardTurn() ', args );
+            
+            let nbActions = args.n;
+            if(nbActions>0){
+                this.addPrimaryActionButton('btnDraw', 'Draw', () => this.takeAction('actDraw', {}));
+                this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
+            }
+            this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
+            this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
+        }, 
+        onEnteringStateChoiceTokenToMove: function(args)
+        {
+            debug( 'onEnteringStateChoiceTokenToMove() ', args );
+            
+            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
+        }, 
 
-            let nbActions = 0;
-            switch( stateName )
-            {
-            case 'commonBoardTurn':
-                nbActions = args.args.n;
-                if(nbActions>0){
-                    this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
-                    this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
-                }
-                this.addDangerActionButton('btnNext', 'Next', () => this.takeAction('actGoToNext', {}));
-                break;
-            case 'personalBoardTurn':
-                nbActions = args.args.n;
-                if(nbActions>0){
-                    this.addPrimaryActionButton('btnDraw', 'Draw', () => this.takeAction('actDraw', {}));
-                    this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
-                }
-                this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
-                this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
-                break;
-            case 'choiceTokenToMove':
-                this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
-                break;
+        onUpdateActivityPlayerTurn: function(args)
+        {
+            debug( 'onUpdateActivityPlayerTurn() ', args );
+            if( !this.isCurrentPlayerActive() ){
+                this.clearPossible();
             }
         }, 
         

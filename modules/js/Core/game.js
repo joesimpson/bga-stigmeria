@@ -167,6 +167,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     },
 
     clearPossible() {
+      debug('clearPossible()' );
       this.removeActionButtons();
       dojo.empty('customActions');
       dojo.empty('restartAction');
