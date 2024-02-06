@@ -42,6 +42,7 @@ use STIG\Managers\Tokens;
 class Stigmeria extends Table
 {
     use STIG\DebugTrait;
+    use STIG\States\ChoiceTokenToLandTrait;
     use STIG\States\ChoiceTokenToMoveTrait;
     use STIG\States\NextTurnTrait;
     use STIG\States\PlayerDiceTrait;

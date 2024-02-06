@@ -25,4 +25,14 @@ trait DebugTrait
     $player = Players::getCurrent();
     Tokens::shuffle(TOKEN_LOCATION_PLAYER_DECK.$player->id);
   }
+  
+  /**
+   * Add many actions ! YEAH
+   */
+  function debugAddNbActions()
+  {
+    $player = Players::getCurrent();
+    $player->setNbPersonalActionsDone(-150);
+    $this->gamestate->nextPrivateState($player->id, "continue");
+  }
 }

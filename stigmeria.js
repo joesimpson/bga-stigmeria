@@ -119,12 +119,20 @@ function (dojo, declare) {
             
             let nbActions = args.n;
             if(nbActions>0){
-                this.addPrimaryActionButton('btnDraw', 'Draw', () => this.takeAction('actDraw', {}));
+                this.addPrimaryActionButton('btnDraw', 'Recruit', () => this.takeAction('actDraw', {}));
+                this.addPrimaryActionButton('btnPlace', 'Land', () => this.takeAction('actLand', {}));
                 this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
             }
             this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
             this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
+        onEnteringStateChoiceTokenToLand: function(args)
+        {
+            debug( 'onEnteringStateChoiceTokenToLand() ', args );
+            
+            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToLand', {}));
+        }, 
+        
         onEnteringStateChoiceTokenToMove: function(args)
         {
             debug( 'onEnteringStateChoiceTokenToMove() ', args );
