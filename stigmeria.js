@@ -64,18 +64,9 @@ function (dojo, declare) {
         {
             debug('SETUP', gamedatas);
             
-            // Setting up player boards
-            for( var player_id in gamedatas.players )
-            {
-                var player = gamedatas.players[player_id];
-                         
-                // TODO: Setting up players boards if needed
-            }
+            this.setupPlayers();
             this.setupInfoPanel();
             
-            // TODO: Set up your game interface here, according to "gamedatas"
-            
- 
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -225,7 +216,67 @@ function (dojo, declare) {
             ROOT.style.setProperty('--stig_board_display_scale', scale);
     
         },
+                
+        ////////////////////////////////////////
+        //  ____  _
+        // |  _ \| | __ _ _   _  ___ _ __ ___
+        // | |_) | |/ _` | | | |/ _ \ '__/ __|
+        // |  __/| | (_| | |_| |  __/ |  \__ \
+        // |_|   |_|\__,_|\__, |\___|_|  |___/
+        //                |___/
+        ////////////////////////////////////////
+
+        setupPlayers() {
+            let currentPlayerNo = 1;
+            let nPlayers = 0;
+            this._counters = {};
+            this.forEachPlayer((player) => {
+                let isCurrent = player.id == this.player_id;
+                this.place('tplPlayerBoard', player, 'stig_player_boards');
+        
+                let pId = player.id;
+                this._counters[pId] = {
+                    //TODO JSA Counters
+                };
+        
+                // Useful to order boards
+                nPlayers++;
+                if (isCurrent) currentPlayerNo = player.no;
+            });
+    
+            // Order them
+            this.forEachPlayer((player) => {
+                let order = ((player.no - currentPlayerNo + nPlayers) % nPlayers) + 1;
+                $(`stig_player_board_container_wrapper_${player.id}`).style.order = order;
+        
+                if (order == 1) {
+                    //TODO JSA DISplay first player
+                    /*
+                    dojo.place('<div id="stig_first_player"></div>', `overall_player_board_${player.id}`);
+                    this.addCustomTooltip('stig_first_player', _('First player'));
+                    */
+                }
+            });
+    
+            this.updateFirstPlayer();
+        },
+        updateFirstPlayer() {
+            let pId = this.gamedatas.firstPlayer;
+            debug("updateFirstPlayer()",pId);
+        },
             
+        tplPlayerBoard(player) {
+            let turnAction = 1;
+            let flowerType = 1;
+            return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
+            <div class='stig_player_board_container'>
+                <div class="stig_player_board" data_flower_type="${flowerType}">
+                    <div class="stig_turn_marker" data_value="${turnAction}">
+                    </div>
+                </div>
+            </div>
+            </div>`;
+        },
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
         // |_ _|_ __  / _| ___   |  _ \ __ _ _ __   ___| |
