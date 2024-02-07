@@ -15,6 +15,11 @@ const ROW_MIN = 1;
 const ROW_MAX = 10;
 const ROW_START = ROW_MIN;
 
+const WIND_DIR_NORTH = 'N';
+const WIND_DIR_SOUTH = 'S';
+const WIND_DIR_EAST = 'E';
+const WIND_DIR_WEST = 'W';
+
 /* TOKEN TYPES */
 const STIG_COLOR_BLUE = 1;
 const STIG_COLOR_RED = 2;

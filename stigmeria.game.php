@@ -104,6 +104,7 @@ class Stigmeria extends Table
           'tokens' => Tokens::getUiData($current_player_id),
           'turn' => Globals::getTurn(),
           'firstPlayer' => Globals::getFirstPlayer(),
+          'winds' => Globals::getAllWindDir(),
         ];
     }
 

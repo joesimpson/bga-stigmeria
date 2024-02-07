@@ -14,8 +14,31 @@ class Globals extends \STIG\Helpers\DB_Manager
     'turn' => 'int',
     'firstPlayer' => 'int',
 
+    //We manage the wind direction for the 10 first turns, then the wind will be saved in windDirection11 (no need to display them)
+    'windDirection1' => 'str',
+    'windDirection2' => 'str',
+    'windDirection3' => 'str',
+    'windDirection4' => 'str',
+    'windDirection5' => 'str',
+    'windDirection6' => 'str',
+    'windDirection7' => 'str',
+    'windDirection8' => 'str',
+    'windDirection9' => 'str',
+    'windDirection10' => 'str',
+    'windDirection11' => 'str',
+
     // Game options
   ];
+
+  public static function getAllWindDir()
+  {
+    $winds=[];
+    for($k=1;$k<=TURN_MAX +1;$k++){
+      $getterName = "getWindDirection$k";
+      $winds[$k] = self::$getterName();
+    }
+    return $winds;
+  }
 
   /*
    * Setup new game
