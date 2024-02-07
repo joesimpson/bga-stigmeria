@@ -45,6 +45,9 @@ function (dojo, declare) {
                 'choiceTokenToMove',
             ];
             */
+            this._notifications = [
+                ['moveToPlayerBoard', 900],
+            ];
         },
         
         /*
@@ -193,50 +196,17 @@ function (dojo, declare) {
         
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications
-
-        /*
-            setupNotifications:
-            
-            In this method, you associate each of your game notifications with your local method to handle it.
-            
-            Note: game notification names correspond to "notifyAllPlayers" and "notifyPlayer" calls in
-                  your stigmeria.game.php file.
-        
-        */
-        setupNotifications: function()
-        {
-            debug( 'notifications subscriptions setup' );
-            
-            // TODO: here, associate your game notifications with local methods
-            
-            // Example 1: standard notification handling
-            // dojo.subscribe( 'cardPlayed', this, "notif_cardPlayed" );
-            
-            // Example 2: standard notification handling + tell the user interface to wait
-            //            during 3 seconds after calling the method in order to let the players
-            //            see what is happening in the game.
-            // dojo.subscribe( 'cardPlayed', this, "notif_cardPlayed" );
-            // this.notifqueue.setSynchronous( 'cardPlayed', 3000 );
-            // 
-        },  
-        
-        // TODO: from this point and below, you can write your game notifications handling methods
-        
-        /*
-        Example:
-        
-        notif_cardPlayed: function( notif )
-        {
-            console.log( 'notif_cardPlayed' );
-            console.log( notif );
-            
-            // Note: notif.args contains the arguments specified during you "notifyAllPlayers" / "notifyPlayer" PHP call
-            
-            // TODO: play the card in the user interface.
-        },    
-        
-        */
-
+ 
+        notif_moveToPlayerBoard(n) {
+            debug('notif_moveToPlayerBoard: new token on player board', n);
+            let token = n.args.token;
+            //Move from player RECRUIT ZONE to player board :
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.row = token.row;
+            div.dataset.col = token.col;
+            div.dataset.state = token.state;
+            this.slide(div, this.getTokenContainer(token));
+        },
 
         ///////////////////////////////////////////////////
         //// Utility methods
