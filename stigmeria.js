@@ -66,6 +66,7 @@ function (dojo, declare) {
             
             this.setupPlayers();
             this.setupInfoPanel();
+            this.setupTokens();
             
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
@@ -134,10 +135,10 @@ function (dojo, declare) {
             
             let selectedToken = null;
             Object.values(args.tokens).forEach((token) => {
-                this.addToken(token, $('stig_select_piece_container'));
-                this.onClick(`stig_token_${token.id}`, () => {
+                let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
+                this.onClick(`${elt.id}`, () => {
                     if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
-                    selectedToken = token.id;
+                    selectedToken = token.id + '_tmp';
                     $(`stig_token_${selectedToken}`).classList.add('selected');
                     /*
                     this.addPrimaryActionButton('btnConfirm', _('Confirm'), () =>
@@ -323,6 +324,8 @@ function (dojo, declare) {
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
                     <div class="stig_turn_marker" data_value="${turnAction}">
                     </div>
+                    <div id="stig_recruits_${player.id}" class='stig_recruits'>
+                    </div>
                     <div id="stig_grid_${player.id}" class='stig_grid'>
                     </div>
                 </div>
@@ -351,17 +354,55 @@ function (dojo, declare) {
         },
         tplTokenCell(token) {
             return `<div class="stig_token_cell" id="stig_token_cell_${token.player_id}_${token.row}_${token.column}" data-row="${token.row}" data-col="${token.column}"></div>`;
-        },      
-        addToken(token, location) {
+        },
+        addToken(token, location = null, divIdSuffix = '') {
             debug("addToken",token, location);
-            if ( $(`stig_token_${token.id}`) ) return;
+            if ( $(`stig_token_${token.id}${divIdSuffix}`) ) return;
             
-            let elt = this.place('tplToken', token, location);
+            token.divIdSuffix = (divIdSuffix == undefined) ? '' : divIdSuffix;
+            let elt = this.place('tplToken', token, location == null ? this.getTokenContainer(token) : location);
             return elt;
         },
         tplToken(token) {
-            return `<div class="stig_token" id="stig_token_${token.id}" data-id="${token.id}" data-type="${token.type}"></div>`;
+            return `<div class="stig_token" id="stig_token_${token.id}${token.divIdSuffix}" data-id="${token.id}" data-player_id="${token.pId}" data-type="${token.type}" data-state="${token.state}" data-row="${token.row}" data-col="${token.col}"></div>`;
         },   
+        setupTokens() {
+            debug("setupTokens");
+            let tokenIds = this.gamedatas.tokens.map((token) => {
+                if (!$(`stig_token_${token.id}`)) {
+                    this.addToken(token);
+                }
+      
+                let o = $(`stig_token_${token.id}`);
+                if (!o) return null;
+        
+                let container = this.getTokenContainer(token);
+                if (o.parentNode != $(container)) {
+                    dojo.place(o, container);
+                }
+                o.dataset.state = token.state;
+        
+                return token.id;
+            });
+            //Clean obsolete tokens:
+            document.querySelectorAll('.stig_token').forEach((oToken) => {
+                if (!tokenIds.includes(parseInt(oToken.getAttribute('data-id')))) {
+                    this.destroy(oToken);
+                }
+            });
+        },
+        getTokenContainer(token) {
+            debug("getTokenContainer",token);
+            if (token.location == 'player_board') {
+                 return $(`stig_grid_${token.pId}`);
+            }
+            if (token.location == 'player_recruit') {
+                return $(`stig_recruits_${token.pId}`);
+            }
+            //TODO JSA OTHER LOCATIONS
+            console.error('Trying to get container of a token', token);
+            return 'game_play_area';
+          },
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
         // |_ _|_ __  / _| ___   |  _ \ __ _ _ __   ___| |
