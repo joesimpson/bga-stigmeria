@@ -149,6 +149,11 @@
   transform: scale(1.2);
 }
 
+#pagemaintitletext .stig_token,
+#gameaction_status .stig_token {
+  position: absolute;
+}
+
 #stig_main_zone .stig_resizable_board {
   width: calc(var(--stig_board_display_scale) * 1127px);
   height: calc(var(--stig_board_display_scale) * 1176px);
@@ -1264,4 +1269,8 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.phantom {
+  visibility: hidden;
 }

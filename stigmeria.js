@@ -46,6 +46,7 @@ function (dojo, declare) {
             ];
             */
             this._notifications = [
+                ['drawToken', 900],
                 ['moveToPlayerBoard', 900],
             ];
         },
@@ -197,6 +198,13 @@ function (dojo, declare) {
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications
  
+        notif_drawToken(n) {
+            debug('notif_drawToken: new token on player board', n);
+            let token = n.args.token;
+            this.addToken(token, this.getVisibleTitleContainer());
+            let div = $(`stig_token_${token.id}`);
+            this.slide(div, this.getTokenContainer(token));
+        },
         notif_moveToPlayerBoard(n) {
             debug('notif_moveToPlayerBoard: new token on player board', n);
             let token = n.args.token;
