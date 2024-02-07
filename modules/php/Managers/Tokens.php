@@ -89,6 +89,18 @@ class Tokens extends \STIG\Helpers\Pieces
       ->wherePlayer($playerId)
       ->get();
   }
+  /**
+   * @param int $playerId
+   * @return Collection of StigmerianToken found at that location
+   */
+  public static function getAllRecruits($playerId)
+  { 
+    Game::get()->trace("getAllRecruits($playerId)");
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_RECRUIT)
+      ->wherePlayer($playerId)
+      ->get();
+  }
   
   /**
    * @param int $playerId

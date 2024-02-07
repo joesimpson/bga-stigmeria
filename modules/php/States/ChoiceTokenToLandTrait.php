@@ -12,9 +12,11 @@ trait ChoiceTokenToLandTrait
 {
     public function argChoiceTokenToLand($player_id)
     {
-        $player = Players::get($player_id);
+        //$player = Players::get($player_id);
+        $tokens = Tokens::getAllRecruits($player_id);
         return [
             'n' => ACTION_COST_MOVE,
+            'tokens' => $tokens->ui(),
             'p_places_p' => $this->listPossiblePlacesOnPersonalBoard($player_id),
         ];
     }

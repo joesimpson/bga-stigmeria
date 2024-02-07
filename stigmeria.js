@@ -132,20 +132,42 @@ function (dojo, declare) {
             
             this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToLand', {}));
             
+            let selectedToken = null;
+            Object.values(args.tokens).forEach((token) => {
+                this.addToken(token, $('stig_select_piece_container'));
+                this.onClick(`stig_token_${token.id}`, () => {
+                    if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
+                    selectedToken = token.id;
+                    $(`stig_token_${selectedToken}`).classList.add('selected');
+                    /*
+                    this.addPrimaryActionButton('btnConfirm', _('Confirm'), () =>
+                        this.takeAction('actChoiceTokenToLand', { tokenId: token.id,  row: row, col:column, })
+                    );*/
+                });
+            });
+            
+            let selectedTokenCell = null;
             let playerBoard = $(`stig_player_board_${this.player_id}`);
-            [...playerBoard.querySelectorAll('.stig_selectable')].forEach((o) => o.removeClass('stig_selectable'));
+            //[...playerBoard.querySelectorAll('.stig_selectable')].forEach((o) => o.classList.remove('stig_selectable'));
             //possible places to play :
             Object.values(args.p_places_p).forEach((coord) => {
                 let row = coord.row;
                 let column = coord.col;
                 this.addSelectableTokenCell(this.player_id,row, column);
-                this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, () =>
-                    //TODO JSA clientState ?
-                    this.clientState('chooseTokenType', _('Select which token you want to place'), {
+                this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, (evt) => {
+                    /*this.clientState('chooseTokenType', _('Select which token you want to place'), {
                         coord: coord,
-                    })
-                );
+                    });  
+                    this.addCancelStateBtn();    */ 
+                    let div = evt.target;
+                    div.classList.toggle('selected')
+                });
             });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = $(`stig_select_piece_container`).querySelector(`.stig_token.selected`);
+                let selectedTokenCell = $(`stig_player_boards`).querySelector(`.stig_token_cell.selected`);
+                this.takeAction('actChoiceTokenToLand', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+            }); 
         }, 
         
         onEnteringStateChoiceTokenToMove: function(args)
@@ -162,6 +184,11 @@ function (dojo, declare) {
                 this.clearPossible();
             }
         }, 
+
+        onLeavingState(stateName) {
+            this.inherited(arguments);
+            dojo.empty('stig_select_piece_container');
+        },
         
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications
@@ -319,11 +346,22 @@ function (dojo, declare) {
             
             let token = this.place('tplTokenCell', {player_id:player_id, row:row, column:column}, playerGrid);
     
+            debug("addSelectableTokenCell() result=> ",token);
             return token;
         },
         tplTokenCell(token) {
-            return `<div class="stig_token_cell stig_selectable" id="stig_token_cell_${token.player_id}_${token.row}_${token.column}" data_row="${token.row}" data_col="${token.column}"></div>`;
+            return `<div class="stig_token_cell" id="stig_token_cell_${token.player_id}_${token.row}_${token.column}" data-row="${token.row}" data-col="${token.column}"></div>`;
+        },      
+        addToken(token, location) {
+            debug("addToken",token, location);
+            if ( $(`stig_token_${token.id}`) ) return;
+            
+            let elt = this.place('tplToken', token, location);
+            return elt;
         },
+        tplToken(token) {
+            return `<div class="stig_token" id="stig_token_${token.id}" data-id="${token.id}" data-type="${token.type}"></div>`;
+        },   
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
         // |_ _|_ __  / _| ___   |  _ \ __ _ _ __   ___| |

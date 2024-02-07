@@ -16,11 +16,11 @@ const ROW_MAX = 10;
 const ROW_START = ROW_MIN;
 
 /* TOKEN TYPES */
-const STIG_COLOR_1 = 'blue';
-const STIG_COLOR_2 = 'red';
-const STIG_COLOR_3 = 'yellow';
-const STIG_PRIMARY_COLORS = [STIG_COLOR_1,STIG_COLOR_2,STIG_COLOR_3, ];
-const STIG_COLORS = [STIG_COLOR_1,STIG_COLOR_2,STIG_COLOR_3, ];
+const STIG_COLOR_BLUE = 1;
+const STIG_COLOR_RED = 2;
+const STIG_COLOR_YELLOW = 3;
+const STIG_PRIMARY_COLORS = [STIG_COLOR_BLUE,STIG_COLOR_RED,STIG_COLOR_YELLOW, ];
+const STIG_COLORS = [STIG_COLOR_BLUE,STIG_COLOR_RED,STIG_COLOR_YELLOW, ];
 
 /* TOKEN LOCATIONS */ 
 const TOKEN_LOCATION_PLAYER_DECK = 'player_deck_';//To be followed by pid in order to shuffle separately
