@@ -79,6 +79,28 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   }
 
   /**
+   * @param int $row
+   * @param int $column
+   * @return bool
+   */
+  public static function isCoordOutOfGrid($row, $column)
+  {
+    if($column > COLUMN_MAX) return true;
+    if($column < COLUMN_MIN) return true;
+    if($row > ROW_MAX) return true;
+    if($row < ROW_MIN) return true;
+
+    return false;
+  }
+  /**
+   * @return bool
+   */
+  public function isOutOfGrid()
+  {
+    return self::isCoordOutOfGrid($this->row, $this->col);
+  }
+
+  /**
    * @param Player $player
    * @param int $row
    * @param int $column

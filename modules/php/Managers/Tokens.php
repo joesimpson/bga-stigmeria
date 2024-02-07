@@ -78,6 +78,21 @@ class Tokens extends \STIG\Helpers\Pieces
       ->getSingle();
   }
   /**
+   * SEARCH in memory, not in DB
+   * @param array $tokens StigmerianToken
+   * @param int $row
+   * @param int $column
+   * @return StigmerianToken if found at that location, null otherwise
+   */
+  public static function findTokenOnBoardWithCoord($boardTokens,$row,$column )
+  { 
+    Game::get()->trace("findTokenOnBoardWithCoord($row, $column)");
+    return $boardTokens->filter( function ($token) use ($row, $column) {
+        return $token->row == $row && $token->col ==$column;
+      }
+    )->first();
+  }
+  /**
    * @param int $playerId
    * @return Collection of StigmerianToken found at that location
    */

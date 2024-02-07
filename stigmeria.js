@@ -49,6 +49,7 @@ function (dojo, declare) {
                 ['drawToken', 900],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
+                ['windBlows', 1800],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
             this._displayNotifsOnTop = false;
@@ -265,6 +266,17 @@ function (dojo, declare) {
             div.dataset.state = token.state;
             this.slide(div, this.getTokenContainer(token));
         },
+        notif_windBlows(n) {
+            debug('notif_windBlows: tokens moved on board', n);
+            let tokens = n.args.tokens;
+            Object.values(tokens).forEach((token) => {
+                let div = $(`stig_token_${token.id}`);
+                div.dataset.row = token.row;
+                div.dataset.col = token.col;
+                div.dataset.state = token.state;
+                this.slide(div, this.getTokenContainer(token));
+            });
+        },
 
         ///////////////////////////////////////////////////
         //// Utility methods
@@ -423,7 +435,8 @@ function (dojo, declare) {
         getTokenContainer(token) {
             debug("getTokenContainer",token);
             if (token.location == 'player_board') {
-                 return $(`stig_grid_${token.pId}`);
+                return $(`stig_grid_${token.pId}`);
+                //TODO IF row/col out of grid (after wind for example, don't show it there)
             }
             if (token.location == 'player_recruit') {
                 return $(`stig_recruits_${token.pId}`);

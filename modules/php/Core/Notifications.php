@@ -110,6 +110,24 @@ class Notifications
     );
   }
 
+  /**
+   * @param string $windDir
+   * @param Collection $boardTokens StigmerianToken 
+   * @param Player $player
+   */
+  public static function windBlows($windDir,$boardTokens,$player){
+    $tokens = $boardTokens->ui();
+    $nbTokens = count($tokens);
+    self::notifyAll('windBlows',clienttranslate('Wind blows to ${dir} on ${player_name} flower and move ${n} tokens'),[ 
+        'i18n'=>['dir'],
+        'player' => $player,
+        'tokens' => $tokens,
+        'windDir' => $windDir,
+        'dir' => Globals::getWindDirName($windDir),
+        'n' => $nbTokens,
+      ],
+    );
+  }
   /*************************
    **** GENERIC METHODS ****
    *************************/

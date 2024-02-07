@@ -80,10 +80,7 @@ trait ChoiceTokenToMoveTrait
     public function canMoveOnPlayerBoard($playerId,$token,$row, $column)
     {
         //TODO JSA RULE MANAGE EXITING TOKEN is possible, by another button 
-        if($column > COLUMN_MAX) return false;
-        if($column < COLUMN_MIN) return false;
-        if($row > ROW_MAX) return false;
-        if($row < ROW_MIN) return false;
+        if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
 
         if(!$token->isAdjacentCoord($row, $column)){
             return false;

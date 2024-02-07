@@ -9,6 +9,7 @@ use STIG\Exceptions\UserException;
 use STIG\Helpers\Utils;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
+use STIG\Models\StigmerianToken;
 
 trait PlayerTurnPersonalBoardTrait
 {
@@ -124,10 +125,7 @@ trait PlayerTurnPersonalBoardTrait
      */
     public function canPlaceOnPlayerBoard($playerId,$row, $column)
     {
-        if($column > COLUMN_MAX) return false;
-        if($column < COLUMN_MIN) return false;
-        if($row > ROW_MAX) return false;
-        if($row < ROW_MIN) return false;
+        if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
 
         $existingToken = Tokens::findOnPersonalBoard($playerId,$row, $column);
         if(isset($existingToken)) return false;//not empty

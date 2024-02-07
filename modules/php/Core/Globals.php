@@ -40,6 +40,22 @@ class Globals extends \STIG\Helpers\DB_Manager
     return $winds;
   }
 
+  public static function getWindDirName($windDir)
+  {
+    switch($windDir){
+      case WIND_DIR_SOUTH:
+        return Game::get()->translate("South");
+      case WIND_DIR_NORTH:
+        return Game::get()->translate("North");
+      case WIND_DIR_EAST:
+        return Game::get()->translate("East");
+      case WIND_DIR_WEST:
+        return Game::get()->translate("West");
+      default: 
+        return "";
+    }
+  }
+
   /*
    * Setup new game
    */

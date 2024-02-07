@@ -31,6 +31,7 @@ const STIG_COLORS = [STIG_COLOR_BLUE,STIG_COLOR_RED,STIG_COLOR_YELLOW, ];
 const TOKEN_LOCATION_PLAYER_DECK = 'player_deck_';//To be followed by pid in order to shuffle separately
 const TOKEN_LOCATION_PLAYER_RECRUIT = 'player_recruit';
 const TOKEN_LOCATION_PLAYER_BOARD = 'player_board';
+const TOKEN_LOCATION_OUT = 'OUT';
 
 /* TOKEN STATES */ 
 const TOKEN_STATE_STIGMERIAN = 0;

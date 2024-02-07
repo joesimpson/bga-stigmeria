@@ -35,4 +35,11 @@ trait DebugTrait
     $player->setNbPersonalActionsDone(-150);
     $this->gamestate->nextPrivateState($player->id, "continue");
   }
+  
+  function debugWind()
+  {
+    $player = Players::getCurrent();
+    $turn = Globals::getTurn();
+    $this->doWindEffect($turn,$player);
+  }
 }
