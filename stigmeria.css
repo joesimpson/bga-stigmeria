@@ -197,6 +197,15 @@
 .stig_player_board[data_flower_type="5"] {
   background-image: url("img/flower5.jpg");
 }
+.stig_player_board .player-name {
+  position: absolute;
+  text-align: center;
+  background-color: rgb(206, 247, 158);
+  right: 20%;
+  border-radius: 25px;
+  padding: 6px 20px;
+  top: 3px;
+}
 .stig_player_board .stig_grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);

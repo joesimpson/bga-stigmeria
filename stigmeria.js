@@ -300,6 +300,7 @@ function (dojo, declare) {
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
             <div class='stig_player_board_container'>
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
+                    <div class='player-name' style='color:#${player.color}'>${player.name}</div>
                     <div class="stig_turn_marker" data_value="${turnAction}">
                     </div>
                     <div id="stig_recruits_${player.id}" class='stig_recruits'>

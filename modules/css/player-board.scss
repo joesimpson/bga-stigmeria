@@ -46,6 +46,16 @@
     &[data_flower_type='5']{
         background-image: url('img/flower5.jpg');
     }
+    
+    .player-name {
+        position: absolute;
+        text-align: center;
+        background-color: rgb(206 247 158);
+        right: 20%;
+        border-radius: 25px;
+        padding: 6px 20px;
+        top: 3px;
+    }
         
     .stig_grid {
         display: grid;
