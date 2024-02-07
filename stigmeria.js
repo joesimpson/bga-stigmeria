@@ -48,6 +48,7 @@ function (dojo, declare) {
             this._notifications = [
                 ['drawToken', 900],
                 ['moveToPlayerBoard', 900],
+                ['moveOnPlayerBoard', 900],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
             this._displayNotifsOnTop = false;
@@ -182,7 +183,43 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateChoiceTokenToMove() ', args );
             
+            let playerBoard = $(`stig_player_board_${this.player_id}`);
+
             this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
+            //possible places to move :
+            this.possibleMoves = args.p_places_m;
+            Object.keys(this.possibleMoves).forEach((tokenId) => {
+                let coords = this.possibleMoves[tokenId];
+                if (coords.length == 0) return;
+                //Click token origin
+                this.onClick(`stig_token_${tokenId}`, (evt) => {
+                    [...playerBoard.querySelectorAll('.stig_token')].forEach((o) => o.classList.remove('selected'));
+                    let div = evt.target;
+                    div.classList.toggle('selected');
+                    [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                        o.classList.remove('selectable');
+                        o.classList.remove('selected');
+                        });
+                    Object.values(this.possibleMoves[tokenId]).forEach((coord) => {
+                        let row = coord.row;
+                        let column = coord.col;
+                        this.addSelectableTokenCell(this.player_id,row, column);
+                        //Click token destination :
+                        this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, (evt) => {
+                            [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                                o.classList.remove('selected');
+                                });
+                            let div = evt.target;
+                            div.classList.toggle('selected');
+                        });
+                    });
+                });
+                this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                    let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
+                    let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                    this.takeAction('actChoiceTokenToMove', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+                }); 
+            });
         }, 
 
         onUpdateActivityPlayerTurn: function(args)
@@ -210,6 +247,16 @@ function (dojo, declare) {
         },
         notif_moveToPlayerBoard(n) {
             debug('notif_moveToPlayerBoard: new token on player board', n);
+            let token = n.args.token;
+            //Move from player RECRUIT ZONE to player board :
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.row = token.row;
+            div.dataset.col = token.col;
+            div.dataset.state = token.state;
+            this.slide(div, this.getTokenContainer(token));
+        },
+        notif_moveOnPlayerBoard(n) {
+            debug('notif_moveOnPlayerBoard: token moved on player board', n);
             let token = n.args.token;
             //Move from player RECRUIT ZONE to player board :
             let div = $(`stig_token_${token.id}`);

@@ -84,6 +84,12 @@
             }
         }
 
+        .stig_token{
+            &.selectable{
+                cursor: pointer;
+                box-shadow: 0px 0px 10px 10px rgb(0, 255, 76);
+            }
+        }
         .stig_token,
         .stig_token_cell{
             display: flex;

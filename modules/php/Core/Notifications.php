@@ -102,7 +102,7 @@ class Notifications
   public static function moveOnPlayerBoard($player, $token,$from,$to, $actionCost){
     self::notifyAll('moveOnPlayerBoard',clienttranslate('${player_name} moves a stigmerian from ${A} to ${B} (cost : ${n} actions)'),[ 
         'player' => $player,
-        'token' => $token->getId(),
+        'token' => $token->getUiData(),
         'A' => $from,
         'B' => $to,
         'n' => $actionCost,
