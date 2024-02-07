@@ -130,6 +130,7 @@ function (dojo, declare) {
                 this.addPrimaryActionButton('btnPlace', 'Land', () => this.takeAction('actLand', {}));
                 this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
             }
+            this.addSecondaryActionButton('btnLetNextPlay', 'Start next player', () => this.takeAction('actLetNextPlay', {}));
             this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
             this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
