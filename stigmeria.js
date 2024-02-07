@@ -49,6 +49,8 @@ function (dojo, declare) {
                 ['drawToken', 900],
                 ['moveToPlayerBoard', 900],
             ];
+            //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
+            this._displayNotifsOnTop = false;
         },
         
         /*
