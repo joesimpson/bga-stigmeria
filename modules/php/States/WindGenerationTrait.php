@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Globals;
+use STIG\Core\Notifications;
 
 trait WindGenerationTrait
 {
@@ -23,6 +24,8 @@ trait WindGenerationTrait
     Globals::setWindDirection11(WIND_DIR_SOUTH);
     
     //TODO JSA ROLL DICE in NO LIMIT
+
+    Notifications::newWinds(Globals::getAllWindDir());
 
     $this->gamestate->nextState('next');
   }

@@ -40,6 +40,15 @@ class Players extends \STIG\Helpers\DB_Manager
 
   }
 
+  /**
+   * @return Collection Players
+   */
+  public static function setupNewRound()
+  {
+    //Nothing special for now
+    return Players::getAll();
+  }
+
   public static function getActiveId()
   {
     return Game::get()->getActivePlayerId();

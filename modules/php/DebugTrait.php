@@ -9,6 +9,10 @@ use STIG\Managers\Tokens;
 
 trait DebugTrait
 {
+  function debugForceState()
+  {
+    $this->gamestate->jumpToState( ST_NEXT_ROUND );
+  }
   function debugGoToNextPlayer()
   {
     $this->gamestate->nextState( 'next' );
@@ -44,6 +48,12 @@ trait DebugTrait
     $this->doWindEffect($turn,$player);
   }
   
+  function debugSchema()
+  {
+    $round = Globals::getRound();
+    $schema = Globals::getSchema();
+    Notifications::newRound($round,$schema);
+  }
   function debugSchemas()
   {
     Notifications::message('debugSchemas',[ 'types'=> Schemas::getUiData()]);

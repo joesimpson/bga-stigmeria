@@ -27,17 +27,30 @@ class Tokens extends \STIG\Helpers\Pieces
 
   public static function getUiData()
   {
-    return self::getAll()
-        //TODO JSA FILTER visible TOKENS (not in draw bags)
+    return self::DB()
+      //FILTER visible TOKENS (not in draw bags)
+      ->whereNotLike(static::$prefix . 'location', [TOKEN_LOCATION_PLAYER_DECK.'%'])
+      ->get()
       ->map(function ($token) {
         return $token->getUiData();
       })
       ->toArray();
   }
 
-  /* Creation of the tokens */
   public static function setupNewGame($players, $options)
   {
+    
+  }
+  
+  /**
+   * @return Collection
+   */
+  public static function setupNewRound($players)
+  {
+    //DELETE ALL
+    self::DB()->delete()->run();
+
+    /* Creation of the tokens for the round */
     $tokens = [];
     // Create the deck with 15 of each primary color to each player
     foreach ($players as $pId => $player) {
@@ -58,6 +71,8 @@ class Tokens extends \STIG\Helpers\Pieces
         //Draw 1 to each recruit zone :
         self::pickForLocation(1,TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
     }
+
+    return self::getAll();
   }
   
   /**

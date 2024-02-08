@@ -1,0 +1,18 @@
+<?php
+
+namespace STIG\States;
+
+use STIG\Core\Notifications;
+
+trait EndRoundTrait
+{
+  
+  public function stEndRound()
+  { 
+    self::trace("stEndRound()");
+
+    Notifications::emptyNotif();
+
+    $this->gamestate->nextState('end');
+  }
+}

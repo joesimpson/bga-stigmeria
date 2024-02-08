@@ -398,6 +398,24 @@ class QueryBuilder extends \APP_DbObject
         $this->where .= "`$field` NOT IN ('" . implode("','", $values) . "')";
         return $this;
     }
+    
+    public function whereNotLike()
+    {
+        $this->where = is_null($this->where)
+            ? ' WHERE '
+            : $this->where . ($this->isOrWhere ? ' OR ' : ' AND ');
+
+        $num_args = func_num_args();
+        $args = func_get_args();
+        $field = $num_args == 1 ? $this->primary : $args[0];
+        $values = $num_args == 1 ? $args[0] : $args[1];
+        if (is_null($values)) {
+            return $this;
+        }
+
+        $this->where .= "`$field` NOT like ('" . implode("','", $values) . "')";
+        return $this;
+    }
 
     public function whereNull($field)
     {

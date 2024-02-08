@@ -55,27 +55,30 @@
         SETUP
         |
         v
-        generateWind <------\
-        |    |              |
-        |    v              /
-        |   playerDice  ----
-        | 
-        v
-    /-- nextTurn   <-------------------------------------------\
-    |     |                                                    |
-    |     v                                                    |
-    |   playerTurn                                             |
-    |   |    |          |                                      |
-    |   |    v          v                                      |
-    |   |commonBoard personalBoard                             |
-    |   |    |          |                                      |
-    |   v    v          v                                      |
-    |    --------------------\                                 |
-    |                        |                                 |
-    |                        v                                 |
-    |                      windEffect -------------------------/
-    |     
-    \-> endGameScoring
+        nextRound
+        ^       |
+        |       v
+        |       generateWind <------\
+        |       |    |              |
+        |       |    v              /
+ /<-endRound    |   playerDice  ----
+ |      ^       | 
+ |      |       v
+ |      \<----- nextTurn   <-------------------------------------------\
+ |                |                                                    |
+ |                v                                                    |
+ |              playerTurn                                             |
+ |              |    |          |                                      |
+ |              |    v          v                                      |
+ |              |commonBoard personalBoard                             |
+ |              |    |          |                                      |
+ |              v    v          v                                      |
+ |               --------------------\                                 |
+ |                                   |                                 |
+ |                                   v                                 |
+ |                                 windEffect -------------------------/
+ v        
+ \-> endGameScoring
         | 
         v
         preEndOfGame
@@ -94,9 +97,20 @@ $machinestates = array(
         "description" => "",
         "type" => "manager",
         "action" => "stGameSetup",
-        "transitions" => array( "" => ST_GENERATE_WIND )
+        "transitions" => array( "" => ST_NEXT_ROUND )
     ),
     
+    //PREPARE States machine for future with a Challenge made of several rounds
+    ST_NEXT_ROUND => array(
+        "name" => "nextRound",
+        "description" => clienttranslate('Preparing new round'),
+        "type" => "game",
+        "action" => "stNextRound",
+        "transitions" => [ 
+            "next" => ST_GENERATE_WIND,
+        ],
+    ),
+
     ST_GENERATE_WIND => array(
         "name" => "generateWind",
         "description" => clienttranslate('Computing Wind direction'),
@@ -127,9 +141,9 @@ $machinestates = array(
         "action" => "stNextTurn",
         "transitions" => [ 
             "play" => ST_PLAYER_TURN,
-            "end" => ST_END_SCORING,
+            "end" => ST_END_ROUND,
         ],
-    ),    
+    ),
    
     ST_PLAYER_TURN => array(
         "name" => "playerTurn",
@@ -229,7 +243,17 @@ $machinestates = array(
             "next" => ST_NEXT_TURN,
             "playerDice" => ST_PLAYER_DICE,
         ],
-    ),    
+    ),
+    ST_END_ROUND => array(
+        "name" => "endRound",
+        "description" => clienttranslate('Ending round'),
+        "type" => "game",
+        "action" => "stEndRound",
+        "transitions" => [ 
+            "next" => ST_NEXT_ROUND,
+            "end" => ST_END_SCORING,
+        ],
+    ),
     ST_END_SCORING => array(
         "name" => "scoring",
         "description" => clienttranslate('Scoring'),

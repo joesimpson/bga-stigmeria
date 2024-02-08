@@ -46,6 +46,8 @@ function (dojo, declare) {
             ];
             */
             this._notifications = [
+                ['newRound', null],
+                ['newWinds', null],
                 ['drawToken', 900],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
@@ -110,6 +112,31 @@ function (dojo, declare) {
         ///////////////////////////////////////////////////
         //// Game & client states
         
+        onEnteringStateNextRound: function(args)
+        {
+            debug( 'onEnteringStateNextRound() ', args );
+            
+        }, 
+        onEnteringStateGenerateWind: function(args)
+        {
+            debug( 'onEnteringStateGenerateWind() ', args );
+            
+        }, 
+        onEnteringStatePlayerDice: function(args)
+        {
+            debug( 'onEnteringStatePlayerDice() ', args );
+            
+        }, 
+        onEnteringStateNextTurn: function(args)
+        {
+            debug( 'onEnteringStateNextTurn() ', args );
+            
+        }, 
+        onEnteringStatePlayerTurn: function(args)
+        {
+            debug( 'onEnteringStatePlayerTurn() ', args );
+            
+        }, 
         onEnteringStateCommonBoardTurn: function(args)
         {
             debug( 'onEnteringStateCommonBoardTurn() ', args );
@@ -222,6 +249,26 @@ function (dojo, declare) {
                 }); 
             });
         }, 
+        onEnteringStateWindEffect: function(args)
+        {
+            debug( 'onEnteringStateWindEffect() ', args );
+            
+        },
+        onEnteringStateEndRound: function(args)
+        {
+            debug( 'onEnteringStateEndRound() ', args );
+            
+        },
+        onEnteringStateScoring: function(args)
+        {
+            debug( 'onEnteringStateScoring() ', args );
+            
+        },
+        onEnteringStatePreEndOfGame: function(args)
+        {
+            debug( 'onEnteringStatePreEndOfGame() ', args );
+            
+        },
 
         onUpdateActivityPlayerTurn: function(args)
         {
@@ -239,6 +286,18 @@ function (dojo, declare) {
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications
  
+        notif_newRound(n) {
+            debug('notif_newRound: new round', n);
+            this.gamedatas.schema = n.args.schema;
+            this.gamedatas.tokens = n.args.tokens;
+            this.gamedatas.turn = 0;
+            this.setupTokens();
+        },
+        notif_newWinds(n) {
+            debug('notif_newWinds: new wind dirs', n);
+            this.gamedatas.winds = n.args.winds;
+            //TODO JSA display winds
+        },
         notif_drawToken(n) {
             debug('notif_drawToken: new token on player board', n);
             let token = n.args.token;
@@ -428,7 +487,7 @@ function (dojo, declare) {
             //Clean obsolete tokens:
             document.querySelectorAll('.stig_token').forEach((oToken) => {
                 if (!tokenIds.includes(parseInt(oToken.getAttribute('data-id')))) {
-                    this.destroy(oToken);
+                    dojo.destroy(oToken);
                 }
             });
         },

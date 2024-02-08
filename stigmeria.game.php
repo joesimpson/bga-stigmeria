@@ -44,7 +44,9 @@ class Stigmeria extends Table
     use STIG\DebugTrait;
     use STIG\States\ChoiceTokenToLandTrait;
     use STIG\States\ChoiceTokenToMoveTrait;
+    use STIG\States\EndRoundTrait;
     use STIG\States\NextTurnTrait;
+    use STIG\States\NextRoundTrait;
     use STIG\States\PlayerDiceTrait;
     use STIG\States\PlayerTurnTrait;
     use STIG\States\PlayerTurnCommonBoardTrait;
@@ -105,6 +107,7 @@ class Stigmeria extends Table
           'turn' => Globals::getTurn(),
           'firstPlayer' => Globals::getFirstPlayer(),
           'winds' => Globals::getAllWindDir(),
+          'schema' => Globals::getSchema(),
         ];
     }
 

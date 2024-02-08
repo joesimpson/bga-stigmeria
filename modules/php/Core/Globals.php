@@ -3,6 +3,9 @@
 namespace STIG\Core;
 
 use STIG\Core\Game;
+use STIG\Managers\Schemas;
+use STIG\Models\Schema;
+
 /*
  * Globals
  */
@@ -11,6 +14,7 @@ class Globals extends \STIG\Helpers\DB_Manager
 {
   protected static $initialized = false;
   protected static $variables = [
+    'round' => 'int',
     'turn' => 'int',
     'firstPlayer' => 'int',
 
@@ -28,6 +32,9 @@ class Globals extends \STIG\Helpers\DB_Manager
     'windDirection11' => 'str',
 
     // Game options
+    
+    //For games with 1 schema in the entire game :(not solo challenge)
+    'optionSchema' => 'int',
   ];
 
   public static function getAllWindDir()
@@ -55,12 +62,24 @@ class Globals extends \STIG\Helpers\DB_Manager
         return "";
     }
   }
+  
+  /**
+   * @return Schema
+   */
+  public static function getSchema()
+  {
+    $optionSchema = Globals::getOptionSchema();
+    return Schemas::getTypes()->filter( function ($schema) use ($optionSchema)  { 
+        return $schema->type == $optionSchema; 
+      })->first();
+  }
 
   /*
    * Setup new game
    */
   public static function setupNewGame($players, $options)
   {
+    self::setRound(0);
     self::setTurn(0);
     
     foreach($players as $pId => $player){
@@ -69,6 +88,18 @@ class Globals extends \STIG\Helpers\DB_Manager
         break;
       }
     }
+
+    //TODO JSA MANAGE Schema other SubList
+    self::setOptionSchema($options[OPTION_SCHEMA_V]);
+  }
+  
+  /**
+   * Setup new game round
+   */
+  public static function setupNewRound()
+  {
+    self::setTurn(0);
+    self::incRound();
   }
 
 

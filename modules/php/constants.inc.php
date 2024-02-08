@@ -113,6 +113,8 @@ const OPTION_CONFIRM_ENABLED = 2;
  */
 const ST_GAME_SETUP = 1;
 
+const ST_NEXT_ROUND = 3;
+
 const ST_GENERATE_WIND = 5;
 const ST_PLAYER_DICE = 6;
 
@@ -125,6 +127,8 @@ const ST_TURN_CHOICE_TOKEN_LAND = 23;
 const ST_TURN_CHOICE_TOKEN_MOVE = 24;
 
 const ST_WIND_EFFECT = 80;
+
+const ST_END_ROUND = 85;
 
 const ST_END_SCORING = 90;
 const ST_PRE_END_OF_GAME = 98;

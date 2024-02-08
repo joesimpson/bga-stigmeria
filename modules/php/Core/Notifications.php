@@ -6,16 +6,41 @@ use STIG\Managers\Players;
 use STIG\Helpers\Utils;
 use STIG\Core\Globals;
 use STIG\Models\Player;
+use STIG\Models\Schema;
 use STIG\Models\StigmerianToken;
 
 class Notifications
 { 
 
   /**
+   * @param int $round
+   * @param Schema $schema
+   * @param Collection $tokens
+   */
+  public static function newRound($round,$schema,$tokens){
+    self::notifyAll('newRound',clienttranslate('Starting round #${n} with schema #${s}'),[ 
+        'n' => $round,
+        's' => $schema->id,
+        //No need to send all the schema datas if we send it at start
+        //'schema' => $schema->getUiData(),
+        'tokens' => $tokens,
+      ],
+    );
+  }
+  /**
+   * @param array $winds
+   */
+  public static function newWinds($winds){
+    self::notifyAll('newWinds','',[ 
+        'winds' => $winds,
+      ],
+    );
+  }
+  /**
    * @param int $turn
    */
   public static function newTurn($turn){
-    self::notifyAll('newTurn',clienttranslate('Starting turn number ${n}'),[ 
+    self::notifyAll('newTurn',clienttranslate('Starting turn #${n}'),[ 
         'n' => $turn,
       ],
     );
