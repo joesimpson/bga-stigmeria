@@ -6,6 +6,9 @@
     
     .stig_token {
         margin: 15px 10px;
+        width: var(--stig_takePieceWidth);
+        height: var(--stig_takePieceWidth);
+        
     }
 }
 

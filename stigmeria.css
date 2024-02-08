@@ -25,6 +25,8 @@
 }
 #stig_select_piece_container .stig_token {
   margin: 15px 10px;
+  width: var(--stig_takePieceWidth);
+  height: var(--stig_takePieceWidth);
 }
 
 .stig_token {
@@ -176,6 +178,10 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+#stig_player_boards #stig_schema_board_container_wrapper {
+  /** let the first player in first place, for when only 1 board is displayed (tiny screen)*/
+  order: 2;
+}
 
 .stig_schema_board,
 .stig_player_board {
@@ -216,12 +222,12 @@
   padding: 6px 20px;
   top: 3px;
   font-size: 26px;
+  outline: 5px solid gold;
 }
 .stig_schema_board .stig_schema_name,
 .stig_player_board .stig_schema_name {
   color: gold;
   background-color: rgb(0, 0, 0);
-  outline: 5px solid gold;
 }
 .stig_schema_board .stig_grid,
 .stig_player_board .stig_grid {

@@ -103,11 +103,36 @@ function (dojo, declare) {
                     },
                   },
                 },
+                takePieceWidth: {
+                  default: 40,
+                  name: _('Token width in selection'),
+                  type: 'slider',
+                  sliderConfig: {
+                    step: 3,
+                    padding: 0,
+                    range: {
+                      min: [10],
+                      max: [100],
+                    },
+                  },
+                },
             };
         },
         
         onChangeBoardWidthSetting(val) {
             this.updateLayout();
+        },
+        onChangeTakePieceWidthSetting(val) {
+            const ROOT = document.documentElement;
+            const WIDTH = 200;
+            let newWidth = (this.settings.takePieceWidth / 100) * WIDTH;
+            /*
+            dojo.query("#stig_select_piece_container .stig_token").forEach( i => {
+                dojo.style(i.id, "width", `${newWidth}px`);
+                dojo.style(i.id, "height", `${newWidth}px`);
+                });
+            */
+            ROOT.style.setProperty('--stig_takePieceWidth', `${newWidth}px`);
         },
        
 
