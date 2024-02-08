@@ -18,6 +18,7 @@ trait PlayerTurnPersonalBoardTrait
     {
         self::trace("stCommonBoardTurn()");
         
+        Notifications::emptyNotif();
     }
 
     public function argPersonalBoardTurn($player_id)

@@ -26,6 +26,7 @@ trait WindGenerationTrait
     //TODO JSA ROLL DICE in NO LIMIT
 
     Notifications::newWinds(Globals::getAllWindDir());
+    //Notifications::emptyNotif();
 
     $this->gamestate->nextState('next');
   }

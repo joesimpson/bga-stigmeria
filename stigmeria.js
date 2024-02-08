@@ -46,8 +46,8 @@ function (dojo, declare) {
             ];
             */
             this._notifications = [
-                ['newRound', null],
-                ['newWinds', null],
+                ['newRound', 10],
+                ['newWinds', 10],
                 ['drawToken', 900],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],

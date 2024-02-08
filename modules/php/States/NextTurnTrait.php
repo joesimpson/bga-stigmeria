@@ -12,6 +12,7 @@ trait NextTurnTrait
   {
     
     if (Globals::getTurn() == TURN_MAX) {
+      Notifications::emptyNotif();
       //TODO JSA MANAGE More with OPTIONS
       $this->gamestate->nextState('end');
       return;
@@ -22,6 +23,6 @@ trait NextTurnTrait
 
     Notifications::newTurn($turn);
 
-    $this->gamestate->nextState('play');
+    $this->gamestate->nextState('next');
   }
 }

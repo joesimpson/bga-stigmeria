@@ -22,6 +22,8 @@ trait PlayerTurnTrait
         //TODO JSA IN NORMAL MODE, we can activate every one
 
         Players::startTurn($playersToActive,$turn);
+        
+        Notifications::emptyNotif();
 
         $this->gamestate->setPlayersMultiactive( $playersToActive, 'end' );
         

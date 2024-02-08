@@ -12,6 +12,7 @@ trait DebugTrait
   function debugForceState()
   {
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
+    //$this->gamestate->jumpToState( ST_NEXT_TURN );
   }
   function debugGoToNextPlayer()
   {
@@ -46,6 +47,10 @@ trait DebugTrait
     $player = Players::getCurrent();
     $turn = Globals::getTurn();
     $this->doWindEffect($turn,$player);
+  }
+  function debugNewWind()
+  {
+    Notifications::newWinds(Globals::getAllWindDir());
   }
   
   function debugSchema()

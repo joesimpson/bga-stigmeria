@@ -31,10 +31,9 @@ class Notifications
    * @param array $winds
    */
   public static function newWinds($winds){
-    self::notifyAll('newWinds','',[ 
-        'winds' => $winds,
-      ],
-    );
+    self::notifyAll('newWinds','',[
+      'winds' => $winds,
+    ],);
   }
   /**
    * @param int $turn

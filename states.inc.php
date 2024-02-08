@@ -102,10 +102,10 @@ $machinestates = array(
     
     //PREPARE States machine for future with a Challenge made of several rounds
     ST_NEXT_ROUND => array(
-        "name" => "nextRound",
+        "name" => "newRound",
         "description" => clienttranslate('Preparing new round'),
         "type" => "game",
-        "action" => "stNextRound",
+        "action" => "stNewRound",
         "transitions" => [ 
             "next" => ST_GENERATE_WIND,
         ],
@@ -140,7 +140,7 @@ $machinestates = array(
         "type" => "game",
         "action" => "stNextTurn",
         "transitions" => [ 
-            "play" => ST_PLAYER_TURN,
+            "next" => ST_PLAYER_TURN,
             "end" => ST_END_ROUND,
         ],
     ),

@@ -10,9 +10,9 @@ use STIG\Managers\Tokens;
 trait NextRoundTrait
 {
   
-  public function stNextRound()
+  public function stNewRound()
   { 
-    self::trace("stNextRound()");
+    self::trace("stNewRound()");
 
     $players = Players::setupNewRound();
     Globals::setupNewRound();
@@ -22,6 +22,7 @@ trait NextRoundTrait
     $round = Globals::getRound();
     $schema = Globals::getSchema();
     Notifications::newRound($round,$schema,$tokens);
+    //Notifications::emptyNotif();
 
     $this->gamestate->nextState('next');
   }
