@@ -74,6 +74,8 @@ function (dojo, declare) {
         {
             debug('SETUP', gamedatas);
             
+            this.setupCentralBoard();
+            this.setupSchemaBoard();
             this.setupPlayers();
             this.setupInfoPanel();
             this.setupTokens();
@@ -414,7 +416,17 @@ function (dojo, declare) {
             let pId = this.gamedatas.firstPlayer;
             debug("updateFirstPlayer()",pId);
         },
-            
+          
+        ////////////////////////////////////////////////////////  
+        //    ____                      _     
+        //   |  _ \                    | |    
+        //   | |_) | ___   __ _ _ __ __| |___ 
+        //   |  _ < / _ \ / _` | '__/ _` / __|
+        //   | |_) | (_) | (_| | | | (_| \__ \
+        //   |____/ \___/ \__,_|_|  \__,_|___/
+        //                                    
+        //        
+        ////////////////////////////////////////////////////////
         tplPlayerBoard(player) {
             let turnAction = 1;
             let flowerType = 1;
@@ -427,6 +439,36 @@ function (dojo, declare) {
                     <div id="stig_recruits_${player.id}" class='stig_recruits'>
                     </div>
                     <div id="stig_grid_${player.id}" class='stig_grid'>
+                    </div>
+                </div>
+            </div>
+            </div>`;
+        },
+        setupCentralBoard(){
+            debug("setupCentralBoard");
+        },
+        setupSchemaBoard(){
+            debug("setupSchemaBoard");
+            let schema = this.gamedatas.schemas[this.gamedatas.schema];
+            this.place('tplSchemaBoard', schema, 'stig_player_boards');
+            let grid = `stig_grid_schema_${schema.id}`;
+            let k = 0;
+            schema.end.forEach((token) => {
+                k++;
+                //These are not real tokens with id
+                token.id = k;
+                let elt = this.addToken(token,grid,'_virtual');
+                elt.classList.add('stig_schema_token');
+            });
+        },
+        tplSchemaBoard(schema) {
+            schema.name = _('Targeted schema');
+            //TODO JSA Display number and difficulty
+            return `<div class='stig_resizable_board' id='stig_schema_board_container_wrapper' data_schema='${schema.id}'>
+            <div class='stig_schema_board_container'>
+                <div class="stig_schema_board" id='stig_schema_board_${schema.id}' data_flower_type="${schema.type}">
+                    <div class='stig_schema_name'>${schema.name}</div>
+                    <div id="stig_grid_schema_${schema.id}" class='stig_grid'>
                     </div>
                 </div>
             </div>
@@ -456,7 +498,7 @@ function (dojo, declare) {
             return `<div class="stig_token_cell" id="stig_token_cell_${token.player_id}_${token.row}_${token.column}" data-row="${token.row}" data-col="${token.column}"></div>`;
         },
         addToken(token, location = null, divIdSuffix = '') {
-            debug("addToken",token, location);
+            debug("addToken",token, location,divIdSuffix);
             if ( $(`stig_token_${token.id}${divIdSuffix}`) ) return;
             
             token.divIdSuffix = (divIdSuffix == undefined) ? '' : divIdSuffix;
@@ -486,7 +528,9 @@ function (dojo, declare) {
             });
             //Clean obsolete tokens:
             document.querySelectorAll('.stig_token').forEach((oToken) => {
-                if (!tokenIds.includes(parseInt(oToken.getAttribute('data-id')))) {
+                if (!tokenIds.includes(parseInt(oToken.getAttribute('data-id')))
+                    && !oToken.classList.contains('stig_schema_token')
+                ) {
                     dojo.destroy(oToken);
                 }
             });

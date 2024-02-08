@@ -69,9 +69,12 @@ class Globals extends \STIG\Helpers\DB_Manager
   public static function getSchema()
   {
     $optionSchema = Globals::getOptionSchema();
+    return Schemas::getTypes()[$optionSchema];
+    /*
     return Schemas::getTypes()->filter( function ($schema) use ($optionSchema)  { 
         return $schema->type == $optionSchema; 
       })->first();
+    */
   }
 
   /*

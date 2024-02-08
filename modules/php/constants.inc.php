@@ -22,8 +22,8 @@ const WIND_DIR_WEST = 'W';
 
 /* TOKEN TYPES : stigmerians, then pollens*/
 const TOKEN_STIG_BLUE =     1;
-const TOKEN_STIG_RED =      2;
-const TOKEN_STIG_YELLOW =   3;
+const TOKEN_STIG_YELLOW =   2;
+const TOKEN_STIG_RED =      3;
 const TOKEN_STIG_ORANGE =   4;
 const TOKEN_STIG_GREEN =    5;
 const TOKEN_STIG_VIOLET =   6;
@@ -36,8 +36,8 @@ const STIG_COLORS = [TOKEN_STIG_BLUE,TOKEN_STIG_RED,TOKEN_STIG_YELLOW,
     TOKEN_STIG_BROWN,TOKEN_STIG_WHITE,TOKEN_STIG_BLACK,
 ];
 const TOKEN_POLLEN_BLUE =     11;
-const TOKEN_POLLEN_RED =      12;
-const TOKEN_POLLEN_YELLOW =   13;
+const TOKEN_POLLEN_YELLOW =   12;
+const TOKEN_POLLEN_RED =      13;
 const TOKEN_POLLEN_ORANGE =   14;
 const TOKEN_POLLEN_GREEN =    15;
 const TOKEN_POLLEN_VIOLET =   16;

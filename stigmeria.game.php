@@ -37,6 +37,7 @@ use STIG\Managers\Players;
 use STIG\Core\Globals;
 use STIG\Core\Preferences;
 use STIG\Core\Stats;
+use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 
 class Stigmeria extends Table
@@ -107,7 +108,8 @@ class Stigmeria extends Table
           'turn' => Globals::getTurn(),
           'firstPlayer' => Globals::getFirstPlayer(),
           'winds' => Globals::getAllWindDir(),
-          'schema' => Globals::getSchema(),
+          'schema' => Globals::getSchema()->id,
+          'schemas' => Schemas::getUiData(),
         ];
     }
 

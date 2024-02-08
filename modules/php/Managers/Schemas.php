@@ -16,8 +16,8 @@ class Schemas
   public static function getTypes()
   {
 
-    return new Collection ([
-      new Schema(1, OPTION_FLOWER_VERTIGHAINEUSE, 1, [],[
+    return [
+      1 => new Schema(1, OPTION_FLOWER_VERTIGHAINEUSE, 1, [],[
           new TokenCoord( TOKEN_POLLEN_BLUE,  2,6 ),
           new TokenCoord( TOKEN_POLLEN_ORANGE,3,5 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  4,3 ),
@@ -32,7 +32,7 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BLUE,  10,8 ),
           
         ] ),
-      new Schema(8, OPTION_FLOWER_MARONNE, 1, [],[
+      8 => new Schema(8, OPTION_FLOWER_MARONNE, 1, [],[
           new TokenCoord( TOKEN_POLLEN_YELLOW,3,5 ),
           new TokenCoord( TOKEN_POLLEN_RED,   4,6 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  5,5 ),
@@ -48,16 +48,13 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BLUE,  10,5 ),
         ] ),
         //TODO JSA OTHER SCHEMAS
-    ]);
+    ];
   }
   
   public static function getUiData()
   {
-    return self::getTypes()
-      ->map(function ($schema) {
-        return $schema->getUiData();
-      })
-      ->toArray();
+    $collection = new Collection(self::getTypes());
+    return $collection->uiAssoc();
   }
   
 }
