@@ -4,6 +4,7 @@ use STIG\Core\Globals;
 use STIG\Core\Game;
 use STIG\Core\Notifications;
 use STIG\Managers\Players;
+use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 
 trait DebugTrait
@@ -41,5 +42,10 @@ trait DebugTrait
     $player = Players::getCurrent();
     $turn = Globals::getTurn();
     $this->doWindEffect($turn,$player);
+  }
+  
+  function debugSchemas()
+  {
+    Notifications::message('debugSchemas',[ 'types'=> Schemas::getUiData()]);
   }
 }
