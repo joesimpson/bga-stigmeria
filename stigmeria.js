@@ -48,6 +48,7 @@ function (dojo, declare) {
             this._notifications = [
                 ['newRound', 10],
                 ['newWinds', 10],
+                ['newTurn', 800],
                 ['drawToken', 900],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
@@ -320,6 +321,14 @@ function (dojo, declare) {
             this.gamedatas.turn = 0;
             this.setupTokens();
         },
+        notif_newTurn(n) {
+            debug('notif_newTurn: new turn', n);
+            this.gamedatas.turn = n.args.n;
+            [... document.querySelectorAll('.stig_turn_marker')].forEach((o) => {
+                o.dataset.turn = this.gamedatas.turn;
+                o.dataset.count_actions = 1;
+                });
+        },
         notif_newWinds(n) {
             debug('notif_newWinds: new wind dirs', n);
             this.gamedatas.winds = n.args.winds;
@@ -453,13 +462,16 @@ function (dojo, declare) {
         //        
         ////////////////////////////////////////////////////////
         tplPlayerBoard(player) {
-            let turnAction = 1;
+            let turn = this.gamedatas.turn;
+            //TODO JSA MANAGE turn >10 display like 10 ?
+            //We want to display the marker before the player take the action
+            let turnActions = player.nbPersonalActionsDone + 1;
             let flowerType = 1;
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
             <div class='stig_player_board_container'>
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
                     <div class='player-name' style='color:#${player.color}'>${player.name}</div>
-                    <div class="stig_turn_marker" data_value="${turnAction}">
+                    <div class="stig_turn_marker" data-turn="${turn}" data-count_actions="${turnActions}">
                     </div>
                     <div id="stig_recruits_${player.id}" class='stig_recruits'>
                     </div>
