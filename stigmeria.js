@@ -224,6 +224,7 @@ function (dojo, declare) {
                         oToken.classList.remove('selected');
                     });
                     div.classList.toggle('selected');
+                    $(`btnConfirm`).classList.remove('disabled');
                 });
             });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
@@ -231,6 +232,8 @@ function (dojo, declare) {
                 let selectedTokenCell = $(`stig_player_boards`).querySelector(`.stig_token_cell.selected`);
                 this.takeAction('actCentralLand', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
             }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
         }, 
         
         onEnteringStateCentralChoiceTokenToMove: function(args)
@@ -239,6 +242,13 @@ function (dojo, declare) {
             
             let playerBoard = $(`stig_central_board`);
 
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
+                let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                this.takeAction('actCentralMove', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
             this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
             //possible places to move :
             this.possibleMoves = args.p_places_m;
@@ -253,6 +263,8 @@ function (dojo, declare) {
                     [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
                         dojo.destroy(o);
                         });
+                    //disable confirm while we don't know destination
+                    $(`btnConfirm`).classList.add('disabled');
                         
                     Object.values(this.possibleMoves[tokenId]).forEach((coord) => {
                         let row = coord.row;
@@ -266,14 +278,10 @@ function (dojo, declare) {
                                 });
                             let div = evt.target;
                             div.classList.toggle('selected');
+                            $(`btnConfirm`).classList.remove('disabled');
                         });
                     });
                 });
-                this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
-                    let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
-                    let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
-                    this.takeAction('actCentralMove', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
-                }); 
             });
         }, 
         
