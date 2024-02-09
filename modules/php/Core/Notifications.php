@@ -168,12 +168,19 @@ class Notifications
   /**
    * @param string $windDir
    * @param Collection $boardTokens StigmerianToken 
-   * @param Player $player
+   * @param Player $player player board or null if central
    */
-  public static function windBlows($windDir,$boardTokens,$player){
+  public static function windBlows($windDir,$boardTokens,$player = null){
     $tokens = $boardTokens->ui();
     $nbTokens = count($tokens);
-    self::notifyAll('windBlows',clienttranslate('Wind blows to ${dir} on ${player_name} flower and move ${n} tokens'),[ 
+    
+    if(isset($player)){
+      $message = clienttranslate('Wind blows to ${dir} on ${player_name} flower and move ${n} tokens');
+    } else {//CENTRAL
+      $message = clienttranslate('Wind blows to ${dir} on StigmaReine flower and move ${n} tokens');
+    }
+
+    self::notifyAll('windBlows',$message,[ 
         'i18n'=>['dir'],
         'player' => $player,
         'tokens' => $tokens,

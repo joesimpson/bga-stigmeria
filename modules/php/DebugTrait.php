@@ -47,6 +47,7 @@ trait DebugTrait
     $player = Players::getCurrent();
     $turn = Globals::getTurn();
     $this->doWindEffect($turn,$player);
+    $this->doWindEffect($turn);
   }
   function debugNewWind()
   {

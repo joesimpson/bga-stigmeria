@@ -42,8 +42,7 @@ trait WindEffectTrait
       $boardTokens = Tokens::getAllOnPersonalBoard($player->id);
     }
     else {
-      //TODO JSA CENTRAL BOARD
-      return;
+      $boardTokens = Tokens::getAllOnCentralBoard();
     }
 
     switch($windDir){

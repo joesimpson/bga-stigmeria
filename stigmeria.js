@@ -195,6 +195,10 @@ function (dojo, declare) {
             
             let selectedTokenCell = null;
             let centralBoard = $(`stig_central_board`);
+            //Clean obsolete tokens:
+            centralBoard.querySelectorAll('.stig_token_cell').forEach((oToken) => {
+                    dojo.destroy(oToken);
+                });
             //possible places to play :
             Object.values(args.p_places_p).forEach((coord) => {
                 let row = coord.row;

@@ -142,6 +142,16 @@ class Tokens extends \STIG\Helpers\Pieces
       ->get();
   }
   /**
+   * @return Collection of StigmerianToken found at that location
+   */
+  public static function getAllOnCentralBoard()
+  { 
+    Game::get()->trace("getAllOnCentralBoard()");
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD)
+      ->get();
+  }
+  /**
    * @param int $row
    * @param int $column
   * @return int nb of tokens on central board at these coordinates
