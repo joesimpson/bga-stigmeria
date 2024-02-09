@@ -14,7 +14,7 @@ class Schema implements \JsonSerializable
 {
   public int $id;
   /**
-   * vertigHaineuse (DEBUTANT),Maronne,  SiffloChamp, DentDine, InspirActrice (EXPERT)
+   * vertigHaineuse (BEGINNER),Maronne,  SiffloChamp, DentDine, InspirActrice (EXPERT)
   */
   public string $type;
   /**

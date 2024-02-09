@@ -5,7 +5,9 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Managers\Players;
+use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
+use STIG\Models\Schema;
 
 trait NextRoundTrait
 {
@@ -20,7 +22,7 @@ trait NextRoundTrait
     $tokens = Tokens::getUiData();
 
     $round = Globals::getRound();
-    $schema = Globals::getSchema();
+    $schema = Schemas::getCurrentSchema();
     Notifications::newRound($round,$schema,$tokens);
     //Notifications::emptyNotif();
 

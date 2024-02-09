@@ -54,6 +54,7 @@ function (dojo, declare) {
                 ['moveOnCentralBoard', 900],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
+                ['newPollen', 900],
                 ['windBlows', 1800],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
@@ -405,6 +406,7 @@ function (dojo, declare) {
             let div = $(`stig_token_${token.id}`);
             div.dataset.row = token.row;
             div.dataset.col = token.col;
+            //TODO JSA REMOVE TEST if useless
             div.dataset.state = token.state;
             this.slide(div, this.getTokenContainer(token));
         },
@@ -415,6 +417,15 @@ function (dojo, declare) {
             div.dataset.row = token.row;
             div.dataset.col = token.col;
             div.dataset.state = token.state;
+            this.slide(div, this.getTokenContainer(token));
+        },
+        notif_newPollen(n) {
+            debug('notif_newPollen: token is flipped !', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.row = token.row;
+            div.dataset.col = token.col;
+            div.dataset.type = token.type;
             this.slide(div, this.getTokenContainer(token));
         },
         notif_windBlows(n) {

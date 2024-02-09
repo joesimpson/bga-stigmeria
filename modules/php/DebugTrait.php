@@ -57,7 +57,7 @@ trait DebugTrait
   function debugSchema()
   {
     $round = Globals::getRound();
-    $schema = Globals::getSchema();
+    $schema = Schemas::getCurrentSchema();
     Notifications::newRound($round,$schema);
   }
   function debugSchemas()

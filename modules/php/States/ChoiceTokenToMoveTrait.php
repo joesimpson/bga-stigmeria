@@ -81,6 +81,7 @@ trait ChoiceTokenToMoveTrait
     {
         //TODO JSA RULE MANAGE EXITING TOKEN is possible, by another button 
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
+        if($token->isPollen()) return false;
 
         if(!$token->isAdjacentCoord($row, $column)){
             return false;

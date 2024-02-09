@@ -109,7 +109,7 @@ class Stigmeria extends Table
           'turn' => Globals::getTurn(),
           'firstPlayer' => Globals::getFirstPlayer(),
           'winds' => Globals::getAllWindDir(),
-          'schema' => Globals::getSchema()->id,
+          'schema' => Schemas::getCurrentSchema()->id,
           'schemas' => Schemas::getUiData(),
         ];
     }

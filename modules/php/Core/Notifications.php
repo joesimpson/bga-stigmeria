@@ -105,6 +105,18 @@ class Notifications
   /**
    * @param Player $player
    * @param StigmerianToken $token
+   */
+  public static function newPollen($player, $token){
+    self::notifyAll('newPollen',clienttranslate('${player_name} gets a new pollen at ${L}'),[ 
+        'player' => $player,
+        'token' => $token->getUiData(),
+        'L' => $token->getCoordName(),
+      ],
+    );
+  }
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
    * @param int $actionCost
    */
   public static function moveToCentralBoard($player, $token, $actionCost){

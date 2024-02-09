@@ -3,8 +3,10 @@
 namespace STIG\Managers;
 
 use STIG\Core\Game;
+use STIG\Core\Globals;
 use STIG\Helpers\Collection;
 use STIG\Models\Schema;
+use STIG\Models\StigmerianToken;
 use STIG\Models\TokenCoord;
 
 /* 
@@ -57,4 +59,35 @@ class Schemas
     return $collection->uiAssoc();
   }
   
+  /**
+   * @return Schema
+   */
+  public static function getCurrentSchema()
+  {
+    $optionSchema = Globals::getOptionSchema();
+    return Schemas::getTypes()[$optionSchema];
+  }
+
+  /**
+   * @param StigmerianToken $token
+   * @return bool true if token is expected in ending current schema
+   */
+  public static function matchCurrentSchema($token)
+  {
+    if(! array_key_exists($token->getType(),TOKEN_POLLENS)) return false;
+    $tokenFuturePollen =  TOKEN_POLLENS[$token->getType()];
+    $schema = Schemas::getCurrentSchema();
+    if(! isset($schema)) return false;
+    $notfound = $schema->end->filter( function ($expected) use ($token, $tokenFuturePollen) {
+        Game::get()->trace("matchCurrentSchema() loop ".json_encode($expected->getUiData()));
+        //Compare TokenCoord VS StigmerianToken
+        return $expected->row == $token->row 
+            && $expected->col == $token->col
+            && $expected->type == $tokenFuturePollen;
+        ;
+      }
+    )->isEmpty();
+    Game::get()->trace("matchCurrentSchema() notfound ? ".json_encode($notfound)." for ".json_encode($token->getUiData()));
+    return !$notfound;
+  }
 }

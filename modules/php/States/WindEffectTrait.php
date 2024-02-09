@@ -6,7 +6,9 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
+use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
+use STIG\Models\StigmerianToken;
 
 trait WindEffectTrait
 {
@@ -38,11 +40,14 @@ trait WindEffectTrait
     $windDir = Globals::$getterName();
     self::trace("doWindEffect($turn) : wind blows to $windDir");
 
+    //Beware ! pollen are not moved !
     if(isset($player)){
-      $boardTokens = Tokens::getAllOnPersonalBoard($player->id);
+      $boardTokens = Tokens::getAllOnPersonalBoard($player->id)
+        ->filter( function ($token) {return !$token->isPollen(); });
     }
     else {
-      $boardTokens = Tokens::getAllOnCentralBoard();
+      $boardTokens = Tokens::getAllOnCentralBoard()
+        ->filter( function ($token) {return !$token->isPollen(); });
     }
 
     switch($windDir){
@@ -51,7 +56,7 @@ trait WindEffectTrait
         for($row = ROW_MAX; $row>=ROW_MIN; $row-- ){
           for($col = COLUMN_MIN; $col<=COLUMN_MAX; $col++ ){
             $token = Tokens::findTokenOnBoardWithCoord($boardTokens,$row,$col );
-            if(isset($token) && !$this->doWindBlowsTo($token,$windDir) ){
+            if(isset($token) && !$this->doWindBlowsTo($token,$windDir,$player) ){
               //TODO JSA if token not moved, remove it from array which will be sent to client
             }
           }
@@ -66,11 +71,16 @@ trait WindEffectTrait
   }
 
   /**
+   * @param StigmerianToken $token
+   * @param string $windDir
+   * @param Player $player
    * @return bool true if token has moved
    */
-  public function doWindBlowsTo($token,$windDir)
+  public function doWindBlowsTo($token,$windDir,$player)
   {
     //self::trace("doWindBlowsTo($windDir)");
+
+    //TODO JSA CHECK NO POLLEN (or token) is in future position BEFORE moving !
 
     switch($windDir){
       case WIND_DIR_SOUTH:
@@ -102,7 +112,11 @@ trait WindEffectTrait
       $token->setCol(null);
     }
     else {
-      self::trace("doWindBlowsTo($windDir) token is still in grid :".json_encode($token));
+      //self::trace("doWindBlowsTo($windDir) token is still in grid :".json_encode($token));
+        
+      if(Schemas::matchCurrentSchema($token)){
+        $token->becomesPollen($player);
+      }
     }
     return true;
   }

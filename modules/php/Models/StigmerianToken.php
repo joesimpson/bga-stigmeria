@@ -3,6 +3,7 @@
 namespace STIG\Models;
 
 use STIG\Core\Notifications;
+use STIG\Managers\Schemas;
 
 /*
  * StigmerianToken: all utility functions concerning a stigmerian token
@@ -19,12 +20,11 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     'pId' => ['player_id', 'int'],
     'col' => ['x', 'int'],
     'row' => ['y', 'int'],
+
+    'type' => ['type', 'int'],
   ];
   
   protected $staticAttributes = [
-    ['type', 'int'],
-    //Manage token face or state is enough ?
-    //['pollen', 'bool'],
   ];
 
   public function __construct($row, $datas)
@@ -41,6 +41,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   {
     $data = parent::getUiData();
     $data['coord'] = $this->getCoordName();
+    $data['pollen'] = $this->isPollen();
     return $data;
   }
 
@@ -125,7 +126,9 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       Notifications::moveToPlayerBoard($player, $this,$actionCost);
     }
 
-    //TODO JSA Check if right positioned => becomes pollen
+    if(Schemas::matchCurrentSchema($this)){
+      $this->becomesPollen($player);
+    }
   }
   
   /**
@@ -152,8 +155,24 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     else {
       Notifications::moveToCentralBoard($player,$this,$actionCost);
     }
+  }
 
-    //TODO JSA Check if right positioned => becomes pollen
+  
+  /**
+   * @param Player $player
+   */
+  public function becomesPollen($player)
+  {
+    $newType = TOKEN_POLLENS[$this->getType()];
+    $this->setType($newType);
+    Notifications::newPollen($player, $this);
   }
   
+  /**
+   * @return bool true if this token is on pollen side
+   */
+  public function isPollen()
+  {
+    return array_search($this->getType(),TOKEN_POLLENS);
+  }
 }

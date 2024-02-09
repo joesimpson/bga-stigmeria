@@ -18,10 +18,7 @@ class Tokens extends \STIG\Helpers\Pieces
 
   protected static function cast($row)
   {
-    /*
-    $data = self::getTokenTypes()[$row['type']];
-    */
-    $data['type'] = $row['type'];
+    $data = [];
     return new StigmerianToken($row, $data);
   }
 
@@ -216,18 +213,4 @@ class Tokens extends \STIG\Helpers\Pieces
       );
   }
   
-  /*
-  public function getTokenTypes()
-  {
-    $f = function ($t) {
-      return [
-        'pollen' => $t[0],
-      ];
-    };
-
-    return [
-      1 => $f([STIG_COLOR_1, false]),
-    ];
-  }
-  */
 }
