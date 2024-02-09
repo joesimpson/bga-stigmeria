@@ -65,6 +65,10 @@ trait DebugTrait
   {
     Notifications::message('debugSchemas',[ 'types'=> Schemas::getUiData()]);
   }
+  function debugNewRoundTokens()
+  {
+    Tokens::setupNewRound(Players::getAll(),Schemas::getCurrentSchema());
+  }
   
   function debugCMD()
   {

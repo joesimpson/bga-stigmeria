@@ -51,8 +51,17 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BLUE,  10,5 ),
         ] ),
       OPTION_SCHEMA_14 => new Schema(14, OPTION_FLOWER_SIFFLOCHAMP, 2, [
-
-          //TODO JSA START
+          new TokenCoord( TOKEN_STIG_BLUE,    1,5 ),
+          new TokenCoord( TOKEN_STIG_RED,     1,6 ),
+          new TokenCoord( TOKEN_STIG_BLUE,    1,7 ),
+          new TokenCoord( TOKEN_STIG_YELLOW,  2,6 ),
+          new TokenCoord( TOKEN_STIG_YELLOW,  3,6 ),
+          new TokenCoord( TOKEN_STIG_BLACK,   5,1 ),
+          new TokenCoord( TOKEN_STIG_BLACK,   6,1 ),
+          new TokenCoord( TOKEN_STIG_BLACK,   7,1 ),
+          new TokenCoord( TOKEN_STIG_BLACK,   8,10 ),
+          new TokenCoord( TOKEN_STIG_BLACK,   9,9 ),
+          new TokenCoord( TOKEN_STIG_BLACK,   9,10 ),
         ],[
           new TokenCoord( TOKEN_POLLEN_YELLOW,5,5 ),
           new TokenCoord( TOKEN_POLLEN_YELLOW,5,6 ),

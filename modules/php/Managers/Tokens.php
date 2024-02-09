@@ -40,9 +40,11 @@ class Tokens extends \STIG\Helpers\Pieces
   }
   
   /**
+   * @param Collection $players Player
+   * @param Schema $schema 
    * @return Collection
    */
-  public static function setupNewRound($players)
+  public static function setupNewRound($players,$schema)
   {
     //DELETE ALL
     self::DB()->delete()->run();
@@ -59,6 +61,17 @@ class Tokens extends \STIG\Helpers\Pieces
               'nbr' => TOKEN_SETUP_NB,
             ];
           }
+      //Init starting schema :
+      foreach ($schema->start as $token) {
+        $tokens[] = [
+          'type' => $token->type,
+          'location' => TOKEN_LOCATION_PLAYER_BOARD,
+          'player_id' => $pId,
+          'y' => $token->row,
+          'x' => $token->col,
+          'nbr' => 1,
+        ];
+      }
     }
 
     self::create($tokens);

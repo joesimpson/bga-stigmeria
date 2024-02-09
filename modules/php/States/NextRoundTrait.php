@@ -18,11 +18,11 @@ trait NextRoundTrait
 
     $players = Players::setupNewRound();
     Globals::setupNewRound();
-    Tokens::setupNewRound($players);
-    $tokens = Tokens::getUiData();
-
     $round = Globals::getRound();
     $schema = Schemas::getCurrentSchema();
+    Tokens::setupNewRound($players,$schema);
+    $tokens = Tokens::getUiData();
+
     Notifications::newRound($round,$schema,$tokens);
     //Notifications::emptyNotif();
 
