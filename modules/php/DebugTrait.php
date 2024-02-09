@@ -71,8 +71,8 @@ trait DebugTrait
     $player = Players::getCurrent();
     $player->setCommonMoveDone(FALSE);
     $player->setCommonMoveDone(FALSE);
-    $player->setCommonMoveDone(FALSE);
     $player->setCommonMoveDone(TRUE);
+    $player->setCommonMoveDone(FALSE);
     $this->gamestate->nextPrivateState($player->id, "continue");
   }
 }

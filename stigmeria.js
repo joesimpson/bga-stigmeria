@@ -251,13 +251,14 @@ function (dojo, declare) {
                     let div = evt.target;
                     div.classList.toggle('selected');
                     [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
-                        o.classList.remove('selectable');
-                        o.classList.remove('selected');
+                        dojo.destroy(o);
                         });
+                        
                     Object.values(this.possibleMoves[tokenId]).forEach((coord) => {
                         let row = coord.row;
                         let column = coord.col;
-                        this.addSelectableTokenCell('central',row, column);
+                        let elt = this.addSelectableTokenCell('central',row, column);
+                        elt.dataset.type = div.dataset.type;
                         //Click token destination :
                         this.onClick(`stig_token_cell_${'central'}_${row}_${column}`, (evt) => {
                             [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
