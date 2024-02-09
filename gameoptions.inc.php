@@ -45,7 +45,7 @@ $game_options = [
                   ),
                 OPTION_MODE_NOLIMIT => array( 
                   'name' => totranslate('No Limit'), 
-                  'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns or more. Unleash the wind power. All actions are possible.'), 
+                  'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.'), 
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
                   'premium' => true,
@@ -242,7 +242,62 @@ $game_options = [
       ],
     //"notdisplayedmessage"=> totranslate("Schemas 7->12 available only with MarOnne flower"),
   ),
+  OPTION_SCHEMA_S => array(
+    'name' => totranslate('Targeted schema'),    
+    'values' => array(
+                OPTION_SCHEMA_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random schema'), 
+                  'tmdisplay' => totranslate('Random schema'),
+                ),
+                OPTION_SCHEMA_13 => array( 
+                  'name' => '#13', 
+                  'description' => '#13', 
+                  'tmdisplay' => '#13',
+                ),
+                OPTION_SCHEMA_14 => array( 
+                  'name' => '#14', 
+                  'description' => '#14', 
+                  'tmdisplay' => '#14',
+                ),
+                OPTION_SCHEMA_15 => array( 
+                  'name' => '#15', 
+                  'description' => '#15', 
+                  'tmdisplay' => '#15',
+                ),
+                OPTION_SCHEMA_16 => array( 
+                  'name' => '#16', 
+                  'description' => '#16', 
+                  'tmdisplay' => '#16',
+                ),
+                OPTION_SCHEMA_17 => array( 
+                  'name' => '#17', 
+                  'description' => '#17', 
+                  'tmdisplay' => '#17',
+                ),
+                OPTION_SCHEMA_18 => array( 
+                  'name' => '#18', 
+                  'description' => '#18', 
+                  'tmdisplay' => '#18',
+                ),
+            ),
+    'default' => OPTION_SCHEMA_RANDOM,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_SIFFLOCHAMP,
+        ],
+        [
+          "type"=> "otheroptionisnot",
+          "id"=> OPTION_DIFFICULTY,
+          "value"=> OPTION_DIFFICULTY_RANDOM,
+        ],
+      ],
+  ),
+
 ];
+
 
 $game_preferences = [
    

@@ -3,6 +3,7 @@
 namespace STIG\Core;
 
 use STIG\Core\Game;
+use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Schemas;
 use STIG\Models\Schema;
 
@@ -81,6 +82,8 @@ class Globals extends \STIG\Helpers\DB_Manager
     //TODO JSA MANAGE Schema other SubList
     if(array_key_exists(OPTION_SCHEMA_V,$options)) $optionSchema = $options[OPTION_SCHEMA_V];
     if(array_key_exists(OPTION_SCHEMA_M,$options)) $optionSchema = $options[OPTION_SCHEMA_M];
+    if(array_key_exists(OPTION_SCHEMA_S,$options)) $optionSchema = $options[OPTION_SCHEMA_S];
+    if(!isset($optionSchema)) throw new UnexpectedException(1,"Missing schema $optionSchema!");
     self::setOptionSchema($optionSchema);
   }
   

@@ -50,7 +50,34 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_RED,   9,6 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  10,5 ),
         ] ),
-        //TODO JSA OTHER SCHEMAS
+      OPTION_SCHEMA_14 => new Schema(14, OPTION_FLOWER_SIFFLOCHAMP, 2, [
+
+          //TODO JSA START
+        ],[
+          new TokenCoord( TOKEN_POLLEN_YELLOW,5,5 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,5,6 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,5,7 ),
+          new TokenCoord( TOKEN_POLLEN_RED,   6,5 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK, 6,6 ),
+          new TokenCoord( TOKEN_POLLEN_RED,   6,7 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,  7,5 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE, 7,6 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,  7,7 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK, 8,1 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,  8,5 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK, 8,6 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,  8,7 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE, 9,1 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,  9,5 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE, 9,6 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,  9,7 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK,10,1 ),
+          new TokenCoord( TOKEN_POLLEN_RED,  10,5 ),
+          new TokenCoord( TOKEN_POLLEN_RED,  10,6 ),
+          new TokenCoord( TOKEN_POLLEN_RED,  10,7 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE,10,10 ),
+        ] ),
+      //TODO JSA OTHER SCHEMAS
     ];
   }
   
