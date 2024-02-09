@@ -186,6 +186,9 @@ function (dojo, declare) {
                 this.addPrimaryActionButton('btnDraw', 'Recruit', () => this.takeAction('actDraw', {}));
                 this.addPrimaryActionButton('btnPlace', 'Land', () => this.takeAction('actLand', {}));
                 this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
+                    
+                this.gamedatas.players[this.player_id].nbPersonalActionsDone = args.done;
+                this.updateTurnMarker(this.gamedatas.turn,args.done +1 );
             }
             this.addSecondaryActionButton('btnLetNextPlay', 'Start next player', () => this.takeAction('actLetNextPlay', {}));
             this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
@@ -323,11 +326,7 @@ function (dojo, declare) {
         },
         notif_newTurn(n) {
             debug('notif_newTurn: new turn', n);
-            this.gamedatas.turn = n.args.n;
-            [... document.querySelectorAll('.stig_turn_marker')].forEach((o) => {
-                o.dataset.turn = this.gamedatas.turn;
-                o.dataset.count_actions = 1;
-                });
+            this.updateTurnMarker(n.args.n,1);
         },
         notif_newWinds(n) {
             debug('notif_newWinds: new wind dirs', n);
@@ -465,7 +464,7 @@ function (dojo, declare) {
             let turn = this.gamedatas.turn;
             //TODO JSA MANAGE turn >10 display like 10 ?
             //We want to display the marker before the player take the action
-            let turnActions = player.nbPersonalActionsDone + 1;
+            let turnActions = Math.min(turn,player.nbPersonalActionsDone + 1);
             let flowerType = 1;
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
             <div class='stig_player_board_container'>
@@ -520,7 +519,16 @@ function (dojo, declare) {
         //      | | (_) |   <  __/ | | \__ \
         //      |_|\___/|_|\_\___|_| |_|___/
         //                           
-        ////////////////////////////////////////////////////////       
+        ////////////////////////////////////////////////////////   
+        updateTurnMarker(turn, action) {
+            debug('updateTurnMarker', turn, action);
+            this.gamedatas.turn = turn;
+            [... document.querySelectorAll('.stig_turn_marker')].forEach((o) => {
+                o.dataset.turn = this.gamedatas.turn;
+                o.dataset.count_actions = action;
+                });
+                //TODO JSA update turn marker of 1 player separately when 1 action is done
+        },    
         addSelectableTokenCell(player_id, row, column) {
             debug("addSelectableTokenCell",player_id, row, column);
             let playerGrid = $(`stig_grid_${player_id}`);

@@ -26,6 +26,7 @@ trait PlayerTurnPersonalBoardTrait
         $player = Players::get($player_id);
         return [
             'n'=> $player->countRemainingPersonalActions(),
+            'done'=> $player->getNbPersonalActionsDone(),
         ];
     }
     
