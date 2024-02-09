@@ -220,7 +220,10 @@ function (dojo, declare) {
                 if(selectedTokenType) elt.dataset.type = selectedTokenType;
                 this.onClick(`stig_token_cell_central_${row}_${column}`, (evt) => {
                     let div = evt.target;
-                    div.classList.toggle('selected')
+                    centralBoard.querySelectorAll('.stig_token_cell').forEach((oToken) => {
+                        oToken.classList.remove('selected');
+                    });
+                    div.classList.toggle('selected');
                 });
             });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
