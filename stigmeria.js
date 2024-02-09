@@ -50,6 +50,8 @@ function (dojo, declare) {
                 ['newWinds', 10],
                 ['newTurn', 800],
                 ['drawToken', 900],
+                ['moveToCentralBoard', 900],
+                ['moveOnCentralBoard', 900],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
                 ['windBlows', 1800],
@@ -180,8 +182,6 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateCentralChoiceTokenToLand() ', args );
             
-            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToLand', {}));
-            
             let selectedToken = null;
             //TODO JSA FACTORIZE 
             Object.values(args.tokens).forEach((token) => {
@@ -194,14 +194,13 @@ function (dojo, declare) {
             });
             
             let selectedTokenCell = null;
-            //TODO JSA DISPLAY and replace by central board
-            let playerBoard = $(`stig_player_board_${this.player_id}`);
+            let centralBoard = $(`stig_central_board`);
             //possible places to play :
             Object.values(args.p_places_p).forEach((coord) => {
                 let row = coord.row;
                 let column = coord.col;
-                this.addSelectableTokenCell(this.player_id,row, column);
-                this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, (evt) => {
+                this.addSelectableTokenCell('central',row, column);
+                this.onClick(`stig_token_cell_central_${row}_${column}`, (evt) => {
                     let div = evt.target;
                     div.classList.toggle('selected')
                 });
@@ -376,6 +375,25 @@ function (dojo, declare) {
             let div = $(`stig_token_${token.id}`);
             this.slide(div, this.getTokenContainer(token));
         },
+        notif_moveToCentralBoard(n) {
+            debug('notif_moveToCentralBoard: new token on central board', n);
+            let token = n.args.token;
+            this.addToken(token, this.getVisibleTitleContainer());
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.row = token.row;
+            div.dataset.col = token.col;
+            div.dataset.state = token.state;
+            this.slide(div, this.getTokenContainer(token));
+        },
+        notif_moveOnCentralBoard(n) {
+            debug('notif_moveOnCentralBoard: token moved on on central board', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.row = token.row;
+            div.dataset.col = token.col;
+            div.dataset.state = token.state;
+            this.slide(div, this.getTokenContainer(token));
+        },
         notif_moveToPlayerBoard(n) {
             debug('notif_moveToPlayerBoard: new token on player board', n);
             let token = n.args.token;
@@ -389,7 +407,6 @@ function (dojo, declare) {
         notif_moveOnPlayerBoard(n) {
             debug('notif_moveOnPlayerBoard: token moved on player board', n);
             let token = n.args.token;
-            //Move from player RECRUIT ZONE to player board :
             let div = $(`stig_token_${token.id}`);
             div.dataset.row = token.row;
             div.dataset.col = token.col;
