@@ -49,7 +49,7 @@ trait PlayerTurnCommonBoardTrait
         $pId = $player->id;
         
         $remaining = $player->countRemainingCommonActions();
-        $actionCost = 1;
+        $actionCost = ACTION_COST_CENTRAL_LAND;
         if($remaining < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
@@ -81,15 +81,14 @@ trait PlayerTurnCommonBoardTrait
         $player = Players::getCurrent();
         
         $remaining = $player->countRemainingCommonActions();
-        $actionCost = 1;
+        $actionCost = ACTION_COST_CENTRAL_MOVE;
         //TODO JSA RULE Impossible to make 2 moves
         if($remaining < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
 
-        //TODO JSA ACTION EFFECT
-        $player->incNbCommonActionsDone();
-
+        $this->gamestate->nextPrivateState($player->id, "startMove");
+        /*
         if($player->countRemainingCommonActions() == 0){
             //IF NO MORE ACTIONS on common board, go to personal board actions :
             $this->gamestate->nextPrivateState($player->id, "next");
@@ -97,6 +96,7 @@ trait PlayerTurnCommonBoardTrait
         else {
             $this->gamestate->nextPrivateState($player->id, "continue");
         }
+        */
     }
     
 }

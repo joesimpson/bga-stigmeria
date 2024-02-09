@@ -44,6 +44,7 @@ class Stigmeria extends Table
 {
     use STIG\DebugTrait;
     use STIG\States\CentralLandTrait;
+    use STIG\States\CentralMoveTrait;
     use STIG\States\ChoiceTokenToLandTrait;
     use STIG\States\ChoiceTokenToMoveTrait;
     use STIG\States\EndRoundTrait;

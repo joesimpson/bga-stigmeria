@@ -30,11 +30,16 @@ trait CentralLandTrait
     public function actCentralLand($token_id, $row, $column)
     {
         self::checkAction( 'actCentralLand' ); 
-        self::trace("actCentralLand($token_id)");
+        self::trace("actCentralLand($token_id, $row, $column)");
         
         $player = Players::getCurrent();
         $pId = $player->id;
 
+        $remaining = $player->countRemainingCommonActions();
+        $actionCost = ACTION_COST_CENTRAL_LAND;
+        if($remaining < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
         $token = Tokens::get($token_id);
         if($token->location != TOKEN_LOCATION_CENTRAL_RECRUIT_TOPLACE ){
             throw new UnexpectedException(20,"You cannot place this token");
@@ -43,11 +48,12 @@ trait CentralLandTrait
             throw new UnexpectedException(30,"You cannot place this token at $row, $column");
         }
 
-        $player->incNbCommonActionsDone(ACTION_COST_CENTRAL_LAND);
+        $player->incNbCommonActionsDone($actionCost);
         Notifications::useActions($player);
 
         //EFFECT : PLACE the TOKEN 
-        $token->moveToCentralBoard($player,$row,$column,ACTION_COST_CENTRAL_LAND);
+        $token->moveToCentralBoard($player,$row,$column,$actionCost);
+        //TODO JSA RULE : gain 1 special action
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
@@ -70,7 +76,7 @@ trait CentralLandTrait
     /**
      * @param int $row
      * @param int $column
-     * @return bool TRUE if a token can be placed on this player board ( Empty spot + Either Line A or adjacent to another token),
+     * @return bool TRUE if a token can be placed on central board ( Empty spot + Either Line A or adjacent to another token),
      *  FALSE otherwise
      */
     public function canPlaceOnCentralBoard($row, $column)

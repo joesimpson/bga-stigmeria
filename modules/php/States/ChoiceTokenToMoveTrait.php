@@ -16,7 +16,7 @@ trait ChoiceTokenToMoveTrait
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
         return [
             'n' => ACTION_COST_MOVE,
-            'p_places_m' => $this->listPossibleMovesOnPersonalBoard($player_id,$boardTokens),
+            'p_places_m' => $this->listPossibleMovesOnBoard($player_id,$boardTokens),
         ];
     }
       
@@ -74,7 +74,7 @@ trait ChoiceTokenToMoveTrait
      * @param StigmerianToken $token
      * @param int $row
      * @param int $col
-     * @return bool TRUE if a token can be move on this player board ( Empty adjacent spot),
+     * @return bool TRUE if this token can be move on this player board ( Empty adjacent spot),
      *  FALSE otherwise
      */
     public function canMoveOnPlayerBoard($playerId,$token,$row, $column)
@@ -99,12 +99,15 @@ trait ChoiceTokenToMoveTrait
      * @param array $tokens of StigmerianToken
      * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
      */
-    public function listPossibleMovesOnPersonalBoard($playerId,$tokens){
+    public function listPossibleMovesOnBoard($playerId,$tokens){
         $spots = [];
         foreach($tokens as $tokenId => $token){
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                    if($this->canMoveOnPlayerBoard($playerId,$token,$row, $column)){
+                    if(isset($playerId) && $this->canMoveOnPlayerBoard($playerId,$token,$row, $column)){
+                        $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
+                    }
+                    else if(!isset($playerId) && $this->canMoveOnCentralBoard($token,$row, $column)){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }
                 }

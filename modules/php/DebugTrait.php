@@ -39,6 +39,7 @@ trait DebugTrait
   {
     $player = Players::getCurrent();
     $player->setNbPersonalActionsDone(-150);
+    $player->setNbCommonActionsDone(-150);
     $this->gamestate->nextPrivateState($player->id, "continue");
   }
   

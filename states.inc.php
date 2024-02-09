@@ -177,12 +177,13 @@ $machinestates = array(
             'continue' => ST_TURN_COMMON_BOARD,
             'next' => ST_TURN_PERSONAL_BOARD,
             'startLand' => ST_TURN_CENTRAL_CHOICE_TOKEN_LAND,
+            'startMove' => ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE,
         ],
     ],
     
     ST_TURN_CENTRAL_CHOICE_TOKEN_LAND => [
         "name" => "centralChoiceTokenToLand",
-        "descriptionmyturn" => clienttranslate('${you} must choose a token to place (cost : ${n} actions)'), 
+        "descriptionmyturn" => clienttranslate('${you} must choose where to place the token on StigmaReine (cost : ${n} actions)'), 
         "type" => "private",
         "args" => "argCentralChoiceTokenToLand",
         "possibleactions" => [
@@ -193,6 +194,21 @@ $machinestates = array(
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,
             //'cancel' => ST_TURN_COMMON_BOARD,
+        ],
+    ],
+    
+    ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE => [
+        "name" => "centralChoiceTokenToMove",
+        "descriptionmyturn" => clienttranslate('${you} must choose a token to move on StigmaReine (cost : ${n} actions)'), 
+        "type" => "private",
+        "args" => "argCentralChoiceTokenToMove",
+        "possibleactions" => [
+            "actCentralMove",
+            "actCancelChoiceTokenToMove",
+        ],
+        "transitions" => [
+            'continue' => ST_TURN_COMMON_BOARD,
+            'cancel' => ST_TURN_COMMON_BOARD,
         ],
     ],
     

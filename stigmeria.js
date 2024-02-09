@@ -217,6 +217,49 @@ function (dojo, declare) {
             }); 
         }, 
         
+        onEnteringStateCentralChoiceTokenToMove: function(args)
+        {
+            debug( 'onEnteringStateCentralChoiceTokenToMove() ', args );
+            
+            let playerBoard = $(`stig_central_board`);
+
+            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
+            //possible places to move :
+            this.possibleMoves = args.p_places_m;
+            Object.keys(this.possibleMoves).forEach((tokenId) => {
+                let coords = this.possibleMoves[tokenId];
+                if (coords.length == 0) return;
+                //Click token origin
+                this.onClick(`stig_token_${tokenId}`, (evt) => {
+                    [...playerBoard.querySelectorAll('.stig_token')].forEach((o) => o.classList.remove('selected'));
+                    let div = evt.target;
+                    div.classList.toggle('selected');
+                    [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                        o.classList.remove('selectable');
+                        o.classList.remove('selected');
+                        });
+                    Object.values(this.possibleMoves[tokenId]).forEach((coord) => {
+                        let row = coord.row;
+                        let column = coord.col;
+                        this.addSelectableTokenCell('central',row, column);
+                        //Click token destination :
+                        this.onClick(`stig_token_cell_${'central'}_${row}_${column}`, (evt) => {
+                            [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                                o.classList.remove('selected');
+                                });
+                            let div = evt.target;
+                            div.classList.toggle('selected');
+                        });
+                    });
+                });
+                this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                    let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
+                    let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                    this.takeAction('actCentralMove', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+                }); 
+            });
+        }, 
+        
         onEnteringStatePersonalBoardTurn: function(args)
         {
             debug( 'onEnteringStatePersonalBoardTurn() ', args );

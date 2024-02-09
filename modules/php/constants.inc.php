@@ -74,6 +74,7 @@ const TOKEN_STATE_POLLEN = 1;
 const ACTION_COST_MOVE = 1;
 const ACTION_COST_LAND = 1;
 const ACTION_COST_CENTRAL_LAND = 1;
+const ACTION_COST_CENTRAL_MOVE = 1;
 
 /*
  * Game options
