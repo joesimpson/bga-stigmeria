@@ -189,12 +189,13 @@ function (dojo, declare) {
             debug( 'onEnteringStateCentralChoiceTokenToLand() ', args );
             
             let selectedToken = null;
-            //TODO JSA FACTORIZE 
+            let selectedTokenType = null;
             Object.values(args.tokens).forEach((token) => {
                 let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
                 if(args.tokens.length == 1) {
                     //AUTO SELECT
                     elt.classList.add('selected');
+                    selectedTokenType = token.type;
                 }
                 else {
                     this.onClick(`${elt.id}`, () => {
@@ -215,7 +216,8 @@ function (dojo, declare) {
             Object.values(args.p_places_p).forEach((coord) => {
                 let row = coord.row;
                 let column = coord.col;
-                this.addSelectableTokenCell('central',row, column);
+                let elt = this.addSelectableTokenCell('central',row, column);
+                if(selectedTokenType) elt.dataset.type = selectedTokenType;
                 this.onClick(`stig_token_cell_central_${row}_${column}`, (evt) => {
                     let div = evt.target;
                     div.classList.toggle('selected')
