@@ -126,6 +126,13 @@ const OPTION_SCHEMA_16 = 16;
 const OPTION_SCHEMA_17 = 17;
 const OPTION_SCHEMA_18 = 18;
 
+const OPTION_SCHEMA_19 = 19;
+const OPTION_SCHEMA_20 = 20;
+const OPTION_SCHEMA_21 = 21;
+const OPTION_SCHEMA_22 = 22;
+const OPTION_SCHEMA_23 = 23;
+const OPTION_SCHEMA_24 = 24;
+
 /*
  * User preferences
  */ 

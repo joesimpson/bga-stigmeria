@@ -20,7 +20,7 @@ class Schemas
   {
 
     return [
-      1 => new Schema(1, OPTION_FLOWER_VERTIGHAINEUSE, 1, [],[
+      OPTION_SCHEMA_1 => new Schema(1, OPTION_FLOWER_VERTIGHAINEUSE, 1, [],[
           new TokenCoord( TOKEN_POLLEN_BLUE,  2,6 ),
           new TokenCoord( TOKEN_POLLEN_ORANGE,3,5 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  4,3 ),
@@ -35,7 +35,7 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BLUE,  10,8 ),
           
         ] ),
-      8 => new Schema(8, OPTION_FLOWER_MARONNE, 1, [],[
+      OPTION_SCHEMA_8 => new Schema(8, OPTION_FLOWER_MARONNE, 1, [],[
           new TokenCoord( TOKEN_POLLEN_YELLOW,3,5 ),
           new TokenCoord( TOKEN_POLLEN_RED,   4,6 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  5,5 ),
@@ -85,6 +85,41 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_RED,  10,6 ),
           new TokenCoord( TOKEN_POLLEN_RED,  10,7 ),
           new TokenCoord( TOKEN_POLLEN_WHITE,10,10 ),
+        ] ),
+        
+      OPTION_SCHEMA_20 => new Schema(20, OPTION_FLOWER_DENTDINE, 1, [
+          new TokenCoord( TOKEN_STIG_BROWN,    1,5 ),
+          new TokenCoord( TOKEN_STIG_BROWN,    1,6 ),
+          new TokenCoord( TOKEN_STIG_BLACK,    2,4 ),
+          new TokenCoord( TOKEN_STIG_BLACK,    2,7 ),
+          new TokenCoord( TOKEN_STIG_WHITE,    3,3 ),
+          new TokenCoord( TOKEN_STIG_WHITE,    3,8 ),
+
+        ],[
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  2,3 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  2,8 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     3,4 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     3,7 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    4,5 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    4,6 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  6,1 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     6,2 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    6,3 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    6,8 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     6,9 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  6,10 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE,   8,3 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  8,4 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  8,7 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE,   8,8 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK,   9,2 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    9,5 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    9,6 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK,   9,9 ),
+          new TokenCoord( TOKEN_POLLEN_BROWN,   10,1 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     10,4 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     10,7 ),
+          new TokenCoord( TOKEN_POLLEN_BROWN,   10,10 ),
         ] ),
       //TODO JSA OTHER SCHEMAS
     ];
