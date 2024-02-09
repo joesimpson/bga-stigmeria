@@ -155,7 +155,7 @@ class Tokens extends \STIG\Helpers\Pieces
   */
   public static function countOnCentralBoard($row, $column)
   { 
-    Game::get()->trace("countOnCentralBoard($row, $column)");
+    //Game::get()->trace("countOnCentralBoard($row, $column)");
     return self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD)
       ->where('y', $row)

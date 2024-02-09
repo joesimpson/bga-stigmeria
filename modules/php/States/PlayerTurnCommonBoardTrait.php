@@ -21,8 +21,16 @@ trait PlayerTurnCommonBoardTrait
     public function argCommonBoardTurn($player_id)
     {
         $player = Players::get($player_id);
+        
+        $actions[] = 'actCommonDrawAndLand';
+        if(!$player->isCommonMoveDone()){
+            $actions[] = 'actCommonMove';
+        }
+        $actions[] = 'actCommonJoker';
+        $actions[] = 'actGoToNext';
         return [
             'n'=> $player->countRemainingCommonActions(),
+            'a' => $actions,
         ];
     }
     /**
@@ -80,6 +88,9 @@ trait PlayerTurnCommonBoardTrait
         
         $player = Players::getCurrent();
         
+        if($player->isCommonMoveDone()){
+            throw new UnexpectedException(9,"You cannot do that action twice in the turn");
+        }
         $remaining = $player->countRemainingCommonActions();
         $actionCost = ACTION_COST_CENTRAL_MOVE;
         //TODO JSA RULE Impossible to make 2 moves

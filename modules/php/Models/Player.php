@@ -30,6 +30,7 @@ class Player extends \STIG\Helpers\DB_Model
     'multiactive' => ['player_is_multiactive', 'bool'],
     'lastTurn' => ['player_turn', 'int'],
     'nbCommonActionsDone' => ['player_common_actions', 'int'],
+    'commonMoveDone' => ['player_common_move', 'bool'],
     'nbPersonalActionsDone' => ['player_personal_actions', 'int'],
   ];
 
@@ -68,6 +69,7 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setLastTurn($turnIndex);
     $this->setNbCommonActionsDone(0);
     $this->setNbPersonalActionsDone(0);
+    $this->setCommonMoveDone(false);
 
     Notifications::startTurn($this,$turnIndex);
   }

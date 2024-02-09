@@ -34,6 +34,9 @@ trait CentralMoveTrait
         $player = Players::getCurrent();
         $pId = $player->id;
 
+        if($player->isCommonMoveDone()){
+            throw new UnexpectedException(9,"You cannot do that action twice in the turn");
+        }
         $remaining = $player->countRemainingCommonActions();
         $actionCost = ACTION_COST_CENTRAL_MOVE;
         if($remaining < $actionCost){
@@ -48,6 +51,7 @@ trait CentralMoveTrait
         }
 
         $player->incNbCommonActionsDone($actionCost);
+        $player->setCommonMoveDone(true);
         Notifications::useActions($player);
 
         //EFFECT : PLACE the TOKEN 

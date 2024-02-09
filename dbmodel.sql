@@ -21,6 +21,7 @@
 ALTER TABLE `player` ADD `player_turn` INT(5) NOT NULL DEFAULT 0 COMMENT 'Last turn played by this player';
 ALTER TABLE `player` ADD `player_common_actions` INT(1) NOT NULL DEFAULT 0 COMMENT 'actions played by this player on central board (during this turn)';
 ALTER TABLE `player` ADD `player_personal_actions` INT(2) NOT NULL DEFAULT 0 COMMENT 'actions played by this player on their board (during this turn)';
+ALTER TABLE `player` ADD `player_common_move` INT(1) NOT NULL DEFAULT 0 COMMENT 'This player used the common action move on central board (during this turn) 0/1';
 
 CREATE TABLE IF NOT EXISTS `token` (
   `token_id` int(5) NOT NULL AUTO_INCREMENT,

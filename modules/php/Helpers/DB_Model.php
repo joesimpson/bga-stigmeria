@@ -103,7 +103,9 @@ abstract class DB_Model extends \APP_DbObject implements \JsonSerializable
             }
           }
           if ($field[1] == 'bool') {
-            $value = (bool) $value;
+            //Game::get()->trace("__call($method, ".json_encode($args).") value BEFORE: $value //");
+            $value = ($value === TRUE) ? 1 : 0;
+            //Game::get()->trace("__call($method, ".json_encode($args).") value AFTER: $value (name:".$this->$name.") //");
             if ($value === $this->$name) {
               return; // No modification, abort DB call
             }

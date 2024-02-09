@@ -172,10 +172,15 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateCommonBoardTurn() ', args );
             
+            let possibleActions = args.a;
             let nbActions = args.n;
             if(nbActions>0){
-                this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
-                this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
+                if(possibleActions.includes('actCommonDrawAndLand')){
+                    this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
+                }
+                if(possibleActions.includes('actCommonMove')){
+                    this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
+                }
             }
             this.addDangerActionButton('btnNext', 'Next', () => this.takeAction('actGoToNext', {}));
         }, 

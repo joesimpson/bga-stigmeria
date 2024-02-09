@@ -59,10 +59,20 @@ trait DebugTrait
   {
     $round = Globals::getRound();
     $schema = Schemas::getCurrentSchema();
-    Notifications::newRound($round,$schema);
+    Notifications::newRound($round,$schema,[]);
   }
   function debugSchemas()
   {
     Notifications::message('debugSchemas',[ 'types'=> Schemas::getUiData()]);
+  }
+  
+  function debugCMD()
+  {
+    $player = Players::getCurrent();
+    $player->setCommonMoveDone(FALSE);
+    $player->setCommonMoveDone(FALSE);
+    $player->setCommonMoveDone(FALSE);
+    $player->setCommonMoveDone(TRUE);
+    $this->gamestate->nextPrivateState($player->id, "continue");
   }
 }
