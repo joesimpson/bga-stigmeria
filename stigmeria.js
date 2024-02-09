@@ -176,6 +176,42 @@ function (dojo, declare) {
             }
             this.addDangerActionButton('btnNext', 'Next', () => this.takeAction('actGoToNext', {}));
         }, 
+        onEnteringStateCentralChoiceTokenToLand: function(args)
+        {
+            debug( 'onEnteringStateCentralChoiceTokenToLand() ', args );
+            
+            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToLand', {}));
+            
+            let selectedToken = null;
+            //TODO JSA FACTORIZE 
+            Object.values(args.tokens).forEach((token) => {
+                let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
+                this.onClick(`${elt.id}`, () => {
+                    if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
+                    selectedToken = token.id + '_tmp';
+                    $(`stig_token_${selectedToken}`).classList.add('selected');
+                });
+            });
+            
+            let selectedTokenCell = null;
+            //TODO JSA DISPLAY and replace by central board
+            let playerBoard = $(`stig_player_board_${this.player_id}`);
+            //possible places to play :
+            Object.values(args.p_places_p).forEach((coord) => {
+                let row = coord.row;
+                let column = coord.col;
+                this.addSelectableTokenCell(this.player_id,row, column);
+                this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, (evt) => {
+                    let div = evt.target;
+                    div.classList.toggle('selected')
+                });
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = $(`stig_select_piece_container`).querySelector(`.stig_token.selected`);
+                let selectedTokenCell = $(`stig_player_boards`).querySelector(`.stig_token_cell.selected`);
+                this.takeAction('actCentralLand', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+            }); 
+        }, 
         
         onEnteringStatePersonalBoardTurn: function(args)
         {

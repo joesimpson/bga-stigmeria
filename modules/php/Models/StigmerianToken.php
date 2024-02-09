@@ -128,4 +128,32 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     //TODO JSA Check if right positioned => becomes pollen
   }
   
+  /**
+   * @param Player $player
+   * @param int $row
+   * @param int $column
+   * @param int $actionCost
+   */
+  public function moveToCentralBoard($player,$row,$column,$actionCost)
+  {
+    $fromBoard = false;
+    if($this->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD ){
+      $fromBoard = true;
+      $fromCoord = $this->getCoordName();
+    }
+    $this->setLocation(TOKEN_LOCATION_CENTRAL_BOARD);
+    $this->setPId(null);
+    $this->setCol($column);
+    $this->setRow($row);
+
+    if($fromBoard){
+      Notifications::moveOnCentralBoard($player,$this,$fromCoord,$this->getCoordName(),$actionCost);
+    }
+    else {
+      Notifications::moveToCentralBoard($player,$this,$actionCost);
+    }
+
+    //TODO JSA Check if right positioned => becomes pollen
+  }
+  
 }

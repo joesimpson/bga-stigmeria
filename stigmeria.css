@@ -162,6 +162,11 @@
   height: calc(var(--stig_board_display_scale) * 1176px);
   margin-bottom: 10px;
 }
+#stig_main_zone .stig_resizable_board .stig_schema_board_container,
+#stig_main_zone .stig_resizable_board .stig_player_board_container {
+  /* prevents vertical invisible overflow on BGA bottom elements*/
+  height: inherit;
+}
 #stig_main_zone .stig_schema_board,
 #stig_main_zone .stig_player_board {
   transform: scale(var(--stig_board_display_scale));

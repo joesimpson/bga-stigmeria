@@ -5,6 +5,12 @@
         width: calc(var(--stig_board_display_scale) * 1127px);
         height: calc(var(--stig_board_display_scale) * 1176px);
         margin-bottom: 10px;
+
+        .stig_schema_board_container,
+        .stig_player_board_container{
+            /* prevents vertical invisible overflow on BGA bottom elements*/
+            height: inherit;
+        }
     }
 
     .stig_schema_board,

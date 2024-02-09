@@ -102,6 +102,15 @@
       $this->game->actChoiceTokenToLand($token_id, $row, $col);
       self::ajaxResponse();
     }
+    public function actCentralLand()
+    {
+      self::setAjaxMode();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actCentralLand($token_id, $row, $col);
+      self::ajaxResponse();
+    }
     public function actCancelChoiceTokenToLand()
     {
       self::setAjaxMode();

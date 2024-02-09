@@ -64,8 +64,7 @@ trait PlayerTurnPersonalBoardTrait
         $player->setNbPersonalActionsDone($nbActionsDone + $actionCost);
         Notifications::useActions($player);
 
-        $tokens = Tokens::pickForLocation(1,TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
-        $token = $tokens->first();
+        $token = Tokens::pickOneForLocation(TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
         if($token == null){
             //TODO JSA LOST GAME (maybe already lost before looking in the bag ?)
             throw new UnexpectedException(404,"Not supported draw : empty draw bag for player $pId");

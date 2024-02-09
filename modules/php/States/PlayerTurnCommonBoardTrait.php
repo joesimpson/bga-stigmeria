@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
+use STIG\Managers\Tokens;
 
 trait PlayerTurnCommonBoardTrait
 {
@@ -35,12 +36,17 @@ trait PlayerTurnCommonBoardTrait
         $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "next");
     }
 
+      
+    /**
+     * Central Action 1 : landing a stigmerian on central board
+     */
     public function actCommonDrawAndLand()
     {
         self::checkAction( 'actCommonDrawAndLand' ); 
         self::trace("actCommonDrawAndLand()");
         
         $player = Players::getCurrent();
+        $pId = $player->id;
         
         $remaining = $player->countRemainingCommonActions();
         $actionCost = 1;
@@ -48,9 +54,16 @@ trait PlayerTurnCommonBoardTrait
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
 
-        //TODO JSA ACTION EFFECT
-        $player->incNbCommonActionsDone();
-        
+        //ACTION EFFECT
+        $token = Tokens::pickOneForLocation(TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_CENTRAL_RECRUIT_TOPLACE, TOKEN_STATE_STIGMERIAN);
+        if($token == null){
+            //TODO JSA LOST GAME (maybe already lost before looking in the bag ?)
+            throw new UnexpectedException(404,"Not supported draw : empty draw bag for player $pId");
+        }
+
+        $this->gamestate->nextPrivateState($player->id, "startLand");
+        return;
+        /*
         if($player->countRemainingCommonActions() == 0){
             //IF NO MORE ACTIONS on common board, go to personal board actions :
             $this->gamestate->nextPrivateState($player->id, "next");
@@ -58,6 +71,7 @@ trait PlayerTurnCommonBoardTrait
         else {
             $this->gamestate->nextPrivateState($player->id, "continue");
         }
+        */
     }
     public function actCommonMove()
     {

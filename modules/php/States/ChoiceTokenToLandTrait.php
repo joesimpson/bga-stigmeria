@@ -15,7 +15,7 @@ trait ChoiceTokenToLandTrait
         //$player = Players::get($player_id);
         $tokens = Tokens::getAllRecruits($player_id);
         return [
-            'n' => ACTION_COST_MOVE,
+            'n' => ACTION_COST_LAND,
             'tokens' => $tokens->ui(),
             'p_places_p' => $this->listPossiblePlacesOnPersonalBoard($player_id),
         ];
@@ -28,6 +28,8 @@ trait ChoiceTokenToLandTrait
         
         $player = Players::getCurrent();
 
+        //TODO JSA CHECK STATE  ST_TURN_CENTRAL_CHOICE_TOKEN_LAND cannot cancel if token revealed
+
         //NOTHING TO CANCEL In BDD, return to previous state
 
         $this->gamestate->nextPrivateState($player->id, "cancel");
@@ -36,7 +38,7 @@ trait ChoiceTokenToLandTrait
      * Basic Action 2 : landing a stigmerian on your board
      * @param int $token_id
      * @param int $row
-     * @param int $col
+     * @param int $column
      */
     public function actChoiceTokenToLand($token_id, $row, $column)
     {

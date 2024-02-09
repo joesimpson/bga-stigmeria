@@ -175,7 +175,24 @@ $machinestates = array(
         ],
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,
-            'next' => ST_TURN_PERSONAL_BOARD, // transition to another private state
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'startLand' => ST_TURN_CENTRAL_CHOICE_TOKEN_LAND,
+        ],
+    ],
+    
+    ST_TURN_CENTRAL_CHOICE_TOKEN_LAND => [
+        "name" => "centralChoiceTokenToLand",
+        "descriptionmyturn" => clienttranslate('${you} must choose a token to place (cost : ${n} actions)'), 
+        "type" => "private",
+        "args" => "argCentralChoiceTokenToLand",
+        "possibleactions" => [
+            "actCentralLand",
+            //No cancel because token is revealed ?
+            //"actCancelChoiceTokenToLand",
+        ],
+        "transitions" => [
+            'continue' => ST_TURN_COMMON_BOARD,
+            //'cancel' => ST_TURN_COMMON_BOARD,
         ],
     ],
     

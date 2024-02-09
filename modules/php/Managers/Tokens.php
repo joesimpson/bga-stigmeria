@@ -131,6 +131,30 @@ class Tokens extends \STIG\Helpers\Pieces
       ->wherePlayer($playerId)
       ->get();
   }
+   /**
+   * @return Collection of StigmerianToken found at that location
+   */
+  public static function getAllCentralTokensToPlace()
+  { 
+    Game::get()->trace("getAllCentralTokensToPlace()");
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_RECRUIT_TOPLACE)
+      ->get();
+  }
+  /**
+   * @param int $row
+   * @param int $column
+  * @return int nb of tokens on central board at these coordinates
+  */
+  public static function countOnCentralBoard($row, $column)
+  { 
+    Game::get()->trace("countOnCentralBoard($row, $column)");
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD)
+      ->where('y', $row)
+      ->where('x', $column)
+      ->count();
+  }
   
   /**
    * @param int $playerId
@@ -156,6 +180,25 @@ class Tokens extends \STIG\Helpers\Pieces
       ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
       ->wherePlayer($playerId)->whereIn('y', [$row + 1] )->whereIn('x', [$column - 1] )
       */
+      ->get()
+      ->filter( function ($token) use ($row, $column) {
+          return $token->isAdjacentCoord($row, $column);
+        }
+      );
+  }
+  
+  /**
+   * @param int $row
+   * @param int $column
+   * @return Collection of StigmerianToken
+   */
+  public static function listAdjacentTokensOnCentral($row, $column)
+  { 
+    Game::get()->trace("listAdjacentTokensOnCentral($row, $column)");
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD)
+      ->whereIn('y', [$row - 1,  $row, $row + 1] )
+      ->whereIn('x', [$column - 1, $column, $column + 1] )
       ->get()
       ->filter( function ($token) use ($row, $column) {
           return $token->isAdjacentCoord($row, $column);

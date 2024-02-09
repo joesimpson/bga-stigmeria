@@ -51,6 +51,9 @@ const TOKEN_LOCATION_PLAYER_DECK = 'player_deck_';//To be followed by pid in ord
 const TOKEN_LOCATION_PLAYER_RECRUIT = 'player_recruit';
 const TOKEN_LOCATION_PLAYER_BOARD = 'player_board';
 const TOKEN_LOCATION_OUT = 'OUT';
+const TOKEN_LOCATION_CENTRAL_RECRUIT = 'central_recruit';
+const TOKEN_LOCATION_CENTRAL_RECRUIT_TOPLACE = 'central_toplace';
+const TOKEN_LOCATION_CENTRAL_BOARD = 'central_board';
 
 /* TOKEN STATES */ 
 const TOKEN_STATE_STIGMERIAN = 0;
@@ -58,6 +61,8 @@ const TOKEN_STATE_POLLEN = 1;
 
 /** ACTIONS */
 const ACTION_COST_MOVE = 1;
+const ACTION_COST_LAND = 1;
+const ACTION_COST_CENTRAL_LAND = 1;
 
 /*
  * Game options
@@ -122,9 +127,12 @@ const ST_NEXT_TURN = 10;
 
 const ST_PLAYER_TURN = 20;
 const ST_TURN_COMMON_BOARD = 21;
+const ST_TURN_CENTRAL_CHOICE_TOKEN_LAND = 23;
+const ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE = 24;
 const ST_TURN_PERSONAL_BOARD = 22;
-const ST_TURN_CHOICE_TOKEN_LAND = 23;
-const ST_TURN_CHOICE_TOKEN_MOVE = 24;
+const ST_TURN_CHOICE_TOKEN_LAND = 25;
+const ST_TURN_CHOICE_TOKEN_MOVE = 26;
+
 
 const ST_WIND_EFFECT = 80;
 
