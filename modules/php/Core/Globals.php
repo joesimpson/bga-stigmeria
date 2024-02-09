@@ -79,7 +79,9 @@ class Globals extends \STIG\Helpers\DB_Manager
     }
 
     //TODO JSA MANAGE Schema other SubList
-    self::setOptionSchema($options[OPTION_SCHEMA_V]);
+    if(array_key_exists(OPTION_SCHEMA_V,$options)) $optionSchema = $options[OPTION_SCHEMA_V];
+    if(array_key_exists(OPTION_SCHEMA_M,$options)) $optionSchema = $options[OPTION_SCHEMA_M];
+    self::setOptionSchema($optionSchema);
   }
   
   /**

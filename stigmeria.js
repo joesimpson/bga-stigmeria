@@ -622,7 +622,8 @@ function (dojo, declare) {
             //TODO JSA MANAGE turn >10 display like 10 ?
             //We want to display the marker before the player take the action
             let turnActions = Math.min(turn,player.nbPersonalActionsDone + 1);
-            let flowerType = 1;
+            let schema = this.gamedatas.schemas[this.gamedatas.schema];
+            let flowerType = schema.type;
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
             <div class='stig_player_board_container'>
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">

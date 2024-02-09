@@ -4,6 +4,7 @@ namespace STIG\Managers;
 
 use STIG\Core\Game;
 use STIG\Core\Globals;
+use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\Collection;
 use STIG\Models\Schema;
 use STIG\Models\StigmerianToken;
@@ -65,6 +66,9 @@ class Schemas
   public static function getCurrentSchema()
   {
     $optionSchema = Globals::getOptionSchema();
+    if(!isset($optionSchema)) throw new UnexpectedException(1,"Missing schema $optionSchema!");
+    $types = Schemas::getTypes();
+    if(!array_key_exists($optionSchema,$types)) throw new UnexpectedException(1,"Missing schema $optionSchema!");
     return Schemas::getTypes()[$optionSchema];
   }
 
