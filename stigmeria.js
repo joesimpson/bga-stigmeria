@@ -52,6 +52,7 @@ function (dojo, declare) {
                 ['drawToken', 900],
                 ['moveToCentralBoard', 900],
                 ['moveOnCentralBoard', 900],
+                ['letNextPlay', 10],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
                 ['newPollen', 900],
@@ -290,6 +291,7 @@ function (dojo, declare) {
             debug( 'onEnteringStatePersonalBoardTurn() ', args );
             
             let nbActions = args.n;
+            let possibleActions = args.a;
             if(nbActions>0){
                 this.addPrimaryActionButton('btnDraw', 'Recruit', () => this.takeAction('actDraw', {}));
                 this.addPrimaryActionButton('btnPlace', 'Land', () => this.takeAction('actLand', {}));
@@ -298,7 +300,13 @@ function (dojo, declare) {
                 this.gamedatas.players[this.player_id].nbPersonalActionsDone = args.done;
                 this.updateTurnMarker(this.gamedatas.turn,args.done +1 );
             }
-            this.addSecondaryActionButton('btnLetNextPlay', 'Start next player', () => this.takeAction('actLetNextPlay', {}));
+            if(possibleActions.includes('actLetNextPlay')){
+                this.addSecondaryActionButton('btnLetNextPlay', 'Start next player', () => {
+                    this.confirmationDialog(_("Next player will start their turn, so you will not be able to play VS actions for this turn."), () => {
+                        this.takeAction('actLetNextPlay', {}) ;
+                    });
+                });
+            }
             this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
             this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
@@ -472,6 +480,10 @@ function (dojo, declare) {
             div.dataset.col = token.col;
             div.dataset.state = token.state;
             this.slide(div, this.getTokenContainer(token));
+        },
+        notif_letNextPlay(n) {
+            debug('notif_letNextPlay: ', n);
+            if($(`btnLetNextPlay`) ) dojo.destroy($(`btnLetNextPlay`));
         },
         notif_moveToPlayerBoard(n) {
             debug('notif_moveToPlayerBoard: new token on player board', n);

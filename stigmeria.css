@@ -2027,3 +2027,7 @@
 .phantom {
   visibility: hidden;
 }
+
+#btnLetNextPlay {
+  background-color: lightgreen;
+}

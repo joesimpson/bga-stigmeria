@@ -24,9 +24,18 @@ trait PlayerTurnPersonalBoardTrait
     public function argPersonalBoardTurn($player_id)
     {
         $player = Players::get($player_id);
+        $turn = Globals::getTurn();
+        $nextPlayer = Players::getNextInactivePlayerInTurn($player->id, $turn);
+        
+        //TODO JSA LIST POSSIBLE ACTIONS according to Special Actions model
+        $actions[] = '';
+        if(isset($nextPlayer)){
+            $actions[] = 'actLetNextPlay';
+        }
         return [
             'n'=> $player->countRemainingPersonalActions(),
             'done'=> $player->getNbPersonalActionsDone(),
+            'a' => $actions,
         ];
     }
     
