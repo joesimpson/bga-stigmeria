@@ -192,11 +192,17 @@ function (dojo, declare) {
             //TODO JSA FACTORIZE 
             Object.values(args.tokens).forEach((token) => {
                 let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
-                this.onClick(`${elt.id}`, () => {
-                    if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
-                    selectedToken = token.id + '_tmp';
-                    $(`stig_token_${selectedToken}`).classList.add('selected');
-                });
+                if(args.tokens.length == 1) {
+                    //AUTO SELECT
+                    elt.classList.add('selected');
+                }
+                else {
+                    this.onClick(`${elt.id}`, () => {
+                        if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
+                        selectedToken = token.id + '_tmp';
+                        $(`stig_token_${selectedToken}`).classList.add('selected');
+                    });
+                }
             });
             
             let selectedTokenCell = null;
