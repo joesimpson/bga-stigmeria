@@ -175,4 +175,14 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   {
     return array_search($this->getType(),TOKEN_POLLENS);
   }
+
+  
+  /**
+   * @param TokenCoord $coord
+   */
+  public function updateCoord($coord)
+  {
+    if($this->col != $coord->col ) $this->setCol($coord->col);
+    if($this->row != $coord->row ) $this->setRow($coord->row);
+  }
 }

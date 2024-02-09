@@ -5,10 +5,12 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Helpers\Collection;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
+use STIG\Models\TokenCoord;
 
 trait WindEffectTrait
 {
@@ -43,12 +45,16 @@ trait WindEffectTrait
     //Beware ! pollen are not moved !
     if(isset($player)){
       $boardTokens = Tokens::getAllOnPersonalBoard($player->id)
-        ->filter( function ($token) {return !$token->isPollen(); });
+        //->filter( function ($token) {return !$token->isPollen(); })
+        ;
     }
     else {
       $boardTokens = Tokens::getAllOnCentralBoard()
-        ->filter( function ($token) {return !$token->isPollen(); });
+        //->filter( function ($token) {return !$token->isPollen(); })
+        ;
     }
+
+    $movedTokens = [];
 
     switch($windDir){
       case WIND_DIR_SOUTH:
@@ -56,8 +62,9 @@ trait WindEffectTrait
         for($row = ROW_MAX; $row>=ROW_MIN; $row-- ){
           for($col = COLUMN_MIN; $col<=COLUMN_MAX; $col++ ){
             $token = Tokens::findTokenOnBoardWithCoord($boardTokens,$row,$col );
-            if(isset($token) && !$this->doWindBlowsTo($token,$windDir,$player) ){
-              //TODO JSA if token not moved, remove it from array which will be sent to client
+            if(isset($token) && $this->doWindBlowsTo($token,$windDir,$player,$boardTokens) ){
+              //if token moved, add it in array which will be sent to client
+              $movedTokens[] = $token;
             }
           }
         }
@@ -67,39 +74,46 @@ trait WindEffectTrait
         Notifications::message("Wind direction $windDir not supported !");
         return;
     }
-    Notifications::windBlows($windDir,$boardTokens,$player);
+    Notifications::windBlows($windDir,new Collection($movedTokens),$player);
   }
 
   /**
    * @param StigmerianToken $token
    * @param string $windDir
    * @param Player $player
+   * @param Collection $boardTokens
    * @return bool true if token has moved
    */
-  public function doWindBlowsTo($token,$windDir,$player)
+  public function doWindBlowsTo($token,$windDir,$player,$boardTokens)
   {
     //self::trace("doWindBlowsTo($windDir)");
 
-    //TODO JSA CHECK NO POLLEN (or token) is in future position BEFORE moving !
+    if($token->isPollen()) return false;
 
     switch($windDir){
       case WIND_DIR_SOUTH:
         //FROM North to South : 
-        $token->incRow(1);
+        $futureCoord = new TokenCoord($token->getType(), $token->getRow() + 1, $token->getCol());
         break;
       case WIND_DIR_NORTH:
-        $token->incRow(-1);
+        $futureCoord = new TokenCoord($token->getType(), $token->getRow() - 1, $token->getCol());
         break;
       case WIND_DIR_EAST:
-        $token->incCol(1);
+        $futureCoord = new TokenCoord($token->getType(), $token->getRow(), $token->getCol() + 1);
         break;
       case WIND_DIR_WEST:
-        $token->incCol(-1);
+        $futureCoord = new TokenCoord($token->getType(), $token->getRow(), $token->getCol() - 1);
         break;
       default: 
         return false;
     }
     //TODO JSA PERFS : use a single update for all tokens
+    $other = Tokens::findTokenOnBoardWithCoord($boardTokens,$futureCoord->row,$futureCoord->col );
+    if(isset($other) ){
+      //Place is not empty
+      return false;
+    }
+    $token->updateCoord($futureCoord);
 
     if($token->isOutOfGrid()){
       self::trace("doWindBlowsTo($windDir) token is out of grid :".json_encode($token));

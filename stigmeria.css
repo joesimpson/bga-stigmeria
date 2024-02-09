@@ -1214,7 +1214,6 @@
   background-position-y: 2293px;
   outline: 3px solid black;
   box-shadow: 0px 0px 10px 5px gold;
-  /** TODO JSA ALL TURNS & actions done */
 }
 .stig_turn_marker[data-turn="1"] {
   left: 556px;
