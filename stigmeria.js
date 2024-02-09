@@ -308,42 +308,43 @@ function (dojo, declare) {
             
             this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToLand', {}));
             
+            let playerBoard = $(`stig_player_board_${this.player_id}`);
             let selectedToken = null;
             Object.values(args.tokens).forEach((token) => {
                 let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
                 this.onClick(`${elt.id}`, () => {
+                    //CLICK SELECT TOKEN
                     if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
                     selectedToken = token.id + '_tmp';
                     $(`stig_token_${selectedToken}`).classList.add('selected');
-                    /*
-                    this.addPrimaryActionButton('btnConfirm', _('Confirm'), () =>
-                        this.takeAction('actChoiceTokenToLand', { tokenId: token.id,  row: row, col:column, })
-                    );*/
+                            
+                    let selectedTokenCell = null;
+                    //possible places to play :
+                    Object.values(args.p_places_p).forEach((coord) => {
+                        let row = coord.row;
+                        let column = coord.col;
+                        let elt2 = this.addSelectableTokenCell(this.player_id,row, column);
+                        elt2.dataset.type = elt.dataset.type;
+                        this.onClick(`${elt2.id}`, (evt) => {
+                            //CLICK SELECT DESTINATION
+                            playerBoard.querySelectorAll('.stig_token_cell').forEach((oToken) => {
+                                oToken.classList.remove('selected');
+                            });
+                            let div = evt.target;
+                            div.classList.toggle('selected');
+                            $(`btnConfirm`).classList.remove('disabled');
+                        });
+                    });
                 });
             });
             
-            let selectedTokenCell = null;
-            let playerBoard = $(`stig_player_board_${this.player_id}`);
-            //[...playerBoard.querySelectorAll('.stig_selectable')].forEach((o) => o.classList.remove('stig_selectable'));
-            //possible places to play :
-            Object.values(args.p_places_p).forEach((coord) => {
-                let row = coord.row;
-                let column = coord.col;
-                this.addSelectableTokenCell(this.player_id,row, column);
-                this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, (evt) => {
-                    /*this.clientState('chooseTokenType', _('Select which token you want to place'), {
-                        coord: coord,
-                    });  
-                    this.addCancelStateBtn();    */ 
-                    let div = evt.target;
-                    div.classList.toggle('selected')
-                });
-            });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedToken = $(`stig_select_piece_container`).querySelector(`.stig_token.selected`);
                 let selectedTokenCell = $(`stig_player_boards`).querySelector(`.stig_token_cell.selected`);
                 this.takeAction('actChoiceTokenToLand', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
             }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
         }, 
         
         onEnteringStateChoiceTokenToMove: function(args)
@@ -367,10 +368,12 @@ function (dojo, declare) {
                         o.classList.remove('selectable');
                         o.classList.remove('selected');
                         });
+                    $(`btnConfirm`).classList.add('disabled');
                     Object.values(this.possibleMoves[tokenId]).forEach((coord) => {
                         let row = coord.row;
                         let column = coord.col;
-                        this.addSelectableTokenCell(this.player_id,row, column);
+                        let elt2 = this.addSelectableTokenCell(this.player_id,row, column);
+                        elt2.dataset.type = div.dataset.type;
                         //Click token destination :
                         this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, (evt) => {
                             [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
@@ -378,15 +381,18 @@ function (dojo, declare) {
                                 });
                             let div = evt.target;
                             div.classList.toggle('selected');
+                            $(`btnConfirm`).classList.remove('disabled');
                         });
                     });
                 });
-                this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
-                    let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
-                    let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
-                    this.takeAction('actChoiceTokenToMove', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
-                }); 
             });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
+                let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                this.takeAction('actChoiceTokenToMove', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
         }, 
         onEnteringStateWindEffect: function(args)
         {
@@ -687,7 +693,8 @@ function (dojo, declare) {
         addSelectableTokenCell(player_id, row, column) {
             debug("addSelectableTokenCell",player_id, row, column);
             let playerGrid = $(`stig_grid_${player_id}`);
-            if ( $(`stig_token_cell_${this.player_id}_${row}_${column}`) ) return;
+            let tokenDivId = `stig_token_cell_${this.player_id}_${row}_${column}`;
+            if ( $(tokenDivId) ) return $(tokenDivId);
             
             let token = this.place('tplTokenCell', {player_id:player_id, row:row, column:column}, playerGrid);
     
@@ -699,7 +706,8 @@ function (dojo, declare) {
         },
         addToken(token, location = null, divIdSuffix = '') {
             debug("addToken",token, location,divIdSuffix);
-            if ( $(`stig_token_${token.id}${divIdSuffix}`) ) return;
+            let tokenDivId = `stig_token_${token.id}${divIdSuffix}`;
+            if ( $(tokenDivId) ) return $(tokenDivId);
             
             token.divIdSuffix = (divIdSuffix == undefined) ? '' : divIdSuffix;
             let elt = this.place('tplToken', token, location == null ? this.getTokenContainer(token) : location);
