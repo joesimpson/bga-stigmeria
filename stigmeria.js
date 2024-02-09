@@ -467,7 +467,10 @@ function (dojo, declare) {
     
             // Order them
             this.forEachPlayer((player) => {
-                let order = ((player.no - currentPlayerNo + nPlayers) % nPlayers) + 1;
+                let isCurrent = player.id == this.player_id;
+                //let 3 spaces for personal board, central board and schema board
+                let order = ((player.no - currentPlayerNo + nPlayers) % nPlayers) + 3;
+                if (isCurrent) order = 1;
                 $(`stig_player_board_container_wrapper_${player.id}`).style.order = order;
         
                 if (order == 1) {
@@ -518,6 +521,7 @@ function (dojo, declare) {
         },
         setupCentralBoard(){
             debug("setupCentralBoard");
+            this.place('tplCentralBoard',{}, 'stig_player_boards');
         },
         setupSchemaBoard(){
             debug("setupSchemaBoard");
@@ -541,6 +545,21 @@ function (dojo, declare) {
                 <div class="stig_schema_board" id='stig_schema_board_${schema.id}' data_flower_type="${schema.type}">
                     <div class='stig_schema_name'>${schema.name}</div>
                     <div id="stig_grid_schema_${schema.id}" class='stig_grid'>
+                    </div>
+                </div>
+            </div>
+            </div>`;
+        },
+        
+        tplCentralBoard() {
+            let boardName = _('StigmaReine (Central board)');
+            let schema = this.gamedatas.schemas[this.gamedatas.schema];
+            let flowerType = schema.type;
+            return `<div class='stig_resizable_board' id='stig_central_board_container_wrapper'>
+            <div class='stig_central_board_container'>
+                <div class="stig_central_board" id='stig_central_board' data_flower_type="${flowerType}">
+                    <div class='stig_schema_name'>${boardName}</div>
+                    <div id="stig_grid_central" class='stig_grid'>
                     </div>
                 </div>
             </div>
@@ -618,9 +637,12 @@ function (dojo, declare) {
         },
         getTokenContainer(token) {
             debug("getTokenContainer",token);
+            if (token.location == 'central_board') {
+                return $(`stig_grid_central`);
+            }
             if (token.location == 'player_board') {
                 return $(`stig_grid_${token.pId}`);
-                //TODO IF row/col out of grid (after wind for example, don't show it there)
+                //TODO JSA IF row/col out of grid (after wind for example, don't show it there)
             }
             if (token.location == 'player_recruit') {
                 return $(`stig_recruits_${token.pId}`);

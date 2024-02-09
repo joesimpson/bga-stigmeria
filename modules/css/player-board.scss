@@ -7,6 +7,7 @@
         margin-bottom: 10px;
 
         .stig_schema_board_container,
+        .stig_central_board_container,
         .stig_player_board_container{
             /* prevents vertical invisible overflow on BGA bottom elements*/
             height: inherit;
@@ -14,6 +15,7 @@
     }
 
     .stig_schema_board,
+    .stig_central_board,
     .stig_player_board {
         transform: scale(var(--stig_board_display_scale));
         transform-origin: top left;
@@ -35,10 +37,14 @@
         /** let the first player in first place, for when only 1 board is displayed (tiny screen)*/
         order: 2;
     }
+    #stig_central_board_container_wrapper{
+        order: 3;
+    }
 }
 
 
 .stig_schema_board,
+.stig_central_board,
 .stig_player_board{
     background-size: 100% auto;
     background-repeat: no-repeat;
