@@ -287,27 +287,80 @@
 .stig_player_board[data_flower_type="5"] {
   background-image: url("img/flower5.jpg");
 }
+.stig_schema_board .stig_schema_number,
+.stig_schema_board .stig_schema_difficulty,
+.stig_schema_board .stig_schema_name,
+.stig_schema_board .player-name,
+.stig_central_board .stig_schema_number,
+.stig_central_board .stig_schema_difficulty,
+.stig_central_board .stig_schema_name,
+.stig_central_board .player-name,
+.stig_player_board .stig_schema_number,
+.stig_player_board .stig_schema_difficulty,
+.stig_player_board .stig_schema_name,
+.stig_player_board .player-name {
+  position: absolute;
+  text-align: center;
+  background-color: rgb(206, 247, 158);
+  border-radius: 25px;
+  padding: 6px 20px;
+  font-size: 26px;
+  outline: 5px solid gold;
+}
+.stig_schema_board .stig_schema_number,
+.stig_schema_board .stig_schema_difficulty,
+.stig_schema_board .stig_schema_name,
+.stig_central_board .stig_schema_number,
+.stig_central_board .stig_schema_difficulty,
+.stig_central_board .stig_schema_name,
+.stig_player_board .stig_schema_number,
+.stig_player_board .stig_schema_difficulty,
+.stig_player_board .stig_schema_name {
+  color: gold;
+  background-color: rgb(0, 0, 0);
+}
 .stig_schema_board .stig_schema_name,
 .stig_schema_board .player-name,
 .stig_central_board .stig_schema_name,
 .stig_central_board .player-name,
 .stig_player_board .stig_schema_name,
 .stig_player_board .player-name {
-  position: absolute;
-  text-align: center;
-  background-color: rgb(206, 247, 158);
-  right: 20%;
-  border-radius: 25px;
-  padding: 6px 20px;
   top: 3px;
-  font-size: 26px;
-  outline: 5px solid gold;
+  right: 20%;
 }
-.stig_schema_board .stig_schema_name,
-.stig_central_board .stig_schema_name,
-.stig_player_board .stig_schema_name {
+.stig_schema_board .stig_schema_difficulty,
+.stig_central_board .stig_schema_difficulty,
+.stig_player_board .stig_schema_difficulty {
+  left: 2%;
+  display: flex;
+  align-items: center;
+}
+.stig_schema_board .stig_schema_number,
+.stig_central_board .stig_schema_number,
+.stig_player_board .stig_schema_number {
+  right: 2%;
+}
+.stig_schema_board .stig_schema_difficulty,
+.stig_schema_board .stig_schema_number,
+.stig_central_board .stig_schema_difficulty,
+.stig_central_board .stig_schema_number,
+.stig_player_board .stig_schema_difficulty,
+.stig_player_board .stig_schema_number {
+  bottom: 16px;
+  font-size: 51px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+.stig_schema_board .stig_schema_difficulty .fa6-star,
+.stig_schema_board .stig_schema_number .fa6-star,
+.stig_central_board .stig_schema_difficulty .fa6-star,
+.stig_central_board .stig_schema_number .fa6-star,
+.stig_player_board .stig_schema_difficulty .fa6-star,
+.stig_player_board .stig_schema_number .fa6-star {
   color: gold;
-  background-color: rgb(0, 0, 0);
+  font-size: 40px;
 }
 .stig_schema_board .stig_grid,
 .stig_central_board .stig_grid,

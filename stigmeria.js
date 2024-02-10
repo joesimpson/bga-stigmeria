@@ -658,13 +658,17 @@ function (dojo, declare) {
         },
         tplSchemaBoard(schema) {
             schema.name = _('Targeted schema');
-            //TODO JSA Display number and difficulty
+            let stars = '';
+            let k = 0;
+            while(k< schema.difficulty){ stars += `<i class="fa6 fa6-star"></i>`; k++;}
             return `<div class='stig_resizable_board' id='stig_schema_board_container_wrapper' data_schema='${schema.id}'>
             <div class='stig_schema_board_container'>
                 <div class="stig_schema_board" id='stig_schema_board_${schema.id}' data_flower_type="${schema.type}">
                     <div class='stig_schema_name'>${schema.name}</div>
                     <div id="stig_grid_schema_${schema.id}" class='stig_grid'>
                     </div>
+                    <div class='stig_schema_difficulty'>&nbsp;&nbsp;${stars}&nbsp;&nbsp;</div>
+                    <div class='stig_schema_number'>&nbsp;&nbsp;&nbsp;&nbsp;${schema.id}&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 </div>
             </div>
             </div>`;
