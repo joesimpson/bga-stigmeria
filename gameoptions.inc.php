@@ -52,6 +52,17 @@ $game_options = [
                   ),
             ),
     'default' => OPTION_MODE_NORMAL,
+    
+    'startcondition'=>  [
+      OPTION_MODE_DISCOVERY => [
+          [
+            "type" => "otheroption",
+            "id" => OPTION_GAMESTATE_RATING_MODE,
+            "value"=> OPTION_GAMESTATE_RATING_MODE_TRAINING,
+            "message"=> totranslate("Discovery is available in training only"),
+          ],
+        ],
+      ],
   ),
   OPTION_FLOWER => array(
     'name' => totranslate('Flower type'),    
@@ -88,15 +99,6 @@ $game_options = [
                 ),
             ),
     'default' => OPTION_FLOWER_VERTIGHAINEUSE,
-    /*
-    'displaycondition'=> [
-      [
-        "type"=> "otheroptionisnot ",
-        "id"=> OPTION_MODE,
-        "value"=> [ 4 ],
-      ],
-    ],
-    */
   ),
   
   OPTION_DIFFICULTY => array(
@@ -121,7 +123,6 @@ $game_options = [
                   'name' => totranslate('4 Stars'), 
                   'description' => totranslate('No Limit'), 
                   'tmdisplay' => totranslate('4 Stars'),
-                  //TODO JSA FILTER NO LIMIT ?
                 ),
                 OPTION_DIFFICULTY_RANDOM => array( 
                   'name' => totranslate('Random'), 
