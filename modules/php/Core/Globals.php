@@ -98,7 +98,9 @@ class Globals extends \STIG\Helpers\DB_Manager
     }
     self::setOptionFlowerType($flowerType);
 
-    $difficulty = $options[OPTION_DIFFICULTY];
+    $difficulty = OPTION_DIFFICULTY_RANDOM;
+    if(array_key_exists(OPTION_DIFFICULTY,$options)) $difficulty = $options[OPTION_DIFFICULTY];
+    if(array_key_exists(OPTION_DIFFICULTY_NL,$options)) $difficulty = $options[OPTION_DIFFICULTY_NL];
     if($difficulty == OPTION_DIFFICULTY_RANDOM){
       $difficulty = OPTION_DIFFICULTY_VALUES[array_rand(OPTION_DIFFICULTY_VALUES, 1)];
     }
@@ -111,6 +113,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     if(array_key_exists(OPTION_SCHEMA_S,$options)) $optionSchema = $options[OPTION_SCHEMA_S];
     if(array_key_exists(OPTION_SCHEMA_D,$options)) $optionSchema = $options[OPTION_SCHEMA_D];
     if(array_key_exists(OPTION_SCHEMA_I,$options)) $optionSchema = $options[OPTION_SCHEMA_I];
+    if(array_key_exists(OPTION_SCHEMA_NL,$options)) $optionSchema = $options[OPTION_SCHEMA_NL];
     if($optionSchema == OPTION_SCHEMA_RANDOM){
       //PICK A RANDOM
       $schemasIds = $schemas->filter( function ($schema) use ($flowerType,$difficulty) {

@@ -106,6 +106,11 @@ $game_options = [
                   'description' => totranslate('Each variety of petals.'), 
                   'tmdisplay' => totranslate('InspirActrice'),
                 ),
+                OPTION_FLOWER_NO_LIMIT => array( 
+                  'name' => totranslate('Competitive No Limit'), 
+                  'description' => totranslate('Competitive No Limit'), 
+                  'tmdisplay' => totranslate('Competitive No Limit'),
+                ),
                 OPTION_FLOWER_RANDOM => array( 
                   'name' => totranslate('Random'), 
                   'description' => totranslate('Random flower'), 
@@ -133,11 +138,6 @@ $game_options = [
                   'description' => totranslate('Very difficult'), 
                   'tmdisplay' => totranslate('3 Stars'),
                 ),
-                OPTION_DIFFICULTY_4 => array( 
-                  'name' => totranslate('4 Stars'), 
-                  'description' => totranslate('No Limit'), 
-                  'tmdisplay' => totranslate('4 Stars'),
-                ),
                 OPTION_DIFFICULTY_RANDOM => array( 
                   'name' => totranslate('Random'), 
                   'description' => totranslate('Random difficulty'), 
@@ -145,6 +145,32 @@ $game_options = [
                 ),
             ),
     'default' => OPTION_DIFFICULTY_1,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroptionisnot",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_NO_LIMIT,
+        ],
+      ],
+  ),
+  
+  OPTION_DIFFICULTY_NL => array(
+    'name' => totranslate('Difficulty'),    
+    'values' => array(
+                OPTION_DIFFICULTY_4 => array( 
+                  'name' => totranslate('4 Stars'), 
+                  'description' => totranslate('No Limit'), 
+                  'tmdisplay' => totranslate('4 Stars'),
+                ),
+            ),
+    'default' => OPTION_DIFFICULTY_4,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_NO_LIMIT,
+        ],
+      ],
   ),
   
   OPTION_SCHEMA_V => array(
@@ -415,6 +441,75 @@ $game_options = [
           "type"=> "otheroptionisnot",
           "id"=> OPTION_DIFFICULTY,
           "value"=> OPTION_DIFFICULTY_RANDOM,
+        ],
+      ],
+  ),
+  
+  OPTION_SCHEMA_NL => array(
+    'name' => totranslate('Targeted schema'),    
+    'values' => array(
+                OPTION_SCHEMA_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random schema'), 
+                  'tmdisplay' => totranslate('Random schema'),
+                ),
+                OPTION_SCHEMA_40 => array( 
+                  'name' => '#40', 
+                  'description' => '#40', 
+                  'tmdisplay' => '#40',
+                ),
+                OPTION_SCHEMA_41 => array( 
+                  'name' => '#41', 
+                  'description' => '#41', 
+                  'tmdisplay' => '#41',
+                ),
+                OPTION_SCHEMA_42 => array( 
+                  'name' => '#42', 
+                  'description' => '#42', 
+                  'tmdisplay' => '#42',
+                ),
+                OPTION_SCHEMA_43 => array( 
+                  'name' => '#43', 
+                  'description' => '#43', 
+                  'tmdisplay' => '#43',
+                ),
+                OPTION_SCHEMA_44 => array( 
+                  'name' => '#44', 
+                  'description' => '#44', 
+                  'tmdisplay' => '#44',
+                ),
+                OPTION_SCHEMA_45 => array( 
+                  'name' => '#45', 
+                  'description' => '#45', 
+                  'tmdisplay' => '#45',
+                ),
+                OPTION_SCHEMA_46 => array( 
+                  'name' => '#46', 
+                  'description' => '#46', 
+                  'tmdisplay' => '#46',
+                ),
+                OPTION_SCHEMA_47 => array( 
+                  'name' => '#47', 
+                  'description' => '#47', 
+                  'tmdisplay' => '#47',
+                ),
+                OPTION_SCHEMA_48 => array( 
+                  'name' => '#48', 
+                  'description' => '#48', 
+                  'tmdisplay' => '#48',
+                ),
+                OPTION_SCHEMA_49 => array( 
+                  'name' => '#49', 
+                  'description' => '#49', 
+                  'tmdisplay' => '#49',
+                ),
+            ),
+    'default' => OPTION_SCHEMA_RANDOM,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_NO_LIMIT,
         ],
       ],
   ),
