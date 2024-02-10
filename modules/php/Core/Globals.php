@@ -5,6 +5,7 @@ namespace STIG\Core;
 use STIG\Core\Game;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\Collection;
+use STIG\Helpers\Utils;
 use STIG\Managers\Schemas;
 use STIG\Models\Schema;
 
@@ -98,18 +99,30 @@ class Globals extends \STIG\Helpers\DB_Manager
     self::setOptionFlowerType($flowerType);
 
     $difficulty = OPTION_DIFFICULTY_RANDOM;
-    if(array_key_exists(OPTION_DIFFICULTY,$options)) $difficulty = $options[OPTION_DIFFICULTY];
-    if(array_key_exists(OPTION_DIFFICULTY_NL,$options)) $difficulty = $options[OPTION_DIFFICULTY_NL];
-    if(array_key_exists(OPTION_DIFFICULTY_ALL,$options)) $difficulty = $options[OPTION_DIFFICULTY_ALL];
+    Utils::updateDataFromArray($options,OPTION_DIFFICULTY,$difficulty);
+    Utils::updateDataFromArray($options,OPTION_DIFFICULTY_NL,$difficulty);
+    Utils::updateDataFromArray($options,OPTION_DIFFICULTY_ALL,$difficulty);
     self::setOptionDifficulty($difficulty);
 
     $optionSchema = OPTION_SCHEMA_RANDOM;//DEFAULT RANDOM
-    if(array_key_exists(OPTION_SCHEMA_V,$options)) $optionSchema = $options[OPTION_SCHEMA_V];
-    if(array_key_exists(OPTION_SCHEMA_M,$options)) $optionSchema = $options[OPTION_SCHEMA_M];
-    if(array_key_exists(OPTION_SCHEMA_S,$options)) $optionSchema = $options[OPTION_SCHEMA_S];
-    if(array_key_exists(OPTION_SCHEMA_D,$options)) $optionSchema = $options[OPTION_SCHEMA_D];
-    if(array_key_exists(OPTION_SCHEMA_I,$options)) $optionSchema = $options[OPTION_SCHEMA_I];
-    if(array_key_exists(OPTION_SCHEMA_C,$options)) $optionSchema = $options[OPTION_SCHEMA_C];
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_V1,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_V2,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_V3,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_M1,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_M2,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_M3,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_S1,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_S2,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_S3,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_D1,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_D2,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_D3,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_I1,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_I2,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_I3,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_C1,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_C2,$optionSchema);
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_C3,$optionSchema);
     if(array_key_exists(OPTION_SCHEMA_NL,$options)) $optionSchema = $options[OPTION_SCHEMA_NL];
     
     $schemaTypes = Schemas::getTypes();
