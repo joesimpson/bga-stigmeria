@@ -127,9 +127,15 @@ class Stigmeria extends Table
     */
     function getGameProgression()
     {
-        // TODO: compute and return the game progression
-
-        return 0;
+        $nbRounds = Globals::getNbRounds(); 
+        if($nbRounds == 0 ) $nbRounds =1;
+        $round = Globals::getRound();
+        $turn = Globals::getTurn();
+        $turnMax = TURN_MAX;
+        //TODO JSA MANAGE rounds WITH more than 10 turns ?
+        $currentRoundProgression = ($turn-1) / $turnMax;
+        $progress = ($round-1)/$nbRounds + 1/$nbRounds * $currentRoundProgression;
+        return $progress * 100;
     }
 
 

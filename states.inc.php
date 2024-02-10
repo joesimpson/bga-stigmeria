@@ -106,6 +106,7 @@ $machinestates = array(
         "description" => clienttranslate('Preparing new round'),
         "type" => "game",
         "action" => "stNewRound",
+        "updateGameProgression" => true,
         "transitions" => [ 
             "next" => ST_GENERATE_WIND,
         ],
@@ -139,6 +140,7 @@ $machinestates = array(
         "description" => clienttranslate('Next turn'),
         "type" => "game",
         "action" => "stNextTurn",
+        "updateGameProgression" => true,
         "transitions" => [ 
             "next" => ST_PLAYER_TURN,
             "end" => ST_END_ROUND,
@@ -153,6 +155,7 @@ $machinestates = array(
         "initialprivate" => ST_TURN_COMMON_BOARD,// This makes this state a master multiactive state and enables private states
         "action" => "stPlayerturn",
         "args" => "argPlayerTurn",
+        "updateGameProgression" => true,
         "possibleactions" => [ 
             //this actions are possible if player is not in any private state which usually happens when they are inactive
         ],

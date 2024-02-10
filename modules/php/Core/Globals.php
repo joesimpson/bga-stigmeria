@@ -16,6 +16,7 @@ class Globals extends \STIG\Helpers\DB_Manager
   protected static $initialized = false;
   protected static $variables = [
     'round' => 'int',
+    'nbRounds' => 'int',
     'turn' => 'int',
     'firstPlayer' => 'int',
 
@@ -69,6 +70,8 @@ class Globals extends \STIG\Helpers\DB_Manager
    */
   public static function setupNewGame($players, $options)
   {
+    //TODO JSA update nbRounds according to options
+    self::setNbRounds(1);
     self::setRound(0);
     self::setTurn(0);
     
