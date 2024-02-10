@@ -50,6 +50,13 @@ $game_options = [
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
                   ),
+                OPTION_MODE_CHALLENGE => [
+                  'name' => totranslate('Challenge'), 
+                  'description' => totranslate('Challenge'), 
+                  'tmdisplay' => totranslate('Challenge'),
+                  'nobeginner' => true, 
+                  'alpha' => true, 
+                ],
             ),
     'default' => OPTION_MODE_NORMAL,
     
@@ -62,7 +69,14 @@ $game_options = [
             "message"=> totranslate("Discovery is available in training only"),
           ],
         ],
-      ],
+      OPTION_MODE_CHALLENGE => [
+          [
+            'type' => 'minplayers', 
+            'value' => 99, 
+            'message' => 'Challenge not available in current version',
+          ],
+        ],
+    ],
   ),
   OPTION_FLOWER => array(
     'name' => totranslate('Flower type'),    
