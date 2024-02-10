@@ -84,6 +84,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     if(array_key_exists(OPTION_SCHEMA_M,$options)) $optionSchema = $options[OPTION_SCHEMA_M];
     if(array_key_exists(OPTION_SCHEMA_S,$options)) $optionSchema = $options[OPTION_SCHEMA_S];
     if(array_key_exists(OPTION_SCHEMA_D,$options)) $optionSchema = $options[OPTION_SCHEMA_D];
+    if(array_key_exists(OPTION_SCHEMA_I,$options)) $optionSchema = $options[OPTION_SCHEMA_I];
     if(!isset($optionSchema)) throw new UnexpectedException(1,"Missing schema $optionSchema!");
     self::setOptionSchema($optionSchema);
   }

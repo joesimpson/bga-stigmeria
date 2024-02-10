@@ -121,6 +121,18 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_RED,     10,7 ),
           new TokenCoord( TOKEN_POLLEN_BROWN,   10,10 ),
         ] ),
+        
+      OPTION_SCHEMA_28 => new Schema(28, OPTION_FLOWER_INSPIRACTRICE, 3, [],[
+          new TokenCoord( TOKEN_POLLEN_GREEN,   1,4 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     1,5 ),
+          new TokenCoord( TOKEN_POLLEN_BROWN,   1,6 ),
+          new TokenCoord( TOKEN_POLLEN_VIOLET,  1,7 ),
+          new TokenCoord( TOKEN_POLLEN_ORANGE,  1,8 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  10,4 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE,   10,5 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK,   10,6 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    10,7 ),
+        ] ),
       //TODO JSA OTHER SCHEMAS
     ];
   }

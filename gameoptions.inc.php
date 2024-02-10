@@ -349,6 +349,60 @@ $game_options = [
         ],
       ],
   ),
+  
+  OPTION_SCHEMA_I => array(
+    'name' => totranslate('Targeted schema'),    
+    'values' => array(
+                OPTION_SCHEMA_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random schema'), 
+                  'tmdisplay' => totranslate('Random schema'),
+                ),
+                OPTION_SCHEMA_25 => array( 
+                  'name' => '#25', 
+                  'description' => '#25', 
+                  'tmdisplay' => '#25',
+                ),
+                OPTION_SCHEMA_26 => array( 
+                  'name' => '#26', 
+                  'description' => '#26', 
+                  'tmdisplay' => '#26',
+                ),
+                OPTION_SCHEMA_27 => array( 
+                  'name' => '#27', 
+                  'description' => '#27', 
+                  'tmdisplay' => '#27',
+                ),
+                OPTION_SCHEMA_28 => array( 
+                  'name' => '#28', 
+                  'description' => '#28', 
+                  'tmdisplay' => '#28',
+                ),
+                OPTION_SCHEMA_29 => array( 
+                  'name' => '#29', 
+                  'description' => '#29', 
+                  'tmdisplay' => '#29',
+                ),
+                OPTION_SCHEMA_30 => array( 
+                  'name' => '#30', 
+                  'description' => '#30', 
+                  'tmdisplay' => '#30',
+                ),
+            ),
+    'default' => OPTION_SCHEMA_RANDOM,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_INSPIRACTRICE,
+        ],
+        [
+          "type"=> "otheroptionisnot",
+          "id"=> OPTION_DIFFICULTY,
+          "value"=> OPTION_DIFFICULTY_RANDOM,
+        ],
+      ],
+  ),
 
 ];
 
