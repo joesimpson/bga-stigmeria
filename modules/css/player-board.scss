@@ -63,7 +63,9 @@
     &[data_flower_type='4']{
         background-image: url('img/flower4.jpg');
     }
-    &[data_flower_type='5']{
+    &[data_flower_type='5'],
+    &[data_flower_type='6'],
+    &[data_flower_type='7']{
         background-image: url('img/flower5.jpg');
     }
     
