@@ -89,24 +89,20 @@ class Globals extends \STIG\Helpers\DB_Manager
       }
     }
 
-    //GAME OPTIONS 
+    //              --------------------------------------------
+    //GAME OPTIONS  --------------------------------------------
+    //              --------------------------------------------
     self::setOptionGameMode($options[OPTION_MODE]);
 
     $flowerType = $options[OPTION_FLOWER];
-    if($flowerType == OPTION_FLOWER_RANDOM){
-      $flowerType = OPTION_FLOWER_VALUES[array_rand(OPTION_FLOWER_VALUES, 1) ];
-    }
     self::setOptionFlowerType($flowerType);
 
     $difficulty = OPTION_DIFFICULTY_RANDOM;
     if(array_key_exists(OPTION_DIFFICULTY,$options)) $difficulty = $options[OPTION_DIFFICULTY];
     if(array_key_exists(OPTION_DIFFICULTY_NL,$options)) $difficulty = $options[OPTION_DIFFICULTY_NL];
-    if($difficulty == OPTION_DIFFICULTY_RANDOM){
-      $difficulty = OPTION_DIFFICULTY_VALUES[array_rand(OPTION_DIFFICULTY_VALUES, 1)];
-    }
+    if(array_key_exists(OPTION_DIFFICULTY_ALL,$options)) $difficulty = $options[OPTION_DIFFICULTY_ALL];
     self::setOptionDifficulty($difficulty);
 
-    $schemas = new Collection(Schemas::getTypes());
     $optionSchema = OPTION_SCHEMA_RANDOM;//DEFAULT RANDOM
     if(array_key_exists(OPTION_SCHEMA_V,$options)) $optionSchema = $options[OPTION_SCHEMA_V];
     if(array_key_exists(OPTION_SCHEMA_M,$options)) $optionSchema = $options[OPTION_SCHEMA_M];
@@ -115,16 +111,32 @@ class Globals extends \STIG\Helpers\DB_Manager
     if(array_key_exists(OPTION_SCHEMA_I,$options)) $optionSchema = $options[OPTION_SCHEMA_I];
     if(array_key_exists(OPTION_SCHEMA_C,$options)) $optionSchema = $options[OPTION_SCHEMA_C];
     if(array_key_exists(OPTION_SCHEMA_NL,$options)) $optionSchema = $options[OPTION_SCHEMA_NL];
+    
+    $schemaTypes = Schemas::getTypes();
+    $schemas = new Collection($schemaTypes);
+    //PICK A RANDOM Schema in respect with every option
+    // (Special warning if random/random/random, we don't want to pick an incompatible flower type and difficulty )
     if($optionSchema == OPTION_SCHEMA_RANDOM){
-      //PICK A RANDOM
+      //IF Schema is random, other options will influence this 
+      //When others are known, let's filter existing schemas in model :
       $schemasIds = $schemas->filter( function ($schema) use ($flowerType,$difficulty) {
-          return $schema->type == $flowerType && $schema->difficulty == $difficulty;
+          return ($schema->type == $flowerType || $flowerType == OPTION_FLOWER_RANDOM)
+              && ($schema->difficulty == $difficulty || $difficulty == OPTION_DIFFICULTY_RANDOM);
         })
         ->map(function ($schema) {
           return $schema->id;
         })->toArray();
-      if(count($schemasIds) == 0) throw new UnexpectedException(1,"Missing schemas ($flowerType , $difficulty) for random !");
+      if(count($schemasIds) == 0) throw new UnexpectedException(1,"Missing random schema ($flowerType , $difficulty) !");
       $optionSchema = $schemasIds[array_rand($schemasIds, 1)];
+    }
+    else {
+      //IF Schema is not random, it is precisely selected, and other options are not used
+      if(!array_key_exists($optionSchema,$schemaTypes)) throw new UnexpectedException(1,"Missing schema $optionSchema !");
+      /*
+      $schema = $schemaTypes[$optionSchema];
+      $difficulty = $schema->difficulty;
+      $flowerType = $schema->type;
+      */
     }
     self::setOptionSchema($optionSchema);
 

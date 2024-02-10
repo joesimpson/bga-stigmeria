@@ -156,6 +156,11 @@ $game_options = [
           "id"=> OPTION_FLOWER,
           "value"=> OPTION_FLOWER_NO_LIMIT,
         ],
+        [
+          "type"=> "otheroptionisnot",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_RANDOM,
+        ],
       ],
   ),
   
@@ -174,6 +179,45 @@ $game_options = [
           "type"=> "otheroption",
           "id"=> OPTION_FLOWER,
           "value"=> OPTION_FLOWER_NO_LIMIT,
+        ],
+      ],
+  ),
+  
+  OPTION_DIFFICULTY_ALL => array(
+    'name' => totranslate('Difficulty'),    
+    'values' => array(
+                OPTION_DIFFICULTY_1 => array( 
+                  'name' => totranslate('1 Star'), 
+                  'description' => totranslate('Normal'), 
+                  'tmdisplay' => totranslate('1 Star'),
+                ),
+                OPTION_DIFFICULTY_2 => array( 
+                  'name' => totranslate('2 Stars'), 
+                  'description' => totranslate('Difficult'), 
+                  'tmdisplay' => totranslate('2 Stars'),
+                ),
+                OPTION_DIFFICULTY_3 => array( 
+                  'name' => totranslate('3 Stars'), 
+                  'description' => totranslate('Very difficult'), 
+                  'tmdisplay' => totranslate('3 Stars'),
+                ),
+                OPTION_DIFFICULTY_4 => array( 
+                  'name' => totranslate('4 Stars'), 
+                  'description' => totranslate('No Limit'), 
+                  'tmdisplay' => totranslate('4 Stars'),
+                ),
+                OPTION_DIFFICULTY_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random difficulty'), 
+                  'tmdisplay' => totranslate('Random difficulty'),
+                ),
+            ),
+    'default' => OPTION_DIFFICULTY_RANDOM,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_RANDOM,
         ],
       ],
   ),
@@ -598,8 +642,6 @@ $game_options = [
                 ),
             ),
     'default' => OPTION_SCHEMA_RANDOM,
-    //OR doesn't work ? => so I need 2 identical lists  
-    //'displayconditionoperand ' => 'OR',
     'displaycondition'=> [
         [
           "type"=> "otheroption",
@@ -625,6 +667,11 @@ $game_options = [
             ),
     'default' => OPTION_SCHEMA_RANDOM,
     'displaycondition'=> [
+        [
+          "type"=> "otheroptionisnot",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_RANDOM,
+        ],
         [
           "type"=> "otheroption",
           "id"=> OPTION_DIFFICULTY,
