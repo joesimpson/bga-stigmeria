@@ -4,6 +4,7 @@ namespace STIG\Core;
 
 use STIG\Core\Game;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Helpers\Collection;
 use STIG\Managers\Schemas;
 use STIG\Models\Schema;
 
@@ -34,10 +35,11 @@ class Globals extends \STIG\Helpers\DB_Manager
     'windDirection11' => 'str',
 
     // Game options
-    
+    'optionGameMode' => 'int',
+    'optionFlowerType' => 'int',
+    'optionDifficulty' => 'int',
     //For games with 1 schema in the entire game :(not solo challenge)
     'optionSchema' => 'int',
-    'optionGameMode' => 'int',
   ];
 
   public static function getAllWindDir()
@@ -87,16 +89,41 @@ class Globals extends \STIG\Helpers\DB_Manager
       }
     }
 
-    //TODO JSA MANAGE Schema other SubList
+    //GAME OPTIONS 
+    self::setOptionGameMode($options[OPTION_MODE]);
+
+    $flowerType = $options[OPTION_FLOWER];
+    if($flowerType == OPTION_FLOWER_RANDOM){
+      $flowerType = OPTION_FLOWER_VALUES[array_rand(OPTION_FLOWER_VALUES, 1) ];
+    }
+    self::setOptionFlowerType($flowerType);
+
+    $difficulty = $options[OPTION_DIFFICULTY];
+    if($difficulty == OPTION_DIFFICULTY_RANDOM){
+      $difficulty = OPTION_DIFFICULTY_VALUES[array_rand(OPTION_DIFFICULTY_VALUES, 1)];
+    }
+    self::setOptionDifficulty($difficulty);
+
+    $schemas = new Collection(Schemas::getTypes());
+    $optionSchema = OPTION_SCHEMA_RANDOM;//DEFAULT RANDOM
     if(array_key_exists(OPTION_SCHEMA_V,$options)) $optionSchema = $options[OPTION_SCHEMA_V];
     if(array_key_exists(OPTION_SCHEMA_M,$options)) $optionSchema = $options[OPTION_SCHEMA_M];
     if(array_key_exists(OPTION_SCHEMA_S,$options)) $optionSchema = $options[OPTION_SCHEMA_S];
     if(array_key_exists(OPTION_SCHEMA_D,$options)) $optionSchema = $options[OPTION_SCHEMA_D];
     if(array_key_exists(OPTION_SCHEMA_I,$options)) $optionSchema = $options[OPTION_SCHEMA_I];
-    if(!isset($optionSchema)) throw new UnexpectedException(1,"Missing schema $optionSchema!");
+    if($optionSchema == OPTION_SCHEMA_RANDOM){
+      //PICK A RANDOM
+      $schemasIds = $schemas->filter( function ($schema) use ($flowerType,$difficulty) {
+          return $schema->type == $flowerType && $schema->difficulty == $difficulty;
+        })
+        ->map(function ($schema) {
+          return $schema->id;
+        })->toArray();
+      if(count($schemasIds) == 0) throw new UnexpectedException(1,"Missing schemas ($flowerType , $difficulty) for random !");
+      $optionSchema = $schemasIds[array_rand($schemasIds, 1)];
+    }
     self::setOptionSchema($optionSchema);
 
-    self::setOptionGameMode($options[OPTION_MODE]);
   }
   
   /**

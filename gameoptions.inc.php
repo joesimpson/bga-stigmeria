@@ -22,7 +22,8 @@ require_once 'modules/php/constants.inc.php';
 $game_options = [
 
   OPTION_MODE => array(
-    'name' => totranslate('Game mode'),    
+    //I make it clearly different from BGA 'Game mode'
+    'name' => totranslate('Stigmeria game mode'),    
     'values' => array(
                 OPTION_MODE_DISCOVERY => array( 
                   'name' => totranslate('Discovery'), 
@@ -48,7 +49,6 @@ $game_options = [
                   'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.'), 
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
-                  'premium' => true,
                   ),
             ),
     'default' => OPTION_MODE_NORMAL,
@@ -141,34 +141,34 @@ $game_options = [
                   'tmdisplay' => totranslate('Random schema'),
                 ),
                 OPTION_SCHEMA_1 => array( 
-                  'name' => '1', 
-                  'description' => '1', 
-                  'tmdisplay' => '1',
+                  'name' => '#1', 
+                  'description' => '#1', 
+                  'tmdisplay' => '#1',
                 ),
                 OPTION_SCHEMA_2 => array( 
-                  'name' => '2', 
-                  'description' => '2', 
-                  'tmdisplay' => '2',
+                  'name' => '#2', 
+                  'description' => '#2', 
+                  'tmdisplay' => '#2',
                 ),
                 OPTION_SCHEMA_3 => array( 
-                  'name' => '3', 
-                  'description' => '3', 
-                  'tmdisplay' => '3',
+                  'name' => '#3', 
+                  'description' => '#3', 
+                  'tmdisplay' => '#3',
                 ),
                 OPTION_SCHEMA_4 => array( 
-                  'name' => '4', 
-                  'description' => '4', 
-                  'tmdisplay' => '4',
+                  'name' => '#4', 
+                  'description' => '#4', 
+                  'tmdisplay' => '#4',
                 ),
                 OPTION_SCHEMA_5 => array( 
-                  'name' => '5', 
-                  'description' => '5', 
-                  'tmdisplay' => '5',
+                  'name' => '#5', 
+                  'description' => '#5', 
+                  'tmdisplay' => '#5',
                 ),
                 OPTION_SCHEMA_6 => array( 
-                  'name' => '6', 
-                  'description' => '6', 
-                  'tmdisplay' => '6',
+                  'name' => '#6', 
+                  'description' => '#6', 
+                  'tmdisplay' => '#6',
                 ),
             ),
     'default' => OPTION_SCHEMA_1,
@@ -197,34 +197,34 @@ $game_options = [
                   'tmdisplay' => totranslate('Random schema'),
                 ),
                 OPTION_SCHEMA_7 => array( 
-                  'name' => '7', 
-                  'description' => '7', 
-                  'tmdisplay' => '7',
+                  'name' => '#7', 
+                  'description' => '#7', 
+                  'tmdisplay' => '#7',
                 ),
                 OPTION_SCHEMA_8 => array( 
-                  'name' => '8', 
-                  'description' => '8', 
-                  'tmdisplay' => '8',
+                  'name' => '#8', 
+                  'description' => '#8', 
+                  'tmdisplay' => '#8',
                 ),
                 OPTION_SCHEMA_9 => array( 
-                  'name' => '9', 
-                  'description' => '9', 
-                  'tmdisplay' => '9',
+                  'name' => '#9', 
+                  'description' => '#9', 
+                  'tmdisplay' => '#9',
                 ),
                 OPTION_SCHEMA_10 => array( 
-                  'name' => '10', 
-                  'description' => '10', 
-                  'tmdisplay' => '10',
+                  'name' => '#10', 
+                  'description' => '#10', 
+                  'tmdisplay' => '#10',
                 ),
                 OPTION_SCHEMA_11 => array( 
-                  'name' => '11', 
-                  'description' => '11', 
-                  'tmdisplay' => '11',
+                  'name' => '#11', 
+                  'description' => '#11', 
+                  'tmdisplay' => '#11',
                 ),
                 OPTION_SCHEMA_12 => array( 
-                  'name' => '12', 
-                  'description' => '12', 
-                  'tmdisplay' => '12',
+                  'name' => '#12', 
+                  'description' => '#12', 
+                  'tmdisplay' => '#12',
                 ),
             ),
     'default' => OPTION_SCHEMA_RANDOM,
@@ -398,6 +398,51 @@ $game_options = [
         ],
         [
           "type"=> "otheroptionisnot",
+          "id"=> OPTION_DIFFICULTY,
+          "value"=> OPTION_DIFFICULTY_RANDOM,
+        ],
+      ],
+  ),
+  
+  OPTION_SCHEMA_RANDOM_ONLY_1 => array(
+    'name' => totranslate('Targeted schema'),    
+    'values' => array(
+                OPTION_SCHEMA_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random schema'), 
+                  'tmdisplay' => totranslate('Random schema'),
+                ),
+            ),
+    'default' => OPTION_SCHEMA_RANDOM,
+    //OR doesn't work ? => so I need 2 identical lists  
+    //'displayconditionoperand ' => 'OR',
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_RANDOM,
+        ],
+        [
+          "type"=> "otheroptionisnot",
+          "id"=> OPTION_DIFFICULTY,
+          "value"=> OPTION_DIFFICULTY_RANDOM,
+        ],
+      ],
+  ),
+  
+  OPTION_SCHEMA_RANDOM_ONLY_2 => array(
+    'name' => totranslate('Targeted schema'),    
+    'values' => array(
+                OPTION_SCHEMA_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random schema'), 
+                  'tmdisplay' => totranslate('Random schema'),
+                ),
+            ),
+    'default' => OPTION_SCHEMA_RANDOM,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
           "id"=> OPTION_DIFFICULTY,
           "value"=> OPTION_DIFFICULTY_RANDOM,
         ],

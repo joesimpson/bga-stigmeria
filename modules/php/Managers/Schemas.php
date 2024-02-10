@@ -20,7 +20,7 @@ class Schemas
   {
 
     return [
-      OPTION_SCHEMA_1 => new Schema(1, OPTION_FLOWER_VERTIGHAINEUSE, 1, [],[
+      OPTION_SCHEMA_1 => new Schema(1, OPTION_FLOWER_VERTIGHAINEUSE, OPTION_DIFFICULTY_1, [],[
           new TokenCoord( TOKEN_POLLEN_BLUE,  2,6 ),
           new TokenCoord( TOKEN_POLLEN_ORANGE,3,5 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  4,3 ),
@@ -35,7 +35,7 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BLUE,  10,8 ),
           
         ] ),
-      OPTION_SCHEMA_8 => new Schema(8, OPTION_FLOWER_MARONNE, 1, [],[
+      OPTION_SCHEMA_8 => new Schema(8, OPTION_FLOWER_MARONNE, OPTION_DIFFICULTY_1, [],[
           new TokenCoord( TOKEN_POLLEN_YELLOW,3,5 ),
           new TokenCoord( TOKEN_POLLEN_RED,   4,6 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  5,5 ),
@@ -50,7 +50,13 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_RED,   9,6 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,  10,5 ),
         ] ),
-      OPTION_SCHEMA_14 => new Schema(14, OPTION_FLOWER_SIFFLOCHAMP, 2, [
+        
+      OPTION_SCHEMA_10 => new Schema(10, OPTION_FLOWER_MARONNE, OPTION_DIFFICULTY_2, [],[
+          new TokenCoord( TOKEN_POLLEN_BROWN, 6,5 ),
+          new TokenCoord( TOKEN_POLLEN_BROWN, 7,6 ),
+          new TokenCoord( TOKEN_POLLEN_BROWN, 8,5 ),
+        ] ),
+      OPTION_SCHEMA_14 => new Schema(14, OPTION_FLOWER_SIFFLOCHAMP, OPTION_DIFFICULTY_2, [
           new TokenCoord( TOKEN_STIG_BLUE,    1,5 ),
           new TokenCoord( TOKEN_STIG_RED,     1,6 ),
           new TokenCoord( TOKEN_STIG_BLUE,    1,7 ),
@@ -87,7 +93,7 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_WHITE,10,10 ),
         ] ),
         
-      OPTION_SCHEMA_20 => new Schema(20, OPTION_FLOWER_DENTDINE, 1, [
+      OPTION_SCHEMA_20 => new Schema(20, OPTION_FLOWER_DENTDINE, OPTION_DIFFICULTY_1, [
           new TokenCoord( TOKEN_STIG_BROWN,    1,5 ),
           new TokenCoord( TOKEN_STIG_BROWN,    1,6 ),
           new TokenCoord( TOKEN_STIG_BLACK,    2,4 ),
@@ -122,7 +128,7 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BROWN,   10,10 ),
         ] ),
         
-      OPTION_SCHEMA_28 => new Schema(28, OPTION_FLOWER_INSPIRACTRICE, 3, [],[
+      OPTION_SCHEMA_28 => new Schema(28, OPTION_FLOWER_INSPIRACTRICE, OPTION_DIFFICULTY_3, [],[
           new TokenCoord( TOKEN_POLLEN_GREEN,   1,4 ),
           new TokenCoord( TOKEN_POLLEN_RED,     1,5 ),
           new TokenCoord( TOKEN_POLLEN_BROWN,   1,6 ),
