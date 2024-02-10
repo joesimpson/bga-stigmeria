@@ -2219,3 +2219,24 @@
 #btnLetNextPlay {
   background-color: lightgreen;
 }
+
+.customimagebutton {
+  border: medium none;
+  display: flex;
+  flex-flow: row;
+  width: fit-content;
+}
+.customimagebutton div {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.customimagebutton div .stig_qty {
+  font-size: large;
+  margin: 0px 5px;
+}
+.customimagebutton div .stig_token {
+  margin-right: 5px;
+  width: 45px;
+  height: 45px;
+}

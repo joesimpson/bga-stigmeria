@@ -33,6 +33,28 @@
     visibility: hidden;
 }
 
+//Buttons :
 #btnLetNextPlay{
     background-color: lightgreen;
+}
+.customimagebutton{
+    border: medium none;
+    display: flex;
+    flex-flow: row;
+    width: fit-content;
+    
+    div{
+        display: flex;
+        align-content: center;
+        align-items: center;
+        .stig_qty{
+            font-size: large;
+            margin: 0px 5px;
+        }
+        .stig_token {
+            margin-right:5px;
+            width: 45px;
+            height: 45px;
+        }
+    }
 }
