@@ -79,4 +79,11 @@ trait DebugTrait
     $player->setCommonMoveDone(FALSE);
     $this->gamestate->nextPrivateState($player->id, "continue");
   }
+  
+  function debugResetJoker()
+  {
+    $player = Players::getCurrent();
+    $player->setJokerUsed(false);
+    $this->gamestate->nextPrivateState($player->id, "continue");
+  }
 }

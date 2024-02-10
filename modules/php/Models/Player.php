@@ -32,6 +32,7 @@ class Player extends \STIG\Helpers\DB_Model
     'nbCommonActionsDone' => ['player_common_actions', 'int'],
     'commonMoveDone' => ['player_common_move', 'bool'],
     'nbPersonalActionsDone' => ['player_personal_actions', 'int'],
+    'jokerUsed' => ['player_joker_used', 'bool'],
   ];
 
   public function getUiData($currentPlayerId = null)

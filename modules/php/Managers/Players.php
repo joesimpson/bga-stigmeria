@@ -45,8 +45,11 @@ class Players extends \STIG\Helpers\DB_Manager
    */
   public static function setupNewRound()
   {
-    //Nothing special for now
-    return Players::getAll();
+    $players = Players::getAll();
+    foreach($players as $player){
+      $player->setJokerUsed(false);
+    }
+    return $players;
   }
 
   public static function getActiveId()

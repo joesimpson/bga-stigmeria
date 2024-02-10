@@ -304,7 +304,11 @@ function (dojo, declare) {
             Object.values(args.pj).forEach((tokenColor) => {
                 let src = tokenColor.src;
                 let dest = tokenColor.dest;
-                this.addImageActionButton(`btnJoker_${src}_${dest}`, `<div><div class='stig_qty'>4</div><div class='stig_token' data-type='${src}'></div> <i class="fa6 fa6-arrow-right"></i> <div class='stig_qty'>4</div> <div class='stig_token' data-type='${dest}'></div></div>`, () => this.takeAction('actJoker', {src:src,dest:dest}));
+                this.addImageActionButton(`btnJoker_${src}_${dest}`, `<div><div class='stig_qty'>4</div><div class='stig_token' data-type='${src}'></div> <i class="fa6 fa6-arrow-right"></i> <div class='stig_qty'>4</div> <div class='stig_token' data-type='${dest}'></div></div>`, () =>  {
+                    this.confirmationDialog(_("This will update tokens in your recruitment zone. You won't be able to replay a Joker in the game !"), () => {
+                        this.takeAction('actJoker', {src:src,dest:dest})
+                    });
+                });
             });
             if(possibleActions.includes('actLetNextPlay')){
                 this.addSecondaryActionButton('btnLetNextPlay', 'Start next player', () => {

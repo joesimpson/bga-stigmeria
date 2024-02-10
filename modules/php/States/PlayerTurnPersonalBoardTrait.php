@@ -34,12 +34,13 @@ trait PlayerTurnPersonalBoardTrait
             $actions[] = 'actLetNextPlay';
         }
         $possibleJokers = [];
-        //TODO JSA check unused Joker
-        foreach (STIG_PRIMARY_COLORS as $colorSrc) {
-            if(!$this->canPlayJoker($player_id,$colorSrc)->isEmpty()){
-                foreach (STIG_PRIMARY_COLORS as $colorDest) {
-                    if($colorSrc == $colorDest) continue;
-                    $possibleJokers[] = ['src' => $colorSrc, 'dest' => $colorDest] ;
+        if(!$player->isJokerUsed()){
+            foreach (STIG_PRIMARY_COLORS as $colorSrc) {
+                if(!$this->canPlayJoker($player_id,$colorSrc)->isEmpty()){
+                    foreach (STIG_PRIMARY_COLORS as $colorDest) {
+                        if($colorSrc == $colorDest) continue;
+                        $possibleJokers[] = ['src' => $colorSrc, 'dest' => $colorDest] ;
+                    }
                 }
             }
         }
@@ -153,11 +154,13 @@ trait PlayerTurnPersonalBoardTrait
         $player = Players::getCurrent();
         $pId = $player->id;
 
+        if($player->isJokerUsed()){
+            throw new UnexpectedException(13,"You cannot replay a joker in the game round");
+        }
         //NORMAL mode joker : 4 same tokens from  recruit zone -> 4 same tokens
         if(array_search($typeDest, STIG_PRIMARY_COLORS) === FALSE){
             throw new UnexpectedException(11,"You cannot play a joker with color $typeDest");
         }
-        //TODO JSA check unused Joker
         $tokens = $this->canPlayJoker($pId,$typeSource);
         if($tokens->isEmpty()){
             throw new UnexpectedException(12,"You cannot play a joker");
@@ -168,6 +171,7 @@ trait PlayerTurnPersonalBoardTrait
             $token->setType($typeDest);
         }
         $newTokens = $tokens;
+        $player->setJokerUsed(true);
         Notifications::playJoker($player,$typeSource, $typeDest, $newTokens);
 
         $this->gamestate->nextPrivateState($pId, "continue");
