@@ -433,11 +433,61 @@ function (dojo, declare) {
         onEnteringStateSpMerge: function(args)
         {
             debug( 'onEnteringStateSpMerge() ', args );
+            let currentToken1 = null;
+            let currentToken2 = null;
             
-            this.addPrimaryActionButton('btnMerge', 'Merge', () => this.takeAction('actMerge', {}));
+            this.addPrimaryActionButton('btnConfirm', 'Confirm', () => { 
+                this.takeAction('actMerge', {t1: currentToken1, t2: currentToken2}); 
+            } );
             //DISABLED by default
-            $(`btnMerge`).classList.add('disabled');
+            $(`btnConfirm`).classList.add('disabled');
             this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelSpecial', {}));
+
+            let playerBoard = $(`stig_player_board_${this.player_id}`);
+            let possibleMerges = args.tokens;
+            Object.keys(possibleMerges).forEach((tokenId) => {
+                //Click token 1
+                this.onClick(`stig_token_${tokenId}`, (evt) => {
+                    let tokenIdInt = parseInt(tokenId);
+                    let div = evt.target;
+                    $(`btnConfirm`).classList.add('disabled');
+                    if(div.classList.contains('selected')){
+                        //UNSELECT
+                        currentToken1 = null;
+                        currentToken2 = null;
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                            o.classList.remove('selected');
+                        });
+                        //REINIT SELECTION
+                        Object.keys(possibleMerges).forEach((tokenId3) => {
+                            $(`stig_token_${tokenId3}`).classList.add('selectable');
+                        });
+                    }
+                    else if(!currentToken1){
+                        //SELECT 1
+                        currentToken1 = tokenIdInt;
+                        div.classList.add('selected');
+                        
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                            o.classList.remove('selectable');
+                        });
+                        Object.values(possibleMerges[tokenIdInt]).forEach((tokenId2) => {
+                            $(`stig_token_${tokenId2}`).classList.add('selectable');
+                        });
+                    }
+                    else if(!currentToken2 && possibleMerges[tokenIdInt].includes(currentToken1)){
+                        //SELECT 2
+                        currentToken2 = tokenIdInt;
+                        div.classList.add('selected');
+                        $(`btnConfirm`).classList.remove('disabled');
+                        
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                            o.classList.remove('selectable');
+                        });
+                    }
+
+                });
+            });
         }, 
         onEnteringStateWindEffect: function(args)
         {
