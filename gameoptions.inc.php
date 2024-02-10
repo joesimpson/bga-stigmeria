@@ -73,9 +73,24 @@ $game_options = [
           [
             'type' => 'minplayers', 
             'value' => 99, 
-            'message' => 'Challenge not available in current version',
+            'message' => totranslate('Challenge not available in current version'),
           ],
         ],
+        
+      OPTION_MODE_COMPETITIVE => [
+        [
+          'type' => 'minplayers', 
+          'value' => 2, 
+          'message' => totranslate('Competitive mode is not for solo play'),
+        ],
+      ],
+      OPTION_MODE_NOLIMIT => [
+        [
+          'type' => 'minplayers', 
+          'value' => 2, 
+          'message' => totranslate('No limit mode is not for solo play'),
+        ],
+      ],
     ],
   ),
   OPTION_FLOWER => array(
@@ -108,12 +123,12 @@ $game_options = [
                 ),
                 OPTION_FLOWER_COMPETITIVE => array( 
                   'name' => totranslate('Competitive'), 
-                  'description' => totranslate('Competitive'), 
+                  'description' => totranslate('Competitive card : designed to be played with competitive game mode.'),  
                   'tmdisplay' => totranslate('Competitive'),
                 ),
                 OPTION_FLOWER_NO_LIMIT => array( 
                   'name' => totranslate('Competitive No Limit'), 
-                  'description' => totranslate('Competitive No Limit'), 
+                  'description' => totranslate('Competitive No Limit card : designed to be played with No Limit game mode.'), 
                   'tmdisplay' => totranslate('Competitive No Limit'),
                 ),
                 OPTION_FLOWER_RANDOM => array( 
