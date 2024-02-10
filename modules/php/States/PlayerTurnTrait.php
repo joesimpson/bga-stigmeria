@@ -19,7 +19,12 @@ trait PlayerTurnTrait
         $playersToActive = [$firstPlayer];
         //During his turn, others may become active...
 
-        //TODO JSA IN NORMAL MODE, we can activate every one
+        //IN NORMAL MODE, we can activate every one
+        $noCentralBoard = Globals::isModeNoCentralBoard();
+        if($noCentralBoard){
+            $playersToActive = Players::getAll()->map( function ($player) { return $player->getId(); } )->toArray();
+        }
+        self::trace("stPlayerTurn() playersToActive =".json_encode($playersToActive));
 
         Players::startTurn($playersToActive,$turn);
         
@@ -29,6 +34,11 @@ trait PlayerTurnTrait
         
         //this is needed when starting private parallel states; players will be transitioned to initialprivate state defined in master state
         $this->gamestate->initializePrivateStateForAllActivePlayers(); 
+        
+        if ($noCentralBoard) {
+            //move all players to different state 
+            $this->gamestate->nextPrivateStateForAllActivePlayers("next");
+        }
     }
 
     public function argPlayerTurn()

@@ -639,6 +639,7 @@ function (dojo, declare) {
             </div>`;
         },
         setupCentralBoard(){
+            if(this.gamedatas.nocb == true) return;
             debug("setupCentralBoard");
             this.place('tplCentralBoard',{}, 'stig_player_boards');
         },

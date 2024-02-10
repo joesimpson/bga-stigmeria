@@ -22,7 +22,7 @@ trait WindEffectTrait
 
     $turn = Globals::getTurn();
     //LOOP ON EACH player BOARD + central board
-    $this->doWindEffect($turn);
+    if(!Globals::isModeNoCentralBoard()) $this->doWindEffect($turn);
     foreach($players as $playerId => $player){
       $this->doWindEffect($turn,$player);
     }

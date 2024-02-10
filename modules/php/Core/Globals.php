@@ -37,6 +37,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     
     //For games with 1 schema in the entire game :(not solo challenge)
     'optionSchema' => 'int',
+    'optionGameMode' => 'int',
   ];
 
   public static function getAllWindDir()
@@ -64,7 +65,11 @@ class Globals extends \STIG\Helpers\DB_Manager
         return "";
     }
   }
-
+  public static function isModeNoCentralBoard()
+  {
+    $gameMode = Globals::getOptionGameMode();
+    return ($gameMode == OPTION_MODE_NORMAL || $gameMode == OPTION_MODE_DISCOVERY);
+  }
   /*
    * Setup new game
    */
@@ -90,6 +95,8 @@ class Globals extends \STIG\Helpers\DB_Manager
     if(array_key_exists(OPTION_SCHEMA_I,$options)) $optionSchema = $options[OPTION_SCHEMA_I];
     if(!isset($optionSchema)) throw new UnexpectedException(1,"Missing schema $optionSchema!");
     self::setOptionSchema($optionSchema);
+
+    self::setOptionGameMode($options[OPTION_MODE]);
   }
   
   /**
