@@ -383,6 +383,15 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     addDangerActionButton(id, text, callback, zone = 'customActions') {
       if (!$(id)) this.addActionButton(id, text, callback, zone, false, 'red');
     },
+    /**
+     * div_html is string not node
+     */
+    addImageActionButton(id, div_html, callback, zone = 'customActions') { 
+      if (!$(id)) this.addActionButton(id, div_html, callback, zone, false, 'blue'); 
+      dojo.style(id, "border", "none"); // remove ugly border
+      dojo.addClass(id, "customimagebutton"); // add css class to do more styling
+      return $(id); // return node for chaining
+    },
 
     clearActionButtons() {
       debug( "clearActionButtons()" );
@@ -1201,6 +1210,16 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       return this.format_string_recursive(log, args);
     },
 
+    /** Make the token blink 2 times */
+    animationBlink2Times(divId){
+      let anim = dojo.fx.chain( [
+          dojo.fadeOut( { node: divId } ),
+          dojo.fadeIn( { node: divId } ),
+          dojo.fadeOut( { node: divId } ),
+          dojo.fadeIn( { node: divId  } )
+      ] );
+      anim.play();
+    },
     onSelectN(elements, n, callback) {
       let selectedElements = [];
       let updateStatus = () => {

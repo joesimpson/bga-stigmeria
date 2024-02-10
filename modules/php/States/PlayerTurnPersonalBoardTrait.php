@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Exceptions\UserException;
+use STIG\Helpers\Collection;
 use STIG\Helpers\Utils;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -32,10 +33,21 @@ trait PlayerTurnPersonalBoardTrait
         if(isset($nextPlayer)){
             $actions[] = 'actLetNextPlay';
         }
+        $possibleJokers = [];
+        //TODO JSA check unused Joker
+        foreach (STIG_PRIMARY_COLORS as $colorSrc) {
+            if(!$this->canPlayJoker($player_id,$colorSrc)->isEmpty()){
+                foreach (STIG_PRIMARY_COLORS as $colorDest) {
+                    if($colorSrc == $colorDest) continue;
+                    $possibleJokers[] = ['src' => $colorSrc, 'dest' => $colorDest] ;
+                }
+            }
+        }
         return [
             'n'=> $player->countRemainingPersonalActions(),
             'done'=> $player->getNbPersonalActionsDone(),
             'a' => $actions,
+            'pj' => $possibleJokers,
         ];
     }
     
@@ -128,10 +140,42 @@ trait PlayerTurnPersonalBoardTrait
         $this->gamestate->nextPrivateState($player->id, "startMove");
     }
 
+    /**
+     * Joker action
+     * @param int $typeSource
+     * @param int $typeDest
+     */
+    public function actJoker($typeSource, $typeDest)
+    {
+        self::checkAction( 'actJoker' ); 
+        self::trace("actJoker($typeSource, $typeDest)");
+
+        $player = Players::getCurrent();
+        $pId = $player->id;
+
+        //NORMAL mode joker : 4 same tokens from  recruit zone -> 4 same tokens
+        if(array_search($typeDest, STIG_PRIMARY_COLORS) === FALSE){
+            throw new UnexpectedException(11,"You cannot play a joker with color $typeDest");
+        }
+        //TODO JSA check unused Joker
+        $tokens = $this->canPlayJoker($pId,$typeSource);
+        if($tokens->isEmpty()){
+            throw new UnexpectedException(12,"You cannot play a joker");
+        }
+
+        //EFFECT
+        foreach($tokens as $token){
+            $token->setType($typeDest);
+        }
+        $newTokens = $tokens;
+        Notifications::playJoker($player,$typeSource, $typeDest, $newTokens);
+
+        $this->gamestate->nextPrivateState($pId, "continue");
+    }
     
     /**
-     * @return bool TRUE if a token can be placed on this player board ( Empty spot + Either Line A or adjacent to another token),
-     *  FALSE otherwise
+     * @return bool + TRUE if a token can be placed on this player board ( Empty spot + Either Line A or adjacent to another token),
+     *  + FALSE otherwise
      */
     public function canPlaceOnPlayerBoard($playerId,$row, $column)
     {
@@ -146,6 +190,20 @@ trait PlayerTurnPersonalBoardTrait
         }
 
         return true;
+    }
+
+    /**
+     * @return Collection + (size 4) if 4 tokens of the same type are in player recruit zone,
+     *  + (size 0) otherwise
+     */
+    public function canPlayJoker($playerId, $typeSource){
+        $tokens = Tokens::getAllRecruits($playerId)->filter( function($token) use ($typeSource) {
+            return $token->type == $typeSource;
+        });
+        if (count($tokens) >= 4 ){
+            return $tokens->limit(4);
+        }
+        return $tokens->limit(0);
     }
 
 }

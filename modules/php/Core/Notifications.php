@@ -178,6 +178,27 @@ class Notifications
   }
 
   /**
+   * @param Player $player
+   * @param int $typeSource
+   * @param int $typeDest
+   * @param Collection $newTokens StigmerianToken
+   */
+  public static function playJoker($player,$typeSource, $typeDest, $newTokens){
+    $tokens = $newTokens->ui();
+    $color1 = StigmerianToken::getTypeName($typeSource);
+    $color2 = StigmerianToken::getTypeName($typeDest);
+    self::notifyAll('playJoker',clienttranslate('${player_name} plays the unique joker to change ${n} ${color1} stigmerians to ${color2}'),[ 
+        'i18n' => ['color1','color2'],  
+        'player' => $player,
+        'n' => count($tokens),
+        //TODO JSA Colors names
+        'color1' => $color1,
+        'color2' => $color2,
+        'tokens' => $tokens,
+      ],
+    );
+  }
+  /**
    * @param string $windDir
    * @param Collection $boardTokens StigmerianToken 
    * @param Player $player player board or null if central

@@ -56,6 +56,7 @@ function (dojo, declare) {
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
                 ['newPollen', 900],
+                ['playJoker', 500],
                 ['windBlows', 1800],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
@@ -300,6 +301,11 @@ function (dojo, declare) {
                 this.gamedatas.players[this.player_id].nbPersonalActionsDone = args.done;
                 this.updateTurnMarker(this.gamedatas.turn,args.done +1 );
             }
+            Object.values(args.pj).forEach((tokenColor) => {
+                let src = tokenColor.src;
+                let dest = tokenColor.dest;
+                this.addImageActionButton(`btnJoker_${src}_${dest}`, `Joker <div class='stig_qty'>4</div><div class='stig_token' data-type='${src}'></div> -> <div class='stig_qty'>4</div> <div class='stig_token' data-type='${dest}'></div>`, () => this.takeAction('actJoker', {src:src,dest:dest}));
+            });
             if(possibleActions.includes('actLetNextPlay')){
                 this.addSecondaryActionButton('btnLetNextPlay', 'Start next player', () => {
                     this.confirmationDialog(_("Next player will start their turn, so you will not be able to play VS actions for this turn."), () => {
@@ -513,6 +519,15 @@ function (dojo, declare) {
             div.dataset.col = token.col;
             div.dataset.type = token.type;
             this.slide(div, this.getTokenContainer(token));
+        },
+        notif_playJoker(n) {
+            debug('notif_playJoker: tokens change color !', n);
+            let tokens = n.args.tokens;
+            Object.values(tokens).forEach((token) => {
+                let div = $(`stig_token_${token.id}`);
+                div.dataset.type = token.type;
+                this.animationBlink2Times(div.id);
+            });
         },
         notif_windBlows(n) {
             debug('notif_windBlows: tokens moved on board', n);

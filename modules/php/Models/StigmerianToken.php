@@ -2,6 +2,7 @@
 
 namespace STIG\Models;
 
+use STIG\Core\Game;
 use STIG\Core\Notifications;
 use STIG\Managers\Schemas;
 
@@ -184,5 +185,19 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   {
     if($this->col != $coord->col ) $this->setCol($coord->col);
     if($this->row != $coord->row ) $this->setRow($coord->row);
+  }
+
+  public static function getTypeName($type)
+  {
+    switch($type){
+      case TOKEN_STIG_RED:
+        return Game::get()->translate("red");
+      case TOKEN_STIG_BLUE:
+        return Game::get()->translate("blue");
+      case TOKEN_STIG_YELLOW:
+        return Game::get()->translate("yellow");
+      default: 
+        return "";
+    }
   }
 }

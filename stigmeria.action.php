@@ -132,6 +132,14 @@
       $this->game->actCancelChoiceTokenToMove();
       self::ajaxResponse();
     }
+    public function actJoker()
+    {
+      self::setAjaxMode();
+      $typeSource = self::getArg( "src", AT_posint, true );
+      $typeDest = self::getArg( "dest", AT_posint, true );
+      $this->game->actJoker($typeSource, $typeDest);
+      self::ajaxResponse();
+    }
 
     public function actLetNextPlay()
     {
