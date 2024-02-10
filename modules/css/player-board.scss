@@ -113,7 +113,20 @@
             font-size: 40px;
         }
     }
-        
+    
+    .stig_recruits{
+        display: flex;
+        flex-flow: column;
+        .stig_token{
+            //ORDER Tokens by type :
+            @for $i from 1 through 25 {
+                &[data-type="#{$i}"] {
+                    order: $i;
+                }
+            }
+        }
+    }
+
     .stig_grid {
         display: grid;
         grid-template-columns: repeat(10, 1fr);
