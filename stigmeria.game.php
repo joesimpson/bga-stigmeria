@@ -56,6 +56,8 @@ class Stigmeria extends Table
     use STIG\States\PlayerTurnPersonalBoardTrait;
     use STIG\States\ScoringTrait;
     use STIG\States\SetupTrait;
+    use STIG\States\SpecialActionTrait;
+    use STIG\States\SpecialMergeTrait;
     use STIG\States\WindEffectTrait;
     use STIG\States\WindGenerationTrait;
 

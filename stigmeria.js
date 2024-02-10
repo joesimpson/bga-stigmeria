@@ -26,6 +26,8 @@ define([
     g_gamethemeurl + 'modules/js/Core/modal.js',
 ],
 function (dojo, declare) {
+    const ACTION_TYPE_MERGE = 10;
+
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
             console.log('stigmeria constructor');
@@ -300,6 +302,10 @@ function (dojo, declare) {
                     
                 this.gamedatas.players[this.player_id].nbPersonalActionsDone = args.done;
                 this.updateTurnMarker(this.gamedatas.turn,args.done +1 );
+                    
+                if(possibleActions.includes('actSpecial')){
+                    this.addPrimaryActionButton('btnSpecialAction', 'Special', () => { this.takeAction('actSpecial', {}); });
+                }
             }
             Object.values(args.pj).forEach((tokenColor) => {
                 let src = tokenColor.src;
@@ -411,6 +417,27 @@ function (dojo, declare) {
             }); 
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
+        }, 
+        
+        onEnteringStateSpecialAction: function(args)
+        {
+            debug( 'onEnteringStateSpecialAction() ', args );
+            
+            let possibleActions = args.a;
+            if(possibleActions.includes(ACTION_TYPE_MERGE)){
+                this.addPrimaryActionButton('btnStartMerge', 'Merge', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MERGE}));
+            }
+            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelSpecial', {}));
+        }, 
+        
+        onEnteringStateSpMerge: function(args)
+        {
+            debug( 'onEnteringStateSpMerge() ', args );
+            
+            this.addPrimaryActionButton('btnMerge', 'Merge', () => this.takeAction('actMerge', {}));
+            //DISABLED by default
+            $(`btnMerge`).classList.add('disabled');
+            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateWindEffect: function(args)
         {

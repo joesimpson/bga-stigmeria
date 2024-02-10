@@ -140,6 +140,37 @@
       $this->game->actJoker($typeSource, $typeDest);
       self::ajaxResponse();
     }
+    
+    public function actSpecial()
+    {
+      self::setAjaxMode();
+      $this->game->actSpecial();
+      self::ajaxResponse();
+    }
+    
+    public function actCancelSpecial()
+    {
+      self::setAjaxMode();
+      $this->game->actCancelSpecial();
+      self::ajaxResponse();
+    }
+    
+    public function actChoiceSpecial()
+    {
+      self::setAjaxMode();
+      $actionType = self::getArg( "act", AT_posint, true );
+      $this->game->actChoiceSpecial($actionType);
+      self::ajaxResponse();
+    }
+    
+    public function actMerge()
+    {
+      self::setAjaxMode();
+      $token1 = self::getArg( "t1", AT_posint, true );
+      $token2 = self::getArg( "t2", AT_posint, true );
+      $this->game->actMerge($token1,$token2);
+      self::ajaxResponse();
+    }
 
     public function actLetNextPlay()
     {

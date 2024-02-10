@@ -225,6 +225,7 @@ $machinestates = array(
             "actDraw",
             "actLand",
             "actMove",
+            "actSpecial",
             //TODO JSA ALL ACTIONS
             "actJoker",
             "actPass",
@@ -237,6 +238,7 @@ $machinestates = array(
             'back' => ST_TURN_COMMON_BOARD,
             'startLand' => ST_TURN_CHOICE_TOKEN_LAND,
             'startMove' => ST_TURN_CHOICE_TOKEN_MOVE,
+            'startSpecial' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
     
@@ -267,6 +269,35 @@ $machinestates = array(
         "transitions" => [
             'continue' => ST_TURN_PERSONAL_BOARD,
             'cancel' => ST_TURN_PERSONAL_BOARD,
+        ],
+    ],
+    
+    ST_TURN_CHOICE_SPECIAL_ACTION => [
+        "name" => "specialAction",
+        "descriptionmyturn" => clienttranslate('${you} may choose a special action'), 
+        "type" => "private",
+        "args" => "argSpecialAction",
+        "possibleactions" => [
+            "actChoiceSpecial",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'startMerge' => ST_TURN_SPECIAL_ACT_MERGE,
+            'cancel' => ST_TURN_PERSONAL_BOARD,
+        ],
+    ],
+    ST_TURN_SPECIAL_ACT_MERGE => [
+        "name" => "spMerge",
+        "descriptionmyturn" => clienttranslate('${you} may choose tokens to merge'), 
+        "type" => "private",
+        "args" => "argSpMerge",
+        "possibleactions" => [
+            "actMerge",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
     

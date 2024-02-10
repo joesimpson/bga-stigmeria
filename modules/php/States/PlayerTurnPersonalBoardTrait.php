@@ -33,6 +33,7 @@ trait PlayerTurnPersonalBoardTrait
         if(isset($nextPlayer)){
             $actions[] = 'actLetNextPlay';
         }
+        $actions[] = 'actSpecial';
         $possibleJokers = [];
         if(!$player->isJokerUsed()){
             foreach (STIG_PRIMARY_COLORS as $colorSrc) {
@@ -175,6 +176,20 @@ trait PlayerTurnPersonalBoardTrait
         Notifications::playJoker($player,$typeSource, $typeDest, $newTokens);
 
         $this->gamestate->nextPrivateState($pId, "continue");
+    }
+    
+    /**
+     * Special Action : will go to another state to list available special actions
+     */
+    public function actSpecial()
+    {
+        self::checkAction( 'actSpecial' ); 
+        self::trace("actSpecial()");
+        
+        $player = Players::getCurrent();
+        $pId = $player->id;
+
+        $this->gamestate->nextPrivateState($player->id, "startSpecial");
     }
     
     /**

@@ -206,6 +206,22 @@ class Tokens extends \STIG\Helpers\Pieces
         }
       );
   }
+  /**
+   * SEARCH IN MEMORY (no DB)
+   * @param Collection $boardTokens tokens already read from DB
+   * @param int $row
+   * @param int $column
+   * @return Collection of StigmerianToken adjacent tokens of 
+   */
+  public static function listAdjacentTokensOnReadBoard($boardTokens,$row, $column)
+  { 
+    return $boardTokens->filter( function ($token) use ($row, $column) {
+          return $token->isAdjacentCoord($row, $column);
+        }
+      );
+  }
+  
+  
   
   /**
    * @param int $row
