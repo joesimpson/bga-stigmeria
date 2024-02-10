@@ -113,6 +113,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     if(array_key_exists(OPTION_SCHEMA_S,$options)) $optionSchema = $options[OPTION_SCHEMA_S];
     if(array_key_exists(OPTION_SCHEMA_D,$options)) $optionSchema = $options[OPTION_SCHEMA_D];
     if(array_key_exists(OPTION_SCHEMA_I,$options)) $optionSchema = $options[OPTION_SCHEMA_I];
+    if(array_key_exists(OPTION_SCHEMA_C,$options)) $optionSchema = $options[OPTION_SCHEMA_C];
     if(array_key_exists(OPTION_SCHEMA_NL,$options)) $optionSchema = $options[OPTION_SCHEMA_NL];
     if($optionSchema == OPTION_SCHEMA_RANDOM){
       //PICK A RANDOM

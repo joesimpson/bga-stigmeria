@@ -140,6 +140,13 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BLUE,    10,7 ),
         ] ),
         
+      OPTION_SCHEMA_33 => new Schema(33, OPTION_FLOWER_COMPETITIVE, OPTION_DIFFICULTY_1, [],[
+          // Reversi LOOKALIKE
+          new TokenCoord( TOKEN_POLLEN_WHITE, 5,5 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK, 5,6 ),
+          new TokenCoord( TOKEN_POLLEN_BLACK, 6,5 ),
+          new TokenCoord( TOKEN_POLLEN_WHITE, 6,6 ),
+        ] ),
       OPTION_SCHEMA_45 => new Schema(45, OPTION_FLOWER_NO_LIMIT, OPTION_DIFFICULTY_4, [],[
           new TokenCoord( TOKEN_POLLEN_BLUE,    1,1 ),
           new TokenCoord( TOKEN_POLLEN_BLUE,    1,2 ),

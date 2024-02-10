@@ -106,6 +106,11 @@ $game_options = [
                   'description' => totranslate('Each variety of petals.'), 
                   'tmdisplay' => totranslate('InspirActrice'),
                 ),
+                OPTION_FLOWER_COMPETITIVE => array( 
+                  'name' => totranslate('Competitive'), 
+                  'description' => totranslate('Competitive'), 
+                  'tmdisplay' => totranslate('Competitive'),
+                ),
                 OPTION_FLOWER_NO_LIMIT => array( 
                   'name' => totranslate('Competitive No Limit'), 
                   'description' => totranslate('Competitive No Limit'), 
@@ -436,6 +441,75 @@ $game_options = [
           "type"=> "otheroption",
           "id"=> OPTION_FLOWER,
           "value"=> OPTION_FLOWER_INSPIRACTRICE,
+        ],
+        [
+          "type"=> "otheroptionisnot",
+          "id"=> OPTION_DIFFICULTY,
+          "value"=> OPTION_DIFFICULTY_RANDOM,
+        ],
+      ],
+  ),
+  
+  OPTION_SCHEMA_C => array(
+    'name' => totranslate('Targeted schema'),    
+    'values' => array(
+                OPTION_SCHEMA_RANDOM => array( 
+                  'name' => totranslate('Random'), 
+                  'description' => totranslate('Random schema'), 
+                  'tmdisplay' => totranslate('Random schema'),
+                ),
+                OPTION_SCHEMA_31 => array( 
+                  'name' => '#31', 
+                  'description' => '#31', 
+                  'tmdisplay' => '#31',
+                ),
+                OPTION_SCHEMA_32 => array( 
+                  'name' => '#32', 
+                  'description' => '#32', 
+                  'tmdisplay' => '#32',
+                ),
+                OPTION_SCHEMA_33 => array( 
+                  'name' => '#33', 
+                  'description' => '#33', 
+                  'tmdisplay' => '#33',
+                ),
+                OPTION_SCHEMA_34 => array( 
+                  'name' => '#34', 
+                  'description' => '#34', 
+                  'tmdisplay' => '#34',
+                ),
+                OPTION_SCHEMA_35 => array( 
+                  'name' => '#35', 
+                  'description' => '#35', 
+                  'tmdisplay' => '#35',
+                ),
+                OPTION_SCHEMA_36 => array( 
+                  'name' => '#36', 
+                  'description' => '#36', 
+                  'tmdisplay' => '#36',
+                ),
+                OPTION_SCHEMA_37 => array( 
+                  'name' => '#37', 
+                  'description' => '#37', 
+                  'tmdisplay' => '#37',
+                ),
+                OPTION_SCHEMA_38 => array( 
+                  'name' => '#38', 
+                  'description' => '#38', 
+                  'tmdisplay' => '#38',
+                ),
+                OPTION_SCHEMA_39 => array( 
+                  'name' => '#39', 
+                  'description' => '#39', 
+                  'tmdisplay' => '#39',
+                ),
+            ),
+    'default' => OPTION_SCHEMA_RANDOM,
+    'displaycondition'=> [
+        [
+          "type"=> "otheroption",
+          "id"=> OPTION_FLOWER,
+          "value"=> OPTION_FLOWER_COMPETITIVE,
         ],
         [
           "type"=> "otheroptionisnot",
