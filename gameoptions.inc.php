@@ -934,7 +934,7 @@ $game_options = [
       ],
   ),
   
-  OPTION_SCHEMA_RANDOM_ONLY_1 => array(
+  OPTION_SCHEMA_RANDOM_ONLY => array(
     'name' => totranslate('Targeted schema'),    
     'values' => array(
                 OPTION_SCHEMA_RANDOM => array( 
@@ -944,33 +944,10 @@ $game_options = [
                 ),
             ),
     'default' => OPTION_SCHEMA_RANDOM,
+    'displayconditionoperand' => 'or',
     'displaycondition'=> [
         [
           "type"=> "otheroption",
-          "id"=> OPTION_FLOWER,
-          "value"=> OPTION_FLOWER_RANDOM,
-        ],
-        [
-          "type"=> "otheroptionisnot",
-          "id"=> OPTION_DIFFICULTY,
-          "value"=> OPTION_DIFFICULTY_RANDOM,
-        ],
-      ],
-  ),
-  
-  OPTION_SCHEMA_RANDOM_ONLY_2 => array(
-    'name' => totranslate('Targeted schema'),    
-    'values' => array(
-                OPTION_SCHEMA_RANDOM => array( 
-                  'name' => totranslate('Random'), 
-                  'description' => totranslate('Random schema'), 
-                  'tmdisplay' => totranslate('Random schema'),
-                ),
-            ),
-    'default' => OPTION_SCHEMA_RANDOM,
-    'displaycondition'=> [
-        [
-          "type"=> "otheroptionisnot",
           "id"=> OPTION_FLOWER,
           "value"=> OPTION_FLOWER_RANDOM,
         ],

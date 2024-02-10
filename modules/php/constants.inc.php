@@ -143,9 +143,7 @@ const OPTION_SCHEMA_C1 = 125;
 const OPTION_SCHEMA_C2 = 126;
 const OPTION_SCHEMA_C3 = 127;
 const OPTION_SCHEMA_NL = 128;
-//2 random only because I don't find how to make 'OR' displaycondition
-const OPTION_SCHEMA_RANDOM_ONLY_1 = 130;
-const OPTION_SCHEMA_RANDOM_ONLY_2 = 131;
+const OPTION_SCHEMA_RANDOM_ONLY = 130;
 
 const OPTION_SCHEMA_RANDOM = 0;
 const OPTION_SCHEMA_1 = 1;
