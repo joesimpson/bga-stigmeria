@@ -240,6 +240,16 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * @param Player $player
+   */
+  public static function schemaFulfilled($player){
+    self::notifyAll('schemaFulfilled',clienttranslate('${player_name} successfully fulfilled the schema !'),[ 
+        'player' => $player,
+      ],
+    );
+  }
   /*************************
    **** GENERIC METHODS ****
    *************************/

@@ -336,9 +336,24 @@ $machinestates = array(
         "type" => "game",
         "action" => "stPreEndOfGame",
         "transitions" => [ 
-            "next" => ST_END_GAME,
+            //"next" => ST_END_GAME,
+            "next" => 96,
+            // TODO JSA REMOVE TESTING STATE
         ],
     ),
+    
+    96 => [ // active player state for debugging end of game
+        "name" => "playerGameEnd",
+        "description" => clienttranslate('${actplayer} Game Over'),
+        "descriptionmyturn" => clienttranslate('${you} Game Over'),
+        "type" => "activeplayer",
+        "args" => "argPlayerTurn",
+        "possibleactions" => ["endGame"],
+        "transitions" => [
+            "next" => ST_END_GAME,
+            "loopback" => 96 
+        ] 
+    ],
    
     // Final state.
     // Please do not modify (and do not overload action/args methods).

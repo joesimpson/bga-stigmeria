@@ -9,11 +9,14 @@ trait ScoringTrait
   
   public function stScoring()
   {
-    Notifications::emptyNotif();
+    Notifications::message('TODO scoring');
+    
+    $this->gamestate->nextState('next');
   }
   
   public function stPreEndOfGame()
   {
-    Notifications::emptyNotif();
+    Notifications::message('Game is ending...');
+    $this->gamestate->nextState('next');
   }
 }
