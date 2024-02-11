@@ -617,7 +617,8 @@ function (dojo, declare) {
             Object.values(tokens).forEach((token) => {
                 let div = $(`stig_token_${token.id}`);
                 div.dataset.type = token.type;
-                this.animationBlink2Times(div.id);
+                this.slide(div, this.getTokenContainer(token));
+                //this.animationBlink2Times(div.id);
             });
         },
         notif_windBlows(n) {
