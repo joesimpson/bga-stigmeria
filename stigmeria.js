@@ -90,9 +90,6 @@ function (dojo, declare) {
             this.setupInfoPanel();
             this.setupTokens();
             
-            // Setup game notifications to handle (see "setupNotifications" method below)
-            this.setupNotifications();
-
             console.log( "Ending specific game setup" );
 
             this.inherited(arguments);
