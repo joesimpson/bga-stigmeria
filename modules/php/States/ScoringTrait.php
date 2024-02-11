@@ -31,11 +31,23 @@ trait ScoringTrait
         $scoreLevel = SCORE_DIFFICULTY_4;
         break;
     }
+    //TODO JSA Computing score of turn/actions
 
     foreach($players as $pId =>$player){
+      $score = 0;
       if(in_array($pId,$winnersIds)){
         $player->addPoints($scoreLevel);
-        Notifications::addPoints($player,$scoreLevel);
+        $score += $scoreLevel;
+        Notifications::addPoints($player,$scoreLevel,clienttranslate('${player_name} scores ${n} points for the difficulty'));
+      }
+      else {
+        $player->addPoints(SCORE_FAIL);
+        $score += SCORE_FAIL;
+        Notifications::addPoints($player,SCORE_FAIL,clienttranslate('${player_name} scores ${n} points for not fulfilling the schema'));
+      }
+      if($player->isJokerUsed()){
+        $score += SCORE_JOKER_USED;
+        Notifications::addPoints($player,SCORE_JOKER_USED,clienttranslate('${player_name} scores ${n} points for using the joker'));
       }
     }
     

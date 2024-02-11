@@ -254,9 +254,11 @@ class Notifications
   /**
    * @param Player $player
    * @param int $points
+   * @param string $message (optional)
    */
-  public static function addPoints($player,$points){
-    self::notifyAll('addPoints',clienttranslate('${player_name} scores ${n} points'),[ 
+  public static function addPoints($player,$points, $msg = null){
+    if(!isset($msg)) $msg = clienttranslate('${player_name} scores ${n} points');
+    self::notifyAll('addPoints',$msg,[ 
         'player' => $player,
         'n' => $points,
       ],
