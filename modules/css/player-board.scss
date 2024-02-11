@@ -117,12 +117,17 @@
     .stig_recruits{
         display: flex;
         flex-flow: column;
-        .stig_token{
+        .stig_recruits_type{
             //ORDER Tokens by type :
             @for $i from 1 through 25 {
                 &[data-type="#{$i}"] {
                     order: $i;
                 }
+            }
+            //Prepare group of tokens overlapped by color
+            margin-bottom: 56px;
+            .stig_token{
+                margin-bottom: -40px;
             }
         }
     }

@@ -372,130 +372,140 @@
   display: flex;
   flex-flow: column;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="1"],
-.stig_central_board .stig_recruits .stig_token[data-type="1"],
-.stig_player_board .stig_recruits .stig_token[data-type="1"] {
+.stig_schema_board .stig_recruits .stig_recruits_type,
+.stig_central_board .stig_recruits .stig_recruits_type,
+.stig_player_board .stig_recruits .stig_recruits_type {
+  margin-bottom: 56px;
+}
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="1"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="1"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="1"] {
   order: 1;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="2"],
-.stig_central_board .stig_recruits .stig_token[data-type="2"],
-.stig_player_board .stig_recruits .stig_token[data-type="2"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="2"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="2"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="2"] {
   order: 2;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="3"],
-.stig_central_board .stig_recruits .stig_token[data-type="3"],
-.stig_player_board .stig_recruits .stig_token[data-type="3"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="3"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="3"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="3"] {
   order: 3;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="4"],
-.stig_central_board .stig_recruits .stig_token[data-type="4"],
-.stig_player_board .stig_recruits .stig_token[data-type="4"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="4"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="4"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="4"] {
   order: 4;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="5"],
-.stig_central_board .stig_recruits .stig_token[data-type="5"],
-.stig_player_board .stig_recruits .stig_token[data-type="5"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="5"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="5"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="5"] {
   order: 5;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="6"],
-.stig_central_board .stig_recruits .stig_token[data-type="6"],
-.stig_player_board .stig_recruits .stig_token[data-type="6"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="6"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="6"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="6"] {
   order: 6;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="7"],
-.stig_central_board .stig_recruits .stig_token[data-type="7"],
-.stig_player_board .stig_recruits .stig_token[data-type="7"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="7"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="7"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="7"] {
   order: 7;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="8"],
-.stig_central_board .stig_recruits .stig_token[data-type="8"],
-.stig_player_board .stig_recruits .stig_token[data-type="8"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="8"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="8"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="8"] {
   order: 8;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="9"],
-.stig_central_board .stig_recruits .stig_token[data-type="9"],
-.stig_player_board .stig_recruits .stig_token[data-type="9"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="9"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="9"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="9"] {
   order: 9;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="10"],
-.stig_central_board .stig_recruits .stig_token[data-type="10"],
-.stig_player_board .stig_recruits .stig_token[data-type="10"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="10"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="10"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="10"] {
   order: 10;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="11"],
-.stig_central_board .stig_recruits .stig_token[data-type="11"],
-.stig_player_board .stig_recruits .stig_token[data-type="11"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="11"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="11"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="11"] {
   order: 11;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="12"],
-.stig_central_board .stig_recruits .stig_token[data-type="12"],
-.stig_player_board .stig_recruits .stig_token[data-type="12"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="12"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="12"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="12"] {
   order: 12;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="13"],
-.stig_central_board .stig_recruits .stig_token[data-type="13"],
-.stig_player_board .stig_recruits .stig_token[data-type="13"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="13"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="13"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="13"] {
   order: 13;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="14"],
-.stig_central_board .stig_recruits .stig_token[data-type="14"],
-.stig_player_board .stig_recruits .stig_token[data-type="14"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="14"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="14"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="14"] {
   order: 14;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="15"],
-.stig_central_board .stig_recruits .stig_token[data-type="15"],
-.stig_player_board .stig_recruits .stig_token[data-type="15"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="15"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="15"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="15"] {
   order: 15;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="16"],
-.stig_central_board .stig_recruits .stig_token[data-type="16"],
-.stig_player_board .stig_recruits .stig_token[data-type="16"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="16"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="16"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="16"] {
   order: 16;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="17"],
-.stig_central_board .stig_recruits .stig_token[data-type="17"],
-.stig_player_board .stig_recruits .stig_token[data-type="17"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="17"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="17"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="17"] {
   order: 17;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="18"],
-.stig_central_board .stig_recruits .stig_token[data-type="18"],
-.stig_player_board .stig_recruits .stig_token[data-type="18"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="18"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="18"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="18"] {
   order: 18;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="19"],
-.stig_central_board .stig_recruits .stig_token[data-type="19"],
-.stig_player_board .stig_recruits .stig_token[data-type="19"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="19"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="19"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="19"] {
   order: 19;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="20"],
-.stig_central_board .stig_recruits .stig_token[data-type="20"],
-.stig_player_board .stig_recruits .stig_token[data-type="20"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="20"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="20"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="20"] {
   order: 20;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="21"],
-.stig_central_board .stig_recruits .stig_token[data-type="21"],
-.stig_player_board .stig_recruits .stig_token[data-type="21"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="21"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="21"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="21"] {
   order: 21;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="22"],
-.stig_central_board .stig_recruits .stig_token[data-type="22"],
-.stig_player_board .stig_recruits .stig_token[data-type="22"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="22"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="22"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="22"] {
   order: 22;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="23"],
-.stig_central_board .stig_recruits .stig_token[data-type="23"],
-.stig_player_board .stig_recruits .stig_token[data-type="23"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="23"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="23"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="23"] {
   order: 23;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="24"],
-.stig_central_board .stig_recruits .stig_token[data-type="24"],
-.stig_player_board .stig_recruits .stig_token[data-type="24"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="24"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="24"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="24"] {
   order: 24;
 }
-.stig_schema_board .stig_recruits .stig_token[data-type="25"],
-.stig_central_board .stig_recruits .stig_token[data-type="25"],
-.stig_player_board .stig_recruits .stig_token[data-type="25"] {
+.stig_schema_board .stig_recruits .stig_recruits_type[data-type="25"],
+.stig_central_board .stig_recruits .stig_recruits_type[data-type="25"],
+.stig_player_board .stig_recruits .stig_recruits_type[data-type="25"] {
   order: 25;
+}
+.stig_schema_board .stig_recruits .stig_recruits_type .stig_token,
+.stig_central_board .stig_recruits .stig_recruits_type .stig_token,
+.stig_player_board .stig_recruits .stig_recruits_type .stig_token {
+  margin-bottom: -40px;
 }
 .stig_schema_board .stig_grid,
 .stig_central_board .stig_grid,

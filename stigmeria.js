@@ -879,7 +879,11 @@ function (dojo, declare) {
                 //TODO JSA IF row/col out of grid (after wind for example, don't show it there)
             }
             if (token.location == 'player_recruit') {
-                return $(`stig_recruits_${token.pId}`);
+                let recruitTypeZone = `stig_recruits_${token.pId}_${token.type}`;
+                if(! $(`${recruitTypeZone}`)){
+                    dojo.place(`<div id=${recruitTypeZone} data-type=${token.type} class='stig_recruits_type'></div>`, `stig_recruits_${token.pId}`);
+                }
+                return $(`${recruitTypeZone}`);
             }
             //TODO JSA OTHER LOCATIONS
             console.error('Trying to get container of a token', token);
