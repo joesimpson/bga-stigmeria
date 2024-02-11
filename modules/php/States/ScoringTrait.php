@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
+use STIG\Managers\Tokens;
 
 trait ScoringTrait
 {
@@ -31,7 +32,6 @@ trait ScoringTrait
         $scoreLevel = SCORE_DIFFICULTY_4;
         break;
     }
-    //TODO JSA Computing score of turn/actions
 
     foreach($players as $pId =>$player){
       $score = 0;
@@ -39,6 +39,13 @@ trait ScoringTrait
         $player->addPoints($scoreLevel);
         $score += $scoreLevel;
         Notifications::addPoints($player,$scoreLevel,clienttranslate('${player_name} scores ${n} points for the difficulty'));
+          
+        //TODO JSA Computing score of turn/actions
+        $nbRecruits = Tokens::countRecruits($pId);
+        if($nbRecruits>0){
+          $score += SCORE_PER_RECRUIT*$nbRecruits;
+          Notifications::addPoints($player,SCORE_PER_RECRUIT*$nbRecruits,clienttranslate('${player_name} scores ${n} points for remaining tokens in recruit zone'));
+        }
       }
       else {
         $player->addPoints(SCORE_FAIL);

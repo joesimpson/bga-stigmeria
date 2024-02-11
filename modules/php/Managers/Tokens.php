@@ -152,6 +152,17 @@ class Tokens extends \STIG\Helpers\Pieces
       ->wherePlayer($playerId)
       ->get();
   }
+  /**
+   * @param int $playerId
+  * @return int nb of tokens on player board recruit zone
+  */
+  public static function countRecruits($playerId)
+  { 
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_RECRUIT)
+      ->wherePlayer($playerId)
+      ->count();
+  }
    /**
    * @return Collection of StigmerianToken found at that location
    */
