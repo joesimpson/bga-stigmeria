@@ -179,7 +179,11 @@ function (dojo, declare) {
             let nbActions = args.n;
             if(nbActions>0){
                 if(possibleActions.includes('actCommonDrawAndLand')){
-                    this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => this.takeAction('actCommonDrawAndLand', {}));
+                    this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => {
+                        this.confirmationDialog(_("Are you sure to draw a token in your bag ?"), () => {
+                            this.takeAction('actCommonDrawAndLand', {});
+                        });
+                    });
                 }
                 if(possibleActions.includes('actCommonMove')){
                     this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
@@ -295,7 +299,11 @@ function (dojo, declare) {
             let nbActions = args.n;
             let possibleActions = args.a;
             if(nbActions>0){
-                this.addPrimaryActionButton('btnDraw', 'Recruit', () => this.takeAction('actDraw', {}));
+                this.addPrimaryActionButton('btnDraw', 'Recruit', () => { 
+                    this.confirmationDialog(_("Are you sure to draw a token in your bag ?"), () => {
+                        this.takeAction('actDraw', {});
+                    });
+                });
                 this.addPrimaryActionButton('btnPlace', 'Land', () => this.takeAction('actLand', {}));
                 this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
                     
@@ -322,7 +330,15 @@ function (dojo, declare) {
                     });
                 });
             }
-            this.addDangerActionButton('btnEndTurn', 'End turn', () => this.takeAction('actEndTurn', {}));
+            this.addDangerActionButton('btnEndTurn', 'End turn', () => {
+                if(nbActions>0){
+                    this.confirmationDialog(_("Are you sure to end your turn ?"), () => {
+                        this.takeAction('actEndTurn', {});
+                    });
+                }else{//auto confirm
+                    this.takeAction('actEndTurn', {});
+                }
+            });
             this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
         onEnteringStateChoiceTokenToLand: function(args)
