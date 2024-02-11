@@ -105,12 +105,13 @@ class Stigmeria extends Table
         // !! We must only return informations visible by this player !!
         $current_player_id = self::getCurrentPId();
         // Gather all information about current game situation (visible by player $current_player_id).
+        $firstPlayer = (Globals::isModeCompetitive() ? Globals::getFirstPlayer() : null);
         return [
           'prefs' => Preferences::getUiData($current_player_id),
           'players' => Players::getUiData($current_player_id),
           'tokens' => Tokens::getUiData($current_player_id),
           'turn' => Globals::getTurn(),
-          'firstPlayer' => Globals::getFirstPlayer(),
+          'firstPlayer' => $firstPlayer,
           'winds' => Globals::getAllWindDir(),
           'nocb' => Globals::isModeNoCentralBoard(),
           'schema' => Schemas::getCurrentSchema()->id,

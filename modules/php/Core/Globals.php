@@ -74,6 +74,10 @@ class Globals extends \STIG\Helpers\DB_Manager
     $gameMode = Globals::getOptionGameMode();
     return ($gameMode == OPTION_MODE_NORMAL || $gameMode == OPTION_MODE_DISCOVERY);
   }
+  public static function isModeCompetitive()
+  {
+    return !Globals::isModeNoCentralBoard();
+  }
   /*
    * Setup new game
    */

@@ -1,3 +1,14 @@
+#stig_first_player{
+    width: 3em;
+    height: 3em;
+    background-image: url("img/tokens.png");
+    background-size: 500% 500%;
+    /** see type 22 */
+    background-position-x: 25%;
+    background-position-y: 100%;
+}
+.stig_panel{
+
 .stig_player_infos {
     display: flex;
     flex-wrap: wrap;
@@ -54,4 +65,6 @@
             }
         }
     }
+}
+
 }

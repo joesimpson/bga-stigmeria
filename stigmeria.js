@@ -558,6 +558,12 @@ function (dojo, declare) {
             debug('notif_newTurn: new turn', n);
             this.updateTurnMarker(n.args.n,1);
         },
+        
+        notif_updateFirstPlayer(n) {
+            debug('Notif: updating first player', n);
+            this.gamedatas.firstPlayer = n.args.pId;
+            this.updateFirstPlayer();
+        },
         notif_newWinds(n) {
             debug('notif_newWinds: new wind dirs', n);
             this.gamedatas.winds = n.args.winds;
@@ -750,6 +756,16 @@ function (dojo, declare) {
         updateFirstPlayer() {
             let pId = this.gamedatas.firstPlayer;
             debug("updateFirstPlayer()",pId);
+            if(pId == null) return;
+            let divHolder = $(`overall_player_board_${pId}`).querySelector('.stig_first_player_holder');
+            if(!$(`stig_first_player`) ){
+                dojo.place('<div id="stig_first_player"></div>', divHolder);
+                this.addTooltip('stig_first_player', _('Starting player'),'');
+            }
+            this.slide('stig_first_player',divHolder, {
+                phantom: false,
+            }).then(() => this.adaptPlayersPanels() );
+            
         },
             
         /**
@@ -758,11 +774,11 @@ function (dojo, declare) {
 
         tplPlayerPanel(player) {
             return `<div class='stig_panel'>
-            <div class="stig_first_player_holder"></div>
             <div class='stig_player_infos'>
                 ${this.tplResourceCounter(player, 'tokens_deck')}
                 ${this.tplResourceCounter(player, 'tokens_recruit')}
             </div>
+            <div class="stig_first_player_holder"></div>
             </div>`;
         },
             
