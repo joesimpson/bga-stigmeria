@@ -220,6 +220,8 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    */
   public function checkAndBecomesPollen($player)
   {
+    //NO pollen on central board
+    if($this->getPId() == null) return;
     if(Schemas::matchCurrentSchema($this)){
       $this->becomesPollen($player);
     }
@@ -231,7 +233,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   {
     $newType = TOKEN_POLLENS[$this->getType()];
     $this->setType($newType);
-    Stats::inc("pollens_board",$player->getId());
+    Stats::inc("pollens_board",$this->getPId());
     Notifications::newPollen($player, $this);
   }
   
