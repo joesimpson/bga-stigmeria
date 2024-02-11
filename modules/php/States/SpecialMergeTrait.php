@@ -32,7 +32,21 @@ trait SpecialMergeTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        //TODO JSA actMerge
+        $actionCost = ACTION_COST_MERGE;
+        if($player->countRemainingPersonalActions() < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
+        $token1 = Tokens::get($tokenId1);
+        if($token1->pId != $pId || $token1->location != TOKEN_LOCATION_PLAYER_BOARD ){
+            throw new UnexpectedException(130,"You cannot merge this token");
+        }
+        $token2 = Tokens::get($tokenId2);
+        if($token2->pId != $pId || $token2->location != TOKEN_LOCATION_PLAYER_BOARD ){
+            throw new UnexpectedException(130,"You cannot merge this token");
+        }
+
+        $token1->merge($token2,$player);
+        $player->incNbPersonalActionsDone($actionCost);
 
         $this->gamestate->nextPrivateState($pId, 'next');
     }

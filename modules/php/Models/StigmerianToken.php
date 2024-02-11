@@ -127,9 +127,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       Notifications::moveToPlayerBoard($player, $this,$actionCost);
     }
 
-    if(Schemas::matchCurrentSchema($this)){
-      $this->becomesPollen($player);
-    }
+    $this->checkAndBecomesPollen($player);
   }
   
   /**
@@ -158,7 +156,72 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     }
   }
 
+  /**
+   * Action of merging colors
+   * @param StigmerianToken $other
+   * @param Player $player
+   * @return bool true if colors are modified
+   */
+  public function merge($other,$player)
+  {
+    switch($this->type){
+      //--------------------
+      case TOKEN_STIG_RED:
+        switch($other->type){
+          case TOKEN_STIG_BLUE:
+            $newColor = TOKEN_STIG_VIOLET;
+            break;
+          case TOKEN_STIG_YELLOW:
+            $newColor = TOKEN_STIG_ORANGE;
+            break;
+        }
+        break;
+      //--------------------
+      case TOKEN_STIG_BLUE:
+        switch($other->type){
+          case TOKEN_STIG_RED:
+            $newColor = TOKEN_STIG_VIOLET;
+            break;
+          case TOKEN_STIG_YELLOW:
+            $newColor = TOKEN_STIG_GREEN;
+            break;
+        }
+        break;
+      //--------------------
+      case TOKEN_STIG_YELLOW:
+        switch($other->type){
+          case TOKEN_STIG_RED:
+            $newColor = TOKEN_STIG_ORANGE;
+            break;
+          case TOKEN_STIG_BLUE:
+            $newColor = TOKEN_STIG_GREEN;
+            break;
+        }
+        break;
+      //--------------------
+    }
+    //Finally change color
+    if(isset($newColor)){
+      $this->setType($newColor);
+      $other->setType($newColor);
+      Notifications::spMerge($player,$this,$other,ACTION_COST_MERGE);
+      $this->checkAndBecomesPollen($player);
+      $other->checkAndBecomesPollen($player);
+      return true;
+    }
+    return false;
+  }
   
+  /**
+   * Check objective and becomes pollen if OK
+   * @param Player $player
+   */
+  public function checkAndBecomesPollen($player)
+  {
+    if(Schemas::matchCurrentSchema($this)){
+      $this->becomesPollen($player);
+    }
+  }
   /**
    * @param Player $player
    */

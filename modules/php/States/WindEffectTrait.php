@@ -127,10 +127,7 @@ trait WindEffectTrait
     }
     else {
       //self::trace("doWindBlowsTo($windDir) token is still in grid :".json_encode($token));
-        
-      if(Schemas::matchCurrentSchema($token)){
-        $token->becomesPollen($player);
-      }
+      $token->checkAndBecomesPollen($player);
     }
     return true;
   }

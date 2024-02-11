@@ -191,10 +191,27 @@ class Notifications
         'i18n' => ['color1','color2'],  
         'player' => $player,
         'n' => count($tokens),
-        //TODO JSA Colors names
         'color1' => $color1,
         'color2' => $color2,
         'tokens' => $tokens,
+      ],
+    );
+  }
+  /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token1
+   * @param StigmerianToken $token2
+   * @param int $actionCost
+   */
+  public static function spMerge($player,$token1,$token2,$actionCost){
+    self::notifyAll('spMerge',clienttranslate('${player_name} merges 2 tokens at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'L1' => $token1->getCoordName(),
+        'L2' => $token2->getCoordName(),
+        'token1' => $token1->getUiData(),
+        'token2' => $token2->getUiData(),
+        'n' => $actionCost,
       ],
     );
   }

@@ -57,6 +57,7 @@ function (dojo, declare) {
                 ['letNextPlay', 10],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
+                ['spMerge', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['windBlows', 1800],
@@ -600,6 +601,17 @@ function (dojo, declare) {
             div.dataset.col = token.col;
             div.dataset.type = token.type;
             this.slide(div, this.getTokenContainer(token));
+        },
+        notif_spMerge(n) {
+            debug('notif_spMerge: tokens are merged !', n);
+            let token1 = n.args.token1;
+            let token2 = n.args.token2;
+            let div1 = $(`stig_token_${token1.id}`);
+            let div2 = $(`stig_token_${token2.id}`);
+            div1.dataset.type = token1.type;
+            div2.dataset.type = token2.type;
+            this.animationBlink2Times(div1);
+            this.animationBlink2Times(div2);
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);
