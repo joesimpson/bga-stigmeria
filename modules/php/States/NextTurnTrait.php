@@ -21,14 +21,18 @@ trait NextTurnTrait
     //-------------------------------------------
     $end = false;
     $players = Players::getAll();
+    $winners = [];
     foreach($players as $pid => $player){
       $isWin = $this->isSchemaFulfilled($player);
       if($isWin){
         Notifications::schemaFulfilled($player);
         $end = true;
+        $winners[] = $pid;
       }
     }
     if($end){
+      
+      Globals::setWinnersIds($winners);
       $this->gamestate->nextState('end');
       return;
     }

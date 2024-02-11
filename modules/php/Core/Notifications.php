@@ -250,6 +250,18 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * @param Player $player
+   * @param int $points
+   */
+  public static function addPoints($player,$points){
+    self::notifyAll('addPoints',clienttranslate('${player_name} scores ${n} points'),[ 
+        'player' => $player,
+        'n' => $points,
+      ],
+    );
+  }
   /*************************
    **** GENERIC METHODS ****
    *************************/

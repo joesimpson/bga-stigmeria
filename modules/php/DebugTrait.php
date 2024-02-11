@@ -87,6 +87,19 @@ trait DebugTrait
     if($isWin) Notifications::message('Schema fulfilled !',[]);
     else Notifications::message('Schema in progress...',[]);
   }
+  function debugWinners()
+  {
+    $winners = Players::getAll()->getIds();
+    Globals::setWinnersIds($winners);
+    Notifications::message('debugWinners',[ 'w'=> Globals::getWinnersIds()]);
+  }
+  
+  function debugPoints()
+  {
+    $player = Players::getCurrent();
+    Notifications::addPoints($player,4);
+  }
+  
   function debugSchemas()
   {
     Notifications::message('debugSchemas',[ 'types'=> Schemas::getUiData()]);

@@ -21,6 +21,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     'nbRounds' => 'int',
     'turn' => 'int',
     'firstPlayer' => 'int',
+    'winnersIds' => 'obj',
 
     //We manage the wind direction for the 10 first turns, then the wind will be saved in windDirection11 (no need to display them)
     'windDirection1' => 'str',
@@ -123,7 +124,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     Utils::updateDataFromArray($options,OPTION_SCHEMA_C1,$optionSchema);
     Utils::updateDataFromArray($options,OPTION_SCHEMA_C2,$optionSchema);
     Utils::updateDataFromArray($options,OPTION_SCHEMA_C3,$optionSchema);
-    if(array_key_exists(OPTION_SCHEMA_NL,$options)) $optionSchema = $options[OPTION_SCHEMA_NL];
+    Utils::updateDataFromArray($options,OPTION_SCHEMA_NL,$optionSchema);
     
     $schemaTypes = Schemas::getTypes();
     $schemas = new Collection($schemaTypes);

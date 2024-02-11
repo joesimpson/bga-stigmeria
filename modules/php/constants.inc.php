@@ -20,6 +20,11 @@ const WIND_DIR_SOUTH = 'S';
 const WIND_DIR_EAST = 'E';
 const WIND_DIR_WEST = 'W';
 
+const SCORE_DIFFICULTY_1 = 5;
+const SCORE_DIFFICULTY_2 = 10;
+const SCORE_DIFFICULTY_3 = 20;
+const SCORE_DIFFICULTY_4 = 40;
+
 /* TOKEN TYPES : stigmerians, then pollens*/
 const TOKEN_STIG_BLUE =     1;
 const TOKEN_STIG_YELLOW =   2;

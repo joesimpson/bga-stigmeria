@@ -61,6 +61,7 @@ function (dojo, declare) {
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['windBlows', 1800],
+                ['addPoints', 800],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
             this._displayNotifsOnTop = false;
@@ -632,6 +633,12 @@ function (dojo, declare) {
                 div.dataset.state = token.state;
                 this.slide(div, this.getTokenContainer(token));
             });
+        },
+        notif_addPoints(n) {
+            debug('notif_addPoints: scoring !', n);
+            let points = n.args.n;
+            let player_id = n.args.player_id;
+            this.scoreCtrl[ player_id ].incValue( points );
         },
 
         ///////////////////////////////////////////////////
