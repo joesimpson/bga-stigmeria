@@ -25,6 +25,7 @@ const SCORE_DIFFICULTY_2 = 10;
 const SCORE_DIFFICULTY_3 = 20;
 const SCORE_DIFFICULTY_4 = 40;
 const SCORE_JOKER_USED = -5;
+const SCORE_PER_ACTION = 1;
 const SCORE_PER_RECRUIT = 1;
 //Not specified by the rules : but I add this to separate '0' score when fullfil easy game with joker VS loosing
 const SCORE_FAIL = -1;

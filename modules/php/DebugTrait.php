@@ -98,6 +98,7 @@ trait DebugTrait
   {
     $player = Players::getCurrent();
     Notifications::addPoints($player,4);
+    Notifications::addPoints($player,3,'TEST ${n} / ${n2}',9);
   }
   
   function debugSchemas()

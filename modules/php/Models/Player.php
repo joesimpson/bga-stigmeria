@@ -56,6 +56,7 @@ class Player extends \STIG\Helpers\DB_Model
   
   public function addPoints($points)
   {
+    if($points == 0) return;
     $this->setScore( $this->getScore() + $points);
     Stats::inc( "score", $this->id, $points );
   }

@@ -9,7 +9,7 @@
     "player": {
       "score": {
         "id": 10,
-        "name": "Number of turns",
+        "name": "Score",
         "type": "int"
       }
     }

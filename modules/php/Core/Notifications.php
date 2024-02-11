@@ -254,13 +254,17 @@ class Notifications
   /**
    * @param Player $player
    * @param int $points
-   * @param string $message (optional)
+   * @param string $msg (optional)
+   * @param int $number2 (optional) 2nd number used in custom message
+   * @param int $number3 (optional) 3rd number used in custom message
    */
-  public static function addPoints($player,$points, $msg = null){
+  public static function addPoints($player,$points, $msg = null, $number2 = null, $number3 = null){
     if(!isset($msg)) $msg = clienttranslate('${player_name} scores ${n} points');
     self::notifyAll('addPoints',$msg,[ 
         'player' => $player,
         'n' => $points,
+        'n2' => $number2,
+        'n3' => $number3,
       ],
     );
   }
@@ -317,6 +321,13 @@ class Notifications
       $data['player_name2'] = $data['player2']->getName();
       $data['player_id2'] = $data['player2']->getId();
       unset($data['player2']);
+    }
+    
+    if (array_key_exists('n2',$data) && $data['n2'] == null) {
+      unset($data['n2']);
+    }
+    if (array_key_exists('n3',$data) && $data['n3'] == null) {
+      unset($data['n3']);
     }
   }
 }
