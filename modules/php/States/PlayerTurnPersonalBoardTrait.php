@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Exceptions\UserException;
 use STIG\Helpers\Collection;
@@ -93,6 +94,10 @@ trait PlayerTurnPersonalBoardTrait
             //TODO JSA LOST GAME (maybe already lost before looking in the bag ?)
             throw new UnexpectedException(404,"Not supported draw : empty draw bag for player $pId");
         }
+        Stats::inc("tokens_deck",$player->getId(),-1);
+        Stats::inc("tokens_recruit",$player->getId());
+        Stats::inc("actions_1",$player->getId());
+        Stats::inc("actions",$player->getId());
 
         Notifications::drawToken($player,$token, $actionCost);
 
@@ -174,6 +179,7 @@ trait PlayerTurnPersonalBoardTrait
         }
         $newTokens = $tokens;
         $player->setJokerUsed(true);
+        Stats::inc("actions_j",$player->getId());
         Notifications::playJoker($player,$typeSource, $typeDest, $newTokens);
 
         $this->gamestate->nextPrivateState($pId, "continue");

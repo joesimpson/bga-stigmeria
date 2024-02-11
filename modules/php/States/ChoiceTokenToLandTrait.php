@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -71,6 +72,9 @@ trait ChoiceTokenToLandTrait
 
         //EFFECT : PLACE the TOKEN 
         $token->moveToPlayerBoard($player,$row,$column,$actionCost);
+        Stats::inc("tokens_recruit",$pId, -1);
+        Stats::inc("actions_2",$player->getId());
+        Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }

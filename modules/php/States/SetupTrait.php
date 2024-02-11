@@ -26,11 +26,7 @@ trait SetupTrait
     Players::setupNewGame($players, $options);
     Globals::setupNewGame($players, $options);
     Preferences::setupNewGame($players, $this->player_preferences);
-    //    Stats::checkExistence();
-    /*foreach ($players as $pId => $player) {
-      Players::get($player['id'])->initStats(count($players));
-    }
-    */
+    Stats::setupNewGame();
     Tokens::setupNewGame($players, $options);
 
     $this->setGameStateInitialValue('logging', false);

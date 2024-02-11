@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -50,6 +51,7 @@ trait CentralLandTrait
 
         $player->incNbCommonActionsDone($actionCost);
         Notifications::useActions($player);
+        Stats::inc("actions_c1",$player->getId());
 
         //EFFECT : PLACE the TOKEN 
         $token->moveToCentralBoard($player,$row,$column,$actionCost);

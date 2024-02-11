@@ -16,6 +16,7 @@ trait SpecialActionTrait
         $player = Players::get($player_id);
         $flowerType = Schemas::getCurrentSchema()->type;
         $remaining = $player->countRemainingPersonalActions();
+        $actions =[];
         if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE && $remaining >=ACTION_COST_MERGE){
             $actions[] = ACTION_TYPE_MERGE;
         }

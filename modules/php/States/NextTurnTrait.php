@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Managers\Players;
 
 trait NextTurnTrait
@@ -40,6 +41,7 @@ trait NextTurnTrait
 
     Globals::incTurn(1);
     $turn = Globals::getTurn();
+    Stats::inc( "turns_number");
 
     Notifications::newTurn($turn);
 

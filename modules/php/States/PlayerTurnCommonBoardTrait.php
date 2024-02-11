@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -68,6 +69,7 @@ trait PlayerTurnCommonBoardTrait
             //TODO JSA LOST GAME (maybe already lost before looking in the bag ?)
             throw new UnexpectedException(404,"Not supported draw : empty draw bag for player $pId");
         }
+        Stats::inc("tokens_deck",$player->getId(),-1);
 
         $this->gamestate->nextPrivateState($player->id, "startLand");
         return;

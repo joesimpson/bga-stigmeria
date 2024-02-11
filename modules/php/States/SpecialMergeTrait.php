@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
@@ -47,6 +48,8 @@ trait SpecialMergeTrait
 
         $token1->merge($token2,$player);
         $player->incNbPersonalActionsDone($actionCost);
+        Stats::inc("actions_s1",$player->getId());
+        Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($pId, 'next');
     }

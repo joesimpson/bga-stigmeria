@@ -3,6 +3,7 @@ namespace STIG;
 use STIG\Core\Globals;
 use STIG\Core\Game;
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -125,5 +126,15 @@ trait DebugTrait
     $player = Players::getCurrent();
     $player->setJokerUsed(false);
     $this->gamestate->nextPrivateState($player->id, "continue");
+  }
+
+  
+  function debugStats()
+  {
+    $players = Players::setupNewRound();
+    $round = Globals::getRound();
+    $schema = Schemas::getCurrentSchema();
+
+    Stats::setupNewRound($players,$schema);
   }
 }

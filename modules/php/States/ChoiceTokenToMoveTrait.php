@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -61,10 +62,12 @@ trait ChoiceTokenToMoveTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
-
+        
         //EFFECT : MOVE the TOKEN 
         $token->moveToPlayerBoard($player,$row,$column,$actionCost);
-
+        Stats::inc("actions_3",$player->getId());
+        Stats::inc("actions",$player->getId());
+        
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
 

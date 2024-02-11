@@ -5,6 +5,22 @@
         "name": "Number of turns",
         "type": "int"
       }
+      ,"schema": {
+        "id": 11,
+        "name": "Targeted schema",
+        "type": "int"
+      }
+      ,"difficulty": {
+        "id": 12,
+        "name": "Difficulty",
+        "type": "int"
+      }
+      ,"flower_type": {
+        "id": 13,
+        "name": "Flower type",
+        "type": "int",
+        "display": "limited"
+      }
     },
     "player": {
       "score": {
@@ -12,5 +28,69 @@
         "name": "Score",
         "type": "int"
       }
+      
+      ,"tokens_board": {
+        "id": 51,
+        "name": "Tokens on board",
+        "type": "int"
+      }
+      ,"tokens_recruit": {
+        "id": 52,
+        "name": "Tokens on recruit zone",
+        "type": "int"
+      }
+      ,"tokens_deck": {
+        "id": 53,
+        "name": "Tokens in bag",
+        "type": "int"
+      }
+      ,"pollens_board": {
+        "id": 54,
+        "name": "Pollens on board",
+        "type": "int"
+      }
+
+      ,"actions_c1": {
+        "id": 12,
+        "name": "Central Draw and Place actions",
+        "type": "int"
+      }
+      ,"actions_c2": {
+        "id": 13,
+        "name": "Central Move actions",
+        "type": "int"
+      }
+
+      ,"actions": {
+        "id": 11,
+        "name": "Actions on player board",
+        "type": "int"
+      }
+      ,"actions_1": {
+        "id": 14,
+        "name": "Recruit actions",
+        "type": "int"
+      }
+      ,"actions_2": {
+        "id": 15,
+        "name": "Land actions",
+        "type": "int"
+      }
+      ,"actions_3": {
+        "id": 16,
+        "name": "Move actions",
+        "type": "int"
+      }
+      ,"actions_j": {
+        "id": 17,
+        "name": "Joker actions",
+        "type": "int"
+      }
+      ,"actions_s1": {
+        "id": 20,
+        "name": "Merge actions",
+        "type": "int"
+      }
+      
     }
   }

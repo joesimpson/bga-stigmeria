@@ -3,6 +3,7 @@
 namespace STIG\Managers;
 
 use STIG\Core\Game;
+use STIG\Core\Stats;
 use STIG\Models\StigmerianToken;
 
 /* 
@@ -60,7 +61,8 @@ class Tokens extends \STIG\Helpers\Pieces
               'player_id' => $pId,
               'nbr' => TOKEN_SETUP_NB,
             ];
-          }
+        }
+        Stats::inc("tokens_deck",$pId,count(STIG_PRIMARY_COLORS)*TOKEN_SETUP_NB);
       //Init starting schema :
       foreach ($schema->start as $token) {
         $tokens[] = [
@@ -72,6 +74,7 @@ class Tokens extends \STIG\Helpers\Pieces
           'nbr' => 1,
         ];
       }
+      Stats::inc("tokens_board",$pId,count($schema->start));
     }
 
     self::create($tokens);
@@ -80,6 +83,8 @@ class Tokens extends \STIG\Helpers\Pieces
         self::shuffle(TOKEN_LOCATION_PLAYER_DECK.$pId);
         //Draw 1 to each recruit zone :
         self::pickForLocation(1,TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
+        Stats::inc("tokens_deck",$pId, -1);
+        Stats::inc("tokens_recruit",$pId);
     }
 
     return self::getAll();

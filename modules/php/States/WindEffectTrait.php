@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\Collection;
 use STIG\Managers\Players;
@@ -117,13 +118,15 @@ trait WindEffectTrait
 
     if($token->isOutOfGrid()){
       self::trace("doWindBlowsTo($windDir) token is out of grid :".json_encode($token));
+      if($token->getPId() !== null ) Stats::inc("tokens_board",$token->getPId(), -1);
       //TODO JSA ELIMINATE player WHEN NORMAL MODE
-
+      
       //TODO JSA ELSE MOVE it or DELETE it ?
       $token->setLocation(TOKEN_LOCATION_OUT);
       $token->setPId(null);
       $token->setRow(null);
       $token->setCol(null);
+      
     }
     else {
       //self::trace("doWindBlowsTo($windDir) token is still in grid :".json_encode($token));

@@ -34,6 +34,7 @@ trait ScoringTrait
         break;
     }
 
+    //TODO JSA DISCOVERY : no other score than scoreLevel
     $nextTurns = 0;
     $nextActions = 0;
     $k = $turn + 1;

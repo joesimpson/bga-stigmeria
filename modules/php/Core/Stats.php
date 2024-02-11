@@ -217,5 +217,20 @@ class Stats extends \STIG\Helpers\DB_Manager
    *********************/
   public static function setupNewGame()
   {
+    Stats::checkExistence();
+    
+  }
+  public static function setupNewRound($players,$schema)
+  {
+    Stats::checkExistence();
+    Stats::setSchema($schema->id);
+    Stats::setDifficulty($schema->difficulty);
+    Stats::setFlower_type($schema->type);
+
+    foreach ($players as $pId => $player) {
+      Stats::setTokens_deck($pId, 0);
+      Stats::setTokens_recruit($pId, 0);
+      Stats::setTokens_board($pId, 0);
+    }
   }
 }

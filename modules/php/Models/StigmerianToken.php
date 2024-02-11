@@ -4,6 +4,7 @@ namespace STIG\Models;
 
 use STIG\Core\Game;
 use STIG\Core\Notifications;
+use STIG\Core\Stats;
 use STIG\Managers\Schemas;
 
 /*
@@ -124,6 +125,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
     }
     else {
+      Stats::inc("tokens_board",$player->getId());
       Notifications::moveToPlayerBoard($player, $this,$actionCost);
     }
 
@@ -229,6 +231,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   {
     $newType = TOKEN_POLLENS[$this->getType()];
     $this->setType($newType);
+    Stats::inc("pollens_board",$player->getId());
     Notifications::newPollen($player, $this);
   }
   
