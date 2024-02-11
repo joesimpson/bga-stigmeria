@@ -61,6 +61,32 @@ trait DebugTrait
     $schema = Schemas::getCurrentSchema();
     Notifications::newRound($round,$schema,[]);
   }
+  function debugSchemaEnd()
+  {
+    $player = Players::getCurrent();
+    $schema = Schemas::getCurrentSchema();
+    //----------------------------------------
+    /*
+    RESET BOARD to match :
+    $tokens = [];
+    Tokens::deleteAllAtLocation(TOKEN_LOCATION_PLAYER_BOARD,$player->id);
+    foreach($schema->end as $token){
+      $tokens[] = [
+        'type' => $token->type,
+        'location' => TOKEN_LOCATION_PLAYER_BOARD,
+        'player_id' => $player->id,
+        'nbr' => 1,
+        'y' => $token->row,
+        'x' => $token->col,
+      ];
+    }
+    Tokens::create($tokens);
+    //-------------------------------------------
+    */
+    $isWin = $this->isSchemaFulfilled($player);
+    if($isWin) Notifications::message('Schema fulfilled !',[]);
+    else Notifications::message('Schema in progress...',[]);
+  }
   function debugSchemas()
   {
     Notifications::message('debugSchemas',[ 'types'=> Schemas::getUiData()]);

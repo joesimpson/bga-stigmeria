@@ -9,6 +9,7 @@ use STIG\Exceptions\UserException;
 use STIG\Helpers\Collection;
 use STIG\Helpers\Utils;
 use STIG\Managers\Players;
+use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
 
@@ -212,6 +213,8 @@ trait PlayerTurnPersonalBoardTrait
     }
 
     /**
+     * @param int $playerId
+     * @param int $typeSource
      * @return Collection + (size 4) if 4 tokens of the same type are in player recruit zone,
      *  + (size 0) otherwise
      */
@@ -225,4 +228,28 @@ trait PlayerTurnPersonalBoardTrait
         return $tokens->limit(0);
     }
 
+    /**
+     * @param Player $player
+     * @return bool + true when every expected tokens of current schema is on player board, and no others !
+     *  + false otherwise
+     */
+    public function isSchemaFulfilled($player){
+        self::trace("isSchemaFulfilled()");
+        $schema = Schemas::getCurrentSchema();
+        $expected = $schema->end;
+        $tokens = Tokens::getAllOnPersonalBoard($player->id);
+        if ($tokens->count() != count($expected) ){
+            return false;
+        }
+        //We suppose the order of tokens is the same on the 2 collection : (sort by DB on left / statically defined on right)
+        //Now let's loop 1 time on tokens to check they match
+        $tokenIndex = 0;
+        foreach($tokens as $token){
+            $expectedToken = $expected->offsetGet($tokenIndex);
+            if(!$token->matchesCoord($expectedToken)) return false;
+            $tokenIndex++;
+        }
+        
+        return true;
+    }
 }

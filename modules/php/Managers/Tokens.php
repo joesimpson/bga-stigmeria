@@ -117,6 +117,14 @@ class Tokens extends \STIG\Helpers\Pieces
       }
     )->first();
   }
+  public static function deleteAllAtLocation($location,$playerId)
+  { 
+    Game::get()->trace("deleteAllOnBoard($location,$playerId)");
+    return self::DB()
+      ->where(static::$prefix . 'location', $location)
+      ->wherePlayer($playerId)
+      ->delete()->run();
+  }
   /**
    * @param int $playerId
    * @return Collection of StigmerianToken found at that location
@@ -127,6 +135,9 @@ class Tokens extends \STIG\Helpers\Pieces
     return self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
       ->wherePlayer($playerId)
+      //Order by row, then column -> will be used to avoid sorting this collection when comparing with schema
+      ->orderBy('y', 'ASC')
+      ->orderBy('x', 'ASC')
       ->get();
   }
   /**

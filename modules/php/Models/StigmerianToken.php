@@ -249,6 +249,19 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     if($this->col != $coord->col ) $this->setCol($coord->col);
     if($this->row != $coord->row ) $this->setRow($coord->row);
   }
+  
+  /**
+   * @param TokenCoord $coord
+   * @return bool true if all attributes are equivalent to the param
+   */
+  public function matchesCoord($coord)
+  {
+    if($this->col != $coord->col ) return false;
+    if($this->row != $coord->row ) return false;
+    if($this->type != $coord->type ) return false;
+    return true;
+  }
+
 
   public static function getTypeName($type)
   {
