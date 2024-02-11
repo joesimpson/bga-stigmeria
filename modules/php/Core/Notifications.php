@@ -18,12 +18,15 @@ class Notifications
    * @param Collection $tokens
    */
   public static function newRound($round,$schema,$tokens){
+    //reload players datas - for now getUiData doesn't care about this current player id, but be careful in the future !
+    $players = Players::getUiData(null);
     self::notifyAll('newRound',clienttranslate('Starting round #${n} with schema #${s}'),[ 
         'n' => $round,
         's' => $schema->id,
         //No need to send all the schema datas if we send it at start
         //'schema' => $schema->getUiData(),
         'tokens' => $tokens,
+        'players' => $players,
       ],
     );
   }

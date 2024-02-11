@@ -7,6 +7,7 @@ use STIG\Core\Stats;
 use STIG\Core\Notifications;
 use STIG\Core\Preferences;
 use STIG\Managers\Players;
+use STIG\Managers\Tokens;
 
 /*
  * Player: all utility functions concerning a player
@@ -39,6 +40,18 @@ class Player extends \STIG\Helpers\DB_Model
   {
     $data = parent::getUiData();
     $current = $this->id == $currentPlayerId;
+
+    $data['tokens_recruit'] = Tokens::countRecruits($this->getId());
+    $data['tokens_deck'] = Tokens::countDeck($this->getId());
+    //decrease JSON SIZE :
+    $data['ncad'] = $this->nbCommonActionsDone;
+    unset($data['nbCommonActionsDone']);
+    //decrease JSON SIZE :
+    $data['npad'] = $this->nbPersonalActionsDone;
+    unset($data['nbPersonalActionsDone']);
+    //decrease JSON SIZE :
+    $data['ncmd'] = $this->commonMoveDone;
+    unset($data['commonMoveDone']);
 
     return $data;
   }

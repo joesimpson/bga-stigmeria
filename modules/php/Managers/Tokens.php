@@ -89,7 +89,17 @@ class Tokens extends \STIG\Helpers\Pieces
 
     return self::getAll();
   }
-  
+  /**
+   * @param int $playerId
+  * @return int nb of tokens on player deck
+  */
+  public static function countDeck($playerId)
+  { 
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_DECK.$playerId)
+      ->wherePlayer($playerId)
+      ->count();
+  }
   /**
    * 
    * @param int $playerId

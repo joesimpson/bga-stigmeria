@@ -110,6 +110,11 @@ trait DebugTrait
   {
     Tokens::setupNewRound(Players::getAll(),Schemas::getCurrentSchema());
   }
+  function debugNewRound()
+  {
+    $this->gamestate->jumpToState( ST_NEXT_ROUND );
+  }
+  
   
   function debugCMD()
   {

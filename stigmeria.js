@@ -307,7 +307,7 @@ function (dojo, declare) {
                 this.addPrimaryActionButton('btnPlace', 'Land', () => this.takeAction('actLand', {}));
                 this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
                     
-                this.gamedatas.players[this.player_id].nbPersonalActionsDone = args.done;
+                this.gamedatas.players[this.player_id].npad = args.done;
                 this.updateTurnMarker(this.gamedatas.turn,args.done +1 );
                     
                 if(possibleActions.includes('actSpecial')){
@@ -546,6 +546,12 @@ function (dojo, declare) {
             this.gamedatas.schema = n.args.schema;
             this.gamedatas.tokens = n.args.tokens;
             this.gamedatas.turn = 0;
+            this.gamedatas.players = n.args.players;
+            this.forEachPlayer((player) => {
+                this._counters[player.id]['tokens_recruit'].setValue(player.tokens_recruit);
+                this._counters[player.id]['tokens_deck'].setValue(player.tokens_deck);
+            });
+            
             this.setupTokens();
         },
         notif_newTurn(n) {
@@ -560,8 +566,11 @@ function (dojo, declare) {
         notif_drawToken(n) {
             debug('notif_drawToken: new token on player board', n);
             let token = n.args.token;
-            this.addToken(token, this.getVisibleTitleContainer());
+            let player_id = n.args.player_id;
+            this.addToken(token, `stig_reserve_${player_id}_tokens_deck`);
             let div = $(`stig_token_${token.id}`);
+            this._counters[player_id]['tokens_deck'].incValue(-1);
+            this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             this.slide(div, this.getTokenContainer(token));
         },
         notif_moveToCentralBoard(n) {
@@ -572,6 +581,7 @@ function (dojo, declare) {
             div.dataset.row = token.row;
             div.dataset.col = token.col;
             div.dataset.state = token.state;
+            this._counters[n.args.player_id]['tokens_deck'].incValue(-1);
             this.slide(div, this.getTokenContainer(token));
         },
         notif_moveOnCentralBoard(n) {
@@ -591,6 +601,7 @@ function (dojo, declare) {
             debug('notif_moveToPlayerBoard: new token on player board', n);
             let token = n.args.token;
             //Move from player RECRUIT ZONE to player board :
+            this._counters[n.args.player_id]['tokens_recruit'].incValue(-1);
             let div = $(`stig_token_${token.id}`);
             div.dataset.row = token.row;
             div.dataset.col = token.col;
@@ -700,11 +711,16 @@ function (dojo, declare) {
             this._counters = {};
             this.forEachPlayer((player) => {
                 let isCurrent = player.id == this.player_id;
+                this.place('tplPlayerPanel', player, `player_panel_content_${player.color}`, 'after');
                 this.place('tplPlayerBoard', player, 'stig_player_boards');
-        
+
+                this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bags'),'');
+                this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
+
                 let pId = player.id;
                 this._counters[pId] = {
-                    //TODO JSA Counters
+                    tokens_recruit: this.createCounter(`stig_counter_${pId}_tokens_recruit`, player.tokens_recruit),
+                    tokens_deck: this.createCounter(`stig_counter_${pId}_tokens_deck`, player.tokens_deck),
                 };
         
                 // Useful to order boards
@@ -735,6 +751,33 @@ function (dojo, declare) {
             let pId = this.gamedatas.firstPlayer;
             debug("updateFirstPlayer()",pId);
         },
+            
+        /**
+         * Player panel
+         */
+
+        tplPlayerPanel(player) {
+            return `<div class='stig_panel'>
+            <div class="stig_first_player_holder"></div>
+            <div class='stig_player_infos'>
+                ${this.tplResourceCounter(player, 'tokens_deck')}
+                ${this.tplResourceCounter(player, 'tokens_recruit')}
+            </div>
+            </div>`;
+        },
+            
+        /**
+         * Use this tpl for any counters that represent qty of tokens
+         */
+        tplResourceCounter(player, res) {
+            return `
+            <div class='stig_player_resource stig_resource_${res}'>
+                <span id='stig_counter_${player.id}_${res}' 
+                class='stig_resource_${res}'></span>${this.formatIcon(res)}
+                <div class='stig_reserve' id='stig_reserve_${player.id}_${res}'></div>
+            </div>
+            `;
+        },
           
         ////////////////////////////////////////////////////////  
         //    ____                      _     
@@ -750,7 +793,7 @@ function (dojo, declare) {
             let turn = this.gamedatas.turn;
             //TODO JSA MANAGE turn >10 display like 10 ?
             //We want to display the marker before the player take the action
-            let turnActions = Math.min(turn,player.nbPersonalActionsDone + 1);
+            let turnActions = Math.min(turn,player.npad + 1);
             let schema = this.gamedatas.schemas[this.gamedatas.schema];
             let flowerType = schema.type;
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
@@ -910,6 +953,27 @@ function (dojo, declare) {
             console.error('Trying to get container of a token', token);
             return 'game_play_area';
           },
+          
+
+        ////////////////////////////////////////////////////////////
+        // _____                          _   _   _
+        // |  ___|__  _ __ _ __ ___   __ _| |_| |_(_)_ __   __ _
+        // | |_ / _ \| '__| '_ ` _ \ / _` | __| __| | '_ \ / _` |
+        // |  _| (_) | |  | | | | | | (_| | |_| |_| | | | | (_| |
+        // |_|  \___/|_|  |_| |_| |_|\__,_|\__|\__|_|_| |_|\__, |
+        //                                                 |___/
+        ////////////////////////////////////////////////////////////
+
+        /**
+         * Replace some expressions by corresponding html formating
+         */
+        formatIcon(name, n = null) {
+            let type = name;
+            let text = n == null ? '' : `<span>${n}</span>`;
+            return `<div class="stig_icon_container stig_icon_container_${type}">
+                <div class="stig_icon stig_${type}">${text}</div>
+                </div>`;
+        },
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
         // |_ _|_ __  / _| ___   |  _ \ __ _ _ __   ___| |
