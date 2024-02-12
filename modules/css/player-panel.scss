@@ -103,11 +103,12 @@
                     background-repeat: no-repeat;
                 }
                 &.stig_jokers {
-                    width: 2.5em;
-                    height: 3em;
-                    background-image: url("img/joker.png");
-                    background-size: 100% auto;
-                    background-repeat: no-repeat;
+                    width: 40px;
+                    height: 40px;
+                    background-image: url("img/tokens.png");
+                    background-size: 6000%;
+                    background-position-x: 480px;
+                    background-position-y: 35px;
                 }
                 &.stig_pollens{
                     display: flex;
