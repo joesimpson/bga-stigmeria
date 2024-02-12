@@ -216,7 +216,7 @@ class Schemas
     $schema = Schemas::getCurrentSchema();
     if(! isset($schema)) return false;
     $notfound = $schema->end->filter( function ($expected) use ($token, $tokenFuturePollen) {
-        Game::get()->trace("matchCurrentSchema() loop ".json_encode($expected->getUiData()));
+        //Game::get()->trace("matchCurrentSchema() loop ".json_encode($expected->getUiData()));
         //Compare TokenCoord VS StigmerianToken
         return $expected->row == $token->row 
             && $expected->col == $token->col
@@ -224,7 +224,7 @@ class Schemas
         ;
       }
     )->isEmpty();
-    Game::get()->trace("matchCurrentSchema() notfound ? ".json_encode($notfound)." for ".json_encode($token->getUiData()));
+    //Game::get()->trace("matchCurrentSchema() notfound ? ".json_encode($notfound)." for ".json_encode($token->getUiData()));
     return !$notfound;
   }
 }

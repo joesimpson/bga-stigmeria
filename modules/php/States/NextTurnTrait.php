@@ -44,7 +44,9 @@ trait NextTurnTrait
     Stats::inc( "turns_number");
 
     Notifications::newTurn($turn);
+    Players::setupNewTurn($players,$turn);
 
     $this->gamestate->nextState('next');
   }
+
 }

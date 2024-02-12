@@ -109,7 +109,7 @@ class Tokens extends \STIG\Helpers\Pieces
    */
   public static function findOnPersonalBoard($playerId,$row, $column)
   { 
-    Game::get()->trace("findOnPersonalBoard($playerId,$row, $column)");
+    //Game::get()->trace("findOnPersonalBoard($playerId,$row, $column)");
     return self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
       ->wherePlayer($playerId)
@@ -169,14 +169,16 @@ class Tokens extends \STIG\Helpers\Pieces
   }
   /**
    * @param int $playerId
+   * @param array $token_types (optional) filter on these types
   * @return int nb of tokens on player board recruit zone
   */
-  public static function countRecruits($playerId)
+  public static function countRecruits($playerId, $token_types = null)
   { 
-    return self::DB()
+    $query = self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_RECRUIT)
-      ->wherePlayer($playerId)
-      ->count();
+      ->wherePlayer($playerId);
+    if(isset($token_types)) $query = $query->whereIn('type',$token_types);
+    return  $query->count();
   }
    /**
    * @return Collection of StigmerianToken found at that location
@@ -221,7 +223,7 @@ class Tokens extends \STIG\Helpers\Pieces
    */
   public static function listAdjacentTokens($playerId,$row, $column)
   { 
-    Game::get()->trace("listAdjacentTokens($playerId,$row, $column)");
+    //Game::get()->trace("listAdjacentTokens($playerId,$row, $column)");
     return self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
       ->wherePlayer($playerId)
@@ -267,7 +269,7 @@ class Tokens extends \STIG\Helpers\Pieces
    */
   public static function listAdjacentTokensOnCentral($row, $column)
   { 
-    Game::get()->trace("listAdjacentTokensOnCentral($row, $column)");
+    //Game::get()->trace("listAdjacentTokensOnCentral($row, $column)");
     return self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD)
       ->whereIn('y', [$row - 1,  $row, $row + 1] )
@@ -278,5 +280,96 @@ class Tokens extends \STIG\Helpers\Pieces
         }
       );
   }
-  
+
+  /**
+   * All next picked tokens are described by this order :
+   * SELECT type FROM `token` WHERE `token_location` = 'player_deck_2373992'
+   *  ORDER BY token_state DESC; 
+   * @param int $playerId
+   * @return array 
+   */
+  public static function getOrderedTypesInDeck($playerId)
+  { 
+    return self::DB()
+      ->select(['type'])
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_DECK.$playerId)
+      ->wherePlayer($playerId)
+      ->orderBy(static::$prefix . 'state')
+      ->get()
+      ->map(function ($token) {
+        return $token->type;
+      })
+      ->toArray();
+  }
+
+  /**
+   * Keep players with the most tokens of specified types
+   * @param Collection $players
+   * @param array $types (optional) filter on these types
+   * @return array Example ["n" => 4,"pId"=> [1234,  999] ]
+   */
+  public static function getPlayerIdsWithMaxRecruit($players, $types = null)
+  { 
+    Game::get()->trace("getPlayerIdsWithMaxRecruit()");
+    $maxRecruits = ['n' => 0, 'pId'=> []]; 
+    foreach($players as $player_id => $player){
+      //--------------------------------------------------
+      $recruits = Tokens::countRecruits($player_id, $types);
+      if($recruits > $maxRecruits['n']) {
+        $maxRecruits['n'] = $recruits;
+        $maxRecruits['pId'] = [];
+        $maxRecruits['pId'][] = $player_id;
+      } else if($recruits == $maxRecruits['n']) {
+        $maxRecruits['pId'][] = $player_id;
+      }
+      //--------------------------------------------------
+    }
+    return $maxRecruits;
+  }
+  /**
+   * DRAW a token in every player deck until one has more yellow ! and finally put the tokens back in their bags
+   * @param array $playersIds 
+   * @return int $winTiePlayerId player with the most yellow
+   */
+  public static function drawUntilYellow($playersIds)
+  { 
+    Game::get()->trace("drawUntilYellow()".json_encode($playersIds));
+
+    $maxTokens = null;
+    $playersTokenTypes = [];
+    //counter to increase progressively like if we pick one token at a time:
+    $playersYellowTokensCounts = [];
+    $winTiePlayerId = $playersIds[array_rand($playersIds)];//to prevent returning null
+    foreach($playersIds as $pId){
+      $playersTokenTypes[$pId] = Tokens::getOrderedTypesInDeck($pId);
+      $maxTokens = isset($maxTokens) ? max($maxTokens, count($playersTokenTypes[$pId]) ) : count($playersTokenTypes[$pId]);
+      $playersYellowTokensCounts[$pId] = 0;
+    }
+
+    Game::get()->trace("drawUntilYellow() playersTokenTypes:".json_encode($playersTokenTypes));
+    for($k=0; $k< $maxTokens;$k++){
+      //$yellowFoundAtThisTurn = false;
+      $playersYellowFoundAtThisTurn = [];
+      foreach($playersIds as $pId){
+        if($k > count($playersTokenTypes[$pId])) continue;
+        $type = $playersTokenTypes[$pId][$k];
+        if($type == TOKEN_STIG_YELLOW ){
+          //$yellowFoundAtThisTurn = true;
+          $playersYellowFoundAtThisTurn[] = $pId;
+          $winTiePlayerId = $pId;
+        }
+      }
+      if(count($playersYellowFoundAtThisTurn) == 1){
+        //We finally have 1 'winner' of the draw -> stop operation
+        break;
+      }
+    }
+
+    //Reshuffle players bags to simulate another randomness, as when players put tokens in the bags IRL
+    foreach($playersIds as $pId){
+      self::shuffle(TOKEN_LOCATION_PLAYER_DECK.$pId);
+    }
+      
+    return $winTiePlayerId;
+  }
 }

@@ -86,7 +86,7 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setNbPersonalActionsDone(0);
     $this->setCommonMoveDone(false);
 
-    Notifications::startTurn($this,$turnIndex);
+    if(Globals::isModeCompetitive()) Notifications::startTurn($this,$turnIndex);
   }
 
   public function countRemainingCommonActions(){

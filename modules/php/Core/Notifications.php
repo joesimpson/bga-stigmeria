@@ -20,7 +20,9 @@ class Notifications
   public static function newRound($round,$schema,$tokens){
     //reload players datas - for now getUiData doesn't care about this current player id, but be careful in the future !
     $players = Players::getUiData(null);
-    self::notifyAll('newRound',clienttranslate('Starting round #${n} with schema #${s}'),[ 
+    $msg = clienttranslate('Starting round #${n} with schema #${s}');
+    if($round==1) $msg = '';
+    self::notifyAll('newRound',$msg,[ 
         'n' => $round,
         's' => $schema->id,
         //No need to send all the schema datas if we send it at start
@@ -47,6 +49,32 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * @param int $turn
+   * @param Player $player
+   * @param int $subcase used to choose player -> now used to change message
+   */
+  public static function updateFirstPlayer($turn,$player,$subcase)
+  {
+    switch($subcase){
+      case 1: 
+        $msg= clienttranslate('${player_name} is the starting player (most tokens in recruit zone)');
+        break;
+      case 2: 
+        $msg= clienttranslate('${player_name} is the starting player (most yellow tokens in recruit zone)');
+        break;
+      case 3:
+        $msg= clienttranslate('${player_name} is the starting player (most yellow tokens drawn from bags)');
+        break;
+    }
+    if($turn == 1){
+      $msg= clienttranslate('${player_name} is the starting player');
+    }
+    self::notifyAll('updateFirstPlayer', $msg, [
+      'player' => $player,
+    ]);
+  }
 
   /**
    * @param Player $player1
@@ -64,7 +92,7 @@ class Notifications
    * @param int $turn
    */
   public static function startTurn($player,$turn){
-    self::notifyAll('startTurn',clienttranslate('${player_name} starts turn #${n}'),[ 
+    self::notifyAll('startTurn',clienttranslate('${player_name} enters turn #${n}'),[ 
         'player' => $player,
         'n' => $turn,
       ],

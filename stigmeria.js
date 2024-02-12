@@ -51,6 +51,7 @@ function (dojo, declare) {
                 ['newRound', 10],
                 ['newWinds', 10],
                 ['newTurn', 800],
+                ['updateFirstPlayer', 500],
                 ['drawToken', 900],
                 ['moveToCentralBoard', 900],
                 ['moveOnCentralBoard', 900],
@@ -561,7 +562,7 @@ function (dojo, declare) {
         
         notif_updateFirstPlayer(n) {
             debug('Notif: updating first player', n);
-            this.gamedatas.firstPlayer = n.args.pId;
+            this.gamedatas.firstPlayer = n.args.player_id;
             this.updateFirstPlayer();
         },
         notif_newWinds(n) {

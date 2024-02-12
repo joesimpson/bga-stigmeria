@@ -115,6 +115,11 @@ trait DebugTrait
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
   }
   
+  function debugNewTurn()
+  {
+    $players = Players::getAll();
+    Players::setupNewTurn($players,2);
+  }
   
   function debugCMD()
   {

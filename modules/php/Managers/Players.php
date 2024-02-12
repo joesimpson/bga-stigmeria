@@ -52,6 +52,47 @@ class Players extends \STIG\Helpers\DB_Manager
     return $players;
   }
 
+  /**
+   * @param Collection $players Players
+   * @param int $turn
+   */
+  public static function setupNewTurn($players,$turn)
+  {
+    Game::get()->trace("setupNewTurn($turn)");
+    if(!Globals::isModeCompetitive()) return;
+    //First player calculation is for competitive games 
+    $maxRecruits = Tokens::getPlayerIdsWithMaxRecruit($players); 
+    Game::get()->trace("setupNewTurn() : maxRecruits =".json_encode($maxRecruits));
+    $tiedPlayers = $maxRecruits['pId'];
+    if(count( $tiedPlayers) > 1){
+      //All these players need a tie breaker decision : check yellow tokens
+      $players = $players->filter(function ($p) use ($tiedPlayers){ 
+        return in_array($p->id,$tiedPlayers); 
+      });
+      $maxYellowRecruits = Tokens::getPlayerIdsWithMaxRecruit($players,[TOKEN_STIG_YELLOW]);
+      Game::get()->trace("setupNewTurn() : maxYellowRecruits =".json_encode($maxYellowRecruits));
+      $tiedPlayers = $maxYellowRecruits['pId']; 
+      if(count( $tiedPlayers) > 1){
+        //All these players need a tie breaker decision : automatic draw tokens in each deck until difference
+        $firstPlayer = Tokens::drawUntilYellow($tiedPlayers);
+        self::updateFirstPlayer($turn,$players[$firstPlayer],3);
+      }
+      else if(count( $tiedPlayers) == 1) {
+        $firstPlayer = $players->filter(function ($p) use ($tiedPlayers){ 
+            return in_array($p->id,$tiedPlayers); 
+          })->first();
+        self::updateFirstPlayer($turn,$firstPlayer,2);
+      }
+    }
+    else if(count( $tiedPlayers) == 1){
+      $firstPlayer = $players->filter(function ($p) use ($tiedPlayers){ 
+          return in_array($p->id,$tiedPlayers); 
+        })->first();
+      self::updateFirstPlayer($turn,$firstPlayer,1);
+    }
+    
+  }
+
   public static function getActiveId()
   {
     return Game::get()->getActivePlayerId();
@@ -168,5 +209,17 @@ class Players extends \STIG\Helpers\DB_Manager
       $player->startTurn($turn);
     }
     //TODO JSA reset others counters but not turn ?
+  }
+  
+  /**
+   * @param int $turn
+   * @param Player $player
+   * @param int $subcase used to choose player
+   */
+  public static function updateFirstPlayer($turn,$player,$subcase){
+    if(!isset($player)) return;
+    Globals::setFirstPlayer($player->id);
+    if(!Globals::isModeCompetitive()) return;
+    Notifications::updateFirstPlayer($turn,$player,$subcase);
   }
 }
