@@ -33,6 +33,10 @@
 .phantom {
     visibility: hidden;
 }
+/* Hide the "You may note something for next time..." popup that would appear any refresh when not active ? */
+#turnBasedNotesIncent {
+    display: none;
+ }
 
 //Buttons :
 #btnLetNextPlay{

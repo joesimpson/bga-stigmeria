@@ -1812,6 +1812,20 @@
 #player_config .player_config_row:last-child {
   border-bottom: none;
 }
+#player_config #turn_counter_wrapper {
+  text-align: center;
+  margin: -5px -3px 0px;
+  background: rgba(227, 188, 146, 0.5019607843);
+  padding: 8px 0px 4px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5411764706);
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: "Bernard MT Condensed";
+  color: black;
+  display: block;
+}
 #player_config #show-settings {
   height: 40px;
   width: 50px;
@@ -2318,6 +2332,11 @@
 
 .phantom {
   visibility: hidden;
+}
+
+/* Hide the "You may note something for next time..." popup that would appear any refresh when not active ? */
+#turnBasedNotesIncent {
+  display: none;
 }
 
 #btnLetNextPlay {

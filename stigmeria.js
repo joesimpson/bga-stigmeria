@@ -26,6 +26,7 @@ define([
     g_gamethemeurl + 'modules/js/Core/modal.js',
 ],
 function (dojo, declare) {
+    const TURN_MAX = 10;
     const ACTION_TYPE_MERGE = 10;
 
     return declare("bgagame.stigmeria", [customgame.game], {
@@ -558,6 +559,7 @@ function (dojo, declare) {
         notif_newTurn(n) {
             debug('notif_newTurn: new turn', n);
             this.updateTurnMarker(n.args.n,1);
+            this._turnCounter.toValue(n.args.n);
         },
         
         notif_updateFirstPlayer(n) {
@@ -1007,6 +1009,7 @@ function (dojo, declare) {
         setupInfoPanel() {
             debug("setupInfoPanel");
             
+            this._turnCounter = this.createCounter('stig_counter_turn',1);
             dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
             
             this._settingsModal = new customgame.modal('showSettings', {
@@ -1023,9 +1026,14 @@ function (dojo, declare) {
         },
         
         tplConfigPlayerBoard() {
+            let turn = this.gamedatas.turn;
+            let turnMax = TURN_MAX;
             return `
             <div class='player-board' id="player_board_config">
                 <div id="player_config" class="player_board_content">
+                <div class="player_config_row" id="turn_counter_wrapper">
+                  ${_('Turn')} <span id='stig_counter_turn'>${turn}</span> / <span id='stig_counter_turn_max'>${turnMax}</span>
+                </div>
                 <div class="player_config_row">
                     <div id="show-settings">
                     <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
