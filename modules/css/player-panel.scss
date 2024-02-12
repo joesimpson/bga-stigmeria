@@ -60,7 +60,7 @@
             margin: 0 0.5em;
 
             &.stig_icon_container_tokens_recruit{
-                width: 50px;
+                width: 56px;
                 height: 50px;
                 background-size: 172px;
                 background-repeat: no-repeat;
@@ -92,8 +92,12 @@
             .stig_icon{
 
                 &.stig_tokens_recruit{
-                    width: 35px;
-                    height: 35px;
+                    display: flex;
+                    .stig_subicon_tokens_recruit{
+                        width: 2em;
+                        height: 2em;
+                        margin-right: -1.8em;
+                    }
                 }
                 &.stig_tokens_deck {
                     width: 2.5em;

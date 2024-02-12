@@ -804,7 +804,7 @@ function (dojo, declare) {
             return `<div class='stig_panel'>
             <div class='stig_player_infos'>
                 ${this.tplResourceCounter(player, 'tokens_deck')}
-                ${this.tplResourceCounter(player, 'tokens_recruit')}
+                ${this.tplResourceCounter(player, 'tokens_recruit',3)}
                 ${this.tplResourceCounter(player, 'pollens',9)}
                 ${this.tplResourceCounter(player, 'jokers')}
             </div>
