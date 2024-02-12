@@ -140,6 +140,7 @@ class Stigmeria extends Table
         //TODO JSA MANAGE rounds WITH more than 10 turns ?
         $currentRoundProgression = ($turn-1) / $turnMax;
         $progress = ($round-1)/$nbRounds + 1/$nbRounds * $currentRoundProgression;
+        $progress = min($progress, 100);
         return $progress * 100;
     }
 

@@ -22,6 +22,12 @@ trait WindEffectTrait
     $players = Players::getAll();
 
     $turn = Globals::getTurn();
+    if($turn == TURN_MAX && Globals::isModeNormal() ){
+      //In this mode, this is the last played turn and no wind is blowing
+      $this->gamestate->nextState('next');
+      return;
+    }
+
     //LOOP ON EACH player BOARD + central board
     if(!Globals::isModeNoCentralBoard()) $this->doWindEffect($turn);
     foreach($players as $playerId => $player){
@@ -39,20 +45,14 @@ trait WindEffectTrait
   {
     self::trace("doWindEffect($turn)");
      
-    $getterName = "getWindDirection$turn";
-    $windDir = Globals::$getterName();
+    $windDir = Globals::getWindDir($turn);
     self::trace("doWindEffect($turn) : wind blows to $windDir");
 
-    //Beware ! pollen are not moved !
     if(isset($player)){
-      $boardTokens = Tokens::getAllOnPersonalBoard($player->id)
-        //->filter( function ($token) {return !$token->isPollen(); })
-        ;
+      $boardTokens = Tokens::getAllOnPersonalBoard($player->id) ;
     }
     else {
-      $boardTokens = Tokens::getAllOnCentralBoard()
-        //->filter( function ($token) {return !$token->isPollen(); })
-        ;
+      $boardTokens = Tokens::getAllOnCentralBoard();
     }
 
     $movedTokens = [];

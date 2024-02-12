@@ -50,6 +50,15 @@ class Notifications
       ],
     );
   }
+  /**
+   * @param int $turn
+   */
+  public static function lastTurnEnd($turn){
+    self::notifyAll('lastTurnEnd',clienttranslate('Game ends because the last turn has ended'),[ 
+        'n' => $turn,
+      ],
+    );
+  }
   
   /**
    * @param int $turn

@@ -34,7 +34,6 @@ trait ScoringTrait
         break;
     }
 
-    //TODO JSA DISCOVERY : no other score than scoreLevel
     $nextTurns = 0;
     $nextActions = 0;
     $k = $turn + 1;
@@ -50,20 +49,22 @@ trait ScoringTrait
       if(in_array($pId,$winnersIds)){
         $score += $scoreLevel;
         Notifications::addPoints($player,$scoreLevel,clienttranslate('${player_name} scores ${n} points for the difficulty'));
-          
-        $nbActions = $nextActions + $player->countRemainingPersonalActions();
-        $scoreActions = SCORE_PER_ACTION * $nbActions;
-        if($scoreActions>0){
-          $score += $scoreActions;
-          Notifications::addPoints($player,$scoreActions,clienttranslate('${player_name} scores ${n} points for remaining actions : ${n2} remaining turns and ${n3} actions unused in this turn'),$nextTurns,$player->countRemainingPersonalActions());
-        }
+            
+        if(!Globals::isModeDiscovery()){
+          $nbActions = $nextActions + $player->countRemainingPersonalActions();
+          $scoreActions = SCORE_PER_ACTION * $nbActions;
+          if($scoreActions>0){
+            $score += $scoreActions;
+            Notifications::addPoints($player,$scoreActions,clienttranslate('${player_name} scores ${n} points for remaining actions : ${n2} remaining turns and ${n3} actions unused in this turn'),$nextTurns,$player->countRemainingPersonalActions());
+          }
 
-        $scoreRecruits = SCORE_PER_RECRUIT*Tokens::countRecruits($pId);
-        if($scoreRecruits>0){
-          $score += $scoreRecruits;
-          Notifications::addPoints($player,$scoreRecruits,clienttranslate('${player_name} scores ${n} points for remaining tokens in recruit zone'));
+          $scoreRecruits = SCORE_PER_RECRUIT*Tokens::countRecruits($pId);
+          if($scoreRecruits>0){
+            $score += $scoreRecruits;
+            Notifications::addPoints($player,$scoreRecruits,clienttranslate('${player_name} scores ${n} points for remaining tokens in recruit zone'));
+          }
+          
         }
-        
       }
       else {
         $score += SCORE_FAIL;

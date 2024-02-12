@@ -54,6 +54,20 @@ class Globals extends \STIG\Helpers\DB_Manager
     }
     return $winds;
   }
+  
+  /**
+   * @param int $turn
+   * @return string
+   */
+  public static function getWindDir($turn)
+  {
+    $maxWindDir = TURN_MAX +1;
+    if($turn> $maxWindDir){
+      $turn = $maxWindDir;
+    }
+    $getterName = "getWindDirection$turn";
+    return self::$getterName();
+  }
 
   public static function getWindDirName($windDir)
   {
@@ -74,6 +88,16 @@ class Globals extends \STIG\Helpers\DB_Manager
   {
     $gameMode = Globals::getOptionGameMode();
     return ($gameMode == OPTION_MODE_NORMAL || $gameMode == OPTION_MODE_DISCOVERY);
+  }
+  public static function isModeDiscovery()
+  {
+    $gameMode = Globals::getOptionGameMode();
+    return $gameMode == OPTION_MODE_DISCOVERY;
+  }
+  public static function isModeNormal()
+  {
+    $gameMode = Globals::getOptionGameMode();
+    return $gameMode == OPTION_MODE_NORMAL;
   }
   public static function isModeCompetitive()
   {

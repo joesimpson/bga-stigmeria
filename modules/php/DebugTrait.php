@@ -82,8 +82,8 @@ trait DebugTrait
       ];
     }
     Tokens::create($tokens);
-    //-------------------------------------------
     */
+    //-------------------------------------------
     $isWin = $this->isSchemaFulfilled($player);
     if($isWin) Notifications::message('Schema fulfilled !',[]);
     else Notifications::message('Schema in progress...',[]);
@@ -118,7 +118,8 @@ trait DebugTrait
   function debugNewTurn()
   {
     $players = Players::getAll();
-    $turn = 5;
+    $turn = 10;
+    Globals::setTurn($turn);
     Players::setupNewTurn($players,$turn);
     Notifications::newTurn($turn);
   }

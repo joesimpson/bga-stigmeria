@@ -1672,6 +1672,17 @@
   left: 73.6%;
 }
 
+.stig_newturn_markers {
+  position: absolute;
+  /** position always data-turn='1' */
+  left: 551px;
+  top: 45px;
+  display: flex;
+}
+.stig_newturn_markers .stig_newturn_marker {
+  margin-right: -40px;
+}
+
 .stig_turn_marker {
   width: 40px;
   height: 40px;

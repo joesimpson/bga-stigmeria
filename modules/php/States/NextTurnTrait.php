@@ -12,13 +12,7 @@ trait NextTurnTrait
   
   public function stNextTurn()
   {
-    
-    if (Globals::getTurn() == TURN_MAX) {
-      Notifications::emptyNotif();
-      //TODO JSA MANAGE More with OPTIONS
-      $this->gamestate->nextState('end');
-      return;
-    }
+    $turn = Globals::getTurn();
     //-------------------------------------------
     $end = false;
     $players = Players::getAll();
@@ -32,8 +26,13 @@ trait NextTurnTrait
       }
     }
     if($end){
-      
       Globals::setWinnersIds($winners);
+      $this->gamestate->nextState('end');
+      return;
+    }
+    //-------------------------------------------
+    if (!Globals::isModeDiscovery() && $turn >= TURN_MAX) {
+      Notifications::lastTurnEnd($turn);
       $this->gamestate->nextState('end');
       return;
     }

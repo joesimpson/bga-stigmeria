@@ -28,6 +28,7 @@ define([
 function (dojo, declare) {
     const TURN_MAX = 10;
     const ACTION_TYPE_MERGE = 10;
+    const TOKEN_TYPE_NEWTURN = 21;
 
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
@@ -837,7 +838,6 @@ function (dojo, declare) {
         ////////////////////////////////////////////////////////
         tplPlayerBoard(player) {
             let turn = this.gamedatas.turn;
-            //TODO JSA MANAGE turn >10 display like 10 ?
             //We want to display the marker before the player take the action
             let turnActions = Math.min(turn,player.npad + 1);
             let flowerType = this.getFlowerType();
@@ -846,6 +846,8 @@ function (dojo, declare) {
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
                     <div class='player-name' style='color:#${player.color}'>${player.name}</div>
                     <div class="stig_turn_marker" data-turn="${turn}" data-count_actions="${turnActions}">
+                    </div>
+                    <div class="stig_newturn_markers" id="stig_newturn_markers_${player.id}" >
                     </div>
                     <div id="stig_recruits_${player.id}" class='stig_recruits'>
                     </div>
@@ -919,10 +921,23 @@ function (dojo, declare) {
             debug('updateTurnMarker', turn, action);
             this.gamedatas.turn = turn;
             [... document.querySelectorAll('.stig_turn_marker')].forEach((o) => {
-                o.dataset.turn = this.gamedatas.turn;
+                o.dataset.turn = Math.min(TURN_MAX,this.gamedatas.turn);
                 o.dataset.count_actions = action;
                 });
                 //TODO JSA update turn marker of 1 player separately when 1 action is done
+            let k =0;
+            while(k < (turn - TURN_MAX) ){
+                k++;
+                let token = {id: 'newTurn'+k, player_id: this.player_id, type: TOKEN_TYPE_NEWTURN };
+                let divId = `stig_token_${token.id}`;
+                if(!$(`${divId}`)){
+                    this.addToken(token, this.getVisibleTitleContainer());
+                    div = $(`${divId}`);
+                    div.dataset.turn = turn;
+                    div.classList.add('stig_newturn_marker');
+                    this.slide(div, $(`stig_newturn_markers_${token.player_id}` ), { duration: 10 } );
+                }
+            }
         },    
         addSelectableTokenCell(player_id, row, column) {
             debug("addSelectableTokenCell",player_id, row, column);
