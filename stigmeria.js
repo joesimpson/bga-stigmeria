@@ -548,10 +548,12 @@ function (dojo, declare) {
             this.gamedatas.schema = n.args.schema;
             this.gamedatas.tokens = n.args.tokens;
             this.gamedatas.turn = 0;
+            this._turnCounter.toValue(this.gamedatas.turn);
             this.gamedatas.players = n.args.players;
             this.forEachPlayer((player) => {
                 this._counters[player.id]['tokens_recruit'].setValue(player.tokens_recruit);
                 this._counters[player.id]['tokens_deck'].setValue(player.tokens_deck);
+                this._counters[player.id]['pollens'].setValue(player.pollens);
             });
             
             this.setupTokens();
@@ -635,6 +637,7 @@ function (dojo, declare) {
             div.dataset.col = token.col;
             div.dataset.type = token.type;
             this.slide(div, this.getTokenContainer(token));
+            this._counters[n.args.player_id]['pollens'].incValue(1);
         },
         notif_spMerge(n) {
             debug('notif_spMerge: tokens are merged !', n);
@@ -725,11 +728,13 @@ function (dojo, declare) {
 
                 this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bags'),'');
                 this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
+                this.addTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'),'');
 
                 let pId = player.id;
                 this._counters[pId] = {
                     tokens_recruit: this.createCounter(`stig_counter_${pId}_tokens_recruit`, player.tokens_recruit),
                     tokens_deck: this.createCounter(`stig_counter_${pId}_tokens_deck`, player.tokens_deck),
+                    pollens: this.createCounter(`stig_counter_${pId}_pollens`, player.pollens),
                 };
         
                 // Useful to order boards
@@ -780,6 +785,7 @@ function (dojo, declare) {
             <div class='stig_player_infos'>
                 ${this.tplResourceCounter(player, 'tokens_deck')}
                 ${this.tplResourceCounter(player, 'tokens_recruit')}
+                ${this.tplResourceCounter(player, 'pollens',9)}
             </div>
             <div class="stig_first_player_holder"></div>
             </div>`;
@@ -788,11 +794,11 @@ function (dojo, declare) {
         /**
          * Use this tpl for any counters that represent qty of tokens
          */
-        tplResourceCounter(player, res) {
+        tplResourceCounter(player, res, nbSubIcons = null) {
             return `
             <div class='stig_player_resource stig_resource_${res}'>
                 <span id='stig_counter_${player.id}_${res}' 
-                class='stig_resource_${res}'></span>${this.formatIcon(res)}
+                class='stig_resource_${res}'></span>${this.formatIcon(res, nbSubIcons)}
                 <div class='stig_reserve' id='stig_reserve_${player.id}_${res}'></div>
             </div>
             `;
@@ -986,11 +992,17 @@ function (dojo, declare) {
         /**
          * Replace some expressions by corresponding html formating
          */
-        formatIcon(name, n = null) {
+        formatIcon(name, nbSubIcons = null, n = null) {
             let type = name;
+            let tplSubIcons ='';
+            if(nbSubIcons && nbSubIcons > 0){
+                for(let k = 1; k<=nbSubIcons; k++){
+                    tplSubIcons +=`<div class='stig_subicon_${type}' data-type='${k}'></div>`;
+                }
+            }
             let text = n == null ? '' : `<span>${n}</span>`;
             return `<div class="stig_icon_container stig_icon_container_${type}">
-                <div class="stig_icon stig_${type}">${text}</div>
+                <div class="stig_icon stig_${type}">${text}${tplSubIcons}</div>
                 </div>`;
         },
         ////////////////////////////////////////////////////////

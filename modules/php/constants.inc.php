@@ -66,7 +66,6 @@ const TOKEN_POLLENS = [
     TOKEN_STIG_BLACK    => TOKEN_POLLEN_BLACK   ,
 ];
 
-
 /* TOKEN LOCATIONS */ 
 const TOKEN_LOCATION_PLAYER_DECK = 'player_deck_';//To be followed by pid in order to shuffle separately
 const TOKEN_LOCATION_PLAYER_RECRUIT = 'player_recruit';

@@ -43,6 +43,7 @@ class Player extends \STIG\Helpers\DB_Model
 
     $data['tokens_recruit'] = Tokens::countRecruits($this->getId());
     $data['tokens_deck'] = Tokens::countDeck($this->getId());
+    $data['pollens'] = Tokens::countOnPlayerBoard($this->getId(),array_values(TOKEN_POLLENS));
     //decrease JSON SIZE :
     $data['ncad'] = $this->nbCommonActionsDone;
     unset($data['nbCommonActionsDone']);

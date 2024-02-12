@@ -29,6 +29,7 @@
             height: 100%;
         }
 
+        .stig_resource_pollens,
         .stig_resource_tokens_recruit,
         .stig_resource_tokens_deck {
             font-size: 22px;
@@ -51,17 +52,42 @@
                 background-image: url("img/flower1.jpg");
                 border: 1px solid black;
             }
-            
-            .stig_icon.stig_tokens_recruit{
-                width: 35px;
-                height: 35px;
+            &.stig_icon_container_pollens{
+                // compensation of subicon margin-right
+                padding-right: 1.8em;
             }
-            .stig_icon.stig_tokens_deck {
-                width: 2.5em;
-                height: 3em;
-                background-image: url("img/bag.png");
-                background-size: 100% auto;
-                background-repeat: no-repeat;
+            
+            .stig_icon{
+
+                &.stig_tokens_recruit{
+                    width: 35px;
+                    height: 35px;
+                }
+                &.stig_tokens_deck {
+                    width: 2.5em;
+                    height: 3em;
+                    background-image: url("img/bag.png");
+                    background-size: 100% auto;
+                    background-repeat: no-repeat;
+                }
+                &.stig_pollens{
+                    display: flex;
+                    // display several icons of pollens (overlapped)
+                    .stig_subicon_pollens{
+                        width: 2em;
+                        height: 2em;
+                        margin-right: -1.8em;
+                        background-image: url("img/tokens.png");
+                        background-size: 500% 500%;
+
+                        @for $i from 10 through 19 {
+                            &[data-type="#{$i + 1 - 10}"] {
+                                background-position-x: ($i % 5) * 100% / 4;
+                                background-position-y: (($i - ($i % 5)) / 5) * 100% / 4;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

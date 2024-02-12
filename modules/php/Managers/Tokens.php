@@ -214,6 +214,19 @@ class Tokens extends \STIG\Helpers\Pieces
       ->where('x', $column)
       ->count();
   }
+  /**
+   * @param int $playerId
+   * @param array $token_types (optional)
+  * @return int nb of tokens on player board filtered by types
+  */
+  public static function countOnPlayerBoard($playerId,$token_types)
+  { 
+    $query = self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
+      ->wherePlayer($playerId);
+    if(isset($token_types)) $query = $query->whereIn('type',$token_types);
+    return  $query->count();
+  }
   
   /**
    * @param int $playerId
