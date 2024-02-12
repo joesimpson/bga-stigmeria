@@ -170,7 +170,7 @@ function (dojo, declare) {
         onEnteringStatePlayerTurn: function(args)
         {
             debug( 'onEnteringStatePlayerTurn() ', args );
-            
+            this._counters['turn'].setValue(this.gamedatas.turn);
         }, 
         onEnteringStateCommonBoardTurn: function(args)
         {
