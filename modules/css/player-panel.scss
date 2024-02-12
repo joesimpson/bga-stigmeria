@@ -49,8 +49,25 @@
                 height: 50px;
                 background-size: 172px;
                 background-repeat: no-repeat;
-                background-image: url("img/flower1.jpg");
                 border: 1px solid black;
+                //We could use flower1, but with a param, we can avoid loading a different image than the played flower :
+                &[data-flower_type='1']{
+                    background-image: url('img/flower1.jpg');
+                }
+                &[data-flower_type='2']{
+                    background-image: url('img/flower2.jpg');
+                }
+                &[data-flower_type='3']{
+                    background-image: url('img/flower3.jpg');
+                }
+                &[data-flower_type='4']{
+                    background-image: url('img/flower4.jpg');
+                }
+                &[data-flower_type='5'],
+                &[data-flower_type='6'],
+                &[data-flower_type='7']{
+                    background-image: url('img/flower5.jpg');
+                }
             }
             &.stig_icon_container_pollens{
                 // compensation of subicon margin-right

@@ -36,18 +36,9 @@ function (dojo, declare) {
             // Fix mobile viewport (remove CSS zoom)
             this.default_viewport = 'width=800';
 
-            // Here, you can init the global variables of your user interface
-            // Example:
-            // this.myGlobalValue = 0;
+            //this.g_img_preload = [ 'flower1.jpg' ];
+            //g_img_preload = this.g_img_preload;
 
-            /*
-            this._activeStates = [
-                'playerTurn',
-                'commonBoardTurn',
-                'personalBoardTurn',
-                'choiceTokenToMove',
-            ];
-            */
             this._notifications = [
                 ['newRound', 10],
                 ['newWinds', 10],
@@ -69,23 +60,25 @@ function (dojo, declare) {
             this._displayNotifsOnTop = false;
         },
         
-        /*
-            setup:
-            
-            This method must set up the game user interface according to current game situation specified
-            in parameters.
-            
-            The method is called each time the game interface is displayed to a player, ie:
-            _ when the game starts
-            _ when a player refreshes the game page (F5)
-            
-            "gamedatas" argument contains all datas retrieved by your "getAllDatas" PHP method.
-        */
+        ///////////////////////////////////////////////////
+        //     _____ ______ _______ _    _ _____  
+        //    / ____|  ____|__   __| |  | |  __ \ 
+        //   | (___ | |__     | |  | |  | | |__) |
+        //    \___ \|  __|    | |  | |  | |  ___/ 
+        //    ____) | |____   | |  | |__| | |     
+        //   |_____/|______|  |_|   \____/|_|    
+        /////////////////////////////////////////////////// 
         
         setup: function( gamedatas )
         {
             debug('SETUP', gamedatas);
             
+            this.dontPreloadImage( 'flower1.jpg' );
+            this.dontPreloadImage( 'flower2.jpg' );
+            this.dontPreloadImage( 'flower3.jpg' );
+            this.dontPreloadImage( 'flower4.jpg' );
+            this.dontPreloadImage( 'flower5.jpg' );
+
             this.setupCentralBoard();
             this.setupSchemaBoard();
             this.setupPlayers();
@@ -146,7 +139,13 @@ function (dojo, declare) {
        
 
         ///////////////////////////////////////////////////
-        //// Game & client states
+        //     _____ _______    _______ ______  _____ 
+        //    / ____|__   __|/\|__   __|  ____|/ ____|
+        //   | (___    | |  /  \  | |  | |__  | (___  
+        //    \___ \   | | / /\ \ | |  |  __|  \___ \ 
+        //    ____) |  | |/ ____ \| |  | |____ ____) |
+        //   |_____/   |_/_/    \_\_|  |______|_____/ 
+        ///////////////////////////////////////////////////
         
         onEnteringStateNextRound: function(args)
         {
@@ -540,8 +539,16 @@ function (dojo, declare) {
             dojo.empty('stig_select_piece_container');
         },
         
-        ///////////////////////////////////////////////////
-        //// Reaction to cometD notifications
+        //////////////////////////////////////////////////////////////
+        //    _   _       _   _  __ _           _   _                 
+        //   | \ | |     | | (_)/ _(_)         | | (_)                
+        //   |  \| | ___ | |_ _| |_ _  ___ __ _| |_ _  ___  _ __  ___ 
+        //   | . ` |/ _ \| __| |  _| |/ __/ _` | __| |/ _ \| '_ \/ __|
+        //   | |\  | (_) | |_| | | | | (_| (_| | |_| | (_) | | | \__ \
+        //   |_| \_|\___/ \__|_|_| |_|\___\__,_|\__|_|\___/|_| |_|___/
+        //                                                            
+        //    
+        //////////////////////////////////////////////////////////////
  
         notif_newRound(n) {
             debug('notif_newRound: new round', n);
@@ -679,14 +686,14 @@ function (dojo, declare) {
         },
 
         ///////////////////////////////////////////////////
-        //// Utility methods
-        
-        /*
-        
-            Here, you can defines some utility methods that you can use everywhere in your javascript
-            script.
-        
-        */
+        //    _    _ _   _ _     
+        //   | |  | | | (_) |    
+        //   | |  | | |_ _| |___ 
+        //   | |  | | __| | / __|
+        //   | |__| | |_| | \__ \
+        //    \____/ \__|_|_|___/
+        //                       
+        ///////////////////////////////////////////////////
         
         onScreenWidthChange() {
             if (this.settings) this.updateLayout();
@@ -708,6 +715,14 @@ function (dojo, declare) {
             ROOT.style.setProperty('--stig_board_display_scale', scale);
     
         },
+
+        getFlowerType(){
+            if(this.gamedatas.schema && this.gamedatas.schemas){
+                let schema = this.gamedatas.schemas[this.gamedatas.schema];
+                return schema.type;
+            }
+            return 1;
+        },
                 
         ////////////////////////////////////////
         //  ____  _
@@ -726,6 +741,8 @@ function (dojo, declare) {
                 let isCurrent = player.id == this.player_id;
                 this.place('tplPlayerPanel', player, `player_panel_content_${player.color}`, 'after');
                 this.place('tplPlayerBoard', player, 'stig_player_boards');
+                
+                document.querySelectorAll('.stig_icon_container_tokens_recruit').forEach((e) => e.dataset.flower_type = this.getFlowerType());
 
                 this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bags'),'');
                 this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
@@ -820,8 +837,7 @@ function (dojo, declare) {
             //TODO JSA MANAGE turn >10 display like 10 ?
             //We want to display the marker before the player take the action
             let turnActions = Math.min(turn,player.npad + 1);
-            let schema = this.gamedatas.schemas[this.gamedatas.schema];
-            let flowerType = schema.type;
+            let flowerType = this.getFlowerType();
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
             <div class='stig_player_board_container'>
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
@@ -875,8 +891,7 @@ function (dojo, declare) {
         
         tplCentralBoard() {
             let boardName = _('StigmaReine (Central board)');
-            let schema = this.gamedatas.schemas[this.gamedatas.schema];
-            let flowerType = schema.type;
+            let flowerType = this.getFlowerType();
             return `<div class='stig_resizable_board' id='stig_central_board_container_wrapper'>
             <div class='stig_central_board_container'>
                 <div class="stig_central_board" id='stig_central_board' data_flower_type="${flowerType}">

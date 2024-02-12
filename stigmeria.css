@@ -298,8 +298,22 @@
   height: 50px;
   background-size: 172px;
   background-repeat: no-repeat;
-  background-image: url("img/flower1.jpg");
   border: 1px solid black;
+}
+.stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit[data-flower_type="1"] {
+  background-image: url("img/flower1.jpg");
+}
+.stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit[data-flower_type="2"] {
+  background-image: url("img/flower2.jpg");
+}
+.stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit[data-flower_type="3"] {
+  background-image: url("img/flower3.jpg");
+}
+.stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit[data-flower_type="4"] {
+  background-image: url("img/flower4.jpg");
+}
+.stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit[data-flower_type="5"], .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit[data-flower_type="6"], .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit[data-flower_type="7"] {
+  background-image: url("img/flower5.jpg");
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_pollens {
   padding-right: 1.8em;
