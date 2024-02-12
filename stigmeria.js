@@ -36,8 +36,7 @@ function (dojo, declare) {
             // Fix mobile viewport (remove CSS zoom)
             this.default_viewport = 'width=800';
 
-            //this.g_img_preload = [ 'flower1.jpg' ];
-            //g_img_preload = this.g_img_preload;
+            this._counters = {};
 
             this._notifications = [
                 ['newRound', 10],
@@ -555,7 +554,7 @@ function (dojo, declare) {
             this.gamedatas.schema = n.args.schema;
             this.gamedatas.tokens = n.args.tokens;
             this.gamedatas.turn = 0;
-            this._turnCounter.toValue(this.gamedatas.turn);
+            this._counters['turn'].toValue(this.gamedatas.turn);
             this.gamedatas.players = n.args.players;
             this.forEachPlayer((player) => {
                 this._counters[player.id]['tokens_recruit'].setValue(player.tokens_recruit);
@@ -568,7 +567,7 @@ function (dojo, declare) {
         notif_newTurn(n) {
             debug('notif_newTurn: new turn', n);
             this.updateTurnMarker(n.args.n,1);
-            this._turnCounter.toValue(n.args.n);
+            this._counters['turn'].toValue(n.args.n);
         },
         
         notif_updateFirstPlayer(n) {
@@ -736,7 +735,6 @@ function (dojo, declare) {
         setupPlayers() {
             let currentPlayerNo = 1;
             let nPlayers = 0;
-            this._counters = {};
             this.forEachPlayer((player) => {
                 let isCurrent = player.id == this.player_id;
                 this.place('tplPlayerPanel', player, `player_panel_content_${player.color}`, 'after');
@@ -1037,8 +1035,8 @@ function (dojo, declare) {
         setupInfoPanel() {
             debug("setupInfoPanel");
             
-            this._turnCounter = this.createCounter('stig_counter_turn',1);
             dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
+            this._counters['turn'] = this.createCounter('stig_counter_turn',1);
             
             this._settingsModal = new customgame.modal('showSettings', {
                 class: 'stig_popin',

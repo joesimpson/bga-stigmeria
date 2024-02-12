@@ -118,7 +118,9 @@ trait DebugTrait
   function debugNewTurn()
   {
     $players = Players::getAll();
-    Players::setupNewTurn($players,2);
+    $turn = 5;
+    Players::setupNewTurn($players,$turn);
+    Notifications::newTurn($turn);
   }
   
   function debugCMD()
