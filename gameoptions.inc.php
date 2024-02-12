@@ -958,6 +958,23 @@ $game_options = [
         ],
       ],
   ),
+  
+  OPTION_JOKER => array(
+    'name' => totranslate('Joker'),    
+    'values' => array(
+            OPTION_JOKER_0 => array( 
+              'name' => '0', 
+              'description' => totranslate('0 Joker to use in the game'), 
+            ),
+            OPTION_JOKER_1 => array( 
+              'name' => '1', 
+              'description' => totranslate('1 Joker to use in the game. Optional but designed to help fight bad luck. Its use will result in a defeat in the event of a tie.'), 
+              'tmdisplay' => totranslate('1 Joker'),
+            ),
+          ), 
+    'default' => OPTION_JOKER_1,
+    'level' => 'additional',
+  ),
 
 ];
 

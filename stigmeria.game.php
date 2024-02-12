@@ -114,6 +114,7 @@ class Stigmeria extends Table
           'firstPlayer' => $firstPlayer,
           'winds' => Globals::getAllWindDir(),
           'nocb' => Globals::isModeNoCentralBoard(),
+          'jokerMode' => Globals::getOptionJokers(),
           'schema' => Schemas::getCurrentSchema()->id,
           'schemas' => Schemas::getUiData(),
         ];

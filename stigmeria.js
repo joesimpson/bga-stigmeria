@@ -806,7 +806,7 @@ function (dojo, declare) {
                 ${this.tplResourceCounter(player, 'tokens_deck')}
                 ${this.tplResourceCounter(player, 'tokens_recruit',3)}
                 ${this.tplResourceCounter(player, 'pollens',9)}
-                ${this.tplResourceCounter(player, 'jokers')}
+                ${this.gamedatas.jokerMode>0 ? this.tplResourceCounter(player, 'jokers') :''}
             </div>
             <div class="stig_first_player_holder"></div>
             </div>`;

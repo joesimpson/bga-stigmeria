@@ -209,6 +209,10 @@ const OPTION_SCHEMA_47 = 47;
 const OPTION_SCHEMA_48 = 48;
 const OPTION_SCHEMA_49 = 49;
 
+const OPTION_JOKER = 190;
+const OPTION_JOKER_0 = 0;
+const OPTION_JOKER_1 = 1;
+
 /*
  * User preferences
  */ 

@@ -42,6 +42,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     'optionDifficulty' => 'int',
     //For games with 1 schema in the entire game :(not solo challenge)
     'optionSchema' => 'int',
+    'optionJokers' => 'int',
   ];
 
   public static function getAllWindDir()
@@ -99,6 +100,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     //GAME OPTIONS  --------------------------------------------
     //              --------------------------------------------
     self::setOptionGameMode($options[OPTION_MODE]);
+    self::setOptionJokers($options[OPTION_JOKER]);
 
     $flowerType = $options[OPTION_FLOWER];
     self::setOptionFlowerType($flowerType);
