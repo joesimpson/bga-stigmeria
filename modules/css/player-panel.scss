@@ -43,6 +43,7 @@
             height: 100%;
         }
 
+        .stig_resource_jokers,
         .stig_resource_pollens,
         .stig_resource_tokens_recruit,
         .stig_resource_tokens_deck {
@@ -98,6 +99,13 @@
                     width: 2.5em;
                     height: 3em;
                     background-image: url("img/bag.png");
+                    background-size: 100% auto;
+                    background-repeat: no-repeat;
+                }
+                &.stig_jokers {
+                    width: 2.5em;
+                    height: 3em;
+                    background-image: url("img/joker.png");
                     background-size: 100% auto;
                     background-repeat: no-repeat;
                 }

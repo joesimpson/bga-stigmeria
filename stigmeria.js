@@ -560,6 +560,7 @@ function (dojo, declare) {
                 this._counters[player.id]['tokens_recruit'].setValue(player.tokens_recruit);
                 this._counters[player.id]['tokens_deck'].setValue(player.tokens_deck);
                 this._counters[player.id]['pollens'].setValue(player.pollens);
+                this._counters[player.id]['jokers'].setValue(player.jokerUsed ? 0:1);
             });
             
             this.setupTokens();
@@ -665,6 +666,7 @@ function (dojo, declare) {
                 this.slide(div, this.getTokenContainer(token));
                 //this.animationBlink2Times(div.id);
             });
+            this._counters[n.args.player_id]['jokers'].incValue(-1);
         },
         notif_windBlows(n) {
             debug('notif_windBlows: tokens moved on board', n);
@@ -745,12 +747,14 @@ function (dojo, declare) {
                 this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bags'),'');
                 this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
                 this.addTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'),'');
+                this.addTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'),'');
 
                 let pId = player.id;
                 this._counters[pId] = {
                     tokens_recruit: this.createCounter(`stig_counter_${pId}_tokens_recruit`, player.tokens_recruit),
                     tokens_deck: this.createCounter(`stig_counter_${pId}_tokens_deck`, player.tokens_deck),
                     pollens: this.createCounter(`stig_counter_${pId}_pollens`, player.pollens),
+                    jokers: this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1),
                 };
         
                 // Useful to order boards
@@ -802,6 +806,7 @@ function (dojo, declare) {
                 ${this.tplResourceCounter(player, 'tokens_deck')}
                 ${this.tplResourceCounter(player, 'tokens_recruit')}
                 ${this.tplResourceCounter(player, 'pollens',9)}
+                ${this.tplResourceCounter(player, 'jokers')}
             </div>
             <div class="stig_first_player_holder"></div>
             </div>`;
