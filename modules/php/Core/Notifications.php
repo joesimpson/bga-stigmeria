@@ -22,6 +22,7 @@ class Notifications
     $players = Players::getUiData(null);
     $msg = clienttranslate('Starting round #${n} with schema #${s}');
     if($round==1) $msg = '';
+    if($round==1 && $schema->start->count()>0) $msg = clienttranslate('Players boards are initialized by schema #${s}');
     self::notifyAll('newRound',$msg,[ 
         'n' => $round,
         's' => $schema->id,
