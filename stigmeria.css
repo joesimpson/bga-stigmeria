@@ -257,6 +257,15 @@
   background-position-y: 100%;
 }
 
+.player_board_inner > .player-name {
+  /** Add a BLACK shadow behind player name in case of bright colors like white/orange*/
+}
+.player_board_inner > .player-name > a[style*="color: #ffa500"],
+.player_board_inner > .player-name > a[style*="color: #ffffff"],
+.player_board_inner > .player-name > a[style*="color: #bdd002"] {
+  text-shadow: 1px 0px 1px black, 0px 1px 1px black, -1px 0px 1px black, 0px -1px 1px black;
+}
+
 .stig_panel .stig_player_infos {
   display: flex;
   flex-wrap: wrap;
@@ -473,6 +482,26 @@
   padding: 6px 20px;
   font-size: 26px;
   outline: 5px solid gold;
+  box-shadow: 0 0 20px gold;
+}
+.stig_schema_board .player-name,
+.stig_central_board .player-name,
+.stig_player_board .player-name {
+  background: linear-gradient(90deg, #85ba2d 15%, #436b2a 25%, #2a7970 50%, #559f37 75%, #64bd53 85%);
+  text-shadow: 2px 0px 2px black, 0px 2px 2px black, -2px 0px 2px black, 0px -2px 2px black;
+}
+.stig_schema_board .player-name[style*="color:#0000ff"], .stig_schema_board .player-name[style*="color:#000000"], .stig_schema_board .player-name[style*="color:#008000"], .stig_schema_board .player-name[style*="color:#773300"], .stig_schema_board .player-name[style*="color:#982fff"],
+.stig_central_board .player-name[style*="color:#0000ff"],
+.stig_central_board .player-name[style*="color:#000000"],
+.stig_central_board .player-name[style*="color:#008000"],
+.stig_central_board .player-name[style*="color:#773300"],
+.stig_central_board .player-name[style*="color:#982fff"],
+.stig_player_board .player-name[style*="color:#0000ff"],
+.stig_player_board .player-name[style*="color:#000000"],
+.stig_player_board .player-name[style*="color:#008000"],
+.stig_player_board .player-name[style*="color:#773300"],
+.stig_player_board .player-name[style*="color:#982fff"] {
+  text-shadow: 2px 0px 2px white, 0px 2px 2px white, -2px 0px 2px white, 0px -2px 2px white;
 }
 .stig_schema_board .stig_schema_number,
 .stig_schema_board .stig_schema_difficulty,

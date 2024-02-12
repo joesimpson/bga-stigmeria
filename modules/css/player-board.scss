@@ -80,6 +80,19 @@
         padding: 6px 20px;
         font-size: 26px;
         outline: 5px solid gold;
+        box-shadow: 0 0 20px gold;
+    }
+    .player-name{
+        background: linear-gradient(90deg,#85ba2d 15%,#436b2a 25%,#2a7970 50%,#559f37 75%,#64bd53 85%);
+        text-shadow: 2px 0px 2px black, 0px 2px 2px black, -2px 0px 2px black, 0px -2px 2px black;
+        &[style*='color:#0000ff'],
+        &[style*='color:#000000'],
+        &[style*='color:#008000'],
+        &[style*='color:#773300'],
+        &[style*='color:#982fff']
+        {
+            text-shadow: 2px 0px 2px white, 0px 2px 2px white, -2px 0px 2px white, 0px -2px 2px white;
+        }
     }
     .stig_schema_number,
     .stig_schema_difficulty,
