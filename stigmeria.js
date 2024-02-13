@@ -185,7 +185,7 @@ function (dojo, declare) {
             if(nbActions>0){
                 if(possibleActions.includes('actCommonDrawAndLand')){
                     this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => {
-                        this.confirmationDialog(_("Are you sure to draw a token in your bag ?"), () => {
+                        this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
                             this.takeAction('actCommonDrawAndLand', {});
                         });
                     });
@@ -305,7 +305,7 @@ function (dojo, declare) {
             let possibleActions = args.a;
             if(nbActions>0){
                 this.addPrimaryActionButton('btnDraw', 'Recruit', () => { 
-                    this.confirmationDialog(_("Are you sure to draw a token in your bag ?"), () => {
+                    this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
                         this.takeAction('actDraw', {});
                     });
                 });
@@ -350,7 +350,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateChoiceTokenToLand() ', args );
             
-            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToLand', {}));
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelChoiceTokenToLand', {}));
             
             let playerBoard = $(`stig_player_board_${this.player_id}`);
             let selectedToken = null;
@@ -397,7 +397,7 @@ function (dojo, declare) {
             
             let playerBoard = $(`stig_player_board_${this.player_id}`);
 
-            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelChoiceTokenToMove', {}));
             //possible places to move :
             this.possibleMoves = args.p_places_m;
             Object.keys(this.possibleMoves).forEach((tokenId) => {
@@ -447,7 +447,7 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_MERGE)){
                 this.addPrimaryActionButton('btnStartMerge', 'Merge', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MERGE}));
             }
-            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
         onEnteringStateSpMerge: function(args)
@@ -461,7 +461,7 @@ function (dojo, declare) {
             } );
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
-            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
 
             let playerBoard = $(`stig_player_board_${this.player_id}`);
             let possibleMerges = args.tokens;
