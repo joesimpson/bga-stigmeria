@@ -5,6 +5,7 @@ namespace STIG\Models;
 use STIG\Core\Game;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
+use STIG\Helpers\GridUtils;
 use STIG\Managers\Schemas;
 
 /*
@@ -111,12 +112,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    */
   public static function isCoordOutOfGrid($row, $column)
   {
-    if($column > COLUMN_MAX) return true;
-    if($column < COLUMN_MIN) return true;
-    if($row > ROW_MAX) return true;
-    if($row < ROW_MIN) return true;
-
-    return false;
+    return GridUtils::isCoordOutOfGrid($row,$column);
   }
   /**
    * @return bool

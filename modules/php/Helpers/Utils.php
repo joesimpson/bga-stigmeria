@@ -58,5 +58,5 @@ abstract class Utils extends \APP_DbObject
     static function updateDataFromArray ($array, $key, &$value) {
         if(array_key_exists($key,$array)) $value = $array[$key];
     }
-    
+ 
 }

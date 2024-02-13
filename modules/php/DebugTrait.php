@@ -4,6 +4,8 @@ use STIG\Core\Globals;
 use STIG\Core\Game;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
+use STIG\Helpers\GridUtils;
+use STIG\Helpers\Utils;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -149,5 +151,23 @@ trait DebugTrait
     $schema = Schemas::getCurrentSchema();
 
     Stats::setupNewRound($players,$schema);
+  }
+
+  function debugPathFinding(){
+
+    $player = Players::getCurrent();
+    $boardTokens =Tokens::getAllOnPersonalBoard($player->id );
+
+    $startingCell = [ 'x' => 4, 'y' => 1, ];
+    $cost = function ($source, $target, $d) use ($boardTokens) {
+      // If there is a unit => can't go there
+      $existingToken = Tokens::findTokenOnBoardWithCoord($boardTokens,$target['y'], $target['x']);
+      if(isset($existingToken)) return 100;//not empty
+      return 1;
+    };
+    $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,10, $cost);
+    $cells = $cellsMarkers[0];
+    $markers = $cellsMarkers[1];
+    $this->trace("debugPathFinding(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
   }
 }

@@ -974,8 +974,8 @@ function (dojo, declare) {
                     //disable confirm while we don't know destination
                     $(`btnConfirm`).classList.add('disabled');
                     Object.values(possibleMoves[tokenId]).forEach((coord) => {
-                        let row = coord.row;
-                        let column = coord.col;
+                        let row = coord.y !=null ? coord.y: coord.row;
+                        let column = coord.x !=null ? coord.x: coord.col;
                         let elt2 = this.addSelectableTokenCell(playerBoardId,row, column);
                         elt2.dataset.type = div.dataset.type;
                         //Click token destination :

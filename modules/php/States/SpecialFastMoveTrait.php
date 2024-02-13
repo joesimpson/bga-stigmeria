@@ -6,6 +6,8 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Helpers\GridUtils;
+use STIG\Helpers\Utils;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -19,10 +21,7 @@ trait SpecialFastMoveTrait
         $player = Players::get($player_id);
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
         $nMoves = Globals::getTurn();
-        $possibleMoves = [];
-        //TODO JSA PERFS FAST MOVE
-        //$possibleMoves = $this->listPossibleFastMovesOnBoard($player_id,$boardTokens,$nMoves);
-        $possibleMoves = $this->listPossibleFastMovesOnBoard($player_id,$boardTokens,5);
+        $possibleMoves = $this->listPossibleFastMovesOnBoard($player_id,$boardTokens,$nMoves);
         return [
             'n' => $nMoves,
             'p_places_m' => $possibleMoves,
@@ -51,11 +50,11 @@ trait SpecialFastMoveTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
+        //TODO JSA CHECK NOT USED IN player turn
         $boardTokens = Tokens::getAllOnPersonalBoard($pId);
         if(!$this->canMoveFastOnPlayerBoard($pId,$boardTokens,$token,$row, $column, $turn)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
-        //TODO JSA CHECK NOT USED IN player turn
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
@@ -79,43 +78,56 @@ trait SpecialFastMoveTrait
      */
     public function canMoveFastOnPlayerBoard($playerId,$boardTokens,$token,$row, $column,$nMoves)
     {
+        /*
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
         if($token->isPollen()) return false;
-
         $existingToken = Tokens::findTokenOnBoardWithCoord($boardTokens,$row, $column);
         if(isset($existingToken)) return false;//not empty
-
-        if($token->isAdjacentCoord($row,$column)) return true;// GOOD path !
-
-        if($nMoves >1){
-            $nMoves = min( $nMoves, (int) MAX_MOVES_TO_REACH_A_PLACE);
-            //self::trace("actFastMove() nMoves =$nMoves //");
-            //RECURSIVE CALL on adjacent tokens
-            $neighboursCoord = TokenCoord::listAdjacentCoords($row, $column);
-            foreach($neighboursCoord as $neighbour){
-                if($this->canMoveFastOnPlayerBoard($playerId,$boardTokens,$token,$neighbour->row, $neighbour->col,$nMoves-1)){
-                    return true;
-                }
-            }
+        */
+        $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$boardTokens,$token, $nMoves);
+        $possibleMoveIndex = GridUtils::searchCell($possibleMoves, $column, $row);
+        if ($possibleMoveIndex === false) {
+            return false;
         }
-        return false;
+        return true;
     }
     /**
      * @param int $playerId
      * @param Collection $tokens of StigmerianToken
-     * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
+     * @param StigmerianToken $token
+     * @param int $nMoves
+     * @return array List of possible spaces. Example [[ 'x' => 1, 'y' => 5 ],] where x is for col, y for row
+     */
+    public function listPossibleFastMovesOnBoardFromToken($playerId,$tokens,$token, $nMoves){
+        self::trace("listPossibleFastMovesOnBoardFromToken($playerId, $nMoves)");
+        if($token->isPollen()) return [];
+
+        $startingCell = [ 'x' => $token->getCol(), 'y' => $token->getRow(), ];
+        $costCallback = function ($source, $target, $d) use ($tokens) {
+            // If there is a unit => can't go there
+            $existingToken = Tokens::findTokenOnBoardWithCoord($tokens,$target['y'], $target['x']);
+            if(isset($existingToken)) return 10000;//not valid position
+            return 1;
+        };
+        $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$nMoves, $costCallback);
+        $cells = $cellsMarkers[0];
+        $markers = $cellsMarkers[1];
+        //self::trace("listPossibleFastMovesOnBoardFromToken(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
+        return $cellsMarkers[0];
+    }
+
+    /**
+     * @param int $playerId
+     * @param Collection $tokens of StigmerianToken
+     * @return array List of possible spaces. Example [[ 'x' => 1, 'y' => 5 ],] where x is for col, y for row
      */
     public function listPossibleFastMovesOnBoard($playerId,$tokens, $nMoves){
         self::trace("listPossibleFastMovesOnBoard($playerId, $nMoves)");
         $spots = [];
+        
         foreach($tokens as $tokenId => $token){
-            for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
-                for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                    if($this->canMoveFastOnPlayerBoard($playerId,$tokens,$token,$row, $column, $nMoves)){
-                        $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
-                    }
-                }
-            }
+            $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$tokens,$token, $nMoves);
+            if(count($possibleMoves)>0) $spots[$tokenId] = $possibleMoves;
         }
         return $spots;
     }
