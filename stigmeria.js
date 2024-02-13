@@ -619,6 +619,7 @@ function (dojo, declare) {
                 this._counters[player.id]['tokens_recruit'].setValue(player.tokens_recruit);
                 this._counters[player.id]['tokens_deck'].setValue(player.tokens_deck);
                 this._counters[player.id]['pollens'].setValue(player.pollens);
+                this._counters[player.id]['pollensMax'].setValue(this.getFlowerTotalPollens());
                 this._counters[player.id]['jokers'].setValue(player.jokerUsed ? 0:1);
                 this._counters[player.id]['actions'].setValue(player.npad);
                 this._counters[player.id]['actionsMax'].setValue(this.gamedatas.turn);
@@ -794,6 +795,15 @@ function (dojo, declare) {
             }
             return 1;
         },
+        getFlowerTotalPollens(){
+            if(this.gamedatas.schema && this.gamedatas.schemas){
+                let schema = this.gamedatas.schemas[this.gamedatas.schema];
+                if(schema.end){
+                    return schema.end.length;
+                }
+            }
+            return 0;
+        },
                 
         ////////////////////////////////////////
         //  ____  _
@@ -825,6 +835,7 @@ function (dojo, declare) {
                     tokens_recruit: this.createCounter(`stig_counter_${pId}_tokens_recruit`, player.tokens_recruit),
                     tokens_deck: this.createCounter(`stig_counter_${pId}_tokens_deck`, player.tokens_deck),
                     pollens: this.createCounter(`stig_counter_${pId}_pollens`, player.pollens),
+                    pollensMax: this.createCounter(`stig_counter_${pId}_pollens_total`, this.getFlowerTotalPollens()),
                     jokers: this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1),
                     actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
                     actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, this.gamedatas.turn),
@@ -879,7 +890,7 @@ function (dojo, declare) {
                 ${this.tplResourceCounter(player, 'tokens_deck')}
                 ${this.tplResourceCounter(player, 'actions', 0, this.gamedatas.turn)}
                 ${this.tplResourceCounter(player, 'tokens_recruit',3)}
-                ${this.tplResourceCounter(player, 'pollens',9)}
+                ${this.tplResourceCounter(player, 'pollens',9, this.getFlowerTotalPollens())}
                 ${this.gamedatas.jokerMode>0 ? this.tplResourceCounter(player, 'jokers') :''}
             </div>
             <div class="stig_first_player_holder"></div>

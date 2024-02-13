@@ -287,22 +287,22 @@
   height: 100%;
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_jokers,
-.stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_recruit,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_deck {
   font-size: 22px;
   font-weight: bold;
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_jokers::after,
-.stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens::after,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_recruit::after,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_deck::after {
   content: " x";
 }
+.stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions {
   font-size: 20px;
   font-weight: bold;
 }
+.stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens::after,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions::after {
   content: " /";
 }
@@ -334,6 +334,7 @@
   background-image: url("img/flower5.jpg");
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_pollens {
+  margin-left: 0.1em;
   padding-right: 1.8em;
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_tokens_recruit {

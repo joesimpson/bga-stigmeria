@@ -44,7 +44,6 @@
         }
 
         .stig_resource_jokers,
-        .stig_resource_pollens,
         .stig_resource_tokens_recruit,
         .stig_resource_tokens_deck {
             font-size: 22px;
@@ -53,6 +52,7 @@
                 content: " x";
             }
         }
+        .stig_resource_pollens,
         .stig_resource_actions{
             font-size: 20px;
             font-weight: bold;
@@ -92,6 +92,7 @@
                 }
             }
             &.stig_icon_container_pollens{
+                margin-left: 0.1em;
                 // compensation of subicon margin-right
                 padding-right: 1.8em;
             }
