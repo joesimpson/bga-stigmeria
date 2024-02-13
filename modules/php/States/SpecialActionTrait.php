@@ -20,6 +20,9 @@ trait SpecialActionTrait
         if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE && $remaining >=ACTION_COST_MERGE){
             $actions[] = ACTION_TYPE_MERGE;
         }
+        if($flowerType == OPTION_FLOWER_DENTDINE && $remaining >=ACTION_COST_MOVE_DIAGONAL){
+            $actions[] = ACTION_TYPE_DIAGONAL;
+        }
         return [
             'a' => $actions,
         ];
@@ -53,6 +56,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_MERGE:
                 $actionCost = ACTION_COST_MERGE;
                 $nextState = "startMerge";
+                break;
+            case ACTION_TYPE_DIAGONAL:
+                $actionCost = ACTION_COST_MOVE_DIAGONAL;
+                $nextState = "startDiagonal";
                 break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");

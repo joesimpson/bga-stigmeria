@@ -283,6 +283,7 @@ $machinestates = array(
         ],
         "transitions" => [
             'startMerge' => ST_TURN_SPECIAL_ACT_MERGE,
+            'startDiagonal' => ST_TURN_SPECIAL_ACT_DIAGONAL,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -293,6 +294,21 @@ $machinestates = array(
         "args" => "argSpMerge",
         "possibleactions" => [
             "actMerge",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_DIAGONAL => [
+        "name" => "spDiagonal",
+        "descriptionmyturn" => clienttranslate('${you} may move in diagonal'), 
+        "type" => "private",
+        "args" => "argSpDiagonal",
+        "possibleactions" => [
+            "actDiagonal",
             "actCancelSpecial",
         ],
         "transitions" => [

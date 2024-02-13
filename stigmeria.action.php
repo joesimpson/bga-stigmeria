@@ -171,6 +171,15 @@
       $this->game->actMerge($token1,$token2);
       self::ajaxResponse();
     }
+    public function actDiagonal()
+    {
+      self::setAjaxMode();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actDiagonal($token_id, $row, $col);
+      self::ajaxResponse();
+    }
 
     public function actLetNextPlay()
     {

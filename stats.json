@@ -91,6 +91,11 @@
         "name": "Merge actions",
         "type": "int"
       }
+      ,"actions_s4": {
+        "id": 23,
+        "name": "Diagonal actions",
+        "type": "int"
+      }
       
     }
   }

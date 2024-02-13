@@ -82,6 +82,29 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   }
 
   /**
+   * @param StigmerianToken $other
+   * @return bool
+   */
+  public function isDiagonalAdjacentToken($other)
+  {
+    if(!isset($other)) return false;
+    return $this->isDiagonalAdjacentCoord($other->row, $other->col);
+  }
+
+  /**
+   * @param int $row
+   * @param int $column
+   * @return bool
+   */
+  public function isDiagonalAdjacentCoord($row, $column)
+  {
+    //KEEP 4 diagonals NEIGHBORS among the 8
+    return $this->row == $row - 1 && $this->col == $column -1
+        || $this->row == $row + 1 && $this->col == $column +1
+        || $this->row == $row - 1 && $this->col == $column + 1
+        || $this->row == $row + 1 && $this->col == $column - 1;
+  }
+  /**
    * @param int $row
    * @param int $column
    * @return bool

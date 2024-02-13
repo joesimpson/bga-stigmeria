@@ -28,6 +28,7 @@ define([
 function (dojo, declare) {
     const TURN_MAX = 10;
     const ACTION_TYPE_MERGE = 10;
+    const ACTION_TYPE_DIAGONAL = 14;
     const TOKEN_TYPE_NEWTURN = 21;
 
     return declare("bgagame.stigmeria", [customgame.game], {
@@ -447,6 +448,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_MERGE)){
                 this.addPrimaryActionButton('btnStartMerge', 'Merge', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MERGE}));
             }
+            if(possibleActions.includes(ACTION_TYPE_DIAGONAL)){
+                this.addPrimaryActionButton('btnStartDiagonal', 'Diagonal', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
+            }
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -509,6 +513,56 @@ function (dojo, declare) {
                 });
             });
         }, 
+        
+        onEnteringStateSpDiagonal: function(args)
+        {
+            debug( 'onEnteringStateSpDiagonal() ', args );
+            
+            let playerBoard = $(`stig_player_board_${this.player_id}`);
+
+            //TODO JSA REUSE SAME CODE from MOVE
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            //possible places to move :
+            this.possibleMoves = args.p_places_m;
+            Object.keys(this.possibleMoves).forEach((tokenId) => {
+                let coords = this.possibleMoves[tokenId];
+                if (coords.length == 0) return;
+                //Click token origin
+                this.onClick(`stig_token_${tokenId}`, (evt) => {
+                    [...playerBoard.querySelectorAll('.stig_token')].forEach((o) => o.classList.remove('selected'));
+                    let div = evt.target;
+                    div.classList.toggle('selected');
+                    [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                        o.classList.remove('selectable');
+                        o.classList.remove('selected');
+                        });
+                    $(`btnConfirm`).classList.add('disabled');
+                    Object.values(this.possibleMoves[tokenId]).forEach((coord) => {
+                        let row = coord.row;
+                        let column = coord.col;
+                        let elt2 = this.addSelectableTokenCell(this.player_id,row, column);
+                        elt2.dataset.type = div.dataset.type;
+                        //Click token destination :
+                        this.onClick(`stig_token_cell_${this.player_id}_${row}_${column}`, (evt) => {
+                            [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                                o.classList.remove('selected');
+                                });
+                            let div = evt.target;
+                            div.classList.toggle('selected');
+                            $(`btnConfirm`).classList.remove('disabled');
+                        });
+                    });
+                });
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
+                let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                this.takeAction('actDiagonal', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
+        }, 
+        
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );

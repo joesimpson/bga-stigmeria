@@ -47,6 +47,7 @@ class Stigmeria extends Table
     use STIG\States\CentralMoveTrait;
     use STIG\States\ChoiceTokenToLandTrait;
     use STIG\States\ChoiceTokenToMoveTrait;
+    use STIG\States\ChoiceTokenDiagonalTrait;
     use STIG\States\EndRoundTrait;
     use STIG\States\NextTurnTrait;
     use STIG\States\NextRoundTrait;
