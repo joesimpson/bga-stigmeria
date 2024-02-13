@@ -364,7 +364,7 @@ class Tokens extends \STIG\Helpers\Pieces
       //$yellowFoundAtThisTurn = false;
       $playersYellowFoundAtThisTurn = [];
       foreach($playersIds as $pId){
-        if($k > count($playersTokenTypes[$pId])) continue;
+        if($k >= count($playersTokenTypes[$pId])) continue;
         $type = $playersTokenTypes[$pId][$k];
         if($type == TOKEN_STIG_YELLOW ){
           //$yellowFoundAtThisTurn = true;
