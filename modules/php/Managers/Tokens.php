@@ -126,7 +126,7 @@ class Tokens extends \STIG\Helpers\Pieces
    */
   public static function findTokenOnBoardWithCoord($boardTokens,$row,$column )
   { 
-    Game::get()->trace("findTokenOnBoardWithCoord($row, $column)");
+    //Game::get()->trace("findTokenOnBoardWithCoord($row, $column)");
     return $boardTokens->filter( function ($token) use ($row, $column) {
         return $token->row == $row && $token->col ==$column;
       }

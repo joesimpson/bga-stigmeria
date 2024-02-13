@@ -48,6 +48,7 @@ trait SpecialMergeTrait
 
         $token1->merge($token2,$player);
         $player->incNbPersonalActionsDone($actionCost);
+        Notifications::useActions($player);
         Stats::inc("actions_s1",$player->getId());
         Stats::inc("actions",$player->getId());
 

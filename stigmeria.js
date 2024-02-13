@@ -44,6 +44,7 @@ function (dojo, declare) {
                 ['newWinds', 10],
                 ['newTurn', 800],
                 ['updateFirstPlayer', 500],
+                ['useActions', 500],
                 ['drawToken', 900],
                 ['moveToCentralBoard', 900],
                 ['moveOnCentralBoard', 900],
@@ -171,6 +172,9 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStatePlayerTurn() ', args );
             this._counters['turn'].setValue(this.gamedatas.turn);
+            this.forEachPlayer(  (player) => {
+                //this._counters[player.id]['actions'].setValue(Math.min(this.gamedatas.turn,TURN_MAX));
+            });
         }, 
         onEnteringStateCommonBoardTurn: function(args)
         {
@@ -562,6 +566,7 @@ function (dojo, declare) {
                 this._counters[player.id]['tokens_deck'].setValue(player.tokens_deck);
                 this._counters[player.id]['pollens'].setValue(player.pollens);
                 this._counters[player.id]['jokers'].setValue(player.jokerUsed ? 0:1);
+                this._counters[player.id]['actions'].setValue(player.npad);
             });
             
             this.setupTokens();
@@ -570,6 +575,9 @@ function (dojo, declare) {
             debug('notif_newTurn: new turn', n);
             this.updateTurnMarker(n.args.n,1);
             this._counters['turn'].toValue(n.args.n);
+            this.forEachPlayer((player) => {
+                this._counters[player.id]['actions'].setValue(0);
+            }); 
         },
         
         notif_updateFirstPlayer(n) {
@@ -581,6 +589,11 @@ function (dojo, declare) {
             debug('notif_newWinds: new wind dirs', n);
             this.gamedatas.winds = n.args.winds;
             //TODO JSA display winds
+        },
+        notif_useActions(n) {
+            debug('notif_useActions: player spent actions', n);
+            this.gamedatas.winds = n.args.winds;
+            this._counters[n.args.player_id]['actions'].toValue(n.args.npad);
         },
         notif_drawToken(n) {
             debug('notif_drawToken: new token on player board', n);
@@ -749,6 +762,7 @@ function (dojo, declare) {
                 this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
                 this.addTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'),'');
                 this.addTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'),'');
+                this.addTooltip(`stig_reserve_${player.id}_actions`, _('Actions done'),'');
 
                 let pId = player.id;
                 this._counters[pId] = {
@@ -756,6 +770,7 @@ function (dojo, declare) {
                     tokens_deck: this.createCounter(`stig_counter_${pId}_tokens_deck`, player.tokens_deck),
                     pollens: this.createCounter(`stig_counter_${pId}_pollens`, player.pollens),
                     jokers: this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1),
+                    actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
                 };
         
                 // Useful to order boards
@@ -805,6 +820,7 @@ function (dojo, declare) {
             return `<div class='stig_panel'>
             <div class='stig_player_infos'>
                 ${this.tplResourceCounter(player, 'tokens_deck')}
+                ${this.tplResourceCounter(player, 'actions')}
                 ${this.tplResourceCounter(player, 'tokens_recruit',3)}
                 ${this.tplResourceCounter(player, 'pollens',9)}
                 ${this.gamedatas.jokerMode>0 ? this.tplResourceCounter(player, 'jokers') :''}

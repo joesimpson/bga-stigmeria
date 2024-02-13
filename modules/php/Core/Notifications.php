@@ -121,12 +121,13 @@ class Notifications
   /**
    * Update number of actions
    * @param Player $player
-   *///TODO JSA CHECK IF USELESS
+   */
   public static function useActions($player){
     self::notifyAll('useActions','',[ 
         'player' => $player,
-        'nbCommonActionsDone' => $player->getNbCommonActionsDone(),
-        'nbPersonalActionsDone' => $player->getNbPersonalActionsDone(),
+        'ncad' => $player->getNbCommonActionsDone(),
+        'npad' => $player->getNbPersonalActionsDone(),
+        'npan' => $player->countRemainingPersonalActions(),
       ],
     );
   }

@@ -26,7 +26,7 @@
 .stig_player_infos {
     display: flex;
     flex-wrap: wrap;
-    font-size: 18px;
+    font-size: 15px;
     justify-content: space-around;
     position: relative;
     padding: 0.5rem 0;
@@ -43,6 +43,7 @@
             height: 100%;
         }
 
+        .stig_resource_actions,
         .stig_resource_jokers,
         .stig_resource_pollens,
         .stig_resource_tokens_recruit,
@@ -131,6 +132,10 @@
                             }
                         }
                     }
+                }
+                &.stig_actions{
+                    position: relative;
+                    box-shadow: none;
                 }
             }
         }
