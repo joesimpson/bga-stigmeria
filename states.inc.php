@@ -284,12 +284,13 @@ $machinestates = array(
         "transitions" => [
             'startMerge' => ST_TURN_SPECIAL_ACT_MERGE,
             'startDiagonal' => ST_TURN_SPECIAL_ACT_DIAGONAL,
+            'startSwap' => ST_TURN_SPECIAL_ACT_SWAP,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
     ST_TURN_SPECIAL_ACT_MERGE => [
         "name" => "spMerge",
-        "descriptionmyturn" => clienttranslate('${you} may choose tokens to merge'), 
+        "descriptionmyturn" => clienttranslate('${you} may choose 2 adjacents tokens to merge'), 
         "type" => "private",
         "args" => "argSpMerge",
         "possibleactions" => [
@@ -309,6 +310,21 @@ $machinestates = array(
         "args" => "argSpDiagonal",
         "possibleactions" => [
             "actDiagonal",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_SWAP => [
+        "name" => "spSwap",
+        "descriptionmyturn" => clienttranslate('${you} may choose 2 adjacents tokens to swap'), 
+        "type" => "private",
+        "args" => "argSpSwap",
+        "possibleactions" => [
+            "actSwap",
             "actCancelSpecial",
         ],
         "transitions" => [

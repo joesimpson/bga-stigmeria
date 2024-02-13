@@ -268,6 +268,14 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     return array_search($this->getType(),TOKEN_POLLENS);
   }
 
+  /**
+   * @return TokenCoord $coord equivalent datas
+   */
+  public function asCoord()
+  {
+    $coord = new TokenCoord($this->type, $this->row,$this->col );
+    return $coord;
+  }
   
   /**
    * @param TokenCoord $coord

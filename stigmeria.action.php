@@ -205,6 +205,15 @@
       $this->game->actDiagonal($token_id, $row, $col);
       self::ajaxResponse();
     }
+    public function actSwap()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token1 = self::getArg( "t1", AT_posint, true );
+      $token2 = self::getArg( "t2", AT_posint, true );
+      $this->game->actSwap($token1,$token2);
+      self::ajaxResponse();
+    }
 
     public function actLetNextPlay()
     {

@@ -22,6 +22,7 @@ trait SpecialActionTrait
         }
         if($flowerType == OPTION_FLOWER_DENTDINE && $remaining >=ACTION_COST_MOVE_DIAGONAL){
             $actions[] = ACTION_TYPE_DIAGONAL;
+            $actions[] = ACTION_TYPE_SWAP;
         }
         return [
             'a' => $actions,
@@ -60,6 +61,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_DIAGONAL:
                 $actionCost = ACTION_COST_MOVE_DIAGONAL;
                 $nextState = "startDiagonal";
+                break;
+            case ACTION_TYPE_SWAP:
+                $actionCost = ACTION_COST_SWAP;
+                $nextState = "startSwap";
                 break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");

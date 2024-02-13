@@ -29,6 +29,7 @@ function (dojo, declare) {
     const TURN_MAX = 10;
     const ACTION_TYPE_MERGE = 10;
     const ACTION_TYPE_DIAGONAL = 14;
+    const ACTION_TYPE_SWAP = 15;
     const TOKEN_TYPE_NEWTURN = 21;
 
     return declare("bgagame.stigmeria", [customgame.game], {
@@ -451,6 +452,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_DIAGONAL)){
                 this.addPrimaryActionButton('btnStartDiagonal', 'Diagonal', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
             }
+            if(possibleActions.includes(ACTION_TYPE_SWAP)){
+                this.addPrimaryActionButton('btnStartSwap', 'Swap', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_SWAP}));
+            }
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -561,6 +565,14 @@ function (dojo, declare) {
             }); 
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
+        }, 
+        
+        onEnteringStateSpSwap: function(args)
+        {
+            debug( 'onEnteringStateSpSwap() ', args );
+            
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.initMultiTokenSelection('actSwap',args.tokens);
         }, 
         
         onEnteringStateWindEffect: function(args)
@@ -1098,6 +1110,63 @@ function (dojo, declare) {
             return 'game_play_area';
           },
           
+        initMultiTokenSelection: function(actionName,possibleTokens){
+            debug( 'initMultiTokenSelection() ', possibleTokens );
+           
+            let currentToken1 = null;
+            let currentToken2 = null;
+            
+            this.addPrimaryActionButton('btnConfirm', 'Confirm', () => { 
+                this.takeAction(actionName, {t1: currentToken1, t2: currentToken2}); 
+            } );
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
+            let playerBoard = $(`stig_player_board_${this.player_id}`);
+            Object.keys(possibleTokens).forEach((tokenId) => {
+                //Click token 1
+                this.onClick(`stig_token_${tokenId}`, (evt) => {
+                    let tokenIdInt = parseInt(tokenId);
+                    let div = evt.target;
+                    $(`btnConfirm`).classList.add('disabled');
+                    if(div.classList.contains('selected')){
+                        //UNSELECT
+                        currentToken1 = null;
+                        currentToken2 = null;
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                            o.classList.remove('selected');
+                        });
+                        //REINIT SELECTION
+                        Object.keys(possibleTokens).forEach((tokenId3) => {
+                            $(`stig_token_${tokenId3}`).classList.add('selectable');
+                        });
+                    }
+                    else if(!currentToken1){
+                        //SELECT 1
+                        currentToken1 = tokenIdInt;
+                        div.classList.add('selected');
+                        
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                            o.classList.remove('selectable');
+                        });
+                        Object.values(possibleTokens[tokenIdInt]).forEach((tokenId2) => {
+                            $(`stig_token_${tokenId2}`).classList.add('selectable');
+                        });
+                    }
+                    else if(!currentToken2 && possibleTokens[tokenIdInt].includes(currentToken1)){
+                        //SELECT 2
+                        currentToken2 = tokenIdInt;
+                        div.classList.add('selected');
+                        $(`btnConfirm`).classList.remove('disabled');
+                        
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                            o.classList.remove('selectable');
+                        });
+                    }
+
+                });
+            });
+           
+        },
 
         ////////////////////////////////////////////////////////////
         // _____                          _   _   _

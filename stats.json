@@ -96,6 +96,11 @@
         "name": "Diagonal actions",
         "type": "int"
       }
+      ,"actions_s5": {
+        "id": 24,
+        "name": "Swap actions",
+        "type": "int"
+      }
       
     }
   }
