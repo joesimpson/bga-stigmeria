@@ -224,7 +224,7 @@ function (dojo, declare) {
             let selectedTokenCell = null;
             let centralBoard = $(`stig_central_board`);
             //Clean obsolete tokens:
-            centralBoard.querySelectorAll('.stig_token_cell').forEach((oToken) => {
+            centralBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)').forEach((oToken) => {
                     dojo.destroy(oToken);
                 });
             //possible places to play :
@@ -235,7 +235,7 @@ function (dojo, declare) {
                 if(selectedTokenType) elt.dataset.type = selectedTokenType;
                 this.onClick(`stig_token_cell_central_${row}_${column}`, (evt) => {
                     let div = evt.target;
-                    centralBoard.querySelectorAll('.stig_token_cell').forEach((oToken) => {
+                    centralBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)').forEach((oToken) => {
                         oToken.classList.remove('selected');
                     });
                     div.classList.toggle('selected');
@@ -244,7 +244,7 @@ function (dojo, declare) {
             });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedToken = $(`stig_select_piece_container`).querySelector(`.stig_token.selected`);
-                let selectedTokenCell = $(`stig_player_boards`).querySelector(`.stig_token_cell.selected`);
+                let selectedTokenCell = $(`stig_player_boards`).querySelector(`.stig_token_cell:not(.stig_token_holder).selected`);
                 this.takeAction('actCentralLand', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
             }); 
             //DISABLED by default
@@ -333,7 +333,7 @@ function (dojo, declare) {
                         elt2.dataset.type = elt.dataset.type;
                         this.onClick(`${elt2.id}`, (evt) => {
                             //CLICK SELECT DESTINATION
-                            playerBoard.querySelectorAll('.stig_token_cell').forEach((oToken) => {
+                            playerBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)').forEach((oToken) => {
                                 oToken.classList.remove('selected');
                             });
                             let div = evt.target;
@@ -528,10 +528,14 @@ function (dojo, declare) {
             debug('notif_moveOnCentralBoard: token moved on on central board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
+            let oldParent = div.parentElement;//token_holder
             div.dataset.row = token.row;
             div.dataset.col = token.col;
             div.dataset.state = token.state;
-            this.slide(div, this.getTokenContainer(token));
+            this.slide(div, this.getTokenContainer(token)).then(() =>{
+                dojo.destroy( $(`${oldParent.id}`));
+                //TODO JSA destroy also previous selectable cell ?
+            });
         },
         notif_letNextPlay(n) {
             debug('notif_letNextPlay: ', n);
@@ -553,10 +557,14 @@ function (dojo, declare) {
             debug('notif_moveOnPlayerBoard: token moved on player board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
+            let oldParent = div.parentElement;//token_holder
             div.dataset.row = token.row;
             div.dataset.col = token.col;
             div.dataset.state = token.state;
-            this.slide(div, this.getTokenContainer(token));
+            this.slide(div, this.getTokenContainer(token)).then(() =>{
+                dojo.destroy( $(`${oldParent.id}`));
+                //TODO JSA destroy also previous selectable cell ?
+            });
         },
         notif_newPollen(n) {
             debug('notif_newPollen: token is flipped !', n);
@@ -878,7 +886,7 @@ function (dojo, declare) {
         addSelectableTokenCell(player_id, row, column) {
             debug("addSelectableTokenCell",player_id, row, column);
             let playerGrid = $(`stig_grid_${player_id}`);
-            let tokenDivId = `stig_token_cell_${this.player_id}_${row}_${column}`;
+            let tokenDivId = `stig_token_cell_${player_id}_${row}_${column}`;
             if ( $(tokenDivId) ) return $(tokenDivId);
             
             let token = this.place('tplTokenCell', {player_id:player_id, row:row, column:column}, playerGrid);
@@ -930,10 +938,21 @@ function (dojo, declare) {
         },
         getTokenContainer(token) {
             debug("getTokenContainer",token);
+            let playerboard_id = token.pId>0 ? token.pId :'central';
             if (token.location == 'central_board') {
+                let tokenHolder = this.addSelectableTokenCell(playerboard_id,token.row, token.col);
+                if( tokenHolder){
+                    tokenHolder.classList.add('stig_token_holder');
+                    return tokenHolder.id;
+                }
                 return $(`stig_grid_central`);
             }
             if (token.location == 'player_board') {
+                let tokenHolder = this.addSelectableTokenCell(playerboard_id,token.row, token.col);
+                if( tokenHolder){
+                    tokenHolder.classList.add('stig_token_holder');
+                    return tokenHolder.id;
+                }
                 return $(`stig_grid_${token.pId}`);
                 //TODO JSA IF row/col out of grid (after wind for example, don't show it there)
             }
@@ -968,7 +987,7 @@ function (dojo, declare) {
                     [...playerBoard.querySelectorAll('.stig_token')].forEach((o) => o.classList.remove('selected'));
                     let div = evt.target;
                     div.classList.toggle('selected');
-                    [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                    [...playerBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)')].forEach((o) => {
                         dojo.destroy(o);
                         });
                     //disable confirm while we don't know destination
@@ -980,7 +999,7 @@ function (dojo, declare) {
                         elt2.dataset.type = div.dataset.type;
                         //Click token destination :
                         this.onClick(`${elt2.id}`, (evt) => {
-                            [...playerBoard.querySelectorAll('.stig_token_cell')].forEach((o) => {
+                            [...playerBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)')].forEach((o) => {
                                 o.classList.remove('selected');
                                 });
                             let div = evt.target;
@@ -992,7 +1011,7 @@ function (dojo, declare) {
             });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
-                let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell:not(.stig_token_holder).selected`);
                 this.takeAction(actionName, { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
             }); 
             //DISABLED by default
