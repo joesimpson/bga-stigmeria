@@ -40,6 +40,9 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     showMessage(msg, type) {
       if (type == 'error') {
         console.error(msg);
+        if (msg && msg.startsWith("!!!")) {
+          return; // suppress red banner and gamelog message
+        }
       }
       return this.inherited(arguments);
     },
@@ -120,6 +123,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       } else if (data.lock === false) {
         delete data.lock;
       }
+      data.version = this.gamedatas.version;
       return new Promise((resolve, reject) => {
         this.ajaxcall(
           '/' + this.game_name + '/' + this.game_name + '/' + action + '.html',
@@ -127,7 +131,10 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
           this,
           (data) => resolve(data),
           (isError, message, code) => {
-            if (isError) reject(message, code);
+            if (isError && message == "!!!checkVersion") {
+              this.infoDialog(  _("A new version of this game is now available"),_("Reload Required"), () => {window.location.reload(true);},true);
+            }
+            else if (isError) reject(message, code);
           }
         );
       });

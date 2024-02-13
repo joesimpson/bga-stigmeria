@@ -37,6 +37,7 @@ use STIG\Managers\Players;
 use STIG\Core\Globals;
 use STIG\Core\Preferences;
 use STIG\Core\Stats;
+use STIG\Exceptions\UserException;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 
@@ -108,6 +109,7 @@ class Stigmeria extends Table
         // Gather all information about current game situation (visible by player $current_player_id).
         $firstPlayer = (Globals::isModeCompetitive() ? Globals::getFirstPlayer() : null);
         return [
+          'version'=> intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION]),
           'prefs' => Preferences::getUiData($current_player_id),
           'players' => Players::getUiData($current_player_id),
           'tokens' => Tokens::getUiData($current_player_id),
@@ -153,7 +155,16 @@ class Stigmeria extends Table
     /*
         In this space, you can put any utility methods useful for your game logic
     */
-
+    /**
+    * Check Server version to compare with client version : throw an error in case it 's not the same
+    * From https://en.doc.boardgamearena.com/BGA_Studio_Cookbook#Force_players_to_refresh_after_new_deploy
+    */
+    public function checkVersion(int $clientVersion): void
+    {
+        if ($clientVersion != intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION])) {
+            throw new UserException('!!!checkVersion');
+        }
+    }
 
 
 //////////////////////////////////////////////////////////////////////////////
