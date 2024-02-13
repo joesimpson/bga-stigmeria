@@ -317,7 +317,7 @@ function (dojo, declare) {
                 this.updateTurnMarker(this.gamedatas.turn,args.done +1 );
                     
                 if(possibleActions.includes('actSpecial')){
-                    this.addPrimaryActionButton('btnSpecialAction', 'Special', () => { this.takeAction('actSpecial', {}); });
+                    this.addImageActionButton('btnSpecialAction', `<div><div class='stig_icon_flower_violet'></div> Special<div class='stig_icon_flower_violet stig_icon_flipped'></div></div>`, () => { this.takeAction('actSpecial', {}); });
                 }
             }
             Object.values(args.pj).forEach((tokenColor) => {

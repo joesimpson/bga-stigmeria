@@ -61,5 +61,18 @@
             width: 45px;
             height: 45px;
         }
+        &.stig_icon_flower_violet {
+            width: 40px;
+            height: 40px;
+            background-image: url("img/tokens.png");
+            background-size: 6000%;
+            background-position-x: 480px;
+            background-position-y: 75px;
+            margin-right: 3px;
+            &.stig_icon_flipped{
+                transform: scaleX(-1);
+                margin-left: 3px;
+            }
+        }
     }
 }
