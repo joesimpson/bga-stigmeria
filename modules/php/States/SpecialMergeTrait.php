@@ -45,6 +45,9 @@ trait SpecialMergeTrait
         if($token2->pId != $pId || $token2->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(130,"You cannot merge this token");
         }
+        if(!$this->canMergeOnBoard($token1,$token2)){
+            throw new UnexpectedException(131,"You cannot merge these tokens");
+        }
 
         $token1->merge($token2,$player);
         $player->incNbPersonalActionsDone($actionCost);
