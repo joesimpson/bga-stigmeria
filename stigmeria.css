@@ -286,7 +286,6 @@
   width: 100%;
   height: 100%;
 }
-.stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_jokers,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_recruit,
@@ -294,12 +293,18 @@
   font-size: 22px;
   font-weight: bold;
 }
-.stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions::after,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_jokers::after,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens::after,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_recruit::after,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_deck::after {
   content: " x";
+}
+.stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions {
+  font-size: 20px;
+  font-weight: bold;
+}
+.stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions::after {
+  content: " /";
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container {
   display: inline-block;

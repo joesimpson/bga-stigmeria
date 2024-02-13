@@ -43,7 +43,6 @@
             height: 100%;
         }
 
-        .stig_resource_actions,
         .stig_resource_jokers,
         .stig_resource_pollens,
         .stig_resource_tokens_recruit,
@@ -52,6 +51,13 @@
             font-weight: bold;
             &::after {
                 content: " x";
+            }
+        }
+        .stig_resource_actions{
+            font-size: 20px;
+            font-weight: bold;
+            &::after {
+                content: " /";
             }
         }
 

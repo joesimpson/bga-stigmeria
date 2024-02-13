@@ -621,6 +621,7 @@ function (dojo, declare) {
                 this._counters[player.id]['pollens'].setValue(player.pollens);
                 this._counters[player.id]['jokers'].setValue(player.jokerUsed ? 0:1);
                 this._counters[player.id]['actions'].setValue(player.npad);
+                this._counters[player.id]['actionsMax'].setValue(this.gamedatas.turn);
             });
             
             this.setupTokens();
@@ -631,6 +632,7 @@ function (dojo, declare) {
             this._counters['turn'].toValue(n.args.n);
             this.forEachPlayer((player) => {
                 this._counters[player.id]['actions'].setValue(0);
+                this._counters[player.id]['actionsMax'].setValue(n.args.n);
             }); 
         },
         
@@ -825,6 +827,7 @@ function (dojo, declare) {
                     pollens: this.createCounter(`stig_counter_${pId}_pollens`, player.pollens),
                     jokers: this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1),
                     actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
+                    actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, this.gamedatas.turn),
                 };
         
                 // Useful to order boards
@@ -874,7 +877,7 @@ function (dojo, declare) {
             return `<div class='stig_panel'>
             <div class='stig_player_infos'>
                 ${this.tplResourceCounter(player, 'tokens_deck')}
-                ${this.tplResourceCounter(player, 'actions')}
+                ${this.tplResourceCounter(player, 'actions', 0, this.gamedatas.turn)}
                 ${this.tplResourceCounter(player, 'tokens_recruit',3)}
                 ${this.tplResourceCounter(player, 'pollens',9)}
                 ${this.gamedatas.jokerMode>0 ? this.tplResourceCounter(player, 'jokers') :''}
@@ -886,11 +889,12 @@ function (dojo, declare) {
         /**
          * Use this tpl for any counters that represent qty of tokens
          */
-        tplResourceCounter(player, res, nbSubIcons = null) {
+        tplResourceCounter(player, res, nbSubIcons = null, totalValue = null) {
+            let totalText = totalValue ==null ? '' : `<span id='stig_counter_${player.id}_${res}_total' class='stig_resource_${res}_total'></span> `;
             return `
             <div class='stig_player_resource stig_resource_${res}'>
                 <span id='stig_counter_${player.id}_${res}' 
-                class='stig_resource_${res}'></span>${this.formatIcon(res, nbSubIcons)}
+                class='stig_resource_${res}'></span>${totalText}${this.formatIcon(res, nbSubIcons)}
                 <div class='stig_reserve' id='stig_reserve_${player.id}_${res}'></div>
             </div>
             `;
