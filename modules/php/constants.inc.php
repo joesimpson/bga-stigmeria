@@ -15,6 +15,8 @@ const COLUMN_MAX = 10;
 const ROW_MIN = 1;
 const ROW_MAX = 10;
 const ROW_START = ROW_MIN;
+//55 max : if we go from A1 to J10, from column 1, then 3, then 5, then 7, then 9
+const MAX_MOVES_TO_REACH_A_PLACE = (COLUMN_MAX -COLUMN_MIN +1 ) /2 *(1+ (ROW_MAX -ROW_MIN +1)  );
 
 const WIND_DIR_NORTH = 'N';
 const WIND_DIR_SOUTH = 'S';
@@ -88,11 +90,13 @@ const ACTION_COST_CENTRAL_MOVE = 1;
 const ACTION_COST_MERGE = 1;
 const ACTION_COST_MOVE_DIAGONAL = 1;
 const ACTION_COST_SWAP = 1;
+const ACTION_COST_MOVE_FAST = 1;
 
 /** ACTIONS TYPES */
 const ACTION_TYPE_MERGE = 10;
 const ACTION_TYPE_DIAGONAL = 14;
 const ACTION_TYPE_SWAP = 15;
+const ACTION_TYPE_MOVE_FAST = 16;
 
 /*
  * Game options
@@ -249,6 +253,7 @@ const ST_TURN_CHOICE_SPECIAL_ACTION = 30;
 const ST_TURN_SPECIAL_ACT_MERGE = 31;
 const ST_TURN_SPECIAL_ACT_DIAGONAL = 32;
 const ST_TURN_SPECIAL_ACT_SWAP = 33;
+const ST_TURN_SPECIAL_ACT_MOVE_FAST = 34;
 
 
 const ST_WIND_EFFECT = 80;

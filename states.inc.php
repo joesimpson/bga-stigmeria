@@ -285,6 +285,7 @@ $machinestates = array(
             'startMerge' => ST_TURN_SPECIAL_ACT_MERGE,
             'startDiagonal' => ST_TURN_SPECIAL_ACT_DIAGONAL,
             'startSwap' => ST_TURN_SPECIAL_ACT_SWAP,
+            'startFastMove' => ST_TURN_SPECIAL_ACT_MOVE_FAST,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -325,6 +326,20 @@ $machinestates = array(
         "args" => "argSpSwap",
         "possibleactions" => [
             "actSwap",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    ST_TURN_SPECIAL_ACT_MOVE_FAST => [
+        "name" => "spFastMove",
+        "descriptionmyturn" => clienttranslate('${you} may move 1 token ${n} steps maximum'), 
+        "type" => "private",
+        "args" => "argSpFastMove",
+        "possibleactions" => [
+            "actFastMove",
             "actCancelSpecial",
         ],
         "transitions" => [

@@ -20,9 +20,17 @@ trait SpecialActionTrait
         if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE && $remaining >=ACTION_COST_MERGE){
             $actions[] = ACTION_TYPE_MERGE;
         }
-        if($flowerType == OPTION_FLOWER_DENTDINE && $remaining >=ACTION_COST_MOVE_DIAGONAL){
-            $actions[] = ACTION_TYPE_DIAGONAL;
-            $actions[] = ACTION_TYPE_SWAP;
+        if($flowerType == OPTION_FLOWER_DENTDINE){
+
+            if($remaining >=ACTION_COST_MOVE_DIAGONAL){
+                $actions[] = ACTION_TYPE_DIAGONAL;
+            }
+            if($remaining >=ACTION_COST_SWAP){
+                $actions[] = ACTION_TYPE_SWAP;
+            }
+            if($remaining >=ACTION_COST_MOVE_FAST){
+                $actions[] = ACTION_TYPE_MOVE_FAST;
+            }
         }
         return [
             'a' => $actions,
@@ -65,6 +73,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_SWAP:
                 $actionCost = ACTION_COST_SWAP;
                 $nextState = "startSwap";
+                break;
+            case ACTION_TYPE_MOVE_FAST:
+                $actionCost = ACTION_COST_MOVE_FAST;
+                $nextState = "startFastMove";
                 break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");

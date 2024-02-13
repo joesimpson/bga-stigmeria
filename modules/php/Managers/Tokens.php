@@ -119,7 +119,7 @@ class Tokens extends \STIG\Helpers\Pieces
   }
   /**
    * SEARCH in memory, not in DB
-   * @param array $tokens StigmerianToken
+   * @param Collection $boardTokens StigmerianToken
    * @param int $row
    * @param int $column
    * @return StigmerianToken if found at that location, null otherwise

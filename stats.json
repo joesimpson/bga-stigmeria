@@ -101,6 +101,11 @@
         "name": "Swap actions",
         "type": "int"
       }
+      ,"actions_s6": {
+        "id": 25,
+        "name": "Fast move actions",
+        "type": "int"
+      }
       
     }
   }

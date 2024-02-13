@@ -30,6 +30,7 @@ function (dojo, declare) {
     const ACTION_TYPE_MERGE = 10;
     const ACTION_TYPE_DIAGONAL = 14;
     const ACTION_TYPE_SWAP = 15;
+    const ACTION_TYPE_MOVE_FAST = 16;
     const TOKEN_TYPE_NEWTURN = 21;
 
     return declare("bgagame.stigmeria", [customgame.game], {
@@ -375,6 +376,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_SWAP)){
                 this.addPrimaryActionButton('btnStartSwap', 'Swap', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_SWAP}));
             }
+            if(possibleActions.includes(ACTION_TYPE_MOVE_FAST)){
+                this.addPrimaryActionButton('btnStartFastMove', 'Fast move', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MOVE_FAST}));
+            }
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -400,6 +404,14 @@ function (dojo, declare) {
             
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
             this.initMultiTokenSelection('actSwap',args.tokens);
+        }, 
+        
+        onEnteringStateSpFastMove: function(args)
+        {
+            debug( 'onEnteringStateSpFastMove() ', args );
+
+            this.initTokenSelectionDest('actFastMove', args.p_places_m, this.player_id);
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
         onEnteringStateWindEffect: function(args)
