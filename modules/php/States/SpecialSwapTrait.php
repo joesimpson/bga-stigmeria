@@ -52,8 +52,9 @@ trait SpecialSwapTrait
         //SWAP EFFECT
         $previousCoord1 = $token1->asCoord();
         $previousCoord2 = $token2->asCoord();
-        $token1->moveToPlayerBoard($player,$previousCoord2->row,$previousCoord2->col,$actionCost);
-        $token2->moveToPlayerBoard($player,$previousCoord1->row,$previousCoord1->col,$actionCost);
+        Notifications::swapTokens($player,$token1,$token2,$actionCost);
+        $token1->moveToPlayerBoard($player,$previousCoord2->row,$previousCoord2->col,0);
+        $token2->moveToPlayerBoard($player,$previousCoord1->row,$previousCoord1->col,0);
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);

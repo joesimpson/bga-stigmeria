@@ -209,11 +209,29 @@ class Notifications
    * @param int $actionCost
    */
   public static function moveOnPlayerBoard($player, $token,$from,$to, $actionCost){
-    self::notifyAll('moveOnPlayerBoard',clienttranslate('${player_name} moves a stigmerian from ${A} to ${B} (cost : ${n} actions)'),[ 
+    self::notifyAll('moveOnPlayerBoard',clienttranslate('${player_name} moves a ${color} stigmerian from ${A} to ${B} (cost : ${n} actions)'),[ 
+        'i18n' => [ 'color'],
         'player' => $player,
+        'color' => StigmerianToken::getTypeName($token->getType()),
         'token' => $token->getUiData(),
         'A' => $from,
         'B' => $to,
+        'n' => $actionCost,
+      ],
+    );
+  }
+  
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token1
+   * @param StigmerianToken $token2
+   * @param int $actionCost
+   */
+  public static function swapTokens($player,$token1,$token2, $actionCost){
+    self::notifyAll('swapTokens',clienttranslate('${player_name} swaps 2 stigmerians between ${A} and ${B} (cost : ${n} actions)'),[ 
+        'player' => $player,
+        'A' => $token1->getCoordName(),
+        'B' => $token2->getCoordName(),
         'n' => $actionCost,
       ],
     );

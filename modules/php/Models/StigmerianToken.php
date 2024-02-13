@@ -298,12 +298,24 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   public static function getTypeName($type)
   {
     switch($type){
-      case TOKEN_STIG_RED:
-        return Game::get()->translate("red");
       case TOKEN_STIG_BLUE:
         return Game::get()->translate("blue");
       case TOKEN_STIG_YELLOW:
         return Game::get()->translate("yellow");
+      case TOKEN_STIG_RED:
+        return Game::get()->translate("red");
+      case TOKEN_STIG_ORANGE:
+        return Game::get()->translate("orange");
+      case TOKEN_STIG_GREEN:
+        return Game::get()->translate("green");
+      case TOKEN_STIG_VIOLET:
+        return Game::get()->translate("violet");
+      case TOKEN_STIG_BROWN:
+        return Game::get()->translate("brown");
+      case TOKEN_STIG_WHITE:
+        return Game::get()->translate("white");
+      case TOKEN_STIG_BLACK:
+        return Game::get()->translate("black");
       default: 
         return "";
     }
