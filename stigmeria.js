@@ -826,7 +826,7 @@ function (dojo, declare) {
             schema.name = _('Targeted schema');
             let stars = '';
             let k = 0;
-            while(k< schema.difficulty){ stars += `<i class="fa6 fa6-star"></i>`; k++;}
+            while(k< schema.difficulty){ stars += `<i class="stig_difficulty_star"></i>`; k++;}
             return `<div class='stig_resizable_board' id='stig_schema_board_container_wrapper' data_schema='${schema.id}'>
             <div class='stig_schema_board_container'>
                 <div class="stig_schema_board" id='stig_schema_board_${schema.id}' data_flower_type="${schema.type}">

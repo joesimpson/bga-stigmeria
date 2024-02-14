@@ -109,6 +109,15 @@
         left: 2%;
         display: flex;
         align-items: center;
+        
+        .stig_difficulty_star {
+            width: 50px;
+            height: 50px;
+            background-image: url("img/tokens.png");
+            background-size: 6000%;
+            background-position-x: 599px;
+            background-position-y: 257px;
+        }
     }
     .stig_schema_number{
         right: 2%;
@@ -121,10 +130,6 @@
         border-top-right-radius: 100px;
         border-bottom-right-radius: 100px;
         border-bottom-left-radius: 100px;
-        .fa6-star{
-            color: gold;
-            font-size: 40px;
-        }
     }
     
     .stig_recruits{

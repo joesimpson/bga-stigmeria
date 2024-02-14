@@ -557,6 +557,16 @@
   display: flex;
   align-items: center;
 }
+.stig_schema_board .stig_schema_difficulty .stig_difficulty_star,
+.stig_central_board .stig_schema_difficulty .stig_difficulty_star,
+.stig_player_board .stig_schema_difficulty .stig_difficulty_star {
+  width: 50px;
+  height: 50px;
+  background-image: url("img/tokens.png");
+  background-size: 6000%;
+  background-position-x: 599px;
+  background-position-y: 257px;
+}
 .stig_schema_board .stig_schema_number,
 .stig_central_board .stig_schema_number,
 .stig_player_board .stig_schema_number {
@@ -574,15 +584,6 @@
   border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
   border-bottom-left-radius: 100px;
-}
-.stig_schema_board .stig_schema_difficulty .fa6-star,
-.stig_schema_board .stig_schema_number .fa6-star,
-.stig_central_board .stig_schema_difficulty .fa6-star,
-.stig_central_board .stig_schema_number .fa6-star,
-.stig_player_board .stig_schema_difficulty .fa6-star,
-.stig_player_board .stig_schema_number .fa6-star {
-  color: gold;
-  font-size: 40px;
 }
 .stig_schema_board .stig_recruits,
 .stig_central_board .stig_recruits,
