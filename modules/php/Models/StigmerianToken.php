@@ -127,8 +127,9 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    * @param int $row
    * @param int $column
    * @param int $actionCost
+   * @param bool $sendNotif (default false) : tells if we want to send a notif for this move
    */
-  public function moveToPlayerBoard($player,$row,$column,$actionCost)
+  public function moveToPlayerBoard($player,$row,$column,$actionCost, $sendNotif = true)
   {
     $fromBoard = false;
     if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
@@ -141,11 +142,11 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     $this->setRow($row);
 
     if($fromBoard){
-      Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
+      if($sendNotif) Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
     }
     else {
       Stats::inc("tokens_board",$player->getId());
-      Notifications::moveToPlayerBoard($player, $this,$actionCost);
+      if($sendNotif) Notifications::moveToPlayerBoard($player, $this,$actionCost);
     }
 
     $this->checkAndBecomesPollen($player);

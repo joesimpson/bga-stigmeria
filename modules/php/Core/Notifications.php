@@ -227,11 +227,13 @@ class Notifications
    * @param StigmerianToken $token2
    * @param int $actionCost
    */
-  public static function swapTokens($player,$token1,$token2, $actionCost){
-    self::notifyAll('swapTokens',clienttranslate('${player_name} swaps 2 stigmerians between ${A} and ${B} (cost : ${n} actions)'),[ 
+  public static function spSwap($player,$token1,$token2, $actionCost){
+    self::notifyAll('spSwap',clienttranslate('${player_name} swaps 2 stigmerians at ${A} and ${B} (cost : ${n} actions)'),[ 
         'player' => $player,
         'A' => $token1->getCoordName(),
         'B' => $token2->getCoordName(),
+        't1' => $token1->getUiData(),
+        't2' => $token2->getUiData(),
         'n' => $actionCost,
       ],
     );
@@ -283,7 +285,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spWhite($player,$token1,$token2,$actionCost){
-    self::notifyAll('spWhite',clienttranslate('${player_name} use the white action to merge tokens at ${L1} and ${L2} into ${L2} (cost: ${n} actions)'),[ 
+    self::notifyAll('spWhite',clienttranslate('${player_name} use the white action to merge tokens at ${L1} and ${L2} into ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
