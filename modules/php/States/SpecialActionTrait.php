@@ -38,6 +38,9 @@ trait SpecialActionTrait
             if($remaining >=ACTION_COST_WHITE){
                 $actions[] = ACTION_TYPE_WHITE;
             }
+            if($remaining >=ACTION_COST_BLACK){
+                $actions[] = ACTION_TYPE_BLACK;
+            }
         }
         return [
             'a' => $actions,
@@ -89,6 +92,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_WHITE:
                 $actionCost = ACTION_COST_WHITE;
                 $nextState = "startWhite";
+                break;
+            case ACTION_TYPE_BLACK:
+                $actionCost = ACTION_COST_BLACK;
+                $nextState = "startBlack";
                 break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");

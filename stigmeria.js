@@ -32,8 +32,9 @@ function (dojo, declare) {
     const ACTION_TYPE_SWAP = 15;
     const ACTION_TYPE_MOVE_FAST = 16;
     const ACTION_TYPE_WHITE = 20;
+    const ACTION_TYPE_BLACK = 21;
 
-    const TOKEN_STIG_WHITE =    8;
+    const TOKEN_STIG_BLACK =    9;
     const TOKEN_TYPE_NEWTURN = 21;
 
     return declare("bgagame.stigmeria", [customgame.game], {
@@ -60,6 +61,7 @@ function (dojo, declare) {
                 ['spMerge', 900],
                 ['spSwap', 900],
                 ['spWhite', 900],
+                ['spBlack', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['windBlows', 1800],
@@ -388,6 +390,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_WHITE)){
                 this.addPrimaryActionButton('btnStartWhite', 'White', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_WHITE}));
             }
+            if(possibleActions.includes(ACTION_TYPE_BLACK)){
+                this.addPrimaryActionButton('btnStartBlack', 'Quarter Note', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_BLACK}));
+            }
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -461,6 +466,14 @@ function (dojo, declare) {
             $(`btnConfirm`).classList.add('disabled');
         }, 
         
+        onEnteringStateSpBlack1: function(args)
+        {
+            debug( 'onEnteringStateSpBlack1() ', args );
+
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.initTokenSelectionDest('actBlack1',args.tokens, this.player_id, TOKEN_STIG_BLACK);
+            
+        }, 
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );
@@ -640,21 +653,7 @@ function (dojo, declare) {
             let token1 = n.args.t1;
             let token2 = n.args.t2;
             let div1 = $(`stig_token_${token1.id}`);
-            let div2 = $(`stig_token_${token2.id}`);
-            /*
-            div1.dataset.type = token1.type;
-            div1.dataset.row = token1.row;
-            div1.dataset.col = token1.col;
-            div2.dataset.type = token2.type;
-            div2.dataset.row = token2.row;
-            div2.dataset.col = token2.col;
-            */
-            /*
-            div1.dataset.type = token1.type;
-            div2.dataset.type = token2.type;
-            this.animationBlink2Times(div1);
-            this.animationBlink2Times(div2);
-            */
+            let div2 = $(`stig_token_${token2.id}`); 
             this.slide(div1, this.getTokenContainer(token1));
             this.slide(div2, this.getTokenContainer(token2));
         },
@@ -670,6 +669,16 @@ function (dojo, declare) {
                 else dojo.destroy(div2);
             }
             this.animationBlink2Times(div1);
+        },
+        notif_spBlack(n) {
+            debug('notif_spBlack: tokens are black !', n);
+            let token1 = n.args.token1;
+            let token2 = n.args.token2;
+            let div1 = $(`stig_token_${token1.id}`);
+            div1.dataset.type = token1.type;
+            this.animationBlink2Times(div1);
+            let div2 = this.addToken(token2, this.getVisibleTitleContainer());
+            this.slide(div2, this.getTokenContainer(token2));
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);
@@ -1078,7 +1087,9 @@ function (dojo, declare) {
           },
           
         
-        initTokenSelectionDest: function(actionName,possibleMoves, playerBoardId = 'central'){
+        initTokenSelectionDest: function(actionName,possibleMoves, playerBoardId = 'central', 
+            differentType = null
+            ){
             debug( 'initTokenSelectionDest() ', actionName, possibleMoves );
             let playerBoard = null;
             if(playerBoardId =='central') {
@@ -1105,7 +1116,7 @@ function (dojo, declare) {
                         let row = coord.y !=null ? coord.y: coord.row;
                         let column = coord.x !=null ? coord.x: coord.col;
                         let elt2 = this.addSelectableTokenCell(playerBoardId,row, column);
-                        elt2.dataset.type = div.dataset.type;
+                        elt2.dataset.type = differentType ==null ? div.dataset.type : differentType;
                         //Click token destination :
                         this.onClick(`${elt2.id}`, (evt) => {
                             [...playerBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)')].forEach((o) => {

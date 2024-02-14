@@ -90,6 +90,26 @@ class Tokens extends \STIG\Helpers\Pieces
     return self::getAll();
   }
   /**
+   * @param StigmerianToken $token
+  */
+  public static function createToken($token)
+  { 
+    /*
+    $tokens[] = [
+      'type' => $token->getType(),
+      'state' => $token->getState(),
+      'location' => $token->getLocation(),
+      'player_id' => $token->getPId(),
+      'y' => $token->getRow(),
+      'x' => $token->getCol(),
+      'nbr' => 1,
+    ];
+    
+    return self::create($tokens);
+    */
+    return self::singleCreate($token);
+  }
+  /**
    * @param int $playerId
   * @return int nb of tokens on player deck
   */

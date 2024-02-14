@@ -295,6 +295,25 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token1
+   * @param StigmerianToken $token2
+   * @param int $actionCost
+   */
+  public static function spBlack($player,$token1,$token2,$actionCost){
+    self::notifyAll('spBlack',clienttranslate('${player_name} use the Quarter Note action to split the white token at ${L1} into 2 black tokens at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'L1' => $token1->getCoordName(),
+        'L2' => $token2->getCoordName(),
+        'token1' => $token1->getUiData(),
+        'token2' => $token2->getUiData(),
+        'n' => $actionCost,
+      ],
+    );
+  }
   /**
    * @param string $windDir
    * @param Collection $boardTokens StigmerianToken 

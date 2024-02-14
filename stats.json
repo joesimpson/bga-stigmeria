@@ -111,5 +111,10 @@
         "name": "White actions",
         "type": "int"
       }
+      ,"actions_s8": {
+        "id": 27,
+        "name": "Quarter Note actions",
+        "type": "int"
+      }
     }
   }

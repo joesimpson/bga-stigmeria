@@ -91,14 +91,12 @@ trait SpecialWhiteTrait
         //  EFFECT
         if($token1->id ==$tokenId ){
             $token1->setType(TOKEN_STIG_WHITE);
-            $previousCoord2 = $token2->getCoordName();
             Notifications::spWhite($player,$token1,$token2,$actionCost); 
             Tokens::delete($token2->id);
             $token1->checkAndBecomesPollen($player);
         }
         else if($token2->id ==$tokenId ){
             $token2->setType(TOKEN_STIG_WHITE);
-            $previousCoord1 = $token1->getCoordName();
             Notifications::spWhite($player,$token2,$token1,$actionCost); 
             Tokens::delete($token1->id);
             $token2->checkAndBecomesPollen($player);
@@ -107,6 +105,7 @@ trait SpecialWhiteTrait
         Notifications::useActions($player);
         Stats::inc("actions_s7",$player->getId());
         Stats::inc("actions",$player->getId());
+        Stats::inc("tokens_board",$pId,-1);
 
         $this->gamestate->nextPrivateState($pId, 'next');
     }

@@ -242,6 +242,35 @@
       $this->game->actWhiteChoice($token1);
       self::ajaxResponse();
     }
+    
+    public function actBlack1()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token1 = self::getArg( "tokenId", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actBlack1($token1,$row,$col);
+      self::ajaxResponse();
+    }
+    /*
+    public function actBlack1()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token1 = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actBlack1($token1);
+      self::ajaxResponse();
+    }
+    public function actBlack2()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actBlack2($row, $col);
+      self::ajaxResponse();
+    }*/
     public function actLetNextPlay()
     {
       self::setAjaxMode();
