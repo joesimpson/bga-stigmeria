@@ -307,7 +307,7 @@ function (dojo, declare) {
                     this.takeAction('actEndTurn', {});
                 }
             });
-            this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
+            //this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
         onEnteringStateChoiceTokenToLand: function(args)
         {

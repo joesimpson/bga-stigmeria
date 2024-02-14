@@ -226,12 +226,11 @@ $machinestates = array(
             "actLand",
             "actMove",
             "actSpecial",
-            //TODO JSA ALL ACTIONS
             "actJoker",
             "actPass",
             "actLetNextPlay",
             "actEndTurn",
-            "actBackToCommon",
+            //"actBackToCommon",
         ],
         "transitions" => [
             'continue' => ST_TURN_PERSONAL_BOARD,
@@ -383,12 +382,12 @@ $machinestates = array(
         "type" => "game",
         "action" => "stPreEndOfGame",
         "transitions" => [ 
-            //"next" => ST_END_GAME,
-            "next" => 96,
-            // TODO JSA REMOVE TESTING STATE
+            "next" => ST_END_GAME,
+            //"next" => 96,
         ],
     ),
-    
+    /*
+    END GAME TESTING STATE
     96 => [ // active player state for debugging end of game
         "name" => "playerGameEnd",
         "description" => clienttranslate('${actplayer} Game Over'),
@@ -401,6 +400,7 @@ $machinestates = array(
             "loopback" => 96 
         ] 
     ],
+    */
    
     // Final state.
     // Please do not modify (and do not overload action/args methods).
