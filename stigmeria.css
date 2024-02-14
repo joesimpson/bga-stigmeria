@@ -725,6 +725,66 @@
 .stig_player_board .stig_recruits .stig_recruits_type .stig_token {
   margin-bottom: -40px;
 }
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="1"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="1"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="1"] {
+  left: 691px;
+  top: 96px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="2"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="2"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="2"] {
+  left: 935px;
+  top: 282px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="3"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="3"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="3"] {
+  left: 1017px;
+  top: 542px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="4"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="4"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="4"] {
+  left: 920px;
+  top: 829px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="5"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="5"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="5"] {
+  left: 703px;
+  top: 991px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="6"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="6"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="6"] {
+  left: 409px;
+  top: 996px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="7"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="7"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="7"] {
+  left: 169px;
+  top: 834px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="8"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="8"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="8"] {
+  left: 69px;
+  top: 548px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="9"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="9"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="9"] {
+  left: 147px;
+  top: 280px;
+}
+.stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="10"],
+.stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="10"],
+.stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="10"] {
+  left: 412px;
+  top: 90px;
+}
 .stig_schema_board .stig_grid,
 .stig_central_board .stig_grid,
 .stig_player_board .stig_grid {
@@ -1982,6 +2042,16 @@
   top: 89px;
 }
 
+.stig_wind_dir {
+  width: 57px;
+  height: 57px;
+  position: absolute;
+  background-image: url("img/tokens.png");
+  background-size: 500% 500%;
+  background-position-x: 100%;
+  background-position-y: 75%;
+}
+
 /**
  * Player panel settings
  * AUTHOR : © Tisaac
@@ -2554,11 +2624,11 @@
 }
 .customimagebutton div.stig_icon_flower_violet {
   width: 40px;
-  height: 40px;
+  height: 34px;
   background-image: url("img/tokens.png");
   background-size: 6000%;
   background-position-x: 480px;
-  background-position-y: 75px;
+  background-position-y: 69px;
   margin-right: 3px;
 }
 .customimagebutton div.stig_icon_flower_violet.stig_icon_flipped {

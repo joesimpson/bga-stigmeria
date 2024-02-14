@@ -794,6 +794,7 @@ function (dojo, declare) {
                     ${this.tplTurnMarkerContainer({ 'player_id':player.id ,'turn':turn, 'turnActions':turnActions, init:true})}
                     <div class="stig_newturn_markers" id="stig_newturn_markers_${player.id}" >
                     </div>
+                    ${this.tplWindDirContainer({'player_id':player.id })}
                     <div id="stig_recruits_${player.id}" class='stig_recruits'>
                     </div>
                     <div id="stig_grid_${player.id}" class='stig_grid'>
@@ -846,6 +847,7 @@ function (dojo, declare) {
             <div class='stig_central_board_container'>
                 <div class="stig_central_board" id='stig_central_board' data_flower_type="${flowerType}">
                     <div class='stig_schema_name'>${boardName}</div>
+                    ${this.tplWindDirContainer({'player_id':'central' })}
                     <div id="stig_grid_central" class='stig_grid'>
                     </div>
                 </div>
@@ -927,6 +929,13 @@ function (dojo, declare) {
         },
         tplToken(token) {
             return `<div class="stig_token" id="stig_token_${token.id}${token.divIdSuffix}" data-id="${token.id}" data-player_id="${token.pId}" data-type="${token.type}" data-state="${token.state}" data-row="${token.row}" data-col="${token.col}"></div>`;
+        },   
+        tplWindDirContainer(datas) {
+            let winds = '';
+            for(let k=1; k< TURN_MAX;k++){
+                winds+= `<div id="stig_wind_dir_${datas.player_id}_${k}" class='stig_wind_dir' data-turn="${k}"></div>`;
+            }
+            return `<div id="stig_wind_dir_container_${datas.player_id}" class='stig_wind_dir_container'>${winds}</div>`;
         },   
         setupTokens() {
             debug("setupTokens");

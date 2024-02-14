@@ -145,6 +145,52 @@
         }
     }
 
+    .stig_wind_dir_container{
+    
+        .stig_wind_dir{
+            &[data-turn='1']{
+                // wind icon at the end of the turn 1...
+                left: 691px;
+                top: 96px;
+            }
+            &[data-turn='2']{
+                left: 935px;
+                top: 282px;
+            }
+            &[data-turn='3']{
+                left: 1017px;
+                top: 542px;
+            }
+            &[data-turn='4']{
+                left: 920px;
+                top: 829px;
+            }
+            &[data-turn='5']{
+                left: 703px;
+                top: 991px;
+            }
+            &[data-turn='6']{
+                left: 409px;
+                top: 996px;
+            }
+            &[data-turn='7']{
+                left: 169px;
+                top: 834px;
+            }
+            &[data-turn='8']{
+                left: 69px;
+                top: 548px;
+            }
+            &[data-turn='9']{
+                left: 147px;
+                top: 280px;
+            }
+            &[data-turn='10']{
+                left: 412px;
+                top: 90px;
+            }
+        }
+    }
     .stig_grid {
         display: grid;
         grid-template-columns: repeat(10, 1fr);
@@ -986,4 +1032,15 @@
             top: 89px;
         }
     }
+}
+
+.stig_wind_dir{
+    width: 57px;
+    height: 57px;
+    position: absolute;
+    background-image: url("img/tokens.png");
+    background-size: 500% 500%;
+    //type 20 in sprite
+    background-position-x: 100%;
+    background-position-y: 75%;
 }
