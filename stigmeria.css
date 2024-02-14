@@ -1780,6 +1780,13 @@
 .stig_turn_marker_container {
   position: absolute;
 }
+.stig_turn_marker_container .stig_turn_marker {
+  transform: translateY(0);
+  transition: transform 0.5s;
+}
+.stig_turn_marker_container:hover .stig_turn_marker {
+  transform: translateY(-100%);
+}
 .stig_turn_marker_container[data-turn="1"] {
   left: 556px;
   top: 60px;

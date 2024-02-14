@@ -744,6 +744,17 @@
 .stig_turn_marker_container{
     position: absolute;
 
+    .stig_turn_marker{
+        transform: translateY(0);
+        transition: transform .5s;
+    }
+    &:hover{
+        .stig_turn_marker{
+            //View behind to see wind token
+            transform:translateY(-100%);
+        }
+    }
+
     &[data-turn='1']{
         left: 556px;
         top: 60px;
