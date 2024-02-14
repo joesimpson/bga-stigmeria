@@ -642,7 +642,10 @@ function (dojo, declare) {
             let div1 = $(`stig_token_${token1.id}`);
             let div2 = $(`stig_token_${token2.id}`);
             div1.dataset.type = token1.type;
-            if(div2) dojo.destroy(div2);
+            if(div2){
+                if(div2.parentElement.classList.contains('stig_token_holder')) dojo.destroy(div2.parentElement);
+                else dojo.destroy(div2);
+            }
             this.animationBlink2Times(div1);
         },
         notif_playJoker(n) {
