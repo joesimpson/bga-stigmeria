@@ -119,10 +119,14 @@ trait DebugTrait
   
   function debugNewTurn()
   {
+    
+    $player = Players::getCurrent();
+
     $players = Players::getAll();
-    $turn = 10;
+    $turn = (Globals::getTurn() ) % 10 +1;
     Globals::setTurn($turn);
     Players::setupNewTurn($players,$turn);
+    Players::startTurn($players->getIds(),$turn);
     Notifications::newTurn($turn);
   }
   

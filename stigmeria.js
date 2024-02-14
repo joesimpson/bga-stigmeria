@@ -275,7 +275,8 @@ function (dojo, declare) {
                 this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
                     
                 this.gamedatas.players[this.player_id].npad = args.done;
-                this.updateTurnMarker(this.gamedatas.turn,args.done +1 );
+                //updated via notif_useActions
+                //this.updateTurnMarker(this.player_id,this.gamedatas.turn,args.done +1 );
                     
                 if(possibleActions.includes('actSpecial')){
                     this.addImageActionButton('btnSpecialAction', `<div><div class='stig_icon_flower_violet'></div> Special<div class='stig_icon_flower_violet stig_icon_flipped'></div></div>`, () => { this.takeAction('actSpecial', {}); });
@@ -480,11 +481,11 @@ function (dojo, declare) {
         },
         notif_newTurn(n) {
             debug('notif_newTurn: new turn', n);
-            this.updateTurnMarker(n.args.n,1);
             this._counters['turn'].toValue(n.args.n);
             this.forEachPlayer((player) => {
                 this._counters[player.id]['actions'].setValue(0);
                 this._counters[player.id]['actionsMax'].setValue(n.args.n);
+                this.updateTurnMarker(player.id,n.args.n,1);
             }); 
         },
         
@@ -502,6 +503,7 @@ function (dojo, declare) {
             debug('notif_useActions: player spent actions', n);
             this.gamedatas.winds = n.args.winds;
             this._counters[n.args.player_id]['actions'].toValue(n.args.npad);
+            this.updateTurnMarker(n.args.player_id,this.gamedatas.turn,n.args.npad+1);
         },
         notif_drawToken(n) {
             debug('notif_drawToken: new token on player board', n);
@@ -789,8 +791,7 @@ function (dojo, declare) {
             <div class='stig_player_board_container'>
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
                     <div class='player-name' style='color:#${player.color}'>${player.name}</div>
-                    <div class="stig_turn_marker" data-turn="${turn}" data-count_actions="${turnActions}">
-                    </div>
+                    ${this.tplTurnMarkerContainer({ 'player_id':player.id ,'turn':turn, 'turnActions':turnActions, init:true})}
                     <div class="stig_newturn_markers" id="stig_newturn_markers_${player.id}" >
                     </div>
                     <div id="stig_recruits_${player.id}" class='stig_recruits'>
@@ -861,18 +862,20 @@ function (dojo, declare) {
         //      |_|\___/|_|\_\___|_| |_|___/
         //                           
         ////////////////////////////////////////////////////////   
-        updateTurnMarker(turn, action) {
-            debug('updateTurnMarker', turn, action);
+        updateTurnMarker(player_id, turn, action) {
+            debug('updateTurnMarker', player_id, turn, action);
             this.gamedatas.turn = turn;
-            [... document.querySelectorAll('.stig_turn_marker')].forEach((o) => {
-                o.dataset.turn = Math.min(TURN_MAX,this.gamedatas.turn);
-                o.dataset.count_actions = action;
-                });
-                //TODO JSA update turn marker of 1 player separately when 1 action is done
+            let newturn = Math.min(TURN_MAX,this.gamedatas.turn);
+            let newcount_actions = action;
+            let existingMarker = $(`stig_turn_marker_${player_id}`);
+            let newTurnContainer = this.addTurnMarker(player_id,newturn,newcount_actions);
+            if(! existingMarker ) existingMarker = this.place('tplTurnMarker', player_id, newTurnContainer );
+            this.slide(existingMarker, newTurnContainer, {} ).then( () => {});
+                
             let k =0;
             while(k < (turn - TURN_MAX) ){
                 k++;
-                let token = {id: 'newTurn'+k, player_id: this.player_id, type: TOKEN_TYPE_NEWTURN };
+                let token = {id: 'newTurn'+k, player_id: player_id, type: TOKEN_TYPE_NEWTURN };
                 let divId = `stig_token_${token.id}`;
                 if(!$(`${divId}`)){
                     this.addToken(token, this.getVisibleTitleContainer());
@@ -883,6 +886,22 @@ function (dojo, declare) {
                 }
             }
         },    
+        tplTurnMarkerContainer(datas) {
+            let marker = datas.init ? this.tplTurnMarker(datas.player_id) : '';
+            return `<div class="stig_turn_marker_container" data-player_id="${datas.player_id}" data-turn="${datas.turn}" data-count_actions="${datas.turnActions}">${marker}</div>`;
+        },
+        tplTurnMarker(player_id) {
+            return `<div class="stig_turn_marker" id="stig_turn_marker_${player_id}"></div>`;
+        },
+        addTurnMarker(player_id,turn,turnActions) {
+            debug("addTurnMarker",player_id,turn,turnActions);
+            let playerBoard = $(`stig_player_board_${player_id}`);
+            let container = playerBoard.querySelector(`.stig_turn_marker_container[data-player_id='${player_id}'][data-turn='${turn}'][data-count_actions='${turnActions}']`);
+            if(container !=null) return container;
+
+            let elt = this.place('tplTurnMarkerContainer', { 'player_id':player_id ,'turn':turn, 'turnActions':turnActions}, playerBoard );
+            return elt;
+        },
         addSelectableTokenCell(player_id, row, column) {
             debug("addSelectableTokenCell",player_id, row, column);
             let playerGrid = $(`stig_grid_${player_id}`);
@@ -963,7 +982,6 @@ function (dojo, declare) {
                 }
                 return $(`${recruitTypeZone}`);
             }
-            //TODO JSA OTHER LOCATIONS
             console.error('Trying to get container of a token', token);
             return 'game_play_area';
           },

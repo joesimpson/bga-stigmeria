@@ -681,7 +681,6 @@
 .stig_turn_marker{
     width: 40px;
     height: 40px;
-    position: absolute;
     border-radius: 100%;
     background-image: url("img/tokens.png");
     background-size: 370px;
@@ -689,7 +688,11 @@
     background-position-y: 2293px;
     outline: 3px solid black;
     box-shadow: 0px 0px 10px 5px gold;
+}
 
+.stig_turn_marker_container{
+    position: absolute;
+    
     &[data-turn='1']{
         left: 556px;
         top: 60px;
