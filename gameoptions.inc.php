@@ -23,7 +23,7 @@ $game_options = [
 
   OPTION_MODE => array(
     //I make it clearly different from BGA 'Game mode'
-    'name' => totranslate('Stigmeria game mode'),    
+    'name' => totranslate('Specific game mode'),    
     'values' => array(
                 OPTION_MODE_DISCOVERY => array( 
                   'name' => totranslate('Discovery'), 
@@ -81,14 +81,14 @@ $game_options = [
         [
           'type' => 'minplayers', 
           'value' => 2, 
-          'message' => totranslate('Competitive mode is not for solo play'),
+          'message' => totranslate('Competitive modes are not for solo play'),
         ],
       ],
       OPTION_MODE_NOLIMIT => [
         [
           'type' => 'minplayers', 
           'value' => 2, 
-          'message' => totranslate('No limit mode is not for solo play'),
+          'message' => totranslate('Competitive modes are is not for solo play'),
         ],
       ],
     ],
@@ -138,6 +138,37 @@ $game_options = [
                 ),
             ),
     'default' => OPTION_FLOWER_VERTIGHAINEUSE,
+    
+    'startcondition'=>  [
+      OPTION_FLOWER_COMPETITIVE => [
+          [
+            "type" => "otheroptionisnot",
+            "id" => OPTION_MODE,
+            "value"=> OPTION_MODE_NORMAL,
+            "message"=> totranslate("Competitive flowers cannot be played in normal/discovery mode"),
+          ],
+          [
+            "type" => "otheroptionisnot",
+            "id" => OPTION_MODE,
+            "value"=> OPTION_MODE_DISCOVERY,
+            "message"=> totranslate("Competitive flowers cannot be played in normal/discovery mode"),
+          ],
+        ], 
+      OPTION_FLOWER_NO_LIMIT => [
+        [
+          "type" => "otheroptionisnot",
+          "id" => OPTION_MODE,
+          "value"=> OPTION_MODE_NORMAL,
+          "message"=> totranslate("Competitive flowers cannot be played in normal/discovery mode"),
+        ],
+        [
+          "type" => "otheroptionisnot",
+          "id" => OPTION_MODE,
+          "value"=> OPTION_MODE_DISCOVERY,
+          "message"=> totranslate("Competitive flowers cannot be played in normal/discovery mode"),
+        ],
+      ], 
+    ],
   ),
   
   OPTION_DIFFICULTY => array(

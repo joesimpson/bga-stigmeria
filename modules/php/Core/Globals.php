@@ -123,7 +123,8 @@ class Globals extends \STIG\Helpers\DB_Manager
     //              --------------------------------------------
     //GAME OPTIONS  --------------------------------------------
     //              --------------------------------------------
-    self::setOptionGameMode($options[OPTION_MODE]);
+    $optionMode = $options[OPTION_MODE];
+    self::setOptionGameMode($optionMode);
     self::setOptionJokers($options[OPTION_JOKER]);
 
     $flowerType = $options[OPTION_FLOWER];
@@ -163,7 +164,18 @@ class Globals extends \STIG\Helpers\DB_Manager
     if($optionSchema == OPTION_SCHEMA_RANDOM){
       //IF Schema is random, other options will influence this 
       //When others are known, let's filter existing schemas in model :
-      $schemasIds = $schemas->filter( function ($schema) use ($flowerType,$difficulty) {
+      $schemasIds = $schemas
+        //REMOVE IMPOSSSIBLE SCHEMAS COMBINATIONS
+        ->filter( function ($schema) use ($optionMode) {
+          if (($schema->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_NORMAL)
+            ||($schema->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_DISCOVERY) 
+            ||($schema->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_NORMAL)
+            ||($schema->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_DISCOVERY)
+          ) return false;
+          return true;
+        })
+        //KEEP SELECTED types/ difficulty
+        ->filter( function ($schema) use ($flowerType,$difficulty) {
           return ($schema->type == $flowerType || $flowerType == OPTION_FLOWER_RANDOM)
               && ($schema->difficulty == $difficulty || $difficulty == OPTION_DIFFICULTY_RANDOM);
         })
