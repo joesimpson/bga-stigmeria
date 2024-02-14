@@ -285,7 +285,7 @@ $machinestates = array(
             'startDiagonal' => ST_TURN_SPECIAL_ACT_DIAGONAL,
             'startSwap' => ST_TURN_SPECIAL_ACT_SWAP,
             'startFastMove' => ST_TURN_SPECIAL_ACT_MOVE_FAST,
-            'startWhite' => ST_TURN_SPECIAL_ACT_WHITE,
+            'startWhite' => ST_TURN_SPECIAL_ACT_WHITE_STEP1,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -348,9 +348,9 @@ $machinestates = array(
         ],
     ],
     
-    ST_TURN_SPECIAL_ACT_WHITE => [
+    ST_TURN_SPECIAL_ACT_WHITE_STEP1 => [
         "name" => "spWhite",
-        "descriptionmyturn" => clienttranslate('${you} may choose 2 adjacents black tokens to merge in 1 white token'), 
+        "descriptionmyturn" => clienttranslate('${you} must choose 2 adjacents black tokens to merge in 1 white token'), 
         "type" => "private",
         "args" => "argSpWhite",
         "possibleactions" => [
@@ -358,8 +358,23 @@ $machinestates = array(
             "actCancelSpecial",
         ],
         "transitions" => [
-            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'next' => ST_TURN_SPECIAL_ACT_WHITE_STEP2,
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_WHITE_STEP2 => [
+        "name" => "spWhiteChoice",
+        "descriptionmyturn" => clienttranslate('${you} must choose which token becomes white'), 
+        "type" => "private",
+        "args" => "argSpWhiteChoice",
+        "possibleactions" => [
+            "actWhiteChoice",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_SPECIAL_ACT_WHITE_STEP1,
         ],
     ],
     

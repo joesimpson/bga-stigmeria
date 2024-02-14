@@ -106,6 +106,10 @@
         "name": "Fast move actions",
         "type": "int"
       }
-      
+      ,"actions_s7": {
+        "id": 26,
+        "name": "White actions",
+        "type": "int"
+      }
     }
   }

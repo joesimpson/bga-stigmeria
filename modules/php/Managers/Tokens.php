@@ -140,6 +140,12 @@ class Tokens extends \STIG\Helpers\Pieces
       ->wherePlayer($playerId)
       ->delete()->run();
   }
+  
+  public static function delete($id)
+  { 
+    Game::get()->trace("delete($id)");
+    return self::DB()->delete($id);
+  }
   /**
    * @param int $playerId
    * @return Collection of StigmerianToken found at that location

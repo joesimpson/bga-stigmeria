@@ -33,6 +33,7 @@ function (dojo, declare) {
     const ACTION_TYPE_MOVE_FAST = 16;
     const ACTION_TYPE_WHITE = 20;
 
+    const TOKEN_STIG_WHITE =    8;
     const TOKEN_TYPE_NEWTURN = 21;
 
     return declare("bgagame.stigmeria", [customgame.game], {
@@ -57,6 +58,7 @@ function (dojo, declare) {
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
                 ['spMerge', 900],
+                ['spWhite', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['windBlows', 1800],
@@ -424,8 +426,38 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpWhite() ', args );
 
-            this.initMultiTokenSelection('actWhite',args.tokens);
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnClearSelection', 'Clear selection', () =>  {
+                this.reinitTokensSelection(args.tokens);
+            });
+            this.initMultiTokenSelection('actWhite',args.tokens, (token1,token2) => {});
+            
+        }, 
+        onEnteringStateSpWhiteChoice: function(args)
+        {
+            debug( 'onEnteringStateSpWhiteChoice() ', args );
+
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+
+            //possible places to play :
+            Object.values(args.tokensIds).forEach((tokensId) => {
+                let elt = $(`stig_token_${tokensId}`);
+                //elt.classList.add('stig_previous_selected');
+                this.onClick(elt, (evt) => {
+                    let div = evt.target;
+                    document.querySelectorAll('.stig_token').forEach((oToken) => {
+                        oToken.classList.remove('selected');
+                    });
+                    div.classList.add('selected');
+                    $(`btnConfirm`).classList.remove('disabled');
+                });
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = document.querySelector(`.stig_token.selected`);
+                this.takeAction('actWhiteChoice', { tokenId: selectedToken.dataset.id,});
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
         }, 
         
         onEnteringStateWindEffect: function(args)
@@ -601,6 +633,17 @@ function (dojo, declare) {
             div2.dataset.type = token2.type;
             this.animationBlink2Times(div1);
             this.animationBlink2Times(div2);
+        },
+        
+        notif_spWhite(n) {
+            debug('notif_spWhite: tokens are merged !', n);
+            let token1 = n.args.token1;
+            let token2 = n.args.token2;
+            let div1 = $(`stig_token_${token1.id}`);
+            let div2 = $(`stig_token_${token2.id}`);
+            div1.dataset.type = token1.type;
+            if(div2) dojo.destroy(div2);
+            this.animationBlink2Times(div1);
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);
@@ -1058,14 +1101,35 @@ function (dojo, declare) {
             $(`btnConfirm`).classList.add('disabled');
 
         },
-        initMultiTokenSelection: function(actionName,possibleTokens){
+        reinitTokensSelection: function(possibleTokens){
+            debug( 'reinitTokensSelection() ', possibleTokens );
+            //UNSELECT
+            this.currentToken1 = null;
+            this.currentToken2 = null;
+            [...document.querySelectorAll(`.stig_token`)].forEach((o) => {
+                o.classList.remove('selected');
+                o.classList.remove('selectable');
+                if(o.dataset.type_origin) o.dataset.type = o.dataset.type_origin;
+            });
+            [...document.querySelectorAll(`.stig_token_holder`)].forEach((o) => {
+                o.classList.remove('selected');
+                o.classList.remove('selectable');
+                if(o.dataset.type_origin) o.dataset.type = o.dataset.type_origin;
+            });
+            //REINIT SELECTION
+            Object.keys(possibleTokens).forEach((tokenId3) => {
+                $(`stig_token_${tokenId3}`).classList.add('selectable');
+            });
+            $(`btnConfirm`).classList.add('disabled');
+        },
+        initMultiTokenSelection: function(actionName,possibleTokens, callbackSelectionDone = null){
             debug( 'initMultiTokenSelection() ', actionName, possibleTokens );
            
-            let currentToken1 = null;
-            let currentToken2 = null;
+            this.currentToken1 = null;
+            this.currentToken2 = null;
             
             this.addPrimaryActionButton('btnConfirm', 'Confirm', () => { 
-                this.takeAction(actionName, {t1: currentToken1, t2: currentToken2}); 
+                this.takeAction(actionName, {t1: this.currentToken1, t2: this.currentToken2}); 
             } );
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
@@ -1078,9 +1142,9 @@ function (dojo, declare) {
                     $(`btnConfirm`).classList.add('disabled');
                     if(div.classList.contains('selected')){
                         //UNSELECT
-                        currentToken1 = null;
-                        currentToken2 = null;
-                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                        this.currentToken1 = null;
+                        this.currentToken2 = null;
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${this.currentToken1}):not(#stig_token_${this.currentToken2})`)].forEach((o) => {
                             o.classList.remove('selected');
                         });
                         //REINIT SELECTION
@@ -1088,27 +1152,30 @@ function (dojo, declare) {
                             $(`stig_token_${tokenId3}`).classList.add('selectable');
                         });
                     }
-                    else if(!currentToken1){
+                    else if(!this.currentToken1){
                         //SELECT 1
-                        currentToken1 = tokenIdInt;
+                        this.currentToken1 = tokenIdInt;
                         div.classList.add('selected');
                         
-                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${this.currentToken1}):not(#stig_token_${this.currentToken2})`)].forEach((o) => {
                             o.classList.remove('selectable');
                         });
                         Object.values(possibleTokens[tokenIdInt]).forEach((tokenId2) => {
                             $(`stig_token_${tokenId2}`).classList.add('selectable');
                         });
                     }
-                    else if(!currentToken2 && possibleTokens[tokenIdInt].includes(currentToken1)){
+                    else if(!this.currentToken2 && possibleTokens[tokenIdInt].includes(this.currentToken1)){
                         //SELECT 2
-                        currentToken2 = tokenIdInt;
+                        this.currentToken2 = tokenIdInt;
                         div.classList.add('selected');
                         $(`btnConfirm`).classList.remove('disabled');
                         
-                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${currentToken1}):not(#stig_token_${currentToken2})`)].forEach((o) => {
+                        [...playerBoard.querySelectorAll(`.stig_token:not(#stig_token_${this.currentToken1}):not(#stig_token_${this.currentToken2})`)].forEach((o) => {
                             o.classList.remove('selectable');
                         });
+                    }
+                    if(callbackSelectionDone !=null){
+                        callbackSelectionDone(this.currentToken1,this.currentToken2);
                     }
 
                 });

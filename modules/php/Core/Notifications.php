@@ -276,6 +276,24 @@ class Notifications
     );
   }
   /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token1
+   * @param StigmerianToken $token2
+   * @param int $actionCost
+   */
+  public static function spWhite($player,$token1,$token2,$actionCost){
+    self::notifyAll('spWhite',clienttranslate('${player_name} use the white action to merge tokens at ${L1} and ${L2} into ${L2} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'L1' => $token1->getCoordName(),
+        'L2' => $token2->getCoordName(),
+        'token1' => $token1->getUiData(),
+        'token2' => $token2->getUiData(),
+        'n' => $actionCost,
+      ],
+    );
+  }
+  /**
    * @param string $windDir
    * @param Collection $boardTokens StigmerianToken 
    * @param Player $player player board or null if central

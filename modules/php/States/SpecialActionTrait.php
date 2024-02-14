@@ -2,6 +2,7 @@
 
 namespace STIG\States;
 
+use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
@@ -50,8 +51,9 @@ trait SpecialActionTrait
         
         $player = Players::getCurrent();
 
+        Globals::setSelectedTokens([]);
+        
         //NOTHING TO CANCEL In BDD, return to previous state
-
         $this->gamestate->nextPrivateState($player->id, "cancel");
     }
     

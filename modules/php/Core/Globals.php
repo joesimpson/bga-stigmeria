@@ -22,6 +22,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     'turn' => 'int',
     'firstPlayer' => 'int',
     'winnersIds' => 'obj',
+    'selectedTokens' => 'obj',
 
     //We manage the wind direction for the 10 first turns, then the wind will be saved in windDirection11 (no need to display them)
     'windDirection1' => 'str',
@@ -119,6 +120,7 @@ class Globals extends \STIG\Helpers\DB_Manager
         break;
       }
     }
+    self::selectedTokens([]);
 
     //              --------------------------------------------
     //GAME OPTIONS  --------------------------------------------

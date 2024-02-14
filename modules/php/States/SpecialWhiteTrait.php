@@ -2,6 +2,7 @@
 
 namespace STIG\States;
 
+use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
@@ -13,10 +14,17 @@ trait SpecialWhiteTrait
 {
     public function argSpWhite($player_id)
     {
-        $player = Players::get($player_id);
         $tokens = $this->listWhiteableTokens($player_id);
         return [
             'tokens' => $tokens,
+        ];
+    } 
+    public function argSpWhiteChoice($player_id)
+    {
+        //TODO JSA global per player
+        $selectedTokens = Globals::getSelectedTokens();
+        return [
+            'tokensIds' => $selectedTokens,
         ];
     } 
     /**
@@ -47,13 +55,55 @@ trait SpecialWhiteTrait
         if(!$this->canWhiteOnBoard($token1,$token2)){
             throw new UnexpectedException(131,"You cannot white these tokens");
         }
+        Globals::setSelectedTokens([$tokenId1, $tokenId2]);
+        $this->gamestate->nextPrivateState($pId, 'next');
+    }
+    
+    /**
+     * Special action of merging 2 adjacent black tokens into a white one - choice of white space
+     * @param int $tokenId
+     */
+    public function actWhiteChoice($tokenId)
+    {
+        self::checkAction( 'actWhiteChoice' ); 
+        self::trace("actWhiteChoice($tokenId)");
+        
+        $player = Players::getCurrent();
+        $pId = $player->id;
+ 
+        $actionCost = ACTION_COST_WHITE;
+        if($player->countRemainingPersonalActions() < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
+        $selectedTokens = Globals::getSelectedTokens();
+        if(count($selectedTokens) != 2) {
+            throw new UnexpectedException(132,"Wrong selection");
+        }
+        if($selectedTokens[0] !=$tokenId && $selectedTokens[1] !=$tokenId){
+            throw new UnexpectedException(132,"Wrong selection");
+        }
+        $token1 = Tokens::get($selectedTokens[0]);
+        $token2 = Tokens::get($selectedTokens[1]);
+        if(!$this->canWhiteOnBoard($token1, $token2)){
+            throw new UnexpectedException(131,"You cannot white these tokens");
+        }
 
-        //TODO JSA  EFFECT
-        Notifications::swapTokens($player,$token1,$token2,$actionCost); 
-
+        //  EFFECT
+        if($token1->id ==$tokenId ){
+            $token1->setType(TOKEN_STIG_WHITE);
+            $previousCoord2 = $token2->getCoordName();
+            Notifications::spWhite($player,$token1,$token2,$actionCost); 
+            Tokens::delete($token2->id);
+        }
+        else if($token2->id ==$tokenId ){
+            $token2->setType(TOKEN_STIG_WHITE);
+            $previousCoord1 = $token1->getCoordName();
+            Notifications::spWhite($player,$token2,$token1,$actionCost); 
+            Tokens::delete($token1->id);
+        }
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
-        Stats::inc("actions_s6",$player->getId());
+        Stats::inc("actions_s7",$player->getId());
         Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($pId, 'next');

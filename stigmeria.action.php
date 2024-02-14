@@ -234,6 +234,14 @@
       $this->game->actWhite($token1,$token2);
       self::ajaxResponse();
     }
+    public function actWhiteChoice()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token1 = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actWhiteChoice($token1);
+      self::ajaxResponse();
+    }
     public function actLetNextPlay()
     {
       self::setAjaxMode();
