@@ -32,6 +32,12 @@ trait SpecialActionTrait
                 $actions[] = ACTION_TYPE_MOVE_FAST;
             }
         }
+        if($flowerType == OPTION_FLOWER_SIFFLOCHAMP){
+
+            if($remaining >=ACTION_COST_WHITE){
+                $actions[] = ACTION_TYPE_WHITE;
+            }
+        }
         return [
             'a' => $actions,
         ];
@@ -77,6 +83,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_MOVE_FAST:
                 $actionCost = ACTION_COST_MOVE_FAST;
                 $nextState = "startFastMove";
+                break;
+            case ACTION_TYPE_WHITE:
+                $actionCost = ACTION_COST_WHITE;
+                $nextState = "startWhite";
                 break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");

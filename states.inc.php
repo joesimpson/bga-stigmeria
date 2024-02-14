@@ -285,6 +285,7 @@ $machinestates = array(
             'startDiagonal' => ST_TURN_SPECIAL_ACT_DIAGONAL,
             'startSwap' => ST_TURN_SPECIAL_ACT_SWAP,
             'startFastMove' => ST_TURN_SPECIAL_ACT_MOVE_FAST,
+            'startWhite' => ST_TURN_SPECIAL_ACT_WHITE,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -339,6 +340,21 @@ $machinestates = array(
         "args" => "argSpFastMove",
         "possibleactions" => [
             "actFastMove",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_WHITE => [
+        "name" => "spWhite",
+        "descriptionmyturn" => clienttranslate('${you} may choose 2 adjacents black tokens to merge in 1 white token'), 
+        "type" => "private",
+        "args" => "argSpWhite",
+        "possibleactions" => [
+            "actWhite",
             "actCancelSpecial",
         ],
         "transitions" => [

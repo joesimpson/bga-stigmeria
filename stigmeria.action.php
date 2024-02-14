@@ -225,6 +225,15 @@
       $this->game->actFastMove($token_id, $row, $col);
       self::ajaxResponse();
     }
+    public function actWhite()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token1 = self::getArg( "t1", AT_posint, true );
+      $token2 = self::getArg( "t2", AT_posint, true );
+      $this->game->actWhite($token1,$token2);
+      self::ajaxResponse();
+    }
     public function actLetNextPlay()
     {
       self::setAjaxMode();
