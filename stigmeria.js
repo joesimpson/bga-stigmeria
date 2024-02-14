@@ -747,6 +747,7 @@ function (dojo, declare) {
 
         tplPlayerPanel(player) {
             return `<div class='stig_panel'>
+            <div class="stig_first_player_holder"></div>
             <div class='stig_player_infos'>
                 ${this.tplResourceCounter(player, 'tokens_deck')}
                 ${this.tplResourceCounter(player, 'actions', 0, this.gamedatas.turn)}
@@ -754,7 +755,6 @@ function (dojo, declare) {
                 ${this.tplResourceCounter(player, 'pollens',9, this.getFlowerTotalPollens())}
                 ${this.gamedatas.jokerMode>0 ? this.tplResourceCounter(player, 'jokers') :''}
             </div>
-            <div class="stig_first_player_holder"></div>
             </div>`;
         },
             

@@ -247,9 +247,17 @@
   position: absolute;
 }
 
-#stig_first_player {
-  width: 3em;
-  height: 3em;
+.stig_first_player_holder {
+  position: absolute;
+  height: 35px;
+  right: 43px;
+  top: 0px;
+  width: 30px;
+}
+.stig_first_player_holder #stig_first_player {
+  position: relative;
+  width: 30px;
+  height: 30px;
   background-image: url("img/tokens.png");
   background-size: 500% 500%;
   /** see type 22 */
