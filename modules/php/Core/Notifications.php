@@ -228,7 +228,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function moveBackToBox($player, $token,$from, $actionCost){
-    self::notifyAll('moveBackToBox',clienttranslate('${player_name} moves a ${color} stigmerian out of the board from ${L}: it is now in the game box (cost : ${n} actions)'),[ 
+    self::notifyAll('moveBackToBox',clienttranslate('${player_name} moves a ${color} stigmerian out of their board from ${L}: it is now in the game box (cost : ${n} actions)'),[ 
         'i18n' => [ 'color'],
         'player' => $player,
         'color' => StigmerianToken::getTypeName($token->getType()),
@@ -245,13 +245,30 @@ class Notifications
    * @param int $actionCost
    */
   public static function moveBackToRecruit($player, $token,$from, $actionCost){
-    self::notifyAll('moveBackToRecruit',clienttranslate('${player_name} moves a ${color} stigmerian out of the board from ${L}: it is now in recruit zone (cost : ${n} actions)'),[ 
+    self::notifyAll('moveBackToRecruit',clienttranslate('${player_name} moves a ${color} stigmerian out of their board from ${L}: it is now in recruit zone (cost : ${n} actions)'),[ 
         'i18n' => [ 'color'],
         'player' => $player,
         'color' => StigmerianToken::getTypeName($token->getType()),
         'token' => $token->getUiData(),
         'L' => $from,
         'n' => $actionCost,
+      ],
+    );
+  }
+  
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param string $from Coordinate name
+   * @param int $actionCost
+   */
+  public static function moveToCentralRecruit($player, $token,$from, $actionCost){
+    self::notifyAll('moveToCentralRecruit',clienttranslate('${player_name} moves a ${color} stigmerian out of the central board from ${L}: it is now in StigmaReine recruit zone'),[ 
+        'i18n' => [ 'color'],
+        'player' => $player,
+        'color' => StigmerianToken::getTypeName($token->getType()),
+        'token' => $token->getUiData(),
+        'L' => $from,
       ],
     );
   }

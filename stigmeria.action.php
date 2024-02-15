@@ -115,6 +115,14 @@
       $this->game->actMoveOut($token_id);
       self::ajaxResponse();
     }
+    public function actCentralMoveOut()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actCentralMoveOut($token_id);
+      self::ajaxResponse();
+    }
     public function actChoiceTokenToLand()
     {
       self::setAjaxMode();

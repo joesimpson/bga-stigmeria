@@ -204,6 +204,20 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       Notifications::moveToRecruitZone($player, $this,$actionCost);
     }*/
   }
+  
+  /**
+   * @param Player $player
+   * @param int $actionCost
+   */
+  public function moveToRecruitZoneCentral($player,$actionCost)
+  {
+    $fromCoord = $this->getCoordName();
+    $this->setLocation(TOKEN_LOCATION_CENTRAL_RECRUIT);
+    $this->setPId(null);
+    $this->setCol(null);
+    $this->setRow(null);
+    Notifications::moveToCentralRecruit($player, $this,$fromCoord,$actionCost);
+  }
 
   /**
    * Action of merging colors

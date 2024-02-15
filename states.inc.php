@@ -207,6 +207,7 @@ $machinestates = array(
         "args" => "argCentralChoiceTokenToMove",
         "possibleactions" => [
             "actCentralMove",
+            "actCentralMoveOut",
             "actCancelChoiceTokenToMove",
         ],
         "transitions" => [

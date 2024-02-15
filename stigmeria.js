@@ -55,6 +55,7 @@ function (dojo, declare) {
                 ['drawToken', 900],
                 ['moveToCentralBoard', 900],
                 ['moveOnCentralBoard', 900],
+                ['moveToCentralRecruit', 900],
                 ['letNextPlay', 10],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
@@ -264,7 +265,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateCentralChoiceTokenToMove() ', args );
             
-            this.initTokenSelectionDest('actCentralMove', args.p_places_m);
+            this.initTokenSelectionDest('actCentralMove', args.p_places_m,'central','actCentralMoveOut');
             this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
         
@@ -597,6 +598,19 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token)).then(() =>{
                 dojo.destroy( $(`${oldParent.id}`));
                 //TODO JSA destroy also previous selectable cell ?
+            });
+        },
+        notif_moveToCentralRecruit(n) {
+            debug('notif_moveToCentralRecruit: token moved out from central board', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(!div) return;
+            let oldParent = div.parentElement;//token_holder
+            div.dataset.row = null;
+            div.dataset.col = null;
+            this.slide(div, this.getTokenContainer(token)).then(() =>{
+                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
         },
         notif_letNextPlay(n) {
@@ -966,6 +980,7 @@ function (dojo, declare) {
                 <div class="stig_central_board" id='stig_central_board' data_flower_type="${flowerType}">
                     <div class='stig_schema_name'>${boardName}</div>
                     ${this.tplWindDirContainer({'player_id':'central' })}
+                    <div id="stig_recruits_central" class='stig_recruits'></div>
                     <div id="stig_grid_central" class='stig_grid'>
                     </div>
                 </div>
@@ -1093,7 +1108,7 @@ function (dojo, declare) {
                 }
                 return $(`stig_grid_central`);
             }
-            if (token.location == 'player_board') {
+            else if (token.location == 'player_board') {
                 let tokenHolder = this.addSelectableTokenCell(playerboard_id,token.row, token.col);
                 if( tokenHolder){
                     tokenHolder.classList.add('stig_token_holder');
@@ -1102,10 +1117,17 @@ function (dojo, declare) {
                 return $(`stig_grid_${token.pId}`);
                 //TODO JSA IF row/col out of grid (after wind for example, don't show it there)
             }
-            if (token.location == 'player_recruit') {
+            else if (token.location == 'player_recruit') {
                 let recruitTypeZone = `stig_recruits_${token.pId}_${token.type}`;
                 if(! $(`${recruitTypeZone}`)){
                     dojo.place(`<div id=${recruitTypeZone} data-type=${token.type} class='stig_recruits_type'></div>`, `stig_recruits_${token.pId}`);
+                }
+                return $(`${recruitTypeZone}`);
+            }
+            else if (token.location == 'central_recruit') {
+                let recruitTypeZone = `stig_recruits_central_${token.type}`;
+                if(! $(`${recruitTypeZone}`)){
+                    dojo.place(`<div id=${recruitTypeZone} data-type=${token.type} class='stig_recruits_type'></div>`, `stig_recruits_central`);
                 }
                 return $(`${recruitTypeZone}`);
             }

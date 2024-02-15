@@ -62,6 +62,44 @@ trait CentralMoveTrait
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
+    
+    /**
+     * Central Action 2 : Moving a stigmerian on central board OUT of the grid
+     * @param int $token_id
+     */
+    public function actCentralMoveOut($token_id)
+    {
+        self::checkAction( 'actCentralMoveOut' ); 
+        self::trace("actCentralMoveOut($token_id)");
+        
+        $player = Players::getCurrent();
+        $pId = $player->id;
+
+        if($player->isCommonMoveDone()){
+            throw new UnexpectedException(9,"You cannot do that action twice in the turn");
+        }
+        $actionCost = ACTION_COST_CENTRAL_MOVE;
+        if($player->countRemainingCommonActions() < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
+        $token = Tokens::get($token_id);
+        if($token->location != TOKEN_LOCATION_CENTRAL_BOARD ){
+            throw new UnexpectedException(20,"You cannot move this token");
+        }
+        if(!$this->canMoveOutOnBoard($token)){
+            throw new UnexpectedException(101,"You cannot move out this token");
+        }
+
+        //EFFECT :
+        $token->moveToRecruitZoneCentral($player,$actionCost);
+
+        $player->incNbCommonActionsDone($actionCost);
+        $player->setCommonMoveDone(true);
+        Notifications::useActions($player);
+        Stats::inc("actions_c2",$player->getId());
+
+        $this->gamestate->nextPrivateState($player->id, "continue");
+    }
      
     /**
      * @param StigmerianToken $token
