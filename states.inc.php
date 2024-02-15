@@ -262,6 +262,7 @@ $machinestates = array(
         "type" => "private",
         "args" => "argChoiceTokenToMove",
         "possibleactions" => [
+            "actMoveOut",
             "actChoiceTokenToMove",
             "actCancelChoiceTokenToMove",
         ],

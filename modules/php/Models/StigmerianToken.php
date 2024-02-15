@@ -177,6 +177,33 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       Notifications::moveToCentralBoard($player,$this,$actionCost);
     }
   }
+  
+  /**
+   * @param Player $player
+   * @param int $actionCost
+   */
+  public function moveToRecruitZone($player,$actionCost)
+  {
+    $fromBoard = false;
+    if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
+      $fromBoard = true;
+      $fromCoord = $this->getCoordName();
+    }
+    $this->setLocation(TOKEN_LOCATION_PLAYER_RECRUIT);
+    $this->setPId($player->getId());
+    $this->setCol(null);
+    $this->setRow(null);
+
+    Stats::inc("tokens_recruit",$player->getId(),1);
+    if($fromBoard){
+      Stats::inc("tokens_board",$player->getId(),-1);
+      Notifications::moveBackToRecruit($player, $this,$fromCoord,$actionCost);
+    }
+    /* TODO if neeeded
+    else {
+      Notifications::moveToRecruitZone($player, $this,$actionCost);
+    }*/
+  }
 
   /**
    * Action of merging colors

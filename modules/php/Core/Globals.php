@@ -103,6 +103,11 @@ class Globals extends \STIG\Helpers\DB_Manager
   {
     return !Globals::isModeNoCentralBoard();
   }
+  public static function isModeCompetitiveNoLimit()
+  {
+    $gameMode = Globals::getOptionGameMode();
+    return ($gameMode == OPTION_MODE_NOLIMIT);
+  }
   /*
    * Setup new game
    */

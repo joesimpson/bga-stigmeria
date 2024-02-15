@@ -223,6 +223,40 @@ class Notifications
   
   /**
    * @param Player $player
+   * @param StigmerianToken $token
+   * @param string $from Coordinate name
+   * @param int $actionCost
+   */
+  public static function moveBackToBox($player, $token,$from, $actionCost){
+    self::notifyAll('moveBackToBox',clienttranslate('${player_name} moves a ${color} stigmerian out of the board from ${L}: it is now in the game box (cost : ${n} actions)'),[ 
+        'i18n' => [ 'color'],
+        'player' => $player,
+        'color' => StigmerianToken::getTypeName($token->getType()),
+        'token' => $token->getUiData(),
+        'L' => $from,
+        'n' => $actionCost,
+      ],
+    );
+  }
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param string $from Coordinate name
+   * @param int $actionCost
+   */
+  public static function moveBackToRecruit($player, $token,$from, $actionCost){
+    self::notifyAll('moveBackToRecruit',clienttranslate('${player_name} moves a ${color} stigmerian out of the board from ${L}: it is now in recruit zone (cost : ${n} actions)'),[ 
+        'i18n' => [ 'color'],
+        'player' => $player,
+        'color' => StigmerianToken::getTypeName($token->getType()),
+        'token' => $token->getUiData(),
+        'L' => $from,
+        'n' => $actionCost,
+      ],
+    );
+  }
+  /**
+   * @param Player $player
    * @param StigmerianToken $token1
    * @param StigmerianToken $token2
    * @param int $actionCost

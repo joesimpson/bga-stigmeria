@@ -107,6 +107,14 @@
       $this->game->actChoiceTokenToMove($token_id, $row, $col);
       self::ajaxResponse();
     }
+    public function actMoveOut()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actMoveOut($token_id);
+      self::ajaxResponse();
+    }
     public function actChoiceTokenToLand()
     {
       self::setAjaxMode();
@@ -252,25 +260,7 @@
       $col = self::getArg( "col", AT_posint, true );
       $this->game->actBlack1($token1,$row,$col);
       self::ajaxResponse();
-    }
-    /*
-    public function actBlack1()
-    {
-      self::setAjaxMode();
-      self::checkVersion();
-      $token1 = self::getArg( "tokenId", AT_posint, true );
-      $this->game->actBlack1($token1);
-      self::ajaxResponse();
-    }
-    public function actBlack2()
-    {
-      self::setAjaxMode();
-      self::checkVersion();
-      $row = self::getArg( "row", AT_posint, true );
-      $col = self::getArg( "col", AT_posint, true );
-      $this->game->actBlack2($row, $col);
-      self::ajaxResponse();
-    }*/
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();

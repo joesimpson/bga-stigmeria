@@ -58,6 +58,8 @@ function (dojo, declare) {
                 ['letNextPlay', 10],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
+                ['moveBackToRecruit', 900],
+                ['moveBackToBox', 900],
                 ['spMerge', 900],
                 ['spSwap', 900],
                 ['spWhite', 900],
@@ -365,8 +367,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateChoiceTokenToMove() ', args );
             
-            this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id);
-
+            this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id,'actMoveOut');
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
         
@@ -471,7 +472,7 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpBlack1() ', args );
 
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
-            this.initTokenSelectionDest('actBlack1',args.tokens, this.player_id, TOKEN_STIG_BLACK);
+            this.initTokenSelectionDest('actBlack1',args.tokens, this.player_id,null, TOKEN_STIG_BLACK);
             
         }, 
         onEnteringStateWindEffect: function(args)
@@ -626,6 +627,32 @@ function (dojo, declare) {
                 dojo.destroy( $(`${oldParent.id}`));
                 //TODO JSA destroy also previous selectable cell ?
             });
+        },
+        notif_moveBackToRecruit(n) {
+            debug('notif_moveBackToRecruit: token moved out from board', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(!div) return;
+            let oldParent = div.parentElement;//token_holder
+            div.dataset.row = null;
+            div.dataset.col = null;
+            this.slide(div, this.getTokenContainer(token)).then(() =>{
+                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
+            });
+        },
+        notif_moveBackToBox(n) {
+            debug('notif_moveBackToBox: token delete from board', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(div){
+                this.slide(div, this.getVisibleTitleContainer(), {
+                    from: div.id,
+                    destroy: true,    
+                    phantom: false,
+                    duration: 1200,
+                }).then(() =>{});
+            }
         },
         notif_newPollen(n) {
             debug('notif_newPollen: token is flipped !', n);
@@ -1088,7 +1115,7 @@ function (dojo, declare) {
           
         
         initTokenSelectionDest: function(actionName,possibleMoves, playerBoardId = 'central', 
-            differentType = null
+            actionOutName = null, differentType = null
             ){
             debug( 'initTokenSelectionDest() ', actionName, possibleMoves );
             let playerBoard = null;
@@ -1112,7 +1139,12 @@ function (dojo, declare) {
                         });
                     //disable confirm while we don't know destination
                     $(`btnConfirm`).classList.add('disabled');
+                    if($(`btnMoveOut`)) $(`btnMoveOut`).classList.add('disabled');
                     Object.values(possibleMoves[tokenId]).forEach((coord) => {
+                        if(coord.out){
+                            $(`btnMoveOut`).classList.remove('disabled');
+                            return;
+                        }
                         let row = coord.y !=null ? coord.y: coord.row;
                         let column = coord.x !=null ? coord.x: coord.col;
                         let elt2 = this.addSelectableTokenCell(playerBoardId,row, column);
@@ -1136,7 +1168,15 @@ function (dojo, declare) {
             }); 
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
-
+            if(actionOutName){
+                this.addPrimaryActionButton('btnMoveOut', 'Move out', () => {
+                    this.confirmationDialog(_("Are you sure to move this token out of the board ?"), () => {
+                        let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
+                        this.takeAction(actionOutName, { tokenId: selectedToken.dataset.id, });
+                    });
+                });
+                $(`btnMoveOut`).classList.add('disabled');
+            }
         },
         reinitTokensSelection: function(possibleTokens){
             debug( 'reinitTokensSelection() ', possibleTokens );

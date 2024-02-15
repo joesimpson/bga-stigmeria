@@ -2,6 +2,7 @@
 
 namespace STIG\States;
 
+use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
@@ -71,18 +72,60 @@ trait ChoiceTokenToMoveTrait
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
 
+    /**
+     * Still the action of moving, but specifying no row/col, because we want to move out of the grid
+     * @param int $token_id
+     */
+    public function actMoveOut($token_id)
+    {
+        self::checkAction( 'actMoveOut' ); 
+        self::trace("actMoveOut($token_id)");
+        
+        $player = Players::getCurrent();
+        $pId = $player->id;
+
+        $actionCost = ACTION_COST_MOVE;
+        if($player->countRemainingPersonalActions() < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
+        $token = Tokens::get($token_id);
+        if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
+            throw new UnexpectedException(100,"You cannot move this token");
+        }
+        if(!$this->canMoveOutOnBoard($token)){
+            throw new UnexpectedException(101,"You cannot move out this token");
+        }
+
+        //EFFECT : 
+        if(Globals::isModeCompetitiveNoLimit()){
+            //EFFECT : MOVE the TOKEN oUT
+            $token->moveToRecruitZone($player,$actionCost);
+        }
+        else {
+            //EFFECT : REMOVE the TOKEN 
+            Stats::inc("tokens_board",$player->getId(),-1);
+            Notifications::moveBackToBox($player, $token,$token->getCoordName(),$actionCost);
+            Tokens::delete($token->id);
+        }
+
+        $player->incNbPersonalActionsDone($actionCost);
+        Notifications::useActions($player);
+        Stats::inc("actions_3",$player->getId());
+        Stats::inc("actions",$player->getId());
+        
+        $this->gamestate->nextPrivateState($player->id, "continue");
+    }
     
     /**
      * @param int $playerId
      * @param StigmerianToken $token
      * @param int $row
      * @param int $col
-     * @return bool TRUE if this token can be move on this player board ( Empty adjacent spot),
+     * @return bool TRUE if this token can be moved on this player board ( Empty adjacent spot),
      *  FALSE otherwise
      */
     public function canMoveOnPlayerBoard($playerId,$token,$row, $column)
     {
-        //TODO JSA RULE MANAGE EXITING TOKEN is possible, by another button 
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
         if($token->isPollen()) return false;
 
@@ -98,6 +141,30 @@ trait ChoiceTokenToMoveTrait
     }
 
     /**
+     * @param StigmerianToken $token
+     * @return bool TRUE if this token can be moved out on this board ( grid edges),
+     *  FALSE otherwise
+     */
+    public function canMoveOutOnBoard($token)
+    {
+        if($token->isPollen()) return false;
+        if(Globals::isModeCompetitiveNoLimit()){
+            if(ROW_MAX != $token->getRow() && $token->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD){
+                //CENTRAL board is like normal mode
+                return false;
+            }
+
+            if( ROW_MAX == $token->getRow()) return true;
+            if( ROW_MIN == $token->getRow()) return true;
+            if( COLUMN_MAX == $token->getCol()) return true;
+            if( COLUMN_MIN == $token->getCol()) return true;
+        }
+        //In all normal modes, we cannot exit the board from any line/col except "J"
+        else if( ROW_MAX == $token->getRow()) return true;
+ 
+        return false;
+    }
+    /**
      * @param int $playerId
      * @param array $tokens of StigmerianToken
      * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
@@ -105,6 +172,9 @@ trait ChoiceTokenToMoveTrait
     public function listPossibleMovesOnBoard($playerId,$tokens){
         $spots = [];
         foreach($tokens as $tokenId => $token){
+            if($this->canMoveOutOnBoard($token)){
+                $spots[$tokenId][] = [ 'out' => true ];
+            }
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
                     if(isset($playerId) && $this->canMoveOnPlayerBoard($playerId,$token,$row, $column)){
