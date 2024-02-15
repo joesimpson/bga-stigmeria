@@ -290,6 +290,7 @@ $machinestates = array(
             'startWhite' => ST_TURN_SPECIAL_ACT_WHITE_STEP1,
             'startBlack' => ST_TURN_SPECIAL_ACT_BLACK_STEP1,
             'startTwoBeats' => ST_TURN_SPECIAL_ACT_TWOBEATS,
+            'startRest' => ST_TURN_SPECIAL_ACT_REST,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -404,6 +405,21 @@ $machinestates = array(
         "args" => "argSpTwoBeats",
         "possibleactions" => [
             "actTwoBeats",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_REST => [
+        "name" => "spRest",
+        "descriptionmyturn" => clienttranslate('${you} must select a token to remove from the board'), 
+        "type" => "private",
+        "args" => "argSpRest",
+        "possibleactions" => [
+            "actRest",
             "actCancelSpecial",
         ],
         "transitions" => [

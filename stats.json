@@ -121,5 +121,10 @@
         "name": "Two Beats actions",
         "type": "int"
       }
+      ,"actions_s23": {
+        "id": 29,
+        "name": "Rest actions",
+        "type": "int"
+      }
     }
   }

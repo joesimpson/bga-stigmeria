@@ -278,6 +278,14 @@
       $this->game->actTwoBeats($row,$col);
       self::ajaxResponse();
     } 
+    public function actRest()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $tokenId = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actRest($tokenId);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();

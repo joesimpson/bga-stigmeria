@@ -336,7 +336,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spWhite($player,$token1,$token2,$actionCost){
-    self::notifyAll('spWhite',clienttranslate('${player_name} use the white action to merge tokens at ${L1} and ${L2} into ${L1} (cost: ${n} actions)'),[ 
+    self::notifyAll('spWhite',clienttranslate('${player_name} use the white action to merge stigmerians at ${L1} and ${L2} into ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -355,7 +355,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spBlack($player,$token1,$token2,$actionCost){
-    self::notifyAll('spBlack',clienttranslate('${player_name} use the Quarter Note action to split the white token at ${L1} into 2 black tokens at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+    self::notifyAll('spBlack',clienttranslate('${player_name} use the Quarter Note action to split the white stigmerian at ${L1} into 2 black stigmerians at ${L1} and ${L2} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -369,11 +369,27 @@ class Notifications
   /**
    * 
    * @param Player $player
-   * @param StigmerianToken $token1
+   * @param StigmerianToken $token
    * @param int $actionCost
    */
   public static function spTwoBeats($player,$token,$actionCost){
-    self::notifyAll('spTwoBeats',clienttranslate('${player_name} use the Two Beats action to get a new white token at ${L1} (cost: ${n} actions)'),[ 
+    self::notifyAll('spTwoBeats',clienttranslate('${player_name} use the Two Beats action to get a new white stigmerian at ${L1} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'L1' => $token->getCoordName(),
+        'token' => $token->getUiData(),
+        'n' => $actionCost,
+      ],
+    );
+  }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param int $actionCost
+   */
+  public static function spRest($player,$token,$actionCost){
+    self::notifyAll('spRest',clienttranslate('${player_name} use the Rest action to remove a token at ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token->getCoordName(),
         'token' => $token->getUiData(),

@@ -34,6 +34,7 @@ function (dojo, declare) {
     const ACTION_TYPE_WHITE = 20;
     const ACTION_TYPE_BLACK = 21;
     const ACTION_TYPE_TWOBEATS = 22;
+    const ACTION_TYPE_REST = 23;
 
     const TOKEN_STIG_WHITE =    8;
     const TOKEN_STIG_BLACK =    9;
@@ -68,6 +69,7 @@ function (dojo, declare) {
                 ['spWhite', 900],
                 ['spBlack', 900],
                 ['spTwoBeats', 900],
+                ['spRest', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['windBlows', 1800],
@@ -401,6 +403,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_TWOBEATS)){
                 this.addPrimaryActionButton('btnStartTwoBeats', _('Two Beats'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_TWOBEATS}));
             }
+            if(possibleActions.includes(ACTION_TYPE_REST)){
+                this.addPrimaryActionButton('btnStartRest', _('Rest'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_REST}));
+            }
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -452,26 +457,7 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpWhiteChoice() ', args );
 
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
-
-            //possible places to play :
-            Object.values(args.tokensIds).forEach((tokensId) => {
-                let elt = $(`stig_token_${tokensId}`);
-                //elt.classList.add('stig_previous_selected');
-                this.onClick(elt, (evt) => {
-                    let div = evt.target;
-                    document.querySelectorAll('.stig_token').forEach((oToken) => {
-                        oToken.classList.remove('selected');
-                    });
-                    div.classList.add('selected');
-                    $(`btnConfirm`).classList.remove('disabled');
-                });
-            });
-            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
-                let selectedToken = document.querySelector(`.stig_token.selected`);
-                this.takeAction('actWhiteChoice', { tokenId: selectedToken.dataset.id,});
-            }); 
-            //DISABLED by default
-            $(`btnConfirm`).classList.add('disabled');
+            this.initTokenSimpleSelection('actWhiteChoice', args.tokensIds);
         }, 
         
         onEnteringStateSpBlack1: function(args)
@@ -488,7 +474,15 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpTwoBeats() ', args );
 
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
-            this.initCellSelectionDest('actTwoBeats', args.p_places_p, this.player_id,TOKEN_STIG_WHITE)
+            this.initCellSelection('actTwoBeats', args.p_places_p, this.player_id,TOKEN_STIG_WHITE)
+        }, 
+        
+        onEnteringStateSpRest: function(args)
+        {
+            debug( 'onEnteringStateSpRest() ', args );
+
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.initTokenSimpleSelection('actRest', args.tokensIds);
         }, 
         onEnteringStateWindEffect: function(args)
         {
@@ -741,6 +735,19 @@ function (dojo, declare) {
             let token = n.args.token;
             let div = this.addToken(token, this.getVisibleTitleContainer());
             this.slide(div, this.getTokenContainer(token));
+        },
+        notif_spRest(n) {
+            debug('notif_spRest: token is removed !', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(div){
+                this.slide(div, this.getVisibleTitleContainer(), {
+                    from: div.id,
+                    destroy: true,    
+                    phantom: false,
+                    duration: 1200,
+                }).then(() =>{});
+            }
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);
@@ -1156,8 +1163,8 @@ function (dojo, declare) {
             return 'game_play_area';
           },
         //Direct selection of a cell, independent of a token
-        initCellSelectionDest(actionName, possiblePlaces, playerBoardId = 'central',newType = null){
-            debug( 'initCellSelectionDest() ', actionName, possiblePlaces,playerBoardId,newType );
+        initCellSelection(actionName, possiblePlaces, playerBoardId = 'central',newType = null){
+            debug( 'initCellSelection() ', actionName, possiblePlaces,playerBoardId,newType );
             let playerBoard = null;
             if(playerBoardId =='central') {
                 playerBoard = $(`stig_central_board`);
@@ -1185,6 +1192,29 @@ function (dojo, declare) {
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
                 this.takeAction(actionName, { row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
+        },
+        
+        //Direct selection of a token, independent of any other
+        initTokenSimpleSelection(actionName, tokensIds){
+            debug( 'initTokenSimpleSelection() ', actionName, tokensIds );
+            //possible places to play :
+            Object.values(tokensIds).forEach((tokensId) => {
+                let elt = $(`stig_token_${tokensId}`);
+                this.onClick(elt, (evt) => {
+                    let div = evt.target;
+                    document.querySelectorAll('.stig_token').forEach((oToken) => {
+                        oToken.classList.remove('selected');
+                    });
+                    div.classList.add('selected');
+                    $(`btnConfirm`).classList.remove('disabled');
+                });
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = document.querySelector(`.stig_token.selected`);
+                this.takeAction(actionName, { tokenId: selectedToken.dataset.id,});
             }); 
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
