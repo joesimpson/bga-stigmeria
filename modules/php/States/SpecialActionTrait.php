@@ -54,7 +54,7 @@ trait SpecialActionTrait
         
         $player = Players::getCurrent();
 
-        Globals::setSelectedTokens([]);
+        $player->setSelection([]);
         
         //NOTHING TO CANCEL In BDD, return to previous state
         $this->gamestate->nextPrivateState($player->id, "cancel");
@@ -72,6 +72,7 @@ trait SpecialActionTrait
         $player = Players::getCurrent();
         $pId = $player->id;
 
+        $player->setSelection([]);
         switch($actionType){
             case ACTION_TYPE_MERGE:
                 $actionCost = ACTION_COST_MERGE;

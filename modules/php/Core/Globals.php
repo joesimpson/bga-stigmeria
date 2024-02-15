@@ -22,7 +22,6 @@ class Globals extends \STIG\Helpers\DB_Manager
     'turn' => 'int',
     'firstPlayer' => 'int',
     'winnersIds' => 'obj',
-    'selectedTokens' => 'obj',
 
     //We manage the wind direction for the 10 first turns, then the wind will be saved in windDirection11 (no need to display them)
     'windDirection1' => 'str',
@@ -109,7 +108,7 @@ class Globals extends \STIG\Helpers\DB_Manager
    */
   public static function setupNewGame($players, $options)
   {
-    //TODO JSA update nbRounds according to options
+    //TODO update nbRounds according to options when needed
     self::setNbRounds(1);
     self::setRound(0);
     self::setTurn(0);
@@ -120,7 +119,6 @@ class Globals extends \STIG\Helpers\DB_Manager
         break;
       }
     }
-    self::selectedTokens([]);
 
     //              --------------------------------------------
     //GAME OPTIONS  --------------------------------------------

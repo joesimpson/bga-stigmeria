@@ -34,6 +34,8 @@ class Player extends \STIG\Helpers\DB_Model
     'commonMoveDone' => ['player_common_move', 'bool'],
     'nbPersonalActionsDone' => ['player_personal_actions', 'int'],
     'jokerUsed' => ['player_joker_used', 'bool'],
+    //fo tokens selection :
+    'selection' => ['player_selection', 'obj'],
   ];
 
   public function getUiData($currentPlayerId = null)
@@ -86,6 +88,7 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setNbCommonActionsDone(0);
     $this->setNbPersonalActionsDone(0);
     $this->setCommonMoveDone(false);
+    $this->setSelection([]);
 
     if(Globals::isModeCompetitive()) Notifications::startTurn($this,$turnIndex);
   }

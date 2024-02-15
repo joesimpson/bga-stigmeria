@@ -23,6 +23,8 @@ ALTER TABLE `player` ADD `player_common_actions` INT(1) NOT NULL DEFAULT 0 COMME
 ALTER TABLE `player` ADD `player_personal_actions` INT(2) NOT NULL DEFAULT 0 COMMENT 'actions played by this player on their board (during this turn)';
 ALTER TABLE `player` ADD `player_common_move` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'This player used the common action move on central board (during this turn) 0/1';
 ALTER TABLE `player` ADD `player_joker_used` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'This player used the joker (during this round) 0/1';
+-- I wanted this to be in global_variables, but I cannot be sure to store it linked to player
+ALTER TABLE `player` ADD `player_selection` JSON COMMENT 'Selected tokens according to current private state';
 
 CREATE TABLE IF NOT EXISTS `token` (
   `token_id` int(5) NOT NULL AUTO_INCREMENT,

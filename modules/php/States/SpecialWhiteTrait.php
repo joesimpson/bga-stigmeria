@@ -21,8 +21,8 @@ trait SpecialWhiteTrait
     } 
     public function argSpWhiteChoice($player_id)
     {
-        //TODO JSA global per player
-        $selectedTokens = Globals::getSelectedTokens();
+        $player = Players::get($player_id);
+        $selectedTokens = $player->getSelection();
         return [
             'tokensIds' => $selectedTokens,
         ];
@@ -55,7 +55,7 @@ trait SpecialWhiteTrait
         if(!$this->canWhiteOnBoard($token1,$token2)){
             throw new UnexpectedException(131,"You cannot white these tokens");
         }
-        Globals::setSelectedTokens([$tokenId1, $tokenId2]);
+        $player->setSelection([$tokenId1, $tokenId2]);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
     
@@ -75,7 +75,7 @@ trait SpecialWhiteTrait
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
-        $selectedTokens = Globals::getSelectedTokens();
+        $selectedTokens = $player->getSelection();
         if(count($selectedTokens) != 2) {
             throw new UnexpectedException(132,"Wrong selection");
         }
@@ -84,6 +84,12 @@ trait SpecialWhiteTrait
         }
         $token1 = Tokens::get($selectedTokens[0]);
         $token2 = Tokens::get($selectedTokens[1]);
+        if($token1->pId != $pId || $token1->location != TOKEN_LOCATION_PLAYER_BOARD ){
+            throw new UnexpectedException(150,"You cannot select this token");
+        }
+        if($token2->pId != $pId || $token2->location != TOKEN_LOCATION_PLAYER_BOARD ){
+            throw new UnexpectedException(150,"You cannot select this token");
+        }
         if(!$this->canWhiteOnBoard($token1, $token2)){
             throw new UnexpectedException(131,"You cannot white these tokens");
         }
@@ -106,6 +112,7 @@ trait SpecialWhiteTrait
         Stats::inc("actions_s7",$player->getId());
         Stats::inc("actions",$player->getId());
         Stats::inc("tokens_board",$pId,-1);
+        $player->setSelection([]);
 
         $this->gamestate->nextPrivateState($pId, 'next');
     }
