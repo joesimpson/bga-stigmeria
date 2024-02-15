@@ -116,5 +116,10 @@
         "name": "Quarter Note actions",
         "type": "int"
       }
+      ,"actions_s9": {
+        "id": 28,
+        "name": "Two Beats actions",
+        "type": "int"
+      }
     }
   }

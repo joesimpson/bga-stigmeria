@@ -62,6 +62,7 @@ class Stigmeria extends Table
     use STIG\States\SpecialFastMoveTrait;
     use STIG\States\SpecialMergeTrait;
     use STIG\States\SpecialSwapTrait;
+    use STIG\States\SpecialTwoBeatsTrait;
     use STIG\States\SpecialWhiteTrait;
     use STIG\States\SpecialBlackTrait;
     use STIG\States\WindEffectTrait;

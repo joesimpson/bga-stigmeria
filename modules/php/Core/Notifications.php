@@ -365,6 +365,22 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token1
+   * @param int $actionCost
+   */
+  public static function spTwoBeats($player,$token,$actionCost){
+    self::notifyAll('spTwoBeats',clienttranslate('${player_name} use the Two Beats action to get a new white token at ${L1} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'L1' => $token->getCoordName(),
+        'token' => $token->getUiData(),
+        'n' => $actionCost,
+      ],
+    );
+  }
   /**
    * @param string $windDir
    * @param Collection $boardTokens StigmerianToken 

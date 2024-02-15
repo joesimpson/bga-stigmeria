@@ -269,6 +269,15 @@
       $this->game->actBlack1($token1,$row,$col);
       self::ajaxResponse();
     } 
+    public function actTwoBeats()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actTwoBeats($row,$col);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();

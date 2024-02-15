@@ -33,7 +33,9 @@ function (dojo, declare) {
     const ACTION_TYPE_MOVE_FAST = 16;
     const ACTION_TYPE_WHITE = 20;
     const ACTION_TYPE_BLACK = 21;
+    const ACTION_TYPE_TWOBEATS = 22;
 
+    const TOKEN_STIG_WHITE =    8;
     const TOKEN_STIG_BLACK =    9;
     const TOKEN_TYPE_NEWTURN = 21;
 
@@ -65,6 +67,7 @@ function (dojo, declare) {
                 ['spSwap', 900],
                 ['spWhite', 900],
                 ['spBlack', 900],
+                ['spTwoBeats', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['windBlows', 1800],
@@ -395,6 +398,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_BLACK)){
                 this.addPrimaryActionButton('btnStartBlack', 'Quarter Note', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_BLACK}));
             }
+            if(possibleActions.includes(ACTION_TYPE_TWOBEATS)){
+                this.addPrimaryActionButton('btnStartTwoBeats', _('Two Beats'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_TWOBEATS}));
+            }
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -475,6 +481,14 @@ function (dojo, declare) {
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSelectionDest('actBlack1',args.tokens, this.player_id,null, TOKEN_STIG_BLACK);
             
+        }, 
+        
+        onEnteringStateSpTwoBeats: function(args)
+        {
+            debug( 'onEnteringStateSpTwoBeats() ', args );
+
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.initCellSelectionDest('actTwoBeats', args.p_places_p, this.player_id,TOKEN_STIG_WHITE)
         }, 
         onEnteringStateWindEffect: function(args)
         {
@@ -720,6 +734,13 @@ function (dojo, declare) {
             this.animationBlink2Times(div1);
             let div2 = this.addToken(token2, this.getVisibleTitleContainer());
             this.slide(div2, this.getTokenContainer(token2));
+        },
+        
+        notif_spTwoBeats(n) {
+            debug('notif_spTwoBeats: new white !', n);
+            let token = n.args.token;
+            let div = this.addToken(token, this.getVisibleTitleContainer());
+            this.slide(div, this.getTokenContainer(token));
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);
@@ -1134,12 +1155,44 @@ function (dojo, declare) {
             console.error('Trying to get container of a token', token);
             return 'game_play_area';
           },
-          
-        
+        //Direct selection of a cell, independent of a token
+        initCellSelectionDest(actionName, possiblePlaces, playerBoardId = 'central',newType = null){
+            debug( 'initCellSelectionDest() ', actionName, possiblePlaces,playerBoardId,newType );
+            let playerBoard = null;
+            if(playerBoardId =='central') {
+                playerBoard = $(`stig_central_board`);
+            }
+            else {
+                playerBoard = $(`stig_player_board_${playerBoardId}`);
+            }
+            
+            //possible places to play :
+            Object.values(possiblePlaces).forEach((coord) => {
+                let row = coord.row;
+                let column = coord.col;
+                let elt2 = this.addSelectableTokenCell(playerBoardId,row, column);
+                elt2.dataset.type = newType;
+                this.onClick(`${elt2.id}`, (evt) => {
+                    //CLICK SELECT DESTINATION
+                    playerBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)').forEach((oToken) => {
+                        oToken.classList.remove('selected');
+                    });
+                    let div = evt.target;
+                    div.classList.add('selected');
+                    $(`btnConfirm`).classList.remove('disabled');
+                });
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                this.takeAction(actionName, { row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
+        },
         initTokenSelectionDest: function(actionName,possibleMoves, playerBoardId = 'central', 
             actionOutName = null, differentType = null
             ){
-            debug( 'initTokenSelectionDest() ', actionName, possibleMoves );
+            debug( 'initTokenSelectionDest() ', actionName, possibleMoves,playerBoardId,actionOutName, differentType);
             let playerBoard = null;
             if(playerBoardId =='central') {
                 playerBoard = $(`stig_central_board`);

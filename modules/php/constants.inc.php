@@ -16,7 +16,10 @@ const ROW_MIN = 1;
 const ROW_MAX = 10;
 const ROW_START = ROW_MIN;
 //55 max : if we go from A1 to J10, from column 1, then 3, then 5, then 7, then 9
-const MAX_MOVES_TO_REACH_A_PLACE = (COLUMN_MAX -COLUMN_MIN +1 ) /2 *(1+ (ROW_MAX -ROW_MIN +1)  );
+//const MAX_MOVES_TO_REACH_A_PLACE = (COLUMN_MAX -COLUMN_MIN +1 ) /2 *(1+ (ROW_MAX -ROW_MIN +1)  );
+
+// 8 : an orthogonal grid with 4 neighbours + 4 in diagonal
+const MAX_GRID_NEIGHBOURS = 8;
 
 const WIND_DIR_NORTH = 'N';
 const WIND_DIR_SOUTH = 'S';
@@ -93,6 +96,7 @@ const ACTION_COST_SWAP = 1;
 const ACTION_COST_MOVE_FAST = 1;
 const ACTION_COST_WHITE = 1;
 const ACTION_COST_BLACK = 1;
+const ACTION_COST_TWOBEATS = 1;
 
 /** ACTIONS TYPES */
 const ACTION_TYPE_MERGE = 10;
@@ -101,6 +105,7 @@ const ACTION_TYPE_SWAP = 15;
 const ACTION_TYPE_MOVE_FAST = 16;
 const ACTION_TYPE_WHITE = 20;
 const ACTION_TYPE_BLACK = 21;
+const ACTION_TYPE_TWOBEATS = 22;
 
 /*
  * Game options
@@ -262,6 +267,7 @@ const ST_TURN_SPECIAL_ACT_WHITE_STEP1 =35;
 const ST_TURN_SPECIAL_ACT_WHITE_STEP2 =36;
 const ST_TURN_SPECIAL_ACT_BLACK_STEP1 =37;
 const ST_TURN_SPECIAL_ACT_BLACK_STEP2 =38;
+const ST_TURN_SPECIAL_ACT_TWOBEATS =39;
 
 
 const ST_WIND_EFFECT = 80;

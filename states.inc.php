@@ -289,6 +289,7 @@ $machinestates = array(
             'startFastMove' => ST_TURN_SPECIAL_ACT_MOVE_FAST,
             'startWhite' => ST_TURN_SPECIAL_ACT_WHITE_STEP1,
             'startBlack' => ST_TURN_SPECIAL_ACT_BLACK_STEP1,
+            'startTwoBeats' => ST_TURN_SPECIAL_ACT_TWOBEATS,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -388,6 +389,21 @@ $machinestates = array(
         "args" => "argSpBlack1",
         "possibleactions" => [
             "actBlack1",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_TWOBEATS => [
+        "name" => "spTwoBeats",
+        "descriptionmyturn" => clienttranslate('${you} must select where to put the new white token'), 
+        "type" => "private",
+        "args" => "argSpTwoBeats",
+        "possibleactions" => [
+            "actTwoBeats",
             "actCancelSpecial",
         ],
         "transitions" => [

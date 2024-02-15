@@ -69,68 +69,6 @@ trait SpecialBlackTrait
 
         $this->gamestate->nextPrivateState($pId, 'next');
     }
-
-    ///**
-    // * Special action of selecting a white token to transform into 2 black tokens
-    // * -> STEP 1 : white selection
-    // * @param int $tokenId
-    // */
-    //public function actBlack1($tokenId,$row2, $column2)
-    //{
-    //    self::checkAction( 'actBlack1' ); 
-    //    self::trace("actBlack1($tokenId)");
-    //    
-    //    $player = Players::getCurrent();
-    //    $pId = $player->id;
- //
-    //    $actionCost = ACTION_COST_BLACK;
-    //    if($player->countRemainingPersonalActions() < $actionCost){
-    //        throw new UnexpectedException(10,"Not enough actions to do that");
-    //    }
-    //    $token1 = Tokens::get($tokenId);
-    //    if($token1->pId != $pId || $token1->location != TOKEN_LOCATION_PLAYER_BOARD ){
-    //        throw new UnexpectedException(150,"You cannot select this token");
-    //    }
-    //    if(!$this->canTurnBlack($token1)){
-    //        throw new UnexpectedException(151,"You cannot black this token");
-    //    }
-//
-    //    Globals::setSelectedTokens([$tokenId]); 
-    //    $this->gamestate->nextPrivateState($pId, 'next');
-    //}
-//
-    ///**
-    // * Special action of selecting a white token to transform into 2 black tokens
-    // * -> STEP 2 : black selection
-    // * @param int $row2 COORD of new black token
-    // * @param int $column2 COORD of new black token
-    // */
-    //public function actBlack2($row2, $column2)
-    //{
-    //    self::checkAction( 'actBlack2' ); 
-    //    self::trace("actBlack2($row2, $column2)");
-    //    
-    //    $player = Players::getCurrent();
-    //    $pId = $player->id;
- //
-    //    $actionCost = ACTION_COST_BLACK;
-    //    if($player->countRemainingPersonalActions() < $actionCost){
-    //        throw new UnexpectedException(10,"Not enough actions to do that");
-    //    }
-    //    $selectedTokens = Globals::getSelectedTokens();
-    //    if(count($selectedTokens) != 1) {
-    //        throw new UnexpectedException(132,"Wrong selection");
-    //    }
-    //    $token1 = Tokens::get($selectedTokens[0]);
-    //    if(!$this->canTurnBlack($token1,$row2, $column2)){
-    //        throw new UnexpectedException(152,"You cannot black this token here");
-    //    }
-    //    
-    //    //TODO JSA EFFECT
-//
-    //    $this->gamestate->nextPrivateState($pId, 'next');
-    //}
-    
     /**
      * @param int $playerId
      * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
@@ -157,7 +95,7 @@ trait SpecialBlackTrait
      * @param StigmerianToken $token1
      * @param int $row2 COORD of new black token
      * @param int $column2 COORD of new black token
-     * @param bool $existingToken 
+     * @param StigmerianToken $existingToken 
      * @return bool + TRUE if this tokens can be turned to 2 black tokens
      *  + FALSE otherwise
      */

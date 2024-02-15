@@ -243,14 +243,18 @@ class Tokens extends \STIG\Helpers\Pieces
   /**
    * @param int $playerId
    * @param array $token_types (optional)
+   * @param int $row (optional)
+   * @param int $col (optional)
   * @return int nb of tokens on player board filtered by types
   */
-  public static function countOnPlayerBoard($playerId,$token_types)
+  public static function countOnPlayerBoard($playerId,$token_types = null, $row = null,$col =null)
   { 
     $query = self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
       ->wherePlayer($playerId);
     if(isset($token_types)) $query = $query->whereIn('type',$token_types);
+    if(isset($row)) $query = $query->where('y',$row);
+    if(isset($col)) $query = $query->where('x',$col);
     return  $query->count();
   }
   
@@ -289,12 +293,14 @@ class Tokens extends \STIG\Helpers\Pieces
    * @param Collection $boardTokens tokens already read from DB
    * @param int $row
    * @param int $column
+   * @param bool $keepDiagonal
    * @return Collection of StigmerianToken adjacent tokens of 
    */
-  public static function listAdjacentTokensOnReadBoard($boardTokens,$row, $column)
+  public static function listAdjacentTokensOnReadBoard($boardTokens,$row, $column, $keepDiagonal = false)
   { 
-    return $boardTokens->filter( function ($token) use ($row, $column) {
-          return $token->isAdjacentCoord($row, $column);
+    return $boardTokens->filter( function ($token) use ($row, $column, $keepDiagonal) {
+          return $token->isAdjacentCoord($row, $column) 
+          || $keepDiagonal && $token->isDiagonalAdjacentCoord($row, $column);
         }
       );
   }
