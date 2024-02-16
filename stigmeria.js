@@ -212,17 +212,17 @@ function (dojo, declare) {
             let nbActions = args.n;
             if(nbActions>0){
                 if(possibleActions.includes('actCommonDrawAndLand')){
-                    this.addPrimaryActionButton('btnCommonDrawAndPlace', 'Draw and Place', () => {
+                    this.addPrimaryActionButton('btnCommonDrawAndPlace', _('Draw and Place'), () => {
                         this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
                             this.takeAction('actCommonDrawAndLand', {});
                         });
                     });
                 }
                 if(possibleActions.includes('actCommonMove')){
-                    this.addPrimaryActionButton('btnCommonMove', 'Move', () => this.takeAction('actCommonMove', {}));
+                    this.addPrimaryActionButton('btnCommonMove',  _('Move'), () => this.takeAction('actCommonMove', {}));
                 }
             }
-            this.addDangerActionButton('btnNext', 'Next', () => this.takeAction('actGoToNext', {}));
+            this.addDangerActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
         }, 
         onEnteringStateCentralChoiceTokenToLand: function(args)
         {
@@ -281,7 +281,7 @@ function (dojo, declare) {
             debug( 'onEnteringStateCentralChoiceTokenToMove() ', args );
             
             this.initTokenSelectionDest('actCentralMove', args.p_places_m,'central','actCentralMoveOut');
-            this.addSecondaryActionButton('btnCancel', 'Cancel', () => this.takeAction('actCancelChoiceTokenToMove', {}));
+            this.addSecondaryActionButton('btnCancel',  _('Cancel'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
         
         onEnteringStatePersonalBoardTurn: function(args)
@@ -291,20 +291,20 @@ function (dojo, declare) {
             let nbActions = args.n;
             let possibleActions = args.a;
             if(nbActions>0){
-                this.addPrimaryActionButton('btnDraw', 'Recruit', () => { 
+                this.addPrimaryActionButton('btnDraw', _('Recruit'), () => { 
                     this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
                         this.takeAction('actDraw', {});
                     });
                 });
-                this.addPrimaryActionButton('btnPlace', 'Land', () => this.takeAction('actLand', {}));
-                this.addPrimaryActionButton('btnMove', 'Move', () => this.takeAction('actMove', {}));
+                this.addPrimaryActionButton('btnPlace', _('Land'), () => this.takeAction('actLand', {}));
+                this.addPrimaryActionButton('btnMove', _('Move'), () => this.takeAction('actMove', {}));
                     
                 this.gamedatas.players[this.player_id].npad = args.done;
                 //updated via notif_useActions
                 //this.updateTurnMarker(this.player_id,this.gamedatas.turn,args.done +1 );
                     
                 if(possibleActions.includes('actSpecial')){
-                    this.addImageActionButton('btnSpecialAction', `<div><div class='stig_icon_flower_violet'></div> Special<div class='stig_icon_flower_violet stig_icon_flipped'></div></div>`, () => { this.takeAction('actSpecial', {}); });
+                    this.addImageActionButton('btnSpecialAction', `<div><div class='stig_icon_flower_violet'></div>`+_('Special')+`<div class='stig_icon_flower_violet stig_icon_flipped'></div></div>`, () => { this.takeAction('actSpecial', {}); });
                 }
             }
             Object.values(args.pj).forEach((tokenColor) => {
@@ -317,13 +317,13 @@ function (dojo, declare) {
                 });
             });
             if(possibleActions.includes('actLetNextPlay')){
-                this.addSecondaryActionButton('btnLetNextPlay', 'Start next player', () => {
+                this.addSecondaryActionButton('btnLetNextPlay',  _('Start next player'), () => {
                     this.confirmationDialog(_("Next player will start their turn, so you will not be able to play VS actions for this turn."), () => {
                         this.takeAction('actLetNextPlay', {}) ;
                     });
                 });
             }
-            this.addDangerActionButton('btnEndTurn', 'End turn', () => {
+            this.addDangerActionButton('btnEndTurn', _('End turn'), () => {
                 if(nbActions>0){
                     this.confirmationDialog(_("Are you sure to end your turn ?"), () => {
                         this.takeAction('actEndTurn', {});
@@ -338,7 +338,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateChoiceTokenToLand() ', args );
             
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelChoiceTokenToLand', {}));
+            this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToLand', {}));
             
             let playerBoard = $(`stig_player_board_${this.player_id}`);
             let selectedToken = null;
@@ -384,7 +384,7 @@ function (dojo, declare) {
             debug( 'onEnteringStateChoiceTokenToMove() ', args );
             
             this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id,'actMoveOut');
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelChoiceTokenToMove', {}));
+            this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
         
         onEnteringStateSpecialAction: function(args)
@@ -393,7 +393,7 @@ function (dojo, declare) {
             
             let possibleActions = args.a;
             if(possibleActions.includes(ACTION_TYPE_MERGE)){
-                this.addPrimaryActionButton('btnStartMerge', 'Merge', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MERGE}));
+                this.addPrimaryActionButton('btnStartMerge', _('Merge'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MERGE}));
             }
             if(possibleActions.includes(ACTION_TYPE_COMBINATION)){
                 this.addPrimaryActionButton('btnStartCombination', _('Combination'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_COMBINATION}));
@@ -405,19 +405,19 @@ function (dojo, declare) {
                 this.addPrimaryActionButton('btnStartChoreography', _('Choreography'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_CHOREOGRAPHY}));
             }
             if(possibleActions.includes(ACTION_TYPE_DIAGONAL)){
-                this.addPrimaryActionButton('btnStartDiagonal', 'Diagonal', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
+                this.addPrimaryActionButton('btnStartDiagonal', _('Diagonal'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
             }
             if(possibleActions.includes(ACTION_TYPE_SWAP)){
-                this.addPrimaryActionButton('btnStartSwap', 'Swap', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_SWAP}));
+                this.addPrimaryActionButton('btnStartSwap', _('Swap'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_SWAP}));
             }
             if(possibleActions.includes(ACTION_TYPE_MOVE_FAST)){
-                this.addPrimaryActionButton('btnStartFastMove', 'Fast move', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MOVE_FAST}));
+                this.addPrimaryActionButton('btnStartFastMove', _('Fast move'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MOVE_FAST}));
             }
             if(possibleActions.includes(ACTION_TYPE_WHITE)){
-                this.addPrimaryActionButton('btnStartWhite', 'White', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_WHITE}));
+                this.addPrimaryActionButton('btnStartWhite', _('White'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_WHITE}));
             }
             if(possibleActions.includes(ACTION_TYPE_BLACK)){
-                this.addPrimaryActionButton('btnStartBlack', 'Quarter Note', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_BLACK}));
+                this.addPrimaryActionButton('btnStartBlack', _('Quarter Note'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_BLACK}));
             }
             if(possibleActions.includes(ACTION_TYPE_TWOBEATS)){
                 this.addPrimaryActionButton('btnStartTwoBeats', _('Two Beats'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_TWOBEATS}));
@@ -425,7 +425,7 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_REST)){
                 this.addPrimaryActionButton('btnStartRest', _('Rest'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_REST}));
             }
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
         onEnteringStateSpMerge: function(args)
@@ -433,19 +433,19 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpMerge() ', args );
 
             this.initMultiTokenSelection('actMerge',args.tokens);
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
         onEnteringStateSpCombination: function(args)
         {
             debug( 'onEnteringStateSpCombination() ', args );
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actCombination', args.tokensIds);
         }, 
         onEnteringStateSpFulgurance: function(args)
         {
             debug( 'onEnteringStateSpFulgurance() ', args );
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             let confirmMessage = _("Are you sure to draw 5 tokens from your bag and randomly place them from that place to the right ?")
             this.initCellSelection('actFulgurance', args.p_places_p, this.player_id,null,confirmMessage);
         }, 
@@ -453,22 +453,22 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpDiagonal() ', args );
             this.initTokenSelectionDest('actDiagonal', args.p_places_m, this.player_id);
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateSpChoreography: function(args)
         {
             debug( 'onEnteringStateSpChoreography() ', args );
             this.initTokenSelectionDest('actChoreography', args.p_places_m, this.player_id);
             //TODO JSA move out ?
-            if(args.n == args.max) this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
-            this.addDangerActionButton('btnStop', 'Stop', () => this.takeAction('actChoreographyStop', {}));
+            if(args.n == args.max) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            this.addDangerActionButton('btnStop', _('Stop'), () => this.takeAction('actChoreographyStop', {}));
         }, 
         
         onEnteringStateSpSwap: function(args)
         {
             debug( 'onEnteringStateSpSwap() ', args );
             
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initMultiTokenSelection('actSwap',args.tokens);
         }, 
         
@@ -477,15 +477,15 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpFastMove() ', args );
 
             this.initTokenSelectionDest('actFastMove', args.p_places_m, this.player_id);
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
         onEnteringStateSpWhite: function(args)
         {
             debug( 'onEnteringStateSpWhite() ', args );
 
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
-            this.addSecondaryActionButton('btnClearSelection', 'Clear selection', () =>  {
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnClearSelection', _('Clear selection'), () =>  {
                 this.reinitTokensSelection(args.tokens);
             });
             this.initMultiTokenSelection('actWhite',args.tokens, (token1,token2) => {});
@@ -495,7 +495,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpWhiteChoice() ', args );
 
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actWhiteChoice', args.tokensIds);
         }, 
         
@@ -503,7 +503,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpBlack1() ', args );
 
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSelectionDest('actBlack1',args.tokens, this.player_id,null, TOKEN_STIG_BLACK);
             
         }, 
@@ -512,7 +512,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpTwoBeats() ', args );
 
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initCellSelection('actTwoBeats', args.p_places_p, this.player_id,TOKEN_STIG_WHITE)
         }, 
         
@@ -520,7 +520,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpRest() ', args );
 
-            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actRest', args.tokensIds);
         }, 
         onEnteringStateWindEffect: function(args)
@@ -1341,7 +1341,7 @@ function (dojo, declare) {
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
             if(actionOutName){
-                this.addPrimaryActionButton('btnMoveOut', 'Move out', () => {
+                this.addPrimaryActionButton('btnMoveOut',  _('Move out'), () => {
                     this.confirmationDialog(_("Are you sure to move this token out of the board ?"), () => {
                         let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
                         this.takeAction(actionOutName, { tokenId: selectedToken.dataset.id, });
@@ -1377,7 +1377,7 @@ function (dojo, declare) {
             this.currentToken1 = null;
             this.currentToken2 = null;
             
-            this.addPrimaryActionButton('btnConfirm', 'Confirm', () => { 
+            this.addPrimaryActionButton('btnConfirm',  _('Confirm'), () => { 
                 this.takeAction(actionName, {t1: this.currentToken1, t2: this.currentToken2}); 
             } );
             //DISABLED by default
