@@ -87,21 +87,8 @@ trait SpecialFulguranceTrait
      * @return bool + TRUE if this position can hold a new token followed by 4 tokens on the right
      *  + FALSE otherwise
      */
-    public function canPlayFulgurance($row, $column,$boardTokens){
-        if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false; 
-        $existing = Tokens::findTokenOnBoardWithCoord($boardTokens,$row, $column);
-        if(isset($existing)) return false;//not empty spot
-
-        // We can place on LINE A if no tokens are already placed
-        //ELSE we must place on adjacent coord
-        if( !(  $row == ROW_START && $boardTokens->count() == 0 
-            ||( $boardTokens->count() > 0 
-                && Tokens::listAdjacentTokensOnReadBoard($boardTokens,$row, $column)->count() > 0 
-             )
-            )
-        ){
-            return false;
-        }
+    public function canPlayFulgurance($row, $column,$boardTokens){ 
+        if( ! $this->canPlaceOnPlayerBoard($boardTokens,$row, $column)) return false;
 
         //COUNT EMPTY spaces on the right :
         $startingCell = [ 'x' => $column, 'y' => $row, ];

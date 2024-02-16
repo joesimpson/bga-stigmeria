@@ -200,18 +200,27 @@ trait PlayerTurnPersonalBoardTrait
     }
     
     /**
+     * @param Collection $boardTokens 
+     * @param int $row COORD of new token 
+     * @param int $column COORD of new token
      * @return bool + TRUE if a token can be placed on this player board ( Empty spot + Either Line A or adjacent to another token),
      *  + FALSE otherwise
      */
-    public function canPlaceOnPlayerBoard($playerId,$row, $column)
+    public function canPlaceOnPlayerBoard($boardTokens,$row, $column)
     {
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
 
-        $existingToken = Tokens::findOnPersonalBoard($playerId,$row, $column);
-        if(isset($existingToken)) return false;//not empty
+        $existing = Tokens::findTokenOnBoardWithCoord($boardTokens,$row, $column);
+        if(isset($existing)) return false;//not empty spot
 
-        //TODO JSA PERFS We could read all tokens on personal board before calling this function if we want to loop on this func
-        if($row != ROW_START && Tokens::listAdjacentTokens($playerId,$row, $column)->isEmpty()){
+        // We can place on LINE A if no tokens are already placed
+        //ELSE we must place on adjacent coord
+        if( !(  $row == ROW_START && $boardTokens->count() == 0 
+            ||( $boardTokens->count() > 0 
+                && Tokens::listAdjacentTokensOnReadBoard($boardTokens,$row, $column)->count() > 0 
+             )
+            )
+        ){
             return false;
         }
 

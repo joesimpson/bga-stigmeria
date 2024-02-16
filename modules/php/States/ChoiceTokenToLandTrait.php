@@ -63,7 +63,8 @@ trait ChoiceTokenToLandTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_RECRUIT ){
             throw new UnexpectedException(20,"You cannot place this token");
         }
-        if(!$this->canPlaceOnPlayerBoard($pId,$row, $column)){
+        $boardTokens = Tokens::getAllOnPersonalBoard($pId);
+        if(!$this->canPlaceOnPlayerBoard($boardTokens,$row, $column)){
             throw new UnexpectedException(30,"You cannot place this token at $row, $column");
         }
 
@@ -85,9 +86,10 @@ trait ChoiceTokenToLandTrait
      */
     public function listPossiblePlacesOnPersonalBoard($playerId){
         $spots = [];
+        $boardTokens = Tokens::getAllOnPersonalBoard($playerId);
         for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
             for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                if($this->canPlaceOnPlayerBoard($playerId,$row, $column)){
+                if($this->canPlaceOnPlayerBoard($boardTokens,$row, $column)){
                     $spots[] = [ 'row' => $row, 'col' => $column ];
                 }
             }
