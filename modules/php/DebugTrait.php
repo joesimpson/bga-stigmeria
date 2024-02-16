@@ -38,7 +38,7 @@ trait DebugTrait
   /**
    * Add many actions ! YEAH
    */
-  function debugAddNbActions()
+  function debugManyActions()
   {
     $player = Players::getCurrent();
     $player->setNbPersonalActionsDone(-150);

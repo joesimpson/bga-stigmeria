@@ -30,6 +30,7 @@ function (dojo, declare) {
     const ACTION_TYPE_MERGE = 10;
     const ACTION_TYPE_COMBINATION = 11;
     const ACTION_TYPE_FULGURANCE = 12;
+    const ACTION_TYPE_CHOREOGRAPHY = 13;
     const ACTION_TYPE_DIAGONAL = 14;
     const ACTION_TYPE_SWAP = 15;
     const ACTION_TYPE_MOVE_FAST = 16;
@@ -395,6 +396,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_FULGURANCE)){
                 this.addPrimaryActionButton('btnStartFulgurance', _('Fulgurance'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_FULGURANCE}));
             }
+            if(possibleActions.includes(ACTION_TYPE_CHOREOGRAPHY)){
+                this.addPrimaryActionButton('btnStartChoreography', _('Choreography'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_CHOREOGRAPHY}));
+            }
             if(possibleActions.includes(ACTION_TYPE_DIAGONAL)){
                 this.addPrimaryActionButton('btnStartDiagonal', 'Diagonal', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
             }
@@ -443,9 +447,16 @@ function (dojo, declare) {
         onEnteringStateSpDiagonal: function(args)
         {
             debug( 'onEnteringStateSpDiagonal() ', args );
-
             this.initTokenSelectionDest('actDiagonal', args.p_places_m, this.player_id);
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+        }, 
+        onEnteringStateSpChoreography: function(args)
+        {
+            debug( 'onEnteringStateSpChoreography() ', args );
+            this.initTokenSelectionDest('actChoreography', args.p_places_m, this.player_id);
+            //TODO JSA move out ?
+            if(args.n == args.max) this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.addDangerActionButton('btnStop', 'Stop', () => this.takeAction('actChoreographyStop', {}));
         }, 
         
         onEnteringStateSpSwap: function(args)

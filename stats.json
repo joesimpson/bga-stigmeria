@@ -136,5 +136,10 @@
         "name": "Fulgurance actions",
         "type": "int"
       }
+      ,"actions_s13": {
+        "id": 32,
+        "name": "Choreography actions",
+        "type": "int"
+      }
     }
   }

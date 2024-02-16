@@ -376,6 +376,20 @@ class Notifications
       ],
     );
   }
+  /**
+   * 
+   * @param Player $player
+   * @param int $nbTokens
+   * @param int $actionCost
+   */
+  public static function spChoreography($player,$nbTokens,$actionCost){
+    self::notifyAll('spChoreography',clienttranslate('${player_name} uses the Choreography to move a maximum of ${n} stigmerians (cost: ${n2} actions)'),[ 
+        'player' => $player,
+        'n' => $nbTokens,
+        'n2' => $actionCost,
+      ],
+    );
+  }
   
   /**
    * 

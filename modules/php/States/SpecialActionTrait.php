@@ -32,6 +32,9 @@ trait SpecialActionTrait
         }
         if($flowerType == OPTION_FLOWER_DENTDINE){
 
+            if($remaining >=ACTION_COST_CHOREOGRAPHY){
+                $actions[] = ACTION_TYPE_CHOREOGRAPHY;
+            }
             if($remaining >=ACTION_COST_MOVE_DIAGONAL){
                 $actions[] = ACTION_TYPE_DIAGONAL;
             }
@@ -100,6 +103,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_FULGURANCE:
                 $actionCost = ACTION_COST_FULGURANCE;
                 $nextState = "startFulgurance";
+                break;
+            case ACTION_TYPE_CHOREOGRAPHY:
+                $actionCost = ACTION_COST_CHOREOGRAPHY;
+                $nextState = "startChoreography";
                 break;
             case ACTION_TYPE_DIAGONAL:
                 $actionCost = ACTION_COST_MOVE_DIAGONAL;

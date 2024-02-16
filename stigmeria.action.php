@@ -228,6 +228,24 @@
       $this->game->actFulgurance($row, $col);
       self::ajaxResponse();
     }
+    
+    public function actChoreography()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actChoreography($token_id, $row, $col);
+      self::ajaxResponse();
+    }
+    public function actChoreographyStop()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actChoreographyStop();
+      self::ajaxResponse();
+    }
     public function actDiagonal()
     {
       self::setAjaxMode();

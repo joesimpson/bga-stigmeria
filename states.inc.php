@@ -293,6 +293,7 @@ $machinestates = array(
             'startRest' => ST_TURN_SPECIAL_ACT_REST,
             'startCombination' => ST_TURN_SPECIAL_ACT_COMBINATION,
             'startFulgurance' => ST_TURN_SPECIAL_ACT_FULGURANCE,
+            'startChoreography' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -341,6 +342,23 @@ $machinestates = array(
         ],
     ],
     
+    ST_TURN_SPECIAL_ACT_CHOREOGRAPHY => [
+        "name" => "spChoreography",
+        "descriptionmyturn" => clienttranslate('${you} may move ${n}/${max} different stigmerians or pass'), 
+        "type" => "private",
+        "args" => "argSpChoreography",
+        "possibleactions" => [
+            "actChoreography",
+            "actChoreographyStop",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'continue' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
+            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            //TODO JSA block cancel if moves in progress
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
     ST_TURN_SPECIAL_ACT_DIAGONAL => [
         "name" => "spDiagonal",
         "descriptionmyturn" => clienttranslate('${you} may move in diagonal'), 
