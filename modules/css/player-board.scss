@@ -37,10 +37,22 @@
 [data-stig_schema_order="1"]{
     //PREF_SCHEMA_BOARD_ORDER_LEFT
     #stig_schema_board_container_wrapper{
-        order: 0;
+        order: -1;
     }
-    #stig_central_board_container_wrapper{
-        order: 3;
+    &[data-stig_stigmareine_order="1"]{
+        #stig_central_board_container_wrapper{
+            order: 0;
+        }
+    }
+    &[data-stig_stigmareine_order="2"]{
+        #stig_central_board_container_wrapper{
+            order: 3;
+        }
+    }
+    &[data-stig_stigmareine_order="20"]{
+        #stig_central_board_container_wrapper{
+            order: 99;
+        }
     }
 }
 [data-stig_schema_order="2"]{
@@ -49,21 +61,46 @@
         /** let the first player in first place, for when only 1 board is displayed (tiny screen)*/
         order: 2;
     }
-    #stig_central_board_container_wrapper{
-        order: 3;
+    
+    &[data-stig_stigmareine_order="1"]{
+        #stig_central_board_container_wrapper{
+            order: 0;
+        }
+    }
+    &[data-stig_stigmareine_order="2"]{
+        #stig_central_board_container_wrapper{
+            order: 3;
+        }
+    }
+    &[data-stig_stigmareine_order="20"]{
+        #stig_central_board_container_wrapper{
+            order: 99;
+        }
     }
 }
 
 [data-stig_schema_order="20"]{
     //PREF_SCHEMA_BOARD_ORDER_LAST
     #stig_schema_board_container_wrapper{
-        order: 99;
+        order: 98;
     }
-    #stig_central_board_container_wrapper{
-        order: 2;
+    
+    &[data-stig_stigmareine_order="1"]{
+        #stig_central_board_container_wrapper{
+            order: 0;
+        }
+    }
+    &[data-stig_stigmareine_order="2"]{
+        #stig_central_board_container_wrapper{
+            order: 2;
+        }
+    }
+    &[data-stig_stigmareine_order="20"]{
+        #stig_central_board_container_wrapper{
+            order: 99;
+        }
     }
 }
-
 
 
 .stig_schema_board,

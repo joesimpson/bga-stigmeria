@@ -44,6 +44,7 @@ function (dojo, declare) {
     const TOKEN_TYPE_NEWTURN = 21;
     
     const PREF_SCHEMA_BOARD_ORDER = 100;
+    const PREF_STIGMAREINE_BOARD_ORDER = 101;
 
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
@@ -119,6 +120,7 @@ function (dojo, declare) {
         getSettingsConfig() {
             return {
                 schemaBoardOrder: { type: 'pref', prefId: PREF_SCHEMA_BOARD_ORDER },
+                centralBoardOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_ORDER },
                 boardWidth: {
                   default: 50,
                   name: _('Board width'),

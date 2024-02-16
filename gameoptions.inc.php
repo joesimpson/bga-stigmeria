@@ -1011,28 +1011,26 @@ $game_options = [
 
 
 $game_preferences = [
-   
-  OPTION_CONFIRM => [
-    'name' => totranslate('Turn confirmation'),
-    'needReload' => false,
-    'values' => [
-      OPTION_CONFIRM_TIMER => [
-        'name' => totranslate('Enabled with timer'),
-      ],
-      OPTION_CONFIRM_ENABLED => ['name' => totranslate('Enabled')],
-      OPTION_CONFIRM_DISABLED => ['name' => totranslate('Disabled')],
-    ],
-
-  ],
   PREF_SCHEMA_BOARD_ORDER => [
-    'name' => totranslate('Target schema order'),
+    'name' => totranslate('Target schema position'),
     'needReload' => false,
     'values' => [
-      PREF_SCHEMA_BOARD_ORDER_LEFT => [ 'name' => totranslate('Left of my board'), "cssPref"=> "stig_schema_order_left" ],
-      PREF_SCHEMA_BOARD_ORDER_RIGHT => [ 'name' => totranslate('Right of my board'), "cssPref"=> "stig_schema_order_right" ],
-      PREF_SCHEMA_BOARD_ORDER_LAST => ['name' => totranslate('Last'), "cssPref"=> "stig_schema_order_last"],
+      PREF_SCHEMA_BOARD_ORDER_LEFT => [ 'name' => totranslate('Left of my board') ],
+      PREF_SCHEMA_BOARD_ORDER_RIGHT => [ 'name' => totranslate('Right of my board')],
+      PREF_SCHEMA_BOARD_ORDER_LAST => ['name' => totranslate('Last')],
     ],
     "default"=> PREF_SCHEMA_BOARD_ORDER_RIGHT,
     'attribute' => 'stig_schema_order',
+  ],
+  PREF_STIGMAREINE_BOARD_ORDER => [
+    'name' => totranslate('StigmaReine position'),
+    'needReload' => false,
+    'values' => [
+      PREF_STIGMAREINE_BOARD_ORDER_LEFT => [ 'name' => totranslate('Left of my board')],
+      PREF_STIGMAREINE_BOARD_ORDER_RIGHT => [ 'name' => totranslate('Right of my board') ],
+      PREF_STIGMAREINE_BOARD_ORDER_LAST => ['name' => totranslate('Last')],
+    ],
+    "default"=> PREF_STIGMAREINE_BOARD_ORDER_RIGHT,
+    'attribute' => 'stig_stigmareine_order',
   ],
 ];
