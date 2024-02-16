@@ -458,12 +458,27 @@
   justify-content: center;
   flex-wrap: wrap;
 }
-#stig_player_boards #stig_schema_board_container_wrapper {
+
+[data-stig_schema_order="1"] #stig_schema_board_container_wrapper {
+  order: 0;
+}
+[data-stig_schema_order="1"] #stig_central_board_container_wrapper {
+  order: 3;
+}
+
+[data-stig_schema_order="2"] #stig_schema_board_container_wrapper {
   /** let the first player in first place, for when only 1 board is displayed (tiny screen)*/
   order: 2;
 }
-#stig_player_boards #stig_central_board_container_wrapper {
+[data-stig_schema_order="2"] #stig_central_board_container_wrapper {
   order: 3;
+}
+
+[data-stig_schema_order="20"] #stig_schema_board_container_wrapper {
+  order: 99;
+}
+[data-stig_schema_order="20"] #stig_central_board_container_wrapper {
+  order: 2;
 }
 
 .stig_schema_board,

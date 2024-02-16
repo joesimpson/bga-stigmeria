@@ -246,11 +246,15 @@ const OPTION_JOKER_1 = 1;
 /*
  * User preferences
  */ 
+const PREF_SCHEMA_BOARD_ORDER = 100;
+const PREF_SCHEMA_BOARD_ORDER_LEFT = 1;
+const PREF_SCHEMA_BOARD_ORDER_RIGHT = 2;
+const PREF_SCHEMA_BOARD_ORDER_LAST = 20;
+
 const OPTION_CONFIRM = 103;
 const OPTION_CONFIRM_DISABLED = 0;
 const OPTION_CONFIRM_TIMER = 1;
 const OPTION_CONFIRM_ENABLED = 2;
-
 /*
  * State constants
  */

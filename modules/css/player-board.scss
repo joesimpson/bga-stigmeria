@@ -32,7 +32,19 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    
+}
+
+[data-stig_schema_order="1"]{
+    //PREF_SCHEMA_BOARD_ORDER_LEFT
+    #stig_schema_board_container_wrapper{
+        order: 0;
+    }
+    #stig_central_board_container_wrapper{
+        order: 3;
+    }
+}
+[data-stig_schema_order="2"]{
+    //PREF_SCHEMA_BOARD_ORDER_RIGHT
     #stig_schema_board_container_wrapper{
         /** let the first player in first place, for when only 1 board is displayed (tiny screen)*/
         order: 2;
@@ -41,6 +53,17 @@
         order: 3;
     }
 }
+
+[data-stig_schema_order="20"]{
+    //PREF_SCHEMA_BOARD_ORDER_LAST
+    #stig_schema_board_container_wrapper{
+        order: 99;
+    }
+    #stig_central_board_container_wrapper{
+        order: 2;
+    }
+}
+
 
 
 .stig_schema_board,

@@ -336,7 +336,19 @@
       $this->game->actEndTurn();
       self::ajaxResponse();
     }
-  
+    
+    ///////////////////
+    /////  PREFS  /////
+    ///////////////////
+
+    public function actChangePref()
+    {
+      self::setAjaxMode();
+      $pref = self::getArg('pref', AT_posint, false);
+      $value = self::getArg('value', AT_posint, false);
+      $this->game->actChangePreference($pref, $value);
+      self::ajaxResponse();
+    }
   }
   
 

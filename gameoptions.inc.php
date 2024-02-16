@@ -1022,5 +1022,17 @@ $game_preferences = [
       OPTION_CONFIRM_ENABLED => ['name' => totranslate('Enabled')],
       OPTION_CONFIRM_DISABLED => ['name' => totranslate('Disabled')],
     ],
+
+  ],
+  PREF_SCHEMA_BOARD_ORDER => [
+    'name' => totranslate('Target schema order'),
+    'needReload' => false,
+    'values' => [
+      PREF_SCHEMA_BOARD_ORDER_LEFT => [ 'name' => totranslate('Left of my board'), "cssPref"=> "stig_schema_order_left" ],
+      PREF_SCHEMA_BOARD_ORDER_RIGHT => [ 'name' => totranslate('Right of my board'), "cssPref"=> "stig_schema_order_right" ],
+      PREF_SCHEMA_BOARD_ORDER_LAST => ['name' => totranslate('Last'), "cssPref"=> "stig_schema_order_last"],
+    ],
+    "default"=> PREF_SCHEMA_BOARD_ORDER_RIGHT,
+    'attribute' => 'stig_schema_order',
   ],
 ];
