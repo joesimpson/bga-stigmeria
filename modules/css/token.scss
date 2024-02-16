@@ -25,6 +25,10 @@
     position: relative;
     background-image: url("img/tokens.png");
     background-size: 500% 500%;
+    
+    &[data-type="null"] {
+        background-image: none;
+    }
     // Loop on sprite types :
     @for $i from 0 through 24 {
         &[data-type="#{$i + 1}"] {

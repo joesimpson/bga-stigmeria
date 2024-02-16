@@ -131,5 +131,10 @@
         "name": "Combination actions",
         "type": "int"
       }
+      ,"actions_s12": {
+        "id": 31,
+        "name": "Fulgurance actions",
+        "type": "int"
+      }
     }
   }

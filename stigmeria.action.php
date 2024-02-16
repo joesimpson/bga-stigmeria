@@ -219,6 +219,15 @@
       $this->game->actCombination($tokenId);
       self::ajaxResponse();
     } 
+    public function actFulgurance()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actFulgurance($row, $col);
+      self::ajaxResponse();
+    }
     public function actDiagonal()
     {
       self::setAjaxMode();

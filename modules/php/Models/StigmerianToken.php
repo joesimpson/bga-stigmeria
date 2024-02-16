@@ -132,9 +132,12 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   public function moveToPlayerBoard($player,$row,$column,$actionCost, $sendNotif = true)
   {
     $fromBoard = false;
+    $fromDeck = false;
     if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
       $fromBoard = true;
       $fromCoord = $this->getCoordName();
+    } else if( str_starts_with($this->getLocation(),TOKEN_LOCATION_PLAYER_DECK) ){
+      $fromDeck = true;
     }
     $this->setLocation(TOKEN_LOCATION_PLAYER_BOARD);
     $this->setPId($player->getId());
@@ -143,6 +146,8 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
 
     if($fromBoard){
       if($sendNotif) Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
+    } else if($fromDeck){
+      if($sendNotif) Notifications::moveFromDeckToPlayerBoard($player, $this,$actionCost);
     }
     else {
       Stats::inc("tokens_board",$player->getId());

@@ -292,6 +292,7 @@ $machinestates = array(
             'startTwoBeats' => ST_TURN_SPECIAL_ACT_TWOBEATS,
             'startRest' => ST_TURN_SPECIAL_ACT_REST,
             'startCombination' => ST_TURN_SPECIAL_ACT_COMBINATION,
+            'startFulgurance' => ST_TURN_SPECIAL_ACT_FULGURANCE,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -317,6 +318,21 @@ $machinestates = array(
         "args" => "argSpCombination",
         "possibleactions" => [
             "actCombination",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_FULGURANCE => [
+        "name" => "spFulgurance",
+        "descriptionmyturn" => clienttranslate('${you} must select the first empty position on the board'), 
+        "type" => "private",
+        "args" => "argSpFulgurance",
+        "possibleactions" => [
+            "actFulgurance",
             "actCancelSpecial",
         ],
         "transitions" => [

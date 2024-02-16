@@ -26,6 +26,9 @@ trait SpecialActionTrait
             if($remaining >=ACTION_COST_COMBINATION){
                 $actions[] = ACTION_TYPE_COMBINATION;
             }
+            if($remaining >=ACTION_COST_FULGURANCE && Tokens::countDeck($player_id)>= FULGURANCE_NB_TOKENS ){
+                $actions[] = ACTION_TYPE_FULGURANCE;
+            }
         }
         if($flowerType == OPTION_FLOWER_DENTDINE){
 
@@ -93,6 +96,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_COMBINATION:
                 $actionCost = ACTION_COST_COMBINATION;
                 $nextState = "startCombination";
+                break;
+            case ACTION_TYPE_FULGURANCE:
+                $actionCost = ACTION_COST_FULGURANCE;
+                $nextState = "startFulgurance";
                 break;
             case ACTION_TYPE_DIAGONAL:
                 $actionCost = ACTION_COST_MOVE_DIAGONAL;

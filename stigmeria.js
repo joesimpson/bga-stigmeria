@@ -29,6 +29,7 @@ function (dojo, declare) {
     const TURN_MAX = 10;
     const ACTION_TYPE_MERGE = 10;
     const ACTION_TYPE_COMBINATION = 11;
+    const ACTION_TYPE_FULGURANCE = 12;
     const ACTION_TYPE_DIAGONAL = 14;
     const ACTION_TYPE_SWAP = 15;
     const ACTION_TYPE_MOVE_FAST = 16;
@@ -63,6 +64,7 @@ function (dojo, declare) {
                 ['letNextPlay', 10],
                 ['moveToPlayerBoard', 900],
                 ['moveOnPlayerBoard', 900],
+                ['moveFromDeckToPlayerBoard', 900],
                 ['moveBackToRecruit', 900],
                 ['moveBackToBox', 900],
                 ['spMerge', 900],
@@ -390,6 +392,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_COMBINATION)){
                 this.addPrimaryActionButton('btnStartCombination', _('Combination'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_COMBINATION}));
             }
+            if(possibleActions.includes(ACTION_TYPE_FULGURANCE)){
+                this.addPrimaryActionButton('btnStartFulgurance', _('Fulgurance'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_FULGURANCE}));
+            }
             if(possibleActions.includes(ACTION_TYPE_DIAGONAL)){
                 this.addPrimaryActionButton('btnStartDiagonal', 'Diagonal', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
             }
@@ -427,6 +432,13 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpCombination() ', args );
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actCombination', args.tokensIds);
+        }, 
+        onEnteringStateSpFulgurance: function(args)
+        {
+            debug( 'onEnteringStateSpFulgurance() ', args );
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            let confirmMessage = _("Are you sure to draw 5 tokens from your bag and randomly place them from that place to the right ?")
+            this.initCellSelection('actFulgurance', args.p_places_p, this.player_id,null,confirmMessage);
         }, 
         onEnteringStateSpDiagonal: function(args)
         {
@@ -635,6 +647,16 @@ function (dojo, declare) {
         notif_letNextPlay(n) {
             debug('notif_letNextPlay: ', n);
             if($(`btnLetNextPlay`) ) dojo.destroy($(`btnLetNextPlay`));
+        },
+        notif_moveFromDeckToPlayerBoard(n) {
+            debug('notif_moveFromDeckToPlayerBoard: new token on player board from deck', n);
+            let token = n.args.token;
+            this.addToken(token, this.getVisibleTitleContainer());
+            this._counters[n.args.player_id]['tokens_deck'].incValue(-1);
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.row = token.row;
+            div.dataset.col = token.col;
+            this.slide(div, this.getTokenContainer(token));
         },
         notif_moveToPlayerBoard(n) {
             debug('notif_moveToPlayerBoard: new token on player board', n);
@@ -1183,7 +1205,9 @@ function (dojo, declare) {
             return 'game_play_area';
           },
         //Direct selection of a cell, independent of a token
-        initCellSelection(actionName, possiblePlaces, playerBoardId = 'central',newType = null){
+        initCellSelection(actionName, possiblePlaces, playerBoardId = 'central',newType = null,
+            confirmMessage = null    
+        ){
             debug( 'initCellSelection() ', actionName, possiblePlaces,playerBoardId,newType );
             let playerBoard = null;
             if(playerBoardId =='central') {
@@ -1211,7 +1235,14 @@ function (dojo, declare) {
             });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
-                this.takeAction(actionName, { row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+                if(confirmMessage) {
+                    this.confirmationDialog(confirmMessage, () => {
+                        this.takeAction(actionName, { row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+                    });
+                }
+                else {
+                    this.takeAction(actionName, { row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
+                }
             }); 
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');

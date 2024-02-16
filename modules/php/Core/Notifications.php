@@ -201,6 +201,21 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param int $actionCost
+   */
+  public static function moveFromDeckToPlayerBoard($player, $token, $actionCost){
+    self::notifyAll('moveFromDeckToPlayerBoard',clienttranslate('${player_name} places a new stigmerian at ${L} (cost : ${n} actions)'),[ 
+        'player' => $player,
+        'token' => $token->getUiData(),
+        'L' => $token->getCoordName(),
+        'n' => $actionCost,
+      ],
+    );
+  }
   /**
    * @param Player $player
    * @param StigmerianToken $token
@@ -347,6 +362,21 @@ class Notifications
       ],
     );
   }
+  /**
+   * 
+   * @param Player $player
+   * @param int $nbTokens
+   * @param int $actionCost
+   */
+  public static function spFulgurance($player,$nbTokens,$actionCost){
+    self::notifyAll('spFulgurance',clienttranslate('${player_name} uses the Fulgurance to draw and place ${n} tokens from the deck (cost: ${n2} actions)'),[ 
+        'player' => $player,
+        'n' => $nbTokens,
+        'n2' => $actionCost,
+      ],
+    );
+  }
+  
   /**
    * 
    * @param Player $player

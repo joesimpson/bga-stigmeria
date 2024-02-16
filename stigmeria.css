@@ -43,6 +43,12 @@
   background-image: url("img/tokens.png");
   background-size: 500% 500%;
 }
+.stig_token_cell.selectable:hover[data-type=null],
+.stig_token_cell.selected[data-type=null],
+.stig_token[data-type=null],
+.stig_subicon_tokens_recruit[data-type=null] {
+  background-image: none;
+}
 .stig_token_cell.selectable:hover[data-type="1"],
 .stig_token_cell.selected[data-type="1"],
 .stig_token[data-type="1"],
