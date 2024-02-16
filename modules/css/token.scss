@@ -5,10 +5,15 @@
     align-items: center;
     
     .stig_token {
-        margin: 15px 10px;
+        margin: 5px 0px;
         width: var(--stig_takePieceWidth);
         height: var(--stig_takePieceWidth);
-        
+
+        @for $i from 0 through 24 {
+            &[data-type="#{$i + 1}"] {
+                order: $i;
+            }
+        }
     }
 }
 
