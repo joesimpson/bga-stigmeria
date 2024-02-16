@@ -291,6 +291,7 @@ $machinestates = array(
             'startBlack' => ST_TURN_SPECIAL_ACT_BLACK_STEP1,
             'startTwoBeats' => ST_TURN_SPECIAL_ACT_TWOBEATS,
             'startRest' => ST_TURN_SPECIAL_ACT_REST,
+            'startCombination' => ST_TURN_SPECIAL_ACT_COMBINATION,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -305,6 +306,21 @@ $machinestates = array(
         ],
         "transitions" => [
             'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_COMBINATION => [
+        "name" => "spCombination",
+        "descriptionmyturn" => clienttranslate('${you} must select a token to become brown'), 
+        "type" => "private",
+        "args" => "argSpCombination",
+        "possibleactions" => [
+            "actCombination",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],

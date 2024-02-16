@@ -328,6 +328,25 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param int $actionCost
+   */
+  public static function spCombination($player,$token,$previousColor,$actionCost){
+    self::notifyAll('spCombination',clienttranslate('${player_name} use the Combination action to transform a ${color} stigmerian at ${L1} into a ${color2} stigmerian (cost: ${n} actions)'),[ 
+        'i18n' => ['color','color2'],
+        'player' => $player,
+        'L1' => $token->getCoordName(),
+        'color' => StigmerianToken::getTypeName($previousColor),
+        'color2' => StigmerianToken::getTypeName($token->getType()),
+        'token' => $token->getUiData(),
+        'n' => $actionCost,
+      ],
+    );
+  }
   /**
    * 
    * @param Player $player

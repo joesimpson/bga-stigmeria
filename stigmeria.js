@@ -28,6 +28,7 @@ define([
 function (dojo, declare) {
     const TURN_MAX = 10;
     const ACTION_TYPE_MERGE = 10;
+    const ACTION_TYPE_COMBINATION = 11;
     const ACTION_TYPE_DIAGONAL = 14;
     const ACTION_TYPE_SWAP = 15;
     const ACTION_TYPE_MOVE_FAST = 16;
@@ -65,6 +66,7 @@ function (dojo, declare) {
                 ['moveBackToRecruit', 900],
                 ['moveBackToBox', 900],
                 ['spMerge', 900],
+                ['spCombination', 900],
                 ['spSwap', 900],
                 ['spWhite', 900],
                 ['spBlack', 900],
@@ -385,6 +387,9 @@ function (dojo, declare) {
             if(possibleActions.includes(ACTION_TYPE_MERGE)){
                 this.addPrimaryActionButton('btnStartMerge', 'Merge', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MERGE}));
             }
+            if(possibleActions.includes(ACTION_TYPE_COMBINATION)){
+                this.addPrimaryActionButton('btnStartCombination', _('Combination'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_COMBINATION}));
+            }
             if(possibleActions.includes(ACTION_TYPE_DIAGONAL)){
                 this.addPrimaryActionButton('btnStartDiagonal', 'Diagonal', () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
             }
@@ -417,6 +422,12 @@ function (dojo, declare) {
             this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
         }, 
         
+        onEnteringStateSpCombination: function(args)
+        {
+            debug( 'onEnteringStateSpCombination() ', args );
+            this.addSecondaryActionButton('btnCancel', 'Return', () => this.takeAction('actCancelSpecial', {}));
+            this.initTokenSimpleSelection('actCombination', args.tokensIds);
+        }, 
         onEnteringStateSpDiagonal: function(args)
         {
             debug( 'onEnteringStateSpDiagonal() ', args );
@@ -696,6 +707,15 @@ function (dojo, declare) {
             div2.dataset.type = token2.type;
             this.animationBlink2Times(div1);
             this.animationBlink2Times(div2);
+        },
+        notif_spCombination(n) {
+            debug('notif_spCombination: token becomes brown !', n);
+            let token1 = n.args.token;
+            let div1 = $(`stig_token_${token1.id}`);
+            if(div1){
+                div1.dataset.type = token1.type;
+                this.animationBlink2Times(div1);
+            }
         },
         notif_spSwap(n) {
             debug('notif_spSwap: tokens are swapped', n);

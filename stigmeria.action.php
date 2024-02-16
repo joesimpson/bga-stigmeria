@@ -211,6 +211,14 @@
       $this->game->actMerge($token1,$token2);
       self::ajaxResponse();
     }
+    public function actCombination()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $tokenId = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actCombination($tokenId);
+      self::ajaxResponse();
+    } 
     public function actDiagonal()
     {
       self::setAjaxMode();

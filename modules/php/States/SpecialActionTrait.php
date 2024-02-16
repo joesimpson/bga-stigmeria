@@ -21,6 +21,12 @@ trait SpecialActionTrait
         if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE && $remaining >=ACTION_COST_MERGE){
             $actions[] = ACTION_TYPE_MERGE;
         }
+        if($flowerType == OPTION_FLOWER_MARONNE){
+
+            if($remaining >=ACTION_COST_COMBINATION){
+                $actions[] = ACTION_TYPE_COMBINATION;
+            }
+        }
         if($flowerType == OPTION_FLOWER_DENTDINE){
 
             if($remaining >=ACTION_COST_MOVE_DIAGONAL){
@@ -83,6 +89,10 @@ trait SpecialActionTrait
             case ACTION_TYPE_MERGE:
                 $actionCost = ACTION_COST_MERGE;
                 $nextState = "startMerge";
+                break;
+            case ACTION_TYPE_COMBINATION:
+                $actionCost = ACTION_COST_COMBINATION;
+                $nextState = "startCombination";
                 break;
             case ACTION_TYPE_DIAGONAL:
                 $actionCost = ACTION_COST_MOVE_DIAGONAL;

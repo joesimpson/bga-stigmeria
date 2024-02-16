@@ -126,5 +126,10 @@
         "name": "Rest actions",
         "type": "int"
       }
+      ,"actions_s11": {
+        "id": 30,
+        "name": "Combination actions",
+        "type": "int"
+      }
     }
   }
