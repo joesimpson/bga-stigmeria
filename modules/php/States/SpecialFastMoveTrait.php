@@ -42,7 +42,7 @@ trait SpecialFastMoveTrait
         $pId = $player->id;
         $turn = Globals::getTurn();
  
-        $actionCost = ACTION_COST_MOVE_FAST;
+        $actionCost = ACTION_COST_MOVE_FAST* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }

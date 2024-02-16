@@ -35,7 +35,7 @@ trait SpecialBlackTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_BLACK;
+        $actionCost = ACTION_COST_BLACK* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }

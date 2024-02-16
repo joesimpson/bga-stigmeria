@@ -16,21 +16,24 @@ trait SpecialActionTrait
     {
         $player = Players::get($player_id);
         $flowerType = Schemas::getCurrentSchema()->type;
+        $deckSize = Tokens::countDeck($player_id);
         $remaining = $player->countRemainingPersonalActions();
         $actions =[];
-        if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE && $remaining >=ACTION_COST_MERGE){
-            $actions[] = ACTION_TYPE_MERGE;
+        if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE){
+            if($remaining >= ACTION_COST_MERGE){
+                $actions[] = ACTION_TYPE_MERGE;
+            }
         }
-        if($flowerType == OPTION_FLOWER_MARONNE){
+        else if($flowerType == OPTION_FLOWER_MARONNE){
 
             if($remaining >=ACTION_COST_COMBINATION){
                 $actions[] = ACTION_TYPE_COMBINATION;
             }
-            if($remaining >=ACTION_COST_FULGURANCE && Tokens::countDeck($player_id)>= FULGURANCE_NB_TOKENS ){
+            if($remaining >=ACTION_COST_FULGURANCE && $deckSize>= FULGURANCE_NB_TOKENS ){
                 $actions[] = ACTION_TYPE_FULGURANCE;
             }
         }
-        if($flowerType == OPTION_FLOWER_DENTDINE){
+        else if($flowerType == OPTION_FLOWER_DENTDINE){
 
             if($remaining >=ACTION_COST_CHOREOGRAPHY){
                 $actions[] = ACTION_TYPE_CHOREOGRAPHY;
@@ -45,7 +48,7 @@ trait SpecialActionTrait
                 $actions[] = ACTION_TYPE_MOVE_FAST;
             }
         }
-        if($flowerType == OPTION_FLOWER_SIFFLOCHAMP){
+        else if($flowerType == OPTION_FLOWER_SIFFLOCHAMP){
 
             if($remaining >=ACTION_COST_WHITE){
                 $actions[] = ACTION_TYPE_WHITE;
@@ -60,11 +63,61 @@ trait SpecialActionTrait
                 $actions[] = ACTION_TYPE_REST;
             }
         }
+        else if($flowerType == OPTION_FLOWER_INSPIRACTRICE){
+            // ALL THE PREVIOUS ACTIONS but with a DOUBLE cost
+            $cost = ACTION_COST_MODIFIER_INSPIRACTRICE;
+            if($remaining >= $cost * ACTION_COST_MERGE){
+                $actions[] = ACTION_TYPE_MERGE;
+            }
+            if($remaining >= $cost * ACTION_COST_COMBINATION){
+                $actions[] = ACTION_TYPE_COMBINATION;
+            }
+            if($remaining >= $cost * ACTION_COST_FULGURANCE && $deckSize>= FULGURANCE_NB_TOKENS ){
+                $actions[] = ACTION_TYPE_FULGURANCE;
+            }
+            if($remaining >= $cost * ACTION_COST_CHOREOGRAPHY){
+                $actions[] = ACTION_TYPE_CHOREOGRAPHY;
+            }
+            if($remaining >= $cost * ACTION_COST_MOVE_DIAGONAL){
+                $actions[] = ACTION_TYPE_DIAGONAL;
+            }
+            if($remaining >= $cost * ACTION_COST_SWAP){
+                $actions[] = ACTION_TYPE_SWAP;
+            }
+            if($remaining >= $cost * ACTION_COST_MOVE_FAST){
+                $actions[] = ACTION_TYPE_MOVE_FAST;
+            }
+            if($remaining >= $cost * ACTION_COST_WHITE){
+                $actions[] = ACTION_TYPE_WHITE;
+            }
+            if($remaining >= $cost * ACTION_COST_BLACK){
+                $actions[] = ACTION_TYPE_BLACK;
+            }
+            if($remaining >= $cost * ACTION_COST_TWOBEATS){
+                $actions[] = ACTION_TYPE_TWOBEATS;
+            }
+            if($remaining >= $cost * ACTION_COST_REST){
+                $actions[] = ACTION_TYPE_REST;
+            }
+        }
         return [
             'a' => $actions,
         ];
     }
-      
+    /**
+     * @return int
+     */
+    public function getGetActionCostModifier()
+    {
+        $multiplier = 1;
+        $flowerType = Schemas::getCurrentSchema()->type;
+        if(!Globals::isModeCompetitive() && $flowerType == OPTION_FLOWER_INSPIRACTRICE){
+            $multiplier = ACTION_COST_MODIFIER_INSPIRACTRICE;
+        }
+        //For competitive modes it is more complex
+        return $multiplier;
+    }
+
     public function actCancelSpecial()
     {
         self::checkAction( 'actCancelSpecial' ); 

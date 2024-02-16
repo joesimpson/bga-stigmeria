@@ -32,7 +32,7 @@ trait SpecialTwoBeatsTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_TWOBEATS;
+        $actionCost = ACTION_COST_TWOBEATS* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }

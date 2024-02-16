@@ -33,7 +33,7 @@ trait SpecialSwapTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_SWAP;
+        $actionCost = ACTION_COST_SWAP* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }

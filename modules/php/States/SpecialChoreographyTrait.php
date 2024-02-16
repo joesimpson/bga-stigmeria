@@ -7,6 +7,7 @@ use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
+use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
 
@@ -51,7 +52,7 @@ trait SpecialChoreographyTrait
         $movedTokensIds = $player->getSelection();
         $nbMovesDone = count($player->getSelection());
 
-        $actionCost = ACTION_COST_CHOREOGRAPHY;
+        $actionCost = ACTION_COST_CHOREOGRAPHY * $this->getGetActionCostModifier();
         if($nbMovesDone ==0 && $player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
@@ -72,6 +73,7 @@ trait SpecialChoreographyTrait
             Notifications::spChoreography($player,$nbMovesMax,$actionCost);
             Stats::inc("actions_s".ACTION_TYPE_CHOREOGRAPHY,$pId);
             Stats::inc("actions",$pId);
+            $player->incNbPersonalActionsDone($actionCost);
             Notifications::useActions($player);
         }
         $token->moveToPlayerBoard($player,$row,$column,0);

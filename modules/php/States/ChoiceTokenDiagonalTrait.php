@@ -35,7 +35,7 @@ trait ChoiceTokenDiagonalTrait
         $pId = $player->id;
 
         $remaining = $player->countRemainingPersonalActions();
-        $actionCost = ACTION_COST_MOVE_DIAGONAL;
+        $actionCost = ACTION_COST_MOVE_DIAGONAL* $this->getGetActionCostModifier();
 
         //CHECK REMAINING ACTIONS VS cost
         if($remaining < $actionCost){

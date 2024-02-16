@@ -33,7 +33,7 @@ trait SpecialMergeTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_MERGE;
+        $actionCost = ACTION_COST_MERGE* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
@@ -49,7 +49,7 @@ trait SpecialMergeTrait
             throw new UnexpectedException(131,"You cannot merge these tokens");
         }
 
-        $token1->merge($token2,$player);
+        $token1->merge($token2,$player,$actionCost);
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
         Stats::inc("actions_s1",$player->getId());

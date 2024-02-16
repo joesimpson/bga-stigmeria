@@ -329,7 +329,7 @@ $machinestates = array(
     
     ST_TURN_SPECIAL_ACT_FULGURANCE => [
         "name" => "spFulgurance",
-        "descriptionmyturn" => clienttranslate('${you} must select the first empty position on the board'), 
+        "descriptionmyturn" => clienttranslate('${you} must select where to draw and place 5 stigmerians'), 
         "type" => "private",
         "args" => "argSpFulgurance",
         "possibleactions" => [

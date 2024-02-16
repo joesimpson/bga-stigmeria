@@ -32,7 +32,7 @@ trait SpecialCombinationTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_COMBINATION;
+        $actionCost = ACTION_COST_COMBINATION* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }

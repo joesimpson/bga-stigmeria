@@ -33,7 +33,7 @@ trait SpecialFulguranceTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_FULGURANCE;
+        $actionCost = ACTION_COST_FULGURANCE* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }

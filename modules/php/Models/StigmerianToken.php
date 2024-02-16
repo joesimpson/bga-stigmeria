@@ -228,9 +228,10 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    * Action of merging colors
    * @param StigmerianToken $other
    * @param Player $player
+   * @param int $actionCost
    * @return bool true if colors are modified
    */
-  public function merge($other,$player)
+  public function merge($other,$player,$actionCost)
   {
     switch($this->type){
       //--------------------
@@ -272,7 +273,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     if(isset($newColor)){
       $this->setType($newColor);
       $other->setType($newColor);
-      Notifications::spMerge($player,$this,$other,ACTION_COST_MERGE);
+      Notifications::spMerge($player,$this,$other,$actionCost);
       $this->checkAndBecomesPollen($player);
       $other->checkAndBecomesPollen($player);
       return true;
