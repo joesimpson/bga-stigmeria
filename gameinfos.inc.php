@@ -15,15 +15,6 @@ $gameinfos = array(
 // Name of the game in English (will serve as the basis for translation) 
 'game_name' => "Stigméria",
 
-// Game designer (or game designers, separated by commas)
-'designer' => 'Gabriel Souleyre',       
-
-// Game artist (or game artists, separated by commas)
-'artist' => 'David Cochard, Gabriel Souleyre',         
-
-// Year of FIRST publication of this game. Can be negative.
-'year' => 2023,                 
-
 // Game publisher (use empty string if there is no publisher)
 'publisher' => 'Editions Garajeux',                     
 
@@ -38,7 +29,7 @@ $gameinfos = array(
 
 
 // Players configuration that can be played (ex: 2 to 4 players)
-'players' => array( 1,2,3,4,5,6,7,8,9,10,11,12 ),    
+'players' => array( 1,2,3,4,5,6 ),    
 
 // Suggest players to play with this number of players. Must be null if there is no such advice, or if there is only one possible player configuration.
 // NB: the automatic lobby will try first the lowest number of players if this is not specified. So you _have to_ specify this parameter if the lowest player number is not compatible with the default options.
@@ -127,36 +118,10 @@ $gameinfos = array(
     'max' => null
 ),
 
-// Game presentation
-// Short game presentation text that will appear on the game description page, structured as an array of paragraphs.
-// Each paragraph must be wrapped with totranslate() for translation and should not contain html (plain text without formatting).
-// A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
-'presentation' => array(
-    totranslate("Puzzle game and thinking game.
-        Bag building, pick and move primary color tokens on the game board with your 3 basic actions and unlock new abilities to create up to 6 new colors of pollen.
-        Anticipates wind movements and reproduces color flower patterns in fewer turns and actions.
-        Place your colored pollens on the appropriate pistils so that the flower produces its seeds with exceptional powers."),
-    //TODO JSA WHEN 3 modes are ready
-    //totranslate("3 game modes, solitaire and competitive with 3 difficulty levels."),
-    totranslate("The Stigmerians have saved you from the great cataclysm that has taken place on your land.
-        You were able to be reborn thanks to their fabulous bulbastigs and the amazing energy flow that connects and irrigate everything in your new world."),
-    totranslate("It's your turn to help the Stigmerians to feed you on your new planet: Stigmeria!
-        Go on an adventure!
-        Fly, land from pistil to pistil on the giant flowers.
-        Count on the help of the wind..."),
-//    ...
-),
-
-// Games tags (categories)
-//  You can attribute a maximum of ten "tags" for your game.
-//  Each tag has a specific ID (ex: 22 for the category "Prototype", 101 for the tag "Science-fiction theme game")
-//  Please see the "Game meta information" entry in the BGA Studio documentation for a full list of available tags:
-//  https://en.doc.boardgamearena.com/Game_meta-information:_gameinfos.inc.php#Tags
-//  IMPORTANT: this list should be ORDERED, with the most important tag first.
-//  NOTE: tags are only read during the first deploy from the file gameinfos.inc.php; afterwards, BGA is responsible for setting tags for a game.
-
-'tags' => array( 3, 100, 209, 227 ),
-
+'custom_buy_button' => array(
+    'url' => 'https://www.garajeux.fr/product-page/stigm%C3%A9ria-une-bo%C3%AEte-de-jeu',
+    'label' => 'Garajeux'
+ ),
 
 //////// BGA SANDBOX ONLY PARAMETERS (DO NOT MODIFY)
 
