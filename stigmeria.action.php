@@ -239,6 +239,14 @@
       $this->game->actChoreography($token_id, $row, $col);
       self::ajaxResponse();
     }
+    public function actChoreMoveOut()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $tokenId = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actChoreMoveOut($tokenId);
+      self::ajaxResponse();
+    }
     public function actChoreographyStop()
     {
       self::setAjaxMode();

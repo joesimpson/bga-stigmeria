@@ -349,13 +349,14 @@ $machinestates = array(
         "args" => "argSpChoreography",
         "possibleactions" => [
             "actChoreography",
+            "actChoreMoveOut",
             "actChoreographyStop",
             "actCancelSpecial",
         ],
         "transitions" => [
             'continue' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
             'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
-            //TODO JSA block cancel if moves in progress
+            //TODO JSA block cancel if moves in progress ? or whatever, we decrease the counter of actions
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],

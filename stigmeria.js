@@ -458,7 +458,7 @@ function (dojo, declare) {
         onEnteringStateSpChoreography: function(args)
         {
             debug( 'onEnteringStateSpChoreography() ', args );
-            this.initTokenSelectionDest('actChoreography', args.p_places_m, this.player_id);
+            this.initTokenSelectionDest('actChoreography', args.p_places_m, this.player_id,'actChoreMoveOut');
             //TODO JSA move out ?
             if(args.n == args.max) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.addDangerActionButton('btnStop', _('Stop'), () => this.takeAction('actChoreographyStop', {}));

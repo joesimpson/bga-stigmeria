@@ -90,6 +90,69 @@ trait SpecialChoreographyTrait
         }
     }
     
+    /**
+     * Still the action of moving, but specifying no row/col, because we want to move out of the grid
+     * @param int $tokenId
+     */
+    public function actChoreMoveOut($tokenId)
+    {
+        self::checkAction( 'actChoreMoveOut' ); 
+        self::trace("actChoreMoveOut($tokenId)");
+        
+        $player = Players::getCurrent();
+        $pId = $player->id;
+        $turn = Globals::getTurn();
+        $nbMovesMax = $turn -2;
+        $movedTokensIds = $player->getSelection();
+        $nbMovesDone = count($player->getSelection());
+
+        $actionCost = ACTION_COST_CHOREOGRAPHY * $this->getGetActionCostModifier();
+        if($nbMovesDone ==0 && $player->countRemainingPersonalActions() < $actionCost){
+            throw new UnexpectedException(10,"Not enough actions to do that");
+        }
+        if($nbMovesMax - $nbMovesDone < 1){
+            throw new UnexpectedException(11,"Not enough moves remaining");
+        }
+        $token = Tokens::get($tokenId);
+        if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
+            throw new UnexpectedException(100,"You cannot move this token");
+        }
+        if(!$this->canMoveOutOnBoard($token)){
+            throw new UnexpectedException(101,"You cannot move out this token");
+        }
+
+        //EFFECT : 
+        if($nbMovesDone ==0 ){
+            Notifications::spChoreography($player,$nbMovesMax,$actionCost);
+            Stats::inc("actions_s".ACTION_TYPE_CHOREOGRAPHY,$pId);
+            Stats::inc("actions",$pId);
+            $player->incNbPersonalActionsDone($actionCost);
+            Notifications::useActions($player);
+        }
+        Stats::inc("tokens_board",$player->getId(),-1);
+        if(Globals::isModeCompetitiveNoLimit()){
+            //EFFECT : MOVE the TOKEN oUT
+            $token->moveToRecruitZone($player,0);
+        }
+        else {
+            //EFFECT : REMOVE the TOKEN 
+            Notifications::moveBackToBox($player, $token,$token->getCoordName(),0);
+            Tokens::delete($token->id);
+        }
+       
+        $movedTokensIds[] = $tokenId;
+        $player->setSelection($movedTokensIds);
+        $nbMovesDone++;
+
+        if($nbMovesMax - $nbMovesDone >= 1){
+            $this->gamestate->nextPrivateState($player->id, "continue");
+        }
+        else {
+            $this->gamestate->nextPrivateState($player->id, "next");
+        }
+    }
+    
+    
     public function actChoreographyStop()
     {
         self::checkAction( 'actChoreographyStop' ); 
@@ -128,6 +191,9 @@ trait SpecialChoreographyTrait
     public function listPossibleChoreographyMovesOnBoard($playerId,$boardTokens,$movedTokensIds){
         $spots = [];
         foreach($boardTokens as $tokenId => $token){
+            if($this->canMoveOutOnBoard($token)){
+                $spots[$tokenId][] = [ 'out' => true ];
+            }
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
                     if(isset($playerId) && $this->canMoveChoreographyOnPlayerBoard($playerId,$token,$row, $column,$movedTokensIds)){

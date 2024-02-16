@@ -97,13 +97,13 @@ trait ChoiceTokenToMoveTrait
         }
 
         //EFFECT : 
+        Stats::inc("tokens_board",$player->getId(),-1);
         if(Globals::isModeCompetitiveNoLimit()){
             //EFFECT : MOVE the TOKEN oUT
             $token->moveToRecruitZone($player,$actionCost);
         }
         else {
             //EFFECT : REMOVE the TOKEN 
-            Stats::inc("tokens_board",$player->getId(),-1);
             Notifications::moveBackToBox($player, $token,$token->getCoordName(),$actionCost);
             Tokens::delete($token->id);
         }
