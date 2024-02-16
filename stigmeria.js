@@ -1008,7 +1008,7 @@ function (dojo, declare) {
             return `<div class='stig_resizable_board' id='stig_player_board_container_wrapper_${player.id}' data_player='${player.id}'>
             <div class='stig_player_board_container'>
                 <div class="stig_player_board" id='stig_player_board_${player.id}' data_flower_type="${flowerType}">
-                    <div class='player-name' style='color:#${player.color}'>${player.name}</div>
+                    <div class='player-name' style='color:#${player.color};outline-color:#${player.color};'>${player.name}</div>
                     ${this.tplTurnMarkerContainer({ 'player_id':player.id ,'turn':turn, 'turnActions':turnActions, init:true})}
                     <div class="stig_newturn_markers" id="stig_newturn_markers_${player.id}" >
                     </div>
