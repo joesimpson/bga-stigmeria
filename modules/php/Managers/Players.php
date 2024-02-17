@@ -146,7 +146,9 @@ class Players extends \STIG\Helpers\DB_Manager
   {
     $nextPlayer_id = Players::getNextId($player_id);
     $nextPlayer = Players::get($nextPlayer_id);
-    if(isset($nextPlayer) && !$nextPlayer->isMultiactive() && $nextPlayer->getLastTurn()< $turn ){
+    if(isset($nextPlayer) && !$nextPlayer->isMultiactive() && $nextPlayer->getLastTurn()< $turn
+      && $nextPlayer->getZombie() != 1
+    ){
       //CHECK nextPlayer not active
       //nextPlayer already played this turn
       return $nextPlayer;
