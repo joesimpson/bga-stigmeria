@@ -44,13 +44,13 @@ $game_options = [
                 
                 OPTION_MODE_COMPETITIVE => array( 
                   'name' => totranslate('Competitive'), 
-                  'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns.'),
+                  'description' => totranslate('Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.'),
                   'tmdisplay' => totranslate('Competitive'),
                   'nobeginner' => true, 
                   ),
                 OPTION_MODE_NOLIMIT => array( 
                   'name' => totranslate('No Limit'), 
-                  'description' => totranslate('Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.'), 
+                  'description' => totranslate('Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.'), 
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
                   ),
@@ -73,11 +73,12 @@ $game_options = [
             "message"=> totranslate("Discovery is available in training only"),
           ],
         ],
-      OPTION_MODE_CHALLENGE => [
+      OPTION_MODE_NORMAL => [
           [
-            'type' => 'minplayers', 
-            'value' => 99, 
-            'message' => totranslate('Challenge not available in current version'),
+            "type" => "otheroption",
+            "id" => OPTION_GAMESTATE_RATING_MODE,
+            "value"=> OPTION_GAMESTATE_RATING_MODE_TRAINING,
+            "message"=> totranslate("Normal is available in training only"),
           ],
         ],
         
@@ -95,6 +96,13 @@ $game_options = [
           'message' => totranslate('Competitive modes are not for solo play'),
         ],
       ],
+      OPTION_MODE_CHALLENGE => [
+          [
+            'type' => 'minplayers', 
+            'value' => 99, 
+            'message' => totranslate('Challenge not available in current version'),
+          ],
+        ],
     ],
   ),
   OPTION_FLOWER => array(
