@@ -231,7 +231,7 @@ class Stigmeria extends Table
 
         if ($state['type'] === "multipleactiveplayer") {
             // Make sure player is in a non blocking status for role turn
-            $this->gamestate->setPlayerNonMultiactive( $active_player, '' );
+            $this->gamestate->setPlayerNonMultiactive( $active_player, 'zombiePass' );
             
             return;
         }

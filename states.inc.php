@@ -132,6 +132,8 @@ $machinestates = array(
         "transitions" => [ 
             "nextDice" => ST_GENERATE_WIND, 
             "windEffect" => ST_WIND_EFFECT,
+            
+            "zombiePass" => ST_GENERATE_WIND,
         ],
     ),
 
@@ -161,6 +163,7 @@ $machinestates = array(
         ],
         "transitions" => [ 
             "end" => ST_WIND_EFFECT,
+            "zombiePass" => ST_WIND_EFFECT,
         ],
     ),
     
