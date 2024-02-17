@@ -283,7 +283,7 @@ $machinestates = array(
             "actCancelSpecial",
         ],
         "transitions" => [
-            'startMerge' => ST_TURN_SPECIAL_ACT_MERGE,
+            'startMixing' => ST_TURN_SPECIAL_ACT_MIX,
             'startDiagonal' => ST_TURN_SPECIAL_ACT_DIAGONAL,
             'startSwap' => ST_TURN_SPECIAL_ACT_SWAP,
             'startFastMove' => ST_TURN_SPECIAL_ACT_MOVE_FAST,
@@ -297,13 +297,13 @@ $machinestates = array(
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
-    ST_TURN_SPECIAL_ACT_MERGE => [
-        "name" => "spMerge",
+    ST_TURN_SPECIAL_ACT_MIX => [
+        "name" => "spMixing",
         "descriptionmyturn" => clienttranslate('${you} may choose 2 adjacents tokens to mix'), 
         "type" => "private",
-        "args" => "argSpMerge",
+        "args" => "argSpMixing",
         "possibleactions" => [
-            "actMerge",
+            "actMixing",
             "actCancelSpecial",
         ],
         "transitions" => [

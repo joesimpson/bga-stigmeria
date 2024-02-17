@@ -27,7 +27,7 @@ define([
 ],
 function (dojo, declare) {
     const TURN_MAX = 10;
-    const ACTION_TYPE_MERGE = 10;
+    const ACTION_TYPE_MIXING = 10;
     const ACTION_TYPE_COMBINATION = 11;
     const ACTION_TYPE_FULGURANCE = 12;
     const ACTION_TYPE_CHOREOGRAPHY = 13;
@@ -72,7 +72,7 @@ function (dojo, declare) {
                 ['moveFromDeckToPlayerBoard', 900],
                 ['moveBackToRecruit', 900],
                 ['moveBackToBox', 900],
-                ['spMerge', 900],
+                ['spMixing', 900],
                 ['spCombination', 900],
                 ['spSwap', 900],
                 ['spWhite', 900],
@@ -402,7 +402,7 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpecialAction() ', args );
             
             let possibleActions = args.a;
-            this.formatSpecialActionButton(_('Mixing'),ACTION_TYPE_MERGE,possibleActions);
+            this.formatSpecialActionButton(_('Mixing'),ACTION_TYPE_MIXING,possibleActions);
             this.formatSpecialActionButton(_('Combination'),ACTION_TYPE_COMBINATION,possibleActions);
             this.formatSpecialActionButton(_('Fulgurance'),ACTION_TYPE_FULGURANCE,possibleActions);
             this.formatSpecialActionButton(_('Choreography'),ACTION_TYPE_CHOREOGRAPHY,possibleActions);
@@ -417,11 +417,11 @@ function (dojo, declare) {
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
-        onEnteringStateSpMerge: function(args)
+        onEnteringStateSpMixing: function(args)
         {
-            debug( 'onEnteringStateSpMerge() ', args );
+            debug( 'onEnteringStateSpMixing() ', args );
 
-            this.initMultiTokenSelection('actMerge',args.tokens);
+            this.initMultiTokenSelection('actMixing',args.tokens);
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -723,8 +723,8 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
             this._counters[n.args.player_id]['pollens'].incValue(1);
         },
-        notif_spMerge(n) {
-            debug('notif_spMerge: tokens are mixed !', n);
+        notif_spMixing(n) {
+            debug('notif_spMixing: tokens are mixed !', n);
             let token1 = n.args.token1;
             let token2 = n.args.token2;
             let div1 = $(`stig_token_${token1.id}`);

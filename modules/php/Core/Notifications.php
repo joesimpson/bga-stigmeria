@@ -332,8 +332,8 @@ class Notifications
    * @param StigmerianToken $token2
    * @param int $actionCost
    */
-  public static function spMerge($player,$token1,$token2,$actionCost){
-    self::notifyAll('spMerge',clienttranslate('${player_name} mixes 2 tokens at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+  public static function spMixing($player,$token1,$token2,$actionCost){
+    self::notifyAll('spMixing',clienttranslate('${player_name} mixes 2 tokens at ${L1} and ${L2} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),

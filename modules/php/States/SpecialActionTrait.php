@@ -20,8 +20,8 @@ trait SpecialActionTrait
         $remaining = $player->countRemainingPersonalActions();
         $actions =[];
         if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE){
-            if($remaining >= ACTION_COST_MERGE){
-                $actions[] = ACTION_TYPE_MERGE;
+            if($remaining >= ACTION_COST_MIXING){
+                $actions[] = ACTION_TYPE_MIXING;
             }
         }
         else if($flowerType == OPTION_FLOWER_MARONNE){
@@ -66,8 +66,8 @@ trait SpecialActionTrait
         else if($flowerType == OPTION_FLOWER_INSPIRACTRICE){
             // ALL THE PREVIOUS ACTIONS but with a DOUBLE cost
             $cost = ACTION_COST_MODIFIER_INSPIRACTRICE;
-            if($remaining >= $cost * ACTION_COST_MERGE){
-                $actions[] = ACTION_TYPE_MERGE;
+            if($remaining >= $cost * ACTION_COST_MIXING){
+                $actions[] = ACTION_TYPE_MIXING;
             }
             if($remaining >= $cost * ACTION_COST_COMBINATION){
                 $actions[] = ACTION_TYPE_COMBINATION;
@@ -145,9 +145,9 @@ trait SpecialActionTrait
 
         $player->setSelection([]);
         switch($actionType){
-            case ACTION_TYPE_MERGE:
-                $actionCost = ACTION_COST_MERGE;
-                $nextState = "startMerge";
+            case ACTION_TYPE_MIXING:
+                $actionCost = ACTION_COST_MIXING;
+                $nextState = "startMixing";
                 break;
             case ACTION_TYPE_COMBINATION:
                 $actionCost = ACTION_COST_COMBINATION;

@@ -202,13 +202,13 @@
       self::ajaxResponse();
     }
     
-    public function actMerge()
+    public function actMixing()
     {
       self::setAjaxMode();
       self::checkVersion();
       $token1 = self::getArg( "t1", AT_posint, true );
       $token2 = self::getArg( "t2", AT_posint, true );
-      $this->game->actMerge($token1,$token2);
+      $this->game->actMixing($token1,$token2);
       self::ajaxResponse();
     }
     public function actCombination()

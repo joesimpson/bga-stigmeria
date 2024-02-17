@@ -63,7 +63,7 @@ class Stigmeria extends Table
     use STIG\States\SpecialCombinationTrait;
     use STIG\States\SpecialFastMoveTrait;
     use STIG\States\SpecialFulguranceTrait;
-    use STIG\States\SpecialMergeTrait;
+    use STIG\States\SpecialMixingTrait;
     use STIG\States\SpecialRestTrait;
     use STIG\States\SpecialSwapTrait;
     use STIG\States\SpecialTwoBeatsTrait;
