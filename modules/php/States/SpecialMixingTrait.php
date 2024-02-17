@@ -54,7 +54,7 @@ trait SpecialMixingTrait
         $token1->mix($token2,$player,$actionCost);
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
-        Stats::inc("actions_s1",$player->getId());
+        Stats::inc("actions_s".ACTION_TYPE_MIXING,$pId);
         Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($pId, 'next');

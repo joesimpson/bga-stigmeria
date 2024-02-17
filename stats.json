@@ -86,49 +86,41 @@
         "name": "Joker actions",
         "type": "int"
       }
-      ,"actions_s1": {
-        "id": 20,
-        "name": "Mixing actions",
+
+      ,"actions_s11": {
+        "id": 30,
+        "name": "Combination actions",
         "type": "int"
       }
-      ,"actions_s4": {
-        "id": 23,
-        "name": "Diagonal actions",
-        "type": "int"
-      }
-      ,"actions_s5": {
-        "id": 24,
-        "name": "Exchange actions",
-        "type": "int"
-      }
-      ,"actions_s6": {
-        "id": 25,
-        "name": "Fast Step actions",
-        "type": "int"
-      }
-      ,"actions_s7": {
-        "id": 26,
-        "name": "Half Note actions",
-        "type": "int"
-      }
-      ,"actions_s8": {
-        "id": 27,
-        "name": "Quarter Note actions",
-        "type": "int"
-      }
-      ,"actions_s9": {
+      ,"actions_s22": {
         "id": 28,
         "name": "Two Beats actions",
         "type": "int"
       }
-      ,"actions_s23": {
-        "id": 29,
-        "name": "Rest actions",
+      ,"actions_s14": {
+        "id": 23,
+        "name": "Diagonal actions",
         "type": "int"
       }
-      ,"actions_s11": {
-        "id": 30,
-        "name": "Combination actions",
+      ,"actions_s10": {
+        "id": 20,
+        "name": "Mixing actions",
+        "type": "int"
+      }
+
+      ,"actions_s21": {
+        "id": 27,
+        "name": "Quarter Note actions",
+        "type": "int"
+      }
+      ,"actions_s20": {
+        "id": 26,
+        "name": "Half Note actions",
+        "type": "int"
+      }
+      ,"actions_s15": {
+        "id": 24,
+        "name": "Exchange actions",
         "type": "int"
       }
       ,"actions_s12": {
@@ -139,6 +131,18 @@
       ,"actions_s13": {
         "id": 32,
         "name": "Choreography actions",
+        "type": "int"
+      }
+
+      ,"actions_s16": {
+        "id": 25,
+        "name": "Fast Step actions",
+        "type": "int"
+      }
+      
+      ,"actions_s23": {
+        "id": 29,
+        "name": "Rest actions",
         "type": "int"
       }
     }

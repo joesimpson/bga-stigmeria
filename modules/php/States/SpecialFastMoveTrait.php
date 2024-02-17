@@ -60,7 +60,7 @@ trait SpecialFastMoveTrait
         Notifications::useActions($player);
         //EFFECT : MOVE the TOKEN 
         $token->moveToPlayerBoard($player,$row,$column,$actionCost);
-        Stats::inc("actions_s6",$player->getId());
+        Stats::inc("actions_s".ACTION_TYPE_MOVE_FAST,$pId);
         Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($pId, 'next');

@@ -54,7 +54,7 @@ trait ChoiceTokenDiagonalTrait
         
         //EFFECT : MOVE the TOKEN 
         $token->moveToPlayerBoard($player,$row,$column,$actionCost);
-        Stats::inc("actions_s4",$player->getId());
+        Stats::inc("actions_s".ACTION_TYPE_DIAGONAL,$pId);
         Stats::inc("actions",$player->getId());
         
         $this->gamestate->nextPrivateState($player->id, "next");

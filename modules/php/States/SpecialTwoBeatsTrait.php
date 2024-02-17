@@ -54,7 +54,7 @@ trait SpecialTwoBeatsTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
-        Stats::inc("actions_s9",$pId);
+        Stats::inc("actions_s".ACTION_TYPE_TWOBEATS,$pId);
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,+1);
 

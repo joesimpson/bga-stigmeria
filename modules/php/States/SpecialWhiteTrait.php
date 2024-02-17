@@ -109,7 +109,7 @@ trait SpecialWhiteTrait
         }
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
-        Stats::inc("actions_s7",$player->getId());
+        Stats::inc("actions_s".ACTION_TYPE_WHITE,$pId);
         Stats::inc("actions",$player->getId());
         Stats::inc("tokens_board",$pId,-1);
         $player->setSelection([]);

@@ -58,7 +58,7 @@ trait SpecialSwapTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
-        Stats::inc("actions_s5",$player->getId());
+        Stats::inc("actions_s".ACTION_TYPE_SWAP,$pId);
         Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($pId, 'next');
