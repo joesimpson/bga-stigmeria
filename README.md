@@ -32,3 +32,16 @@ Css file is compiled by VSCode extension 'LiveSass Compiler' with these settings
         "/stigmeria.scss",
     ],
 ```
+
+# BGA Options / Preferences format
+
+Written in PHP with many constants.
+Erased in JSON by BGA commit/build.
+
+So we can easily update the JSON version (now included in the workspace) by 
+- deleting the json file in distant BGA folder via FTP (keep it in local workspace)
+- Manage game : reload options (this will use the php options version)
+- call the tchat debug function `debugJSON()`
+- then browser inspect the notif and copy its DOM content. 
+- then copy this JSON to the json file 
+- remove the first keys coming from BGA framework, if not already auto removed by the function

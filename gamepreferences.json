@@ -1,0 +1,53 @@
+{
+    "100": {
+        "name": "Target schema position",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Left of my board"
+            },
+            "2": {
+                "name": "Right of my board"
+            },
+            "20": {
+                "name": "Last"
+            }
+        },
+        "default": 2,
+        "attribute": "stig_schema_order"
+    },
+    "101": {
+        "name": "StigmaReine position (in competitive mode)",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Left of my board"
+            },
+            "2": {
+                "name": "Right of my board"
+            },
+            "20": {
+                "name": "Last"
+            }
+        },
+        "default": 2,
+        "attribute": "stig_stigmareine_order"
+    },
+    "102": {
+        "name": "Special action buttons",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Text and Image"
+            },
+            "2": {
+                "name": "Image only"
+            },
+            "3": {
+                "name": "Text only"
+            }
+        },
+        "default": 1,
+        "attribute": "stig_sp_buttons"
+    }
+}

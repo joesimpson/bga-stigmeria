@@ -12,6 +12,10 @@
  * gameoptions.inc.php
  *
  * Stigmeria game options description
+ * 
+ * NB : 11/2023 new JSON format you can generate it from this file with PHP : 
+ * call the debug function from chat :
+ *    debugJSON()
  *
  */
 
@@ -88,7 +92,7 @@ $game_options = [
         [
           'type' => 'minplayers', 
           'value' => 2, 
-          'message' => totranslate('Competitive modes are is not for solo play'),
+          'message' => totranslate('Competitive modes are not for solo play'),
         ],
       ],
     ],
@@ -1023,7 +1027,7 @@ $game_preferences = [
     'attribute' => 'stig_schema_order',
   ],
   PREF_STIGMAREINE_BOARD_ORDER => [
-    'name' => totranslate('StigmaReine position'),
+    'name' => totranslate('StigmaReine position (in competitive mode)'),
     'needReload' => false,
     'values' => [
       PREF_STIGMAREINE_BOARD_ORDER_LEFT => [ 'name' => totranslate('Left of my board')],

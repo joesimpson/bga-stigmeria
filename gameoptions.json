@@ -1,0 +1,981 @@
+{
+    "100": {
+        "name": "Specific game mode",
+        "values": {
+            "1": {
+                "name": "Discovery",
+                "description": "Learn to play progressively. Reach the goal in 10 turns or more.",
+                "tmdisplay": "Discovery",
+                "firstgameonly": true
+            },
+            "2": {
+                "name": "Normal",
+                "description": "Learn to play progressively. Reach the goal in 10 turns.",
+                "tmdisplay": "Normal"
+            },
+            "3": {
+                "name": "Competitive",
+                "description": "Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns.",
+                "tmdisplay": "Competitive",
+                "nobeginner": true
+            },
+            "4": {
+                "name": "No Limit",
+                "description": "Compete with others to control the StigmaReine (central board). Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.",
+                "tmdisplay": "No Limit",
+                "nobeginner": true
+            },
+            "5": {
+                "name": "Challenge",
+                "description": "Challenge",
+                "tmdisplay": "Challenge",
+                "nobeginner": true,
+                "alpha": true
+            }
+        },
+        "default": 2,
+        "startcondition": {
+            "1": [
+                {
+                    "type": "otheroption",
+                    "id": 201,
+                    "value": 1,
+                    "message": "Discovery is available in training only"
+                }
+            ],
+            "5": [
+                {
+                    "type": "minplayers",
+                    "value": 99,
+                    "message": "Challenge not available in current version"
+                }
+            ],
+            "3": [
+                {
+                    "type": "minplayers",
+                    "value": 2,
+                    "message": "Competitive modes are not for solo play"
+                }
+            ],
+            "4": [
+                {
+                    "type": "minplayers",
+                    "value": 2,
+                    "message": "Competitive modes are not for solo play"
+                }
+            ]
+        },
+        "level": "base"
+    },
+    "101": {
+        "name": "Flower type",
+        "values": {
+            "1": {
+                "name": "VertigHaineuse",
+                "description": "Choose it for your first game ! Green, violet, and orange petals.",
+                "tmdisplay": "VertigHaineuse"
+            },
+            "2": {
+                "name": "MarOnne",
+                "description": "Brown petals.",
+                "tmdisplay": "MarOnne"
+            },
+            "3": {
+                "name": "SiffloChamp",
+                "description": "Black and white petals.",
+                "tmdisplay": "SiffloChamp"
+            },
+            "4": {
+                "name": "DentD\u00eene",
+                "description": "Pink petals and permanent moves.",
+                "tmdisplay": "DentD\u00eene"
+            },
+            "5": {
+                "name": "InspirActrice",
+                "description": "Each variety of petals.",
+                "tmdisplay": "InspirActrice"
+            },
+            "6": {
+                "name": "Competitive",
+                "description": "Competitive card : designed to be played with competitive game mode.",
+                "tmdisplay": "Competitive"
+            },
+            "7": {
+                "name": "Competitive No Limit",
+                "description": "Competitive No Limit card : designed to be played with No Limit game mode.",
+                "tmdisplay": "Competitive No Limit"
+            },
+            "10": {
+                "name": "Random",
+                "description": "Random flower",
+                "tmdisplay": "Random flower"
+            }
+        },
+        "default": 1,
+        "startcondition": {
+            "6": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 2,
+                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
+                },
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 1,
+                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
+                }
+            ],
+            "7": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 2,
+                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
+                },
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 1,
+                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
+                }
+            ]
+        },
+        "level": "base"
+    },
+    "102": {
+        "name": "Difficulty",
+        "values": {
+            "1": {
+                "name": "1 Star",
+                "description": "Normal",
+                "tmdisplay": "1 Star"
+            },
+            "2": {
+                "name": "2 Stars",
+                "description": "Difficult",
+                "tmdisplay": "2 Stars"
+            },
+            "3": {
+                "name": "3 Stars",
+                "description": "Very difficult",
+                "tmdisplay": "3 Stars"
+            },
+            "10": {
+                "name": "Random",
+                "description": "Random difficulty",
+                "tmdisplay": "Random difficulty"
+            }
+        },
+        "default": 1,
+        "displaycondition": [
+            {
+                "type": "otheroptionisnot",
+                "id": 101,
+                "value": 7
+            },
+            {
+                "type": "otheroptionisnot",
+                "id": 101,
+                "value": 10
+            }
+        ],
+        "level": "base"
+    },
+    "103": {
+        "name": "Difficulty",
+        "values": {
+            "4": {
+                "name": "4 Stars",
+                "description": "No Limit",
+                "tmdisplay": "4 Stars"
+            }
+        },
+        "default": 4,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 7
+            }
+        ],
+        "level": "base"
+    },
+    "104": {
+        "name": "Difficulty",
+        "values": {
+            "1": {
+                "name": "1 Star",
+                "description": "Normal",
+                "tmdisplay": "1 Star"
+            },
+            "2": {
+                "name": "2 Stars",
+                "description": "Difficult",
+                "tmdisplay": "2 Stars"
+            },
+            "3": {
+                "name": "3 Stars",
+                "description": "Very difficult",
+                "tmdisplay": "3 Stars"
+            },
+            "4": {
+                "name": "4 Stars",
+                "description": "No Limit",
+                "tmdisplay": "4 Stars"
+            },
+            "10": {
+                "name": "Random",
+                "description": "Random difficulty",
+                "tmdisplay": "Random difficulty"
+            }
+        },
+        "default": 10,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 10
+            }
+        ],
+        "level": "base"
+    },
+    "110": {
+        "name": "Targeted schema",
+        "values": [
+            {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            {
+                "name": "#1",
+                "description": "#1",
+                "tmdisplay": "#1"
+            },
+            {
+                "name": "#2",
+                "description": "#2",
+                "tmdisplay": "#2"
+            }
+        ],
+        "default": 1,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 1
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 1
+            }
+        ],
+        "level": "base"
+    },
+    "111": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "3": {
+                "name": "#3",
+                "description": "#3",
+                "tmdisplay": "#3"
+            },
+            "4": {
+                "name": "#4",
+                "description": "#4",
+                "tmdisplay": "#4"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 1
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 2
+            }
+        ],
+        "level": "base"
+    },
+    "112": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "5": {
+                "name": "#5",
+                "description": "#5",
+                "tmdisplay": "#5"
+            },
+            "6": {
+                "name": "#6",
+                "description": "#6",
+                "tmdisplay": "#6"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 1
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 3
+            }
+        ],
+        "level": "base"
+    },
+    "113": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "7": {
+                "name": "#7",
+                "description": "#7",
+                "tmdisplay": "#7"
+            },
+            "8": {
+                "name": "#8",
+                "description": "#8",
+                "tmdisplay": "#8"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 2
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 1
+            }
+        ],
+        "level": "base"
+    },
+    "114": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "9": {
+                "name": "#9",
+                "description": "#9",
+                "tmdisplay": "#9"
+            },
+            "10": {
+                "name": "#10",
+                "description": "#10",
+                "tmdisplay": "#10"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 2
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 2
+            }
+        ],
+        "level": "base"
+    },
+    "115": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "11": {
+                "name": "#11",
+                "description": "#11",
+                "tmdisplay": "#11"
+            },
+            "12": {
+                "name": "#12",
+                "description": "#12",
+                "tmdisplay": "#12"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 2
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 3
+            }
+        ],
+        "level": "base"
+    },
+    "116": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "13": {
+                "name": "#13",
+                "description": "#13",
+                "tmdisplay": "#13"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 3
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 1
+            }
+        ],
+        "level": "base"
+    },
+    "117": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "14": {
+                "name": "#14",
+                "description": "#14",
+                "tmdisplay": "#14"
+            },
+            "15": {
+                "name": "#15",
+                "description": "#15",
+                "tmdisplay": "#15"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 3
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 2
+            }
+        ],
+        "level": "base"
+    },
+    "118": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "16": {
+                "name": "#16",
+                "description": "#16",
+                "tmdisplay": "#16"
+            },
+            "17": {
+                "name": "#17",
+                "description": "#17",
+                "tmdisplay": "#17"
+            },
+            "18": {
+                "name": "#18",
+                "description": "#18",
+                "tmdisplay": "#18"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 3
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 3
+            }
+        ],
+        "level": "base"
+    },
+    "119": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "19": {
+                "name": "#19",
+                "description": "#19",
+                "tmdisplay": "#19"
+            },
+            "20": {
+                "name": "#20",
+                "description": "#20",
+                "tmdisplay": "#20"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 4
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 1
+            }
+        ],
+        "level": "base"
+    },
+    "120": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "21": {
+                "name": "#21",
+                "description": "#21",
+                "tmdisplay": "#21"
+            },
+            "22": {
+                "name": "#22",
+                "description": "#22",
+                "tmdisplay": "#22"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 4
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 2
+            }
+        ],
+        "level": "base"
+    },
+    "121": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "23": {
+                "name": "#23",
+                "description": "#23",
+                "tmdisplay": "#23"
+            },
+            "24": {
+                "name": "#24",
+                "description": "#24",
+                "tmdisplay": "#24"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 4
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 3
+            }
+        ],
+        "level": "base"
+    },
+    "122": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "25": {
+                "name": "#25",
+                "description": "#25",
+                "tmdisplay": "#25"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 5
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 1
+            }
+        ],
+        "level": "base"
+    },
+    "123": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "26": {
+                "name": "#26",
+                "description": "#26",
+                "tmdisplay": "#26"
+            },
+            "27": {
+                "name": "#27",
+                "description": "#27",
+                "tmdisplay": "#27"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 5
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 2
+            }
+        ],
+        "level": "base"
+    },
+    "124": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "28": {
+                "name": "#28",
+                "description": "#28",
+                "tmdisplay": "#28"
+            },
+            "29": {
+                "name": "#29",
+                "description": "#29",
+                "tmdisplay": "#29"
+            },
+            "30": {
+                "name": "#30",
+                "description": "#30",
+                "tmdisplay": "#30"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 5
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 3
+            }
+        ],
+        "level": "base"
+    },
+    "125": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "31": {
+                "name": "#31",
+                "description": "#31",
+                "tmdisplay": "#31"
+            },
+            "32": {
+                "name": "#32",
+                "description": "#32",
+                "tmdisplay": "#32"
+            },
+            "33": {
+                "name": "#33",
+                "description": "#33",
+                "tmdisplay": "#33"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 6
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 1
+            }
+        ],
+        "level": "base"
+    },
+    "126": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "34": {
+                "name": "#34",
+                "description": "#34",
+                "tmdisplay": "#34"
+            },
+            "35": {
+                "name": "#35",
+                "description": "#35",
+                "tmdisplay": "#35"
+            },
+            "36": {
+                "name": "#36",
+                "description": "#36",
+                "tmdisplay": "#36"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 6
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 2
+            }
+        ],
+        "level": "base"
+    },
+    "127": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "37": {
+                "name": "#37",
+                "description": "#37",
+                "tmdisplay": "#37"
+            },
+            "38": {
+                "name": "#38",
+                "description": "#38",
+                "tmdisplay": "#38"
+            },
+            "39": {
+                "name": "#39",
+                "description": "#39",
+                "tmdisplay": "#39"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 6
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 3
+            }
+        ],
+        "level": "base"
+    },
+    "128": {
+        "name": "Targeted schema",
+        "values": {
+            "0": {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            },
+            "40": {
+                "name": "#40",
+                "description": "#40",
+                "tmdisplay": "#40"
+            },
+            "41": {
+                "name": "#41",
+                "description": "#41",
+                "tmdisplay": "#41"
+            },
+            "42": {
+                "name": "#42",
+                "description": "#42",
+                "tmdisplay": "#42"
+            },
+            "43": {
+                "name": "#43",
+                "description": "#43",
+                "tmdisplay": "#43"
+            },
+            "44": {
+                "name": "#44",
+                "description": "#44",
+                "tmdisplay": "#44"
+            },
+            "45": {
+                "name": "#45",
+                "description": "#45",
+                "tmdisplay": "#45"
+            },
+            "46": {
+                "name": "#46",
+                "description": "#46",
+                "tmdisplay": "#46"
+            },
+            "47": {
+                "name": "#47",
+                "description": "#47",
+                "tmdisplay": "#47"
+            },
+            "48": {
+                "name": "#48",
+                "description": "#48",
+                "tmdisplay": "#48"
+            },
+            "49": {
+                "name": "#49",
+                "description": "#49",
+                "tmdisplay": "#49"
+            }
+        },
+        "default": 0,
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 7
+            }
+        ],
+        "level": "base"
+    },
+    "130": {
+        "name": "Targeted schema",
+        "values": [
+            {
+                "name": "Random",
+                "description": "Random schema",
+                "tmdisplay": "Random schema"
+            }
+        ],
+        "default": 0,
+        "displayconditionoperand": "or",
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 101,
+                "value": 10
+            },
+            {
+                "type": "otheroption",
+                "id": 102,
+                "value": 10
+            }
+        ],
+        "level": "base"
+    },
+    "190": {
+        "name": "Joker",
+        "values": [
+            {
+                "name": "0",
+                "description": "0 Joker to use in the game"
+            },
+            {
+                "name": "1",
+                "description": "1 Joker to use in the game. Optional but designed to help fight bad luck. Its use will result in a defeat in the event of a tie.",
+                "tmdisplay": "1 Joker"
+            }
+        ],
+        "default": 1,
+        "level": "additional"
+    }
+}

@@ -12,6 +12,39 @@ use STIG\Managers\Tokens;
 
 trait DebugTrait
 {
+  /**
+   * Function to call to regenerate JSON from PHP (when json file is removed)
+   */
+  function debugJSON(){
+    $customOptions = $this->getTableOptions();
+    //AUTO REMOVE BGA OPTIONS:
+    foreach($customOptions as $key => $option){
+      if($key <100 || $key>=200){
+        unset($customOptions[$key]);
+      }
+      else {
+        //there is a strange boolTrueId =null  and "type": "choice"
+        unset($customOptions[$key]['boolTrueId']);
+        unset($customOptions[$key]['type']);
+      }
+    }
+    $json = json_encode($customOptions, JSON_PRETTY_PRINT);
+    //Formatting options as json -> copy the DOM of this log : \n
+    Notifications::message("$json",['json' => $json]);
+    
+    $customOptions = $this->getTablePreferences();
+    //AUTO REMOVE BGA OPTIONS:
+    foreach($customOptions as $key => $option){
+      if($key <100 || $key>=200){
+        unset($customOptions[$key]);
+      }
+    }
+    $json = json_encode($customOptions, JSON_PRETTY_PRINT);
+    //Formatting prefs as json -> copy the DOM of this log : \n
+    Notifications::message("$json",['json' => $json]);
+  }
+
+  /*
   function debugForceState()
   {
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
@@ -35,9 +68,7 @@ trait DebugTrait
     Tokens::shuffle(TOKEN_LOCATION_PLAYER_DECK.$player->id);
   }
   
-  /**
-   * Add many actions ! YEAH
-   */
+  // Add many actions ! YEAH
   function debugManyActions()
   {
     $player = Players::getCurrent();
@@ -69,7 +100,6 @@ trait DebugTrait
     $player = Players::getCurrent();
     $schema = Schemas::getCurrentSchema();
     //----------------------------------------
-    /*
     //RESET BOARD to match :
     $tokens = [];
     Tokens::deleteAllAtLocation(TOKEN_LOCATION_PLAYER_BOARD,$player->id);
@@ -84,7 +114,6 @@ trait DebugTrait
       ];
     }
     Tokens::create($tokens);
-    */
     //-------------------------------------------
     $isWin = $this->isSchemaFulfilled($player);
     if($isWin) Notifications::message('Schema fulfilled !',[]);
@@ -179,4 +208,5 @@ trait DebugTrait
     $markers = $cellsMarkers[1];
     $this->trace("debugPathFinding(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
   }
+  */
 }
