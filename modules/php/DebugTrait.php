@@ -70,7 +70,7 @@ trait DebugTrait
     $schema = Schemas::getCurrentSchema();
     //----------------------------------------
     /*
-    RESET BOARD to match :
+    //RESET BOARD to match :
     $tokens = [];
     Tokens::deleteAllAtLocation(TOKEN_LOCATION_PLAYER_BOARD,$player->id);
     foreach($schema->end as $token){
@@ -90,6 +90,11 @@ trait DebugTrait
     if($isWin) Notifications::message('Schema fulfilled !',[]);
     else Notifications::message('Schema in progress...',[]);
   }
+
+  function debugScoring(){
+    $this->computeSchemaScoring();
+  }
+
   function debugWinners()
   {
     $winners = Players::getAll()->getIds();

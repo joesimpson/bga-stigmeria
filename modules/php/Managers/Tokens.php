@@ -82,9 +82,12 @@ class Tokens extends \STIG\Helpers\Pieces
     foreach ($players as $pId => $player) {
         self::shuffle(TOKEN_LOCATION_PLAYER_DECK.$pId);
         //Draw 1 to each recruit zone :
-        self::pickForLocation(1,TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
+        $token = self::pickOneForLocation(TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
         Stats::inc("tokens_deck",$pId, -1);
         Stats::inc("tokens_recruit",$pId);
+        if(TOKEN_STIG_YELLOW == $token->getType()){
+          $player->addTieBreakerPoints(1);
+        }
     }
 
     return self::getAll();

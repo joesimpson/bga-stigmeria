@@ -501,7 +501,7 @@ $machinestates = array(
     ),
     ST_END_SCORING => array(
         "name" => "scoring",
-        "description" => clienttranslate('Scoring'),
+        "description" => '', //clienttranslate('Scoring'),
         "type" => "game",
         "action" => "stScoring",
         "transitions" => [ 
@@ -519,7 +519,7 @@ $machinestates = array(
         ],
     ),
     /*
-    END GAME TESTING STATE
+    //END GAME TESTING STATE
     96 => [ // active player state for debugging end of game
         "name" => "playerGameEnd",
         "description" => clienttranslate('${actplayer} Game Over'),

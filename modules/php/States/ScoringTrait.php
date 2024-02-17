@@ -13,6 +13,16 @@ trait ScoringTrait
   
   public function stScoring()
   {
+    //Schema is chosen at round start => so it is scored at round end
+    //$this->computeSchemaScoring();
+
+    $this->gamestate->nextState('next');
+  }
+
+
+  public function computeSchemaScoring()
+  {
+    self::trace("computeSchemaScoring()");
     $turn = Globals::getTurn();
     $schema = Schemas::getCurrentSchema();
     $winnersIds = Globals::getWinnersIds();
@@ -75,14 +85,15 @@ trait ScoringTrait
         Notifications::addPoints($player,SCORE_JOKER_USED,clienttranslate('${player_name} scores ${n} points for using the joker'));
       }
       $player->addPoints($score);
+      //TiE BREAKER:
+      $yellowTokens = Tokens::countRecruits($pId,[TOKEN_STIG_YELLOW]);
+      $player->setTieBreakerPoints($yellowTokens);
     }
-    
-    $this->gamestate->nextState('next');
   }
   
   public function stPreEndOfGame()
   {
-    Notifications::message('Game is ending...');
+    Notifications::message(clienttranslate('Game is ending...'));
     $this->gamestate->nextState('next');
   }
 }

@@ -12,6 +12,8 @@ trait EndRoundTrait
     self::trace("stEndRound()");
 
     Notifications::emptyNotif();
+    
+    $this->computeSchemaScoring();
 
     $this->gamestate->nextState('end');
   }

@@ -139,6 +139,11 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     } else if( str_starts_with($this->getLocation(),TOKEN_LOCATION_PLAYER_DECK) ){
       $fromDeck = true;
     }
+    else if($this->getLocation() == TOKEN_LOCATION_PLAYER_RECRUIT ){
+      if(TOKEN_STIG_YELLOW == $this->getType()){
+        $player->addTieBreakerPoints(-1);
+      }
+    }
     $this->setLocation(TOKEN_LOCATION_PLAYER_BOARD);
     $this->setPId($player->getId());
     $this->setCol($column);
@@ -169,6 +174,11 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     if($this->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD ){
       $fromBoard = true;
       $fromCoord = $this->getCoordName();
+    }
+    else if($this->getLocation() == TOKEN_LOCATION_PLAYER_RECRUIT ){
+      if(TOKEN_STIG_YELLOW == $this->getType()){
+        $player->addTieBreakerPoints(-1);
+      }
     }
     $this->setLocation(TOKEN_LOCATION_CENTRAL_BOARD);
     $this->setPId(null);
@@ -203,6 +213,9 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     if($fromBoard){
       Stats::inc("tokens_board",$player->getId(),-1);
       Notifications::moveBackToRecruit($player, $this,$fromCoord,$actionCost);
+      if(TOKEN_STIG_YELLOW == $this->getType()){
+        $player->addTieBreakerPoints(1);
+      }
     }
     /* TODO if neeeded
     else {
@@ -216,6 +229,11 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    */
   public function moveToRecruitZoneCentral($player,$actionCost)
   {
+    if($this->getLocation() == TOKEN_LOCATION_PLAYER_RECRUIT ){
+      if(TOKEN_STIG_YELLOW == $this->getType()){
+        $player->addTieBreakerPoints(-1);
+      }
+    }
     $fromCoord = $this->getCoordName();
     $this->setLocation(TOKEN_LOCATION_CENTRAL_RECRUIT);
     $this->setPId(null);

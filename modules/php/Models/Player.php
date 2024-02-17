@@ -76,6 +76,16 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setScore( $this->getScore() + $points);
     Stats::inc( "score", $this->id, $points );
   }
+  
+  public function setTieBreakerPoints($points)
+  {
+    $this->setScoreAux($points);
+  }
+  public function addTieBreakerPoints($points)
+  {
+    if($points == 0) return;
+    $this->incScoreAux($points);
+  }
 
   /**
    * Sets player datas related to turn number $turnIndex
