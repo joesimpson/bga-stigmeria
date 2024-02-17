@@ -391,7 +391,7 @@ function (dojo, declare) {
         }, 
         formatSpecialActionButton: function(text,actionType,possibleActions) {
             if(possibleActions.includes(actionType)){
-                let divText = `<div><div class='stig_sp_action_text'>`+this.translate(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
+                let divText = `<div><div class='stig_sp_action_text'>`+_(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
                 this.addImageActionButton('btnStartSp'+actionType,divText , () => this.takeAction('actChoiceSpecial', {act:actionType}));
             }
         },
@@ -400,17 +400,17 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpecialAction() ', args );
             
             let possibleActions = args.a;
-            this.formatSpecialActionButton('Mixing',ACTION_TYPE_MERGE,possibleActions);
-            this.formatSpecialActionButton('Combination',ACTION_TYPE_COMBINATION,possibleActions);
-            this.formatSpecialActionButton('Fulgurance',ACTION_TYPE_FULGURANCE,possibleActions);
-            this.formatSpecialActionButton('Choreography',ACTION_TYPE_CHOREOGRAPHY,possibleActions);
-            this.formatSpecialActionButton('Diagonal',ACTION_TYPE_DIAGONAL,possibleActions);
-            this.formatSpecialActionButton('Exchange',ACTION_TYPE_SWAP,possibleActions);
-            this.formatSpecialActionButton('Fast Step',ACTION_TYPE_MOVE_FAST,possibleActions);
-            this.formatSpecialActionButton('Half Note',ACTION_TYPE_WHITE,possibleActions);
-            this.formatSpecialActionButton('Quarter Note',ACTION_TYPE_BLACK,possibleActions);
-            this.formatSpecialActionButton('Two Beats',ACTION_TYPE_TWOBEATS,possibleActions);
-            this.formatSpecialActionButton('Rest',ACTION_TYPE_REST,possibleActions);
+            this.formatSpecialActionButton(_('Mixing'),ACTION_TYPE_MERGE,possibleActions);
+            this.formatSpecialActionButton(_('Combination'),ACTION_TYPE_COMBINATION,possibleActions);
+            this.formatSpecialActionButton(_('Fulgurance'),ACTION_TYPE_FULGURANCE,possibleActions);
+            this.formatSpecialActionButton(_('Choreography'),ACTION_TYPE_CHOREOGRAPHY,possibleActions);
+            this.formatSpecialActionButton(_('Diagonal'),ACTION_TYPE_DIAGONAL,possibleActions);
+            this.formatSpecialActionButton(_('Exchange'),ACTION_TYPE_SWAP,possibleActions);
+            this.formatSpecialActionButton(_('Fast Step'),ACTION_TYPE_MOVE_FAST,possibleActions);
+            this.formatSpecialActionButton(_('Half Note'),ACTION_TYPE_WHITE,possibleActions);
+            this.formatSpecialActionButton(_('Quarter Note'),ACTION_TYPE_BLACK,possibleActions);
+            this.formatSpecialActionButton(_('Two Beats'),ACTION_TYPE_TWOBEATS,possibleActions);
+            this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
