@@ -626,16 +626,45 @@
   position: absolute;
   text-align: center;
   background-color: rgb(206, 247, 158);
-  border-radius: 25px;
   padding: 6px 20px;
   font-size: 26px;
-  outline: 5px solid gold;
   box-shadow: 0 0 20px gold;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  /** Safari issue : recreate the outline from scratch with after element */
+}
+.stig_schema_board .stig_schema_number::after,
+.stig_schema_board .stig_schema_difficulty::after,
+.stig_schema_board .stig_schema_name::after,
+.stig_schema_board .player-name::after,
+.stig_central_board .stig_schema_number::after,
+.stig_central_board .stig_schema_difficulty::after,
+.stig_central_board .stig_schema_name::after,
+.stig_central_board .player-name::after,
+.stig_player_board .stig_schema_number::after,
+.stig_player_board .stig_schema_difficulty::after,
+.stig_player_board .stig_schema_name::after,
+.stig_player_board .player-name::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 25px;
+  border-style: solid;
+  border-width: 5px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
 }
 .stig_schema_board .player-name,
 .stig_central_board .player-name,
 .stig_player_board .player-name {
-  background: linear-gradient(90deg, #85ba2d 15%, #436b2a 25%, #2a7970 50%, #559f37 75%, #64bd53 85%);
+  background: linear-gradient(90deg, #92b559 15%, #88b36e 25%, #67aca4 50%, #93ff67 75%, #61c64e 85%);
   text-shadow: 2px 0px 2px black, 0px 2px 2px black, -2px 0px 2px black, 0px -2px 2px black;
 }
 .stig_schema_board .player-name[style*="color:#0000ff"], .stig_schema_board .player-name[style*="color:#000000"], .stig_schema_board .player-name[style*="color:#008000"], .stig_schema_board .player-name[style*="color:#773300"], .stig_schema_board .player-name[style*="color:#982fff"],
@@ -663,14 +692,17 @@
   color: gold;
   background-color: rgb(0, 0, 0);
 }
-.stig_schema_board .stig_schema_name,
 .stig_schema_board .player-name,
-.stig_central_board .stig_schema_name,
 .stig_central_board .player-name,
-.stig_player_board .stig_schema_name,
 .stig_player_board .player-name {
   top: 3px;
   right: 20%;
+}
+.stig_schema_board .stig_schema_name,
+.stig_central_board .stig_schema_name,
+.stig_player_board .stig_schema_name {
+  top: 3px;
+  right: 5%;
 }
 .stig_schema_board .stig_schema_difficulty,
 .stig_central_board .stig_schema_difficulty,
@@ -702,10 +734,12 @@
 .stig_player_board .stig_schema_number {
   bottom: 16px;
   font-size: 51px;
+  /* moved in after
   border-top-left-radius: 100px;
   border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
   border-bottom-left-radius: 100px;
+  */
 }
 .stig_schema_board .stig_recruits,
 .stig_central_board .stig_recruits,
@@ -1896,8 +1930,20 @@
   background-size: 370px;
   background-position-x: 2293px;
   background-position-y: 2293px;
-  outline: 3px solid black;
   box-shadow: 0px 0px 10px 5px gold;
+  /** Safari issue : recreate the outline from scratch with after element */
+}
+.stig_icon.stig_actions::after,
+.stig_turn_marker::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 100%;
+  border-style: solid;
+  border-width: 3px;
 }
 
 .stig_turn_marker_container {
