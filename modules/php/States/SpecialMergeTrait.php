@@ -10,6 +10,10 @@ use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
 
+/**
+ * Function related to using special Action 'Mixing', 
+ * sorry for the wrong original name 'Merge' (translation mistake)
+ */
 trait SpecialMergeTrait
 {
     public function argSpMerge($player_id)

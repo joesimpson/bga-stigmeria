@@ -723,7 +723,7 @@ function (dojo, declare) {
             this._counters[n.args.player_id]['pollens'].incValue(1);
         },
         notif_spMerge(n) {
-            debug('notif_spMerge: tokens are merged !', n);
+            debug('notif_spMerge: tokens are mixed !', n);
             let token1 = n.args.token1;
             let token2 = n.args.token2;
             let div1 = $(`stig_token_${token1.id}`);
@@ -890,11 +890,11 @@ function (dojo, declare) {
                 
                 document.querySelectorAll('.stig_icon_container_tokens_recruit').forEach((e) => e.dataset.flower_type = this.getFlowerType());
 
-                this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bags'),'');
+                this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bag'),'');
                 this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
                 this.addTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'),'');
                 this.addTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'),'');
-                this.addTooltip(`stig_reserve_${player.id}_actions`, _('Actions done'),'');
+                this.addTooltip(`stig_reserve_${player.id}_actions`, _('Actions on player board'),'');
 
                 let pId = player.id;
                 this._counters[pId] = {

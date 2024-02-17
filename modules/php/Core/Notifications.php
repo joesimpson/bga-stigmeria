@@ -333,7 +333,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spMerge($player,$token1,$token2,$actionCost){
-    self::notifyAll('spMerge',clienttranslate('${player_name} merges 2 tokens at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+    self::notifyAll('spMerge',clienttranslate('${player_name} mixes 2 tokens at ${L1} and ${L2} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -399,7 +399,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spWhite($player,$token1,$token2,$actionCost){
-    self::notifyAll('spWhite',clienttranslate('${player_name} use the white action to merge stigmerians at ${L1} and ${L2} into ${L1} (cost: ${n} actions)'),[ 
+    self::notifyAll('spWhite',clienttranslate('${player_name} use the Half Note action to merge stigmerians at ${L1} and ${L2} into ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),

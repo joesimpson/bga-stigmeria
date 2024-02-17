@@ -93,7 +93,7 @@ trait ScoringTrait
   
   public function stPreEndOfGame()
   {
-    Notifications::message(clienttranslate('Game is ending...'));
+    //Notifications::message(clienttranslate('Game is ending...'));
     $this->gamestate->nextState('next');
   }
 }

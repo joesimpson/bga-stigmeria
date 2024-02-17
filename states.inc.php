@@ -299,7 +299,7 @@ $machinestates = array(
     ],
     ST_TURN_SPECIAL_ACT_MERGE => [
         "name" => "spMerge",
-        "descriptionmyturn" => clienttranslate('${you} may choose 2 adjacents tokens to merge'), 
+        "descriptionmyturn" => clienttranslate('${you} may choose 2 adjacents tokens to mix'), 
         "type" => "private",
         "args" => "argSpMerge",
         "possibleactions" => [

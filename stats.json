@@ -36,7 +36,7 @@
       }
       ,"tokens_recruit": {
         "id": 52,
-        "name": "Tokens on recruit zone",
+        "name": "Tokens in recruit zone",
         "type": "int"
       }
       ,"tokens_deck": {
@@ -46,7 +46,7 @@
       }
       ,"pollens_board": {
         "id": 54,
-        "name": "Pollens on board",
+        "name": "Pollens on flower",
         "type": "int"
       }
 
@@ -88,7 +88,7 @@
       }
       ,"actions_s1": {
         "id": 20,
-        "name": "Merge actions",
+        "name": "Mixing actions",
         "type": "int"
       }
       ,"actions_s4": {
@@ -98,17 +98,17 @@
       }
       ,"actions_s5": {
         "id": 24,
-        "name": "Swap actions",
+        "name": "Exchange actions",
         "type": "int"
       }
       ,"actions_s6": {
         "id": 25,
-        "name": "Fast move actions",
+        "name": "Fast Step actions",
         "type": "int"
       }
       ,"actions_s7": {
         "id": 26,
-        "name": "White actions",
+        "name": "Half Note actions",
         "type": "int"
       }
       ,"actions_s8": {
