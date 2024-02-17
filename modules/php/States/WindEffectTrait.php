@@ -90,6 +90,7 @@ trait WindEffectTrait
     //self::trace("doWindBlowsTo($windDir)");
 
     if($token->isPollen()) return false;
+    $fromCoord = $token->getCoordName();
 
     switch($windDir){
       case WIND_DIR_SOUTH:
@@ -118,10 +119,18 @@ trait WindEffectTrait
 
     if($token->isOutOfGrid()){
       self::trace("doWindBlowsTo($windDir) token is out of grid :".json_encode($token));
-      if($token->getPId() !== null ) Stats::inc("tokens_board",$token->getPId(), -1);
-      //TODO JSA ELIMINATE player WHEN NORMAL MODE
+      if(isset($player)){
+        Stats::inc("tokens_board",$player, -1);
+        if(!Globals::isModeCompetitive()){
+          //ELIMINATE player WHEN NORMAL MODE
+          $token->setLocation(TOKEN_LOCATION_OUT);
+          Notifications::windElimination($player,$token,$fromCoord);
+          self::eliminatePlayer( $player->id );
+          return true;
+        }
+      }
       
-      //TODO JSA ELSE MOVE it or DELETE it ?
+      //TODO JSA COMPETITIVE MODE : MOVE it TO RECRUIT ZONE
       $token->setLocation(TOKEN_LOCATION_OUT);
       $token->setPId(null);
       $token->setRow(null);

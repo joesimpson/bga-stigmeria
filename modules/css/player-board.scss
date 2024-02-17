@@ -191,7 +191,6 @@
         border-bottom-right-radius: 100px;
         border-bottom-left-radius: 100px;
     }
-    
     .stig_recruits{
         display: flex;
         flex-flow: column;
@@ -208,6 +207,14 @@
                 margin-bottom: -40px;
             }
         }
+    }
+    
+    .stig_grid_out{
+        display: flex;
+        flex-flow: row;
+        position: absolute;
+        right: 100px;
+        bottom: 100px;
     }
 
     .stig_wind_dir_container{

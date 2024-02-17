@@ -848,6 +848,15 @@
 .stig_player_board .stig_recruits .stig_recruits_type .stig_token {
   margin-bottom: -40px;
 }
+.stig_schema_board .stig_grid_out,
+.stig_central_board .stig_grid_out,
+.stig_player_board .stig_grid_out {
+  display: flex;
+  flex-flow: row;
+  position: absolute;
+  right: 100px;
+  bottom: 100px;
+}
 .stig_schema_board .stig_wind_dir_container .stig_wind_dir[data-turn="1"],
 .stig_central_board .stig_wind_dir_container .stig_wind_dir[data-turn="1"],
 .stig_player_board .stig_wind_dir_container .stig_wind_dir[data-turn="1"] {

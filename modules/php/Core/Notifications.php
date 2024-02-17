@@ -488,6 +488,21 @@ class Notifications
   
   /**
    * @param Player $player
+   * @param StigmerianToken $token
+   * @param string $fromCoord
+   */
+  public static function windElimination($player,$token,$fromCoord){
+    $message = clienttranslate('Wind eliminates ${player_name} by moving a token out of their board (from ${coord}) !');
+    self::notifyAll('windElimination',$message,[ 
+        'player' => $player,
+        'coord' => $fromCoord,
+      ],
+    );
+  }
+  
+  
+  /**
+   * @param Player $player
    */
   public static function schemaFulfilled($player){
     self::notifyAll('schemaFulfilled',clienttranslate('${player_name} successfully fulfilled the schema !'),[ 

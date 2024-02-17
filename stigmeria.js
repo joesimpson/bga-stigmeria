@@ -1004,6 +1004,8 @@ function (dojo, declare) {
                     </div>
                     <div id="stig_grid_${player.id}" class='stig_grid'>
                     </div>
+                    <div id="stig_grid_out_${player.id}" class='stig_grid_out'>
+                    </div>
                 </div>
             </div>
             </div>`;
@@ -1188,7 +1190,10 @@ function (dojo, declare) {
                     return tokenHolder.id;
                 }
                 return $(`stig_grid_${token.pId}`);
-                //TODO JSA IF row/col out of grid (after wind for example, don't show it there)
+            }
+            else if (token.location == 'OUT') {
+                //IF row/col out of grid (after wind for example, don't show it ? )
+                return $(`stig_grid_out_${token.pId}`);
             }
             else if (token.location == 'player_recruit') {
                 let recruitTypeZone = `stig_recruits_${token.pId}_${token.type}`;
