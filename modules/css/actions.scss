@@ -1,0 +1,76 @@
+#customActions{
+    .stig_sp_action{
+        width: 98px;
+        height: 58px;
+        background-image: url("img/actions.jpg");
+        background-size: 800%;
+        margin-left: 5px;
+        border-radius: 12px;
+
+        &[data-type="10"]{
+            //ACTION_TYPE_MERGE
+            background-position-x: 731px;
+            background-position-y: 349px;
+        }
+        &[data-type="11"]{
+            //ACTION_TYPE_COMBINATION
+            background-position-x: 731px;
+            background-position-y: 616px;
+        }
+        &[data-type="12"]{
+            //ACTION_TYPE_FULGURANCE
+            background-position-x: 495px;
+            background-position-y: 349px;
+        }
+        &[data-type="13"]{
+            //ACTION_TYPE_CHOREOGRAPHY
+            background-position-x: 1034px;
+            background-position-y: 714px;
+        }
+        &[data-type="14"]{
+            //ACTION_TYPE_DIAGONAL
+            width: 60px;
+            background-size: 1502%;
+            background-position-x: -84px;
+            background-position-y: 496px;
+        }
+        &[data-type="15"]{
+            //ACTION_TYPE_SWAP
+            background-position-x: 548px;
+            background-position-y: 517px;
+            height: 67px;
+            width: 62px;
+            background-size: 1490%;
+        }
+        &[data-type="16"]{
+            //ACTION_TYPE_MOVE_FAST
+            background-position-x: 286px;
+            background-position-y: 517px;
+            height: 67px;
+            width: 96px;
+            background-size: 949%;
+        }
+        
+        &[data-type="20"]{
+            //ACTION_TYPE_WHITE
+            background-position-x: 1283px;
+            background-position-y: 714px;
+        }
+        &[data-type="21"]{
+            //ACTION_TYPE_BLACK
+            background-position-x: 731px;
+            background-position-y: 180px;
+        }
+        &[data-type="22"]{
+            //ACTION_TYPE_TWOBEATS
+            background-position-x: 731px;
+            background-position-y: 531px;
+        }
+        &[data-type="23"]{
+            //ACTION_TYPE_REST
+            background-position-x: 1040px;
+            background-position-y: 268px;
+        }
+    }
+    
+}

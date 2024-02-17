@@ -105,6 +105,7 @@ function (dojo, declare) {
             this.dontPreloadImage( 'flower3.jpg' );
             this.dontPreloadImage( 'flower4.jpg' );
             this.dontPreloadImage( 'flower5.jpg' );
+            this.dontPreloadImage( 'actions.jpg' );
 
             this.setupCentralBoard();
             this.setupSchemaBoard();
@@ -386,45 +387,29 @@ function (dojo, declare) {
             this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id,'actMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
-        
+        formatSpecialActionButton: function(text,actionType,possibleActions) {
+            if(possibleActions.includes(actionType)){
+                let divText = `<div>`+this.translate(text)+`<div class='stig_sp_action' data-type='${actionType}'></div></div>`;
+                this.addImageActionButton('btnStartSp'+actionType,divText , () => this.takeAction('actChoiceSpecial', {act:actionType}));
+            }
+        },
         onEnteringStateSpecialAction: function(args)
         {
             debug( 'onEnteringStateSpecialAction() ', args );
             
             let possibleActions = args.a;
-            if(possibleActions.includes(ACTION_TYPE_MERGE)){
-                this.addPrimaryActionButton('btnStartMerge', _('Merge'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MERGE}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_COMBINATION)){
-                this.addPrimaryActionButton('btnStartCombination', _('Combination'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_COMBINATION}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_FULGURANCE)){
-                this.addPrimaryActionButton('btnStartFulgurance', _('Fulgurance'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_FULGURANCE}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_CHOREOGRAPHY)){
-                this.addPrimaryActionButton('btnStartChoreography', _('Choreography'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_CHOREOGRAPHY}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_DIAGONAL)){
-                this.addPrimaryActionButton('btnStartDiagonal', _('Diagonal'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_DIAGONAL}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_SWAP)){
-                this.addPrimaryActionButton('btnStartSwap', _('Swap'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_SWAP}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_MOVE_FAST)){
-                this.addPrimaryActionButton('btnStartFastMove', _('Fast move'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_MOVE_FAST}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_WHITE)){
-                this.addPrimaryActionButton('btnStartWhite', _('White'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_WHITE}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_BLACK)){
-                this.addPrimaryActionButton('btnStartBlack', _('Quarter Note'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_BLACK}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_TWOBEATS)){
-                this.addPrimaryActionButton('btnStartTwoBeats', _('Two Beats'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_TWOBEATS}));
-            }
-            if(possibleActions.includes(ACTION_TYPE_REST)){
-                this.addPrimaryActionButton('btnStartRest', _('Rest'), () => this.takeAction('actChoiceSpecial', {act:ACTION_TYPE_REST}));
-            }
+            this.formatSpecialActionButton('Mixing',ACTION_TYPE_MERGE,possibleActions);
+            this.formatSpecialActionButton('Combination',ACTION_TYPE_COMBINATION,possibleActions);
+            this.formatSpecialActionButton('Fulgurance',ACTION_TYPE_FULGURANCE,possibleActions);
+            this.formatSpecialActionButton('Choreography',ACTION_TYPE_CHOREOGRAPHY,possibleActions);
+            this.formatSpecialActionButton('Diagonal',ACTION_TYPE_DIAGONAL,possibleActions);
+            this.formatSpecialActionButton('Exchange',ACTION_TYPE_SWAP,possibleActions);
+            this.formatSpecialActionButton('Fast Step',ACTION_TYPE_MOVE_FAST,possibleActions);
+            this.formatSpecialActionButton('Half Note',ACTION_TYPE_WHITE,possibleActions);
+            this.formatSpecialActionButton('Quarter Note',ACTION_TYPE_BLACK,possibleActions);
+            this.formatSpecialActionButton('Two Beats',ACTION_TYPE_TWOBEATS,possibleActions);
+            this.formatSpecialActionButton('Rest',ACTION_TYPE_REST,possibleActions);
+            
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
