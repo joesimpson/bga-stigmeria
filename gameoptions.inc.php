@@ -1033,4 +1033,16 @@ $game_preferences = [
     "default"=> PREF_STIGMAREINE_BOARD_ORDER_RIGHT,
     'attribute' => 'stig_stigmareine_order',
   ],
+  
+  PREF_SP_BUTTONS => [
+    'name' => totranslate('Special action buttons'),
+    'needReload' => false,
+    'values' => [
+      PREF_SP_BUTTONS_IMAGES_AND_TEXT => [ 'name' => totranslate('Text and Image')],
+      PREF_SP_BUTTONS_IMAGES_ONLY => ['name' => totranslate('Image only')],
+      PREF_SP_BUTTONS_TEXT_ONLY => [ 'name' => totranslate('Text only') ],
+    ],
+    "default"=> PREF_SP_BUTTONS_IMAGES_AND_TEXT,
+    'attribute' => 'stig_sp_buttons',
+  ],
 ];

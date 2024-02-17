@@ -45,6 +45,7 @@ function (dojo, declare) {
     
     const PREF_SCHEMA_BOARD_ORDER = 100;
     const PREF_STIGMAREINE_BOARD_ORDER = 101;
+    const PREF_SP_BUTTONS = 102;
 
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
@@ -148,6 +149,7 @@ function (dojo, declare) {
                     },
                   },
                 },
+                spButtonsStyle: { type: 'pref', prefId: PREF_SP_BUTTONS },
             };
         },
         
@@ -389,7 +391,7 @@ function (dojo, declare) {
         }, 
         formatSpecialActionButton: function(text,actionType,possibleActions) {
             if(possibleActions.includes(actionType)){
-                let divText = `<div>`+this.translate(text)+`<div class='stig_sp_action' data-type='${actionType}'></div></div>`;
+                let divText = `<div><div class='stig_sp_action_text'>`+this.translate(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
                 this.addImageActionButton('btnStartSp'+actionType,divText , () => this.takeAction('actChoiceSpecial', {act:actionType}));
             }
         },
@@ -409,7 +411,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton('Quarter Note',ACTION_TYPE_BLACK,possibleActions);
             this.formatSpecialActionButton('Two Beats',ACTION_TYPE_TWOBEATS,possibleActions);
             this.formatSpecialActionButton('Rest',ACTION_TYPE_REST,possibleActions);
-            
+
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         

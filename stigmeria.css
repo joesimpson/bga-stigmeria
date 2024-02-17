@@ -2182,7 +2182,7 @@
   background-position-y: 75%;
 }
 
-#customActions .stig_sp_action {
+#customActions .stig_sp_action_image {
   width: 98px;
   height: 58px;
   background-image: url("img/actions.jpg");
@@ -2190,57 +2190,71 @@
   margin-left: 5px;
   border-radius: 12px;
 }
-#customActions .stig_sp_action[data-type="10"] {
+#customActions .stig_sp_action_image[data-type="10"] {
   background-position-x: 731px;
   background-position-y: 349px;
 }
-#customActions .stig_sp_action[data-type="11"] {
+#customActions .stig_sp_action_image[data-type="11"] {
   background-position-x: 731px;
   background-position-y: 616px;
 }
-#customActions .stig_sp_action[data-type="12"] {
+#customActions .stig_sp_action_image[data-type="12"] {
   background-position-x: 495px;
   background-position-y: 349px;
 }
-#customActions .stig_sp_action[data-type="13"] {
+#customActions .stig_sp_action_image[data-type="13"] {
   background-position-x: 1034px;
   background-position-y: 714px;
 }
-#customActions .stig_sp_action[data-type="14"] {
+#customActions .stig_sp_action_image[data-type="14"] {
   width: 60px;
   background-size: 1502%;
   background-position-x: -84px;
   background-position-y: 496px;
 }
-#customActions .stig_sp_action[data-type="15"] {
+#customActions .stig_sp_action_image[data-type="15"] {
   background-position-x: 548px;
   background-position-y: 517px;
   height: 67px;
   width: 62px;
   background-size: 1490%;
 }
-#customActions .stig_sp_action[data-type="16"] {
+#customActions .stig_sp_action_image[data-type="16"] {
   background-position-x: 286px;
   background-position-y: 517px;
   height: 67px;
   width: 96px;
   background-size: 949%;
 }
-#customActions .stig_sp_action[data-type="20"] {
+#customActions .stig_sp_action_image[data-type="20"] {
   background-position-x: 1283px;
   background-position-y: 714px;
 }
-#customActions .stig_sp_action[data-type="21"] {
+#customActions .stig_sp_action_image[data-type="21"] {
   background-position-x: 731px;
   background-position-y: 180px;
 }
-#customActions .stig_sp_action[data-type="22"] {
+#customActions .stig_sp_action_image[data-type="22"] {
   background-position-x: 731px;
   background-position-y: 531px;
 }
-#customActions .stig_sp_action[data-type="23"] {
+#customActions .stig_sp_action_image[data-type="23"] {
   background-position-x: 1040px;
   background-position-y: 268px;
+}
+
+body {
+  /*
+  &[data-stig_sp_buttons="1"]{
+      //PREF_SP_BUTTONS_IMAGES_AND_TEXT
+  }
+  */
+}
+body[data-stig_sp_buttons="2"] .stig_sp_action_text {
+  display: none;
+}
+body[data-stig_sp_buttons="3"] .stig_sp_action_image {
+  display: none;
 }
 
 /**

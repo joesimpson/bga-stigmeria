@@ -1,5 +1,5 @@
 #customActions{
-    .stig_sp_action{
+    .stig_sp_action_image{
         width: 98px;
         height: 58px;
         background-image: url("img/actions.jpg");
@@ -73,4 +73,23 @@
         }
     }
     
+}
+body{
+    /*
+    &[data-stig_sp_buttons="1"]{
+        //PREF_SP_BUTTONS_IMAGES_AND_TEXT
+    }
+    */
+    &[data-stig_sp_buttons="2"]{
+        //PREF_SP_BUTTONS_TEXT_ONLY
+        .stig_sp_action_text{
+            display: none;
+        }
+    }
+    &[data-stig_sp_buttons="3"]{
+        //PREF_SP_BUTTONS_IMAGES_ONLY
+        .stig_sp_action_image{
+            display: none;
+        }
+    }
 }
