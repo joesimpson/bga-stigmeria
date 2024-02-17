@@ -261,11 +261,6 @@
                 "name": "#1",
                 "description": "#1",
                 "tmdisplay": "#1"
-            },
-            {
-                "name": "#2",
-                "description": "#2",
-                "tmdisplay": "#2"
             }
         ],
         "default": 1,
@@ -295,11 +290,6 @@
                 "name": "#3",
                 "description": "#3",
                 "tmdisplay": "#3"
-            },
-            "4": {
-                "name": "#4",
-                "description": "#4",
-                "tmdisplay": "#4"
             }
         },
         "default": 0,
@@ -324,11 +314,6 @@
                 "name": "Random",
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
-            },
-            "5": {
-                "name": "#5",
-                "description": "#5",
-                "tmdisplay": "#5"
             },
             "6": {
                 "name": "#6",
@@ -359,11 +344,6 @@
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
             },
-            "7": {
-                "name": "#7",
-                "description": "#7",
-                "tmdisplay": "#7"
-            },
             "8": {
                 "name": "#8",
                 "description": "#8",
@@ -392,11 +372,6 @@
                 "name": "Random",
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
-            },
-            "9": {
-                "name": "#9",
-                "description": "#9",
-                "tmdisplay": "#9"
             },
             "10": {
                 "name": "#10",
@@ -431,11 +406,6 @@
                 "name": "#11",
                 "description": "#11",
                 "tmdisplay": "#11"
-            },
-            "12": {
-                "name": "#12",
-                "description": "#12",
-                "tmdisplay": "#12"
             }
         },
         "default": 0,
@@ -494,11 +464,6 @@
                 "name": "#14",
                 "description": "#14",
                 "tmdisplay": "#14"
-            },
-            "15": {
-                "name": "#15",
-                "description": "#15",
-                "tmdisplay": "#15"
             }
         },
         "default": 0,
@@ -523,16 +488,6 @@
                 "name": "Random",
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
-            },
-            "16": {
-                "name": "#16",
-                "description": "#16",
-                "tmdisplay": "#16"
-            },
-            "17": {
-                "name": "#17",
-                "description": "#17",
-                "tmdisplay": "#17"
             },
             "18": {
                 "name": "#18",
@@ -562,11 +517,6 @@
                 "name": "Random",
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
-            },
-            "19": {
-                "name": "#19",
-                "description": "#19",
-                "tmdisplay": "#19"
             },
             "20": {
                 "name": "#20",
@@ -601,11 +551,6 @@
                 "name": "#21",
                 "description": "#21",
                 "tmdisplay": "#21"
-            },
-            "22": {
-                "name": "#22",
-                "description": "#22",
-                "tmdisplay": "#22"
             }
         },
         "default": 0,
@@ -635,11 +580,6 @@
                 "name": "#23",
                 "description": "#23",
                 "tmdisplay": "#23"
-            },
-            "24": {
-                "name": "#24",
-                "description": "#24",
-                "tmdisplay": "#24"
             }
         },
         "default": 0,
@@ -698,11 +638,6 @@
                 "name": "#26",
                 "description": "#26",
                 "tmdisplay": "#26"
-            },
-            "27": {
-                "name": "#27",
-                "description": "#27",
-                "tmdisplay": "#27"
             }
         },
         "default": 0,
@@ -732,16 +667,6 @@
                 "name": "#28",
                 "description": "#28",
                 "tmdisplay": "#28"
-            },
-            "29": {
-                "name": "#29",
-                "description": "#29",
-                "tmdisplay": "#29"
-            },
-            "30": {
-                "name": "#30",
-                "description": "#30",
-                "tmdisplay": "#30"
             }
         },
         "default": 0,
