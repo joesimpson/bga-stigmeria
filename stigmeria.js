@@ -1051,6 +1051,8 @@ function (dojo, declare) {
                     <div id="stig_recruits_central" class='stig_recruits'></div>
                     <div id="stig_grid_central" class='stig_grid'>
                     </div>
+                    <div id="stig_grid_out_central" class='stig_grid_out'>
+                    </div>
                 </div>
             </div>
             </div>`;
@@ -1186,7 +1188,7 @@ function (dojo, declare) {
             }
             else if (token.location == 'OUT') {
                 //IF row/col out of grid (after wind for example, don't show it ? )
-                return $(`stig_grid_out_${token.pId}`);
+                return $(`stig_grid_out_${playerboard_id}`);
             }
             else if (token.location == 'player_recruit') {
                 let recruitTypeZone = `stig_recruits_${token.pId}_${token.type}`;

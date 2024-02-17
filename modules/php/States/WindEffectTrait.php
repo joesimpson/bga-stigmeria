@@ -132,7 +132,6 @@ trait WindEffectTrait
       
       //TODO JSA COMPETITIVE MODE : MOVE it TO RECRUIT ZONE
       $token->setLocation(TOKEN_LOCATION_OUT);
-      $token->setPId(null);
       $token->setRow(null);
       $token->setCol(null);
       
