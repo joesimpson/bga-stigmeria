@@ -22,25 +22,32 @@ trait PlayerTurnCommonBoardTrait
     public function argCommonBoardTurn($player_id)
     {
         $player = Players::get($player_id);
-        
+        $nbMoves = $player->countRemainingCommonActions();
         $actions[] = 'actCommonDrawAndLand';
         if(!$player->isCommonMoveDone()){
             $actions[] = 'actCommonMove';
         }
+        if($nbMoves <1){
+            $actions[] = 'actGoToNext';
+        }
         $actions[] = 'actCommonJoker';
-        $actions[] = 'actGoToNext';
         return [
-            'n'=> $player->countRemainingCommonActions(),
+            'n'=> $nbMoves,
             'a' => $actions,
         ];
     }
     /**
-     * TODO JSA : FOR TESTING only : it is forbidden to go to next steps before ending this step
+     * BEware : it is forbidden to go to next steps before ending this step
      */
     public function actGoToNext()
     {
         self::checkAction( 'actGoToNext' ); 
         
+        $player = Players::getCurrent();
+        if($player->countRemainingCommonActions() > 0){
+            throw new UnexpectedException(10,"You still have actions to take");
+        }
+
         //moving current player to different state :
         $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "next");
     }
@@ -95,7 +102,6 @@ trait PlayerTurnCommonBoardTrait
         }
         $remaining = $player->countRemainingCommonActions();
         $actionCost = ACTION_COST_CENTRAL_MOVE;
-        //TODO JSA RULE Impossible to make 2 moves
         if($remaining < $actionCost){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }

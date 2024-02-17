@@ -208,7 +208,6 @@ class Players extends \STIG\Helpers\DB_Manager
       $player = self::get($player_id);
       $player->startTurn($turn);
     }
-    //TODO JSA reset others counters but not turn ?
   }
   
   /**

@@ -225,7 +225,9 @@ function (dojo, declare) {
                     this.addPrimaryActionButton('btnCommonMove',  _('Move'), () => this.takeAction('actCommonMove', {}));
                 }
             }
-            this.addDangerActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
+            if(possibleActions.includes('actGoToNext')){
+                this.addDangerActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
+            }
         }, 
         onEnteringStateCentralChoiceTokenToLand: function(args)
         {
@@ -446,7 +448,6 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpChoreography() ', args );
             this.initTokenSelectionDest('actChoreography', args.p_places_m, this.player_id,'actChoreMoveOut');
-            //TODO JSA move out ?
             if(args.n == args.max) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.addDangerActionButton('btnStop', _('Stop'), () => this.takeAction('actChoreographyStop', {}));
         }, 
@@ -919,14 +920,6 @@ function (dojo, declare) {
                 let order = ((player.no - currentPlayerNo + nPlayers) % nPlayers) + 3;
                 if (isCurrent) order = 1;
                 $(`stig_player_board_container_wrapper_${player.id}`).style.order = order;
-        
-                if (order == 1) {
-                    //TODO JSA DISplay first player
-                    /*
-                    dojo.place('<div id="stig_first_player"></div>', `overall_player_board_${player.id}`);
-                    this.addCustomTooltip('stig_first_player', _('First player'));
-                    */
-                }
             });
     
             this.updateFirstPlayer();

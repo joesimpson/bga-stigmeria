@@ -30,7 +30,6 @@ trait PlayerTurnPersonalBoardTrait
         $turn = Globals::getTurn();
         $nextPlayer = Players::getNextInactivePlayerInTurn($player->id, $turn);
         
-        //TODO JSA LIST POSSIBLE ACTIONS according to Special Actions model
         $actions[] = '';
         if(isset($nextPlayer)){
             $actions[] = 'actLetNextPlay';
@@ -56,15 +55,15 @@ trait PlayerTurnPersonalBoardTrait
     }
     
     /**
-     * TODO JSA : Proof of concept, maybe not necessary
+     * FOR TESTING only : it is forbidden 
      */
-    public function actBackToCommon()
-    {
-        self::checkAction( 'actBackToCommon' ); 
-        
-        //moving current player to different state :
-        $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "back");
-    }
+    //public function actBackToCommon()
+    //{
+    //    self::checkAction( 'actBackToCommon' ); 
+    //    
+    //    //moving current player to different state :
+    //    $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "back");
+    //}
     
     /**
      * Basic Action 1 : draw a stigmerian in your bag
