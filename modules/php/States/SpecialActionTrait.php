@@ -18,6 +18,7 @@ trait SpecialActionTrait
         $flowerType = Schemas::getCurrentSchema()->type;
         $deckSize = Tokens::countDeck($player_id);
         $remaining = $player->countRemainingPersonalActions();
+        $cost = $this->getGetActionCostModifier();
         $actions =[];
         if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE){
             if($remaining >= ACTION_COST_MIXING){
@@ -65,7 +66,6 @@ trait SpecialActionTrait
         }
         else if($flowerType == OPTION_FLOWER_INSPIRACTRICE){
             // ALL THE PREVIOUS ACTIONS but with a DOUBLE cost
-            $cost = ACTION_COST_MODIFIER_INSPIRACTRICE;
             if($remaining >= $cost * ACTION_COST_MIXING){
                 $actions[] = ACTION_TYPE_MIXING;
             }

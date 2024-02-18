@@ -851,7 +851,6 @@ function (dojo, declare) {
         //    \____/ \__|_|_|___/
         //                       
         ///////////////////////////////////////////////////
-        
         onScreenWidthChange() {
             if (this.settings) this.updateLayout();
         },
@@ -1458,15 +1457,49 @@ function (dojo, declare) {
         // |_|  \___/|_|  |_| |_| |_|\__,_|\__|\__|_|_| |_|\__, |
         //                                                 |___/
         ////////////////////////////////////////////////////////////
+        /**
+         * Format log strings
+         *  @Override
+         */
+        format_string_recursive(log, args) {
+            try {
+            if (log && args && !args.processed) {
+                args.processed = true;
 
+                log = this.formatString(_(log));
+                let token_color = 'token_color';
+                let token_type = 'token_type';
+                if(token_color in args && token_type in args) {
+                    args.token_color = this.formatIcon("token_log",args.token_type,args.token_type);
+                    args.token_type = "";
+                }
+                let token_color2 = 'token_color2';
+                let token_type2 = 'token_type2';
+                if(token_color2 in args && token_type2 in args) {
+                    args.token_color2 = this.formatIcon("token_log",args.token_type2,args.token_type2);
+                    args.token_type2 = "";
+                }
+
+            }
+            } catch (e) {
+                console.error(log, args, 'Exception thrown', e.stack);
+            }
+
+            return this.inherited(arguments);
+        },
+            
+        formatString(str) {
+            return str;
+        },
         /**
          * Replace some expressions by corresponding html formating
          */
-        formatIcon(name, nbSubIcons = null, n = null) {
+        formatIcon(name, nbSubIcons = null, filterSubIconType = null, n = null) {
             let type = name;
             let tplSubIcons ='';
             if(nbSubIcons && nbSubIcons > 0){
                 for(let k = 1; k<=nbSubIcons; k++){
+                    if(filterSubIconType != null && k!= filterSubIconType) continue;
                     tplSubIcons +=`<div class='stig_subicon_${type}' data-type='${k}'></div>`;
                 }
             }

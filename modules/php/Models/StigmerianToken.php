@@ -368,22 +368,31 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   {
     switch($type){
       case TOKEN_STIG_BLUE:
+      case TOKEN_POLLEN_BLUE:
         return Game::get()->translate("blue");
       case TOKEN_STIG_YELLOW:
+      case TOKEN_POLLEN_YELLOW:
         return Game::get()->translate("yellow");
       case TOKEN_STIG_RED:
+      case TOKEN_POLLEN_RED:
         return Game::get()->translate("red");
       case TOKEN_STIG_ORANGE:
+      case TOKEN_POLLEN_ORANGE:
         return Game::get()->translate("orange");
       case TOKEN_STIG_GREEN:
+      case TOKEN_POLLEN_GREEN:
         return Game::get()->translate("green");
       case TOKEN_STIG_VIOLET:
+      case TOKEN_POLLEN_VIOLET:
         return Game::get()->translate("violet");
       case TOKEN_STIG_BROWN:
+      case TOKEN_POLLEN_BROWN:
         return Game::get()->translate("brown");
       case TOKEN_STIG_WHITE:
+      case TOKEN_POLLEN_WHITE:
         return Game::get()->translate("white");
       case TOKEN_STIG_BLACK:
+      case TOKEN_POLLEN_BLACK:
         return Game::get()->translate("black");
       default: 
         return "";
