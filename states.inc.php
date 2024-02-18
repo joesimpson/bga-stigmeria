@@ -173,6 +173,7 @@ $machinestates = array(
         "type" => "private", // this state is reachable only as a private state
         "args" => "argCommonBoardTurn",
         "action" => "stCommonBoardTurn",
+        "updateGameProgression" => true,
         "possibleactions" => [
             "actCommonDrawAndLand",
             "actCommonMove",
@@ -225,6 +226,7 @@ $machinestates = array(
         "type" => "private", // this state is reachable only as a private state
         "args" => "argPersonalBoardTurn",
         "action" => "stPersonalBoardTurn",
+        "updateGameProgression" => true,
         "possibleactions" => [
             "actDraw",
             "actLand",

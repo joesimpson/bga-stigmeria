@@ -149,8 +149,17 @@ class Stigmeria extends Table
         $round = Globals::getRound();
         $turn = Globals::getTurn();
         $turnMax = TURN_MAX;
+
+        $players = Players::getAll();
+        $nbActionsInReserve = 0;
+        $nbActionsTOTAL = count($players)* min($turnMax,$turn);
+        foreach($players as $player){
+            $nbActionsInReserve += $player->countRemainingPersonalActions();
+        }
+        $currentTurnProgression = ($nbActionsTOTAL - $nbActionsInReserve) / $nbActionsTOTAL;
+
         //TODO JSA MANAGE rounds WITH more than 10 turns ?
-        $currentRoundProgression = ($turn-1) / $turnMax;
+        $currentRoundProgression = ($turn-1) / $turnMax + 1/$turnMax * $currentTurnProgression;
         $progress = ($round-1)/$nbRounds + 1/$nbRounds * $currentRoundProgression;
         $progress = min($progress, 100);
         return $progress * 100;
