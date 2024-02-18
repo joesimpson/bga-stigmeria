@@ -9,7 +9,7 @@ use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
 
-trait ChoiceTokenDiagonalTrait
+trait SpecialDiagonalTrait
 {
     public function argSpDiagonal($player_id)
     {
