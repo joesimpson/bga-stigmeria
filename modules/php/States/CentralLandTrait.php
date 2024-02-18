@@ -45,7 +45,8 @@ trait CentralLandTrait
         if($token->location != TOKEN_LOCATION_CENTRAL_RECRUIT_TOPLACE ){
             throw new UnexpectedException(20,"You cannot place this token");
         }
-        if(!$this->canPlaceOnCentralBoard($row, $column)){
+        $boardTokens = Tokens::getAllOnCentralBoard();
+        if(!$this->canPlaceOnCentralBoard($boardTokens,$row, $column)){
             throw new UnexpectedException(30,"You cannot place this token at $row, $column");
         }
 
@@ -65,9 +66,10 @@ trait CentralLandTrait
      */
     public function listPossiblePlacesOnCentralBoard(){
         $spots = [];
+        $boardTokens = Tokens::getAllOnCentralBoard();
         for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
             for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                if($this->canPlaceOnCentralBoard($row, $column)){
+                if($this->canPlaceOnCentralBoard($boardTokens,$row, $column)){
                     $spots[] = [ 'row' => $row, 'col' => $column ];
                 }
             }
@@ -76,21 +78,14 @@ trait CentralLandTrait
     }
      
     /**
+     * @param Collection $boardTokens 
      * @param int $row
      * @param int $column
      * @return bool TRUE if a token can be placed on central board ( Empty spot + Either Line A or adjacent to another token),
      *  FALSE otherwise
      */
-    public function canPlaceOnCentralBoard($row, $column)
+    public function canPlaceOnCentralBoard($boardTokens,$row, $column)
     {
-        if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
-        if(Tokens::countOnCentralBoard($row, $column) > 0) return false;//not empty
-
-        //TODO JSA PERFS We could read all tokens on central board before calling this function if we want to loop on this func
-        if($row != ROW_START && Tokens::listAdjacentTokensOnCentral($row, $column)->isEmpty()){
-            return false;
-        }
-
-        return true;
+        return $this->canPlaceOnPlayerBoard($boardTokens,$row, $column);
     }
 }
