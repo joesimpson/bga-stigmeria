@@ -549,7 +549,7 @@ function (dojo, declare) {
             this.inherited(arguments);
             dojo.empty('stig_select_piece_container');
             this.removeEmptyCellHolders();
-            $('stig_central_board_container_wrapper').classList.remove('stig_current_play');
+            if($('stig_central_board_container_wrapper')) $('stig_central_board_container_wrapper').classList.remove('stig_current_play');
         },
         
         //////////////////////////////////////////////////////////////
