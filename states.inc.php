@@ -312,7 +312,7 @@ $machinestates = array(
             "actCancelSpecial",
         ],
         "transitions" => [
-            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'next' => ST_TURN_PERSONAL_BOARD,
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
@@ -360,7 +360,7 @@ $machinestates = array(
         ],
         "transitions" => [
             'continue' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
-            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'next' => ST_TURN_PERSONAL_BOARD,
             //TODO JSA block cancel if moves in progress ? or whatever, we decrease the counter of actions
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
@@ -375,7 +375,7 @@ $machinestates = array(
             "actCancelSpecial",
         ],
         "transitions" => [
-            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'next' => ST_TURN_PERSONAL_BOARD,
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
@@ -390,7 +390,7 @@ $machinestates = array(
             "actCancelSpecial",
         ],
         "transitions" => [
-            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'next' => ST_TURN_PERSONAL_BOARD,
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
@@ -405,7 +405,7 @@ $machinestates = array(
             "actCancelSpecial",
         ],
         "transitions" => [
-            'next' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'next' => ST_TURN_PERSONAL_BOARD,
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
