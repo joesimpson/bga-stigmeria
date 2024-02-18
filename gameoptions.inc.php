@@ -826,6 +826,7 @@ $game_options = [
                   'description' => totranslate('Random schema'), 
                   'tmdisplay' => totranslate('Random schema'),
                 ),
+                /*
                 OPTION_SCHEMA_31 => array( 
                   'name' => '#31', 
                   'description' => '#31', 
@@ -836,6 +837,7 @@ $game_options = [
                   'description' => '#32', 
                   'tmdisplay' => '#32',
                 ),
+                */
                 OPTION_SCHEMA_33 => array( 
                   'name' => '#33', 
                   'description' => '#33', 
@@ -864,6 +866,7 @@ $game_options = [
                   'description' => totranslate('Random schema'), 
                   'tmdisplay' => totranslate('Random schema'),
                 ), 
+                /*
                 OPTION_SCHEMA_34 => array( 
                   'name' => '#34', 
                   'description' => '#34', 
@@ -874,6 +877,7 @@ $game_options = [
                   'description' => '#35', 
                   'tmdisplay' => '#35',
                 ),
+                */
                 OPTION_SCHEMA_36 => array( 
                   'name' => '#36', 
                   'description' => '#36', 
@@ -903,6 +907,7 @@ $game_options = [
                   'description' => totranslate('Random schema'), 
                   'tmdisplay' => totranslate('Random schema'),
                 ),
+                /*
                 OPTION_SCHEMA_37 => array( 
                   'name' => '#37', 
                   'description' => '#37', 
@@ -913,6 +918,7 @@ $game_options = [
                   'description' => '#38', 
                   'tmdisplay' => '#38',
                 ),
+                */
                 OPTION_SCHEMA_39 => array( 
                   'name' => '#39', 
                   'description' => '#39', 
@@ -942,6 +948,7 @@ $game_options = [
                   'description' => totranslate('Random schema'), 
                   'tmdisplay' => totranslate('Random schema'),
                 ),
+                /*
                 OPTION_SCHEMA_40 => array( 
                   'name' => '#40', 
                   'description' => '#40', 
@@ -967,11 +974,13 @@ $game_options = [
                   'description' => '#44', 
                   'tmdisplay' => '#44',
                 ),
+                */
                 OPTION_SCHEMA_45 => array( 
                   'name' => '#45', 
                   'description' => '#45', 
                   'tmdisplay' => '#45',
                 ),
+                /*
                 OPTION_SCHEMA_46 => array( 
                   'name' => '#46', 
                   'description' => '#46', 
@@ -992,6 +1001,7 @@ $game_options = [
                   'description' => '#49', 
                   'tmdisplay' => '#49',
                 ),
+                */
             ),
     'default' => OPTION_SCHEMA_RANDOM,
     'displaycondition'=> [

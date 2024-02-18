@@ -692,16 +692,6 @@
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
             },
-            "31": {
-                "name": "#31",
-                "description": "#31",
-                "tmdisplay": "#31"
-            },
-            "32": {
-                "name": "#32",
-                "description": "#32",
-                "tmdisplay": "#32"
-            },
             "33": {
                 "name": "#33",
                 "description": "#33",
@@ -730,16 +720,6 @@
                 "name": "Random",
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
-            },
-            "34": {
-                "name": "#34",
-                "description": "#34",
-                "tmdisplay": "#34"
-            },
-            "35": {
-                "name": "#35",
-                "description": "#35",
-                "tmdisplay": "#35"
             },
             "36": {
                 "name": "#36",
@@ -770,16 +750,6 @@
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
             },
-            "37": {
-                "name": "#37",
-                "description": "#37",
-                "tmdisplay": "#37"
-            },
-            "38": {
-                "name": "#38",
-                "description": "#38",
-                "tmdisplay": "#38"
-            },
             "39": {
                 "name": "#39",
                 "description": "#39",
@@ -809,55 +779,10 @@
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
             },
-            "40": {
-                "name": "#40",
-                "description": "#40",
-                "tmdisplay": "#40"
-            },
-            "41": {
-                "name": "#41",
-                "description": "#41",
-                "tmdisplay": "#41"
-            },
-            "42": {
-                "name": "#42",
-                "description": "#42",
-                "tmdisplay": "#42"
-            },
-            "43": {
-                "name": "#43",
-                "description": "#43",
-                "tmdisplay": "#43"
-            },
-            "44": {
-                "name": "#44",
-                "description": "#44",
-                "tmdisplay": "#44"
-            },
             "45": {
                 "name": "#45",
                 "description": "#45",
                 "tmdisplay": "#45"
-            },
-            "46": {
-                "name": "#46",
-                "description": "#46",
-                "tmdisplay": "#46"
-            },
-            "47": {
-                "name": "#47",
-                "description": "#47",
-                "tmdisplay": "#47"
-            },
-            "48": {
-                "name": "#48",
-                "description": "#48",
-                "tmdisplay": "#48"
-            },
-            "49": {
-                "name": "#49",
-                "description": "#49",
-                "tmdisplay": "#49"
             }
         },
         "default": 0,
