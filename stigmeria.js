@@ -340,6 +340,7 @@ function (dojo, declare) {
             });
             //this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
+        
         onEnteringStateChoiceTokenToLand: function(args)
         {
             debug( 'onEnteringStateChoiceTokenToLand() ', args );
@@ -356,7 +357,6 @@ function (dojo, declare) {
                     selectedToken = token.id + '_tmp';
                     $(`stig_token_${selectedToken}`).classList.add('selected');
                             
-                    let selectedTokenCell = null;
                     //possible places to play :
                     Object.values(args.p_places_p).forEach((coord) => {
                         let row = coord.row;
@@ -544,6 +544,7 @@ function (dojo, declare) {
         onLeavingState(stateName) {
             this.inherited(arguments);
             dojo.empty('stig_select_piece_container');
+            this.removeEmptyCellHolders();
         },
         
         //////////////////////////////////////////////////////////////
@@ -1429,6 +1430,11 @@ function (dojo, declare) {
            
         },
 
+        removeEmptyCellHolders: function()
+        {
+            //Remove parasites : token holders with no tokens (maybe after wind or moves that didn't clean it)
+            $(`stig_player_boards`).querySelectorAll(`.stig_token_cell.stig_token_holder:empty`).forEach((a) => { dojo.destroy(a); }); 
+        },
         ////////////////////////////////////////////////////////////
         // _____                          _   _   _
         // |  ___|__  _ __ _ __ ___   __ _| |_| |_(_)_ __   __ _
