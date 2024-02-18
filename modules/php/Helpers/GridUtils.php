@@ -1,6 +1,8 @@
 <?php
 namespace STIG\Helpers;
 
+use STIG\Core\Globals;
+
 abstract class GridUtils extends \APP_DbObject
 { 
 
@@ -32,6 +34,24 @@ abstract class GridUtils extends \APP_DbObject
     protected function isValidCell($cell)
     {
         return !GridUtils::isCoordOutOfGrid($cell['y'],$cell['x']);
+    }
+    public static function isValidCellToMoveOut($row, $col, $fromCentralBoard = false)
+    {
+      if(Globals::isModeCompetitiveNoLimit()){
+        if(ROW_MAX != $row && $fromCentralBoard){
+            //CENTRAL board is like normal mode
+            return false;
+        }
+        //We can exit from any edge
+        if( ROW_MAX == $row) return true;
+        if( ROW_MIN == $row) return true;
+        if( COLUMN_MAX == $col) return true;
+        if( COLUMN_MIN == $col) return true;
+      }
+      //In all normal modes, we cannot exit the board from any line/col except "J"
+      else if( ROW_MAX == $row) return true;
+
+      return false;
     }
             
     public static function array_usearch($array, $test)
@@ -125,10 +145,17 @@ abstract class GridUtils extends \APP_DbObject
 
     // Extract the reachable cells
     $cells = [];
+    $checkOut = true;
     foreach ($markers as $col) {
       foreach ($col as $cell) {
         if ($cell !== false && $cell['d'] > 0) {
           $cells[] = $cell;
+
+          //if cell on edge and we still have 1 move left ($d > $cell['d']), we may move out
+          if($checkOut && ($d > $cell['d']) && self::isValidCellToMoveOut($cell['y'],$cell['x']) ){
+            $cells[] = [ 'out' => true ];
+            $checkOut = false;//avoid duplicate
+          }
         }
       }
     }

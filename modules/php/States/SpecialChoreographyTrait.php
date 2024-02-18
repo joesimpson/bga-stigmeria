@@ -129,13 +129,13 @@ trait SpecialChoreographyTrait
             $player->incNbPersonalActionsDone($actionCost);
             Notifications::useActions($player);
         }
-        Stats::inc("tokens_board",$player->getId(),-1);
         if(Globals::isModeCompetitiveNoLimit()){
             //EFFECT : MOVE the TOKEN oUT
             $token->moveToRecruitZone($player,0);
         }
         else {
             //EFFECT : REMOVE the TOKEN 
+            Stats::inc("tokens_board",$player->getId(),-1);
             Notifications::moveBackToBox($player, $token,$token->getCoordName(),0);
             Tokens::delete($token->id);
         }

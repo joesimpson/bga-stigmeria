@@ -468,7 +468,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpFastMove() ', args );
 
-            this.initTokenSelectionDest('actFastMove', args.p_places_m, this.player_id);
+            this.initTokenSelectionDest('actFastMove', args.p_places_m, this.player_id,'actMoveOutFast');
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         

@@ -284,6 +284,14 @@
       $this->game->actFastMove($token_id, $row, $col);
       self::ajaxResponse();
     }
+    public function actMoveOutFast()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actMoveOutFast($token_id);
+      self::ajaxResponse();
+    }
     public function actWhite()
     {
       self::setAjaxMode();

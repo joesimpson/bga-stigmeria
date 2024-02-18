@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Helpers\GridUtils;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -97,13 +98,13 @@ trait ChoiceTokenToMoveTrait
         }
 
         //EFFECT : 
-        Stats::inc("tokens_board",$player->getId(),-1);
         if(Globals::isModeCompetitiveNoLimit()){
             //EFFECT : MOVE the TOKEN oUT
             $token->moveToRecruitZone($player,$actionCost);
         }
         else {
             //EFFECT : REMOVE the TOKEN 
+            Stats::inc("tokens_board",$player->getId(),-1);
             Notifications::moveBackToBox($player, $token,$token->getCoordName(),$actionCost);
             Tokens::delete($token->id);
         }
@@ -148,21 +149,7 @@ trait ChoiceTokenToMoveTrait
     public function canMoveOutOnBoard($token)
     {
         if($token->isPollen()) return false;
-        if(Globals::isModeCompetitiveNoLimit()){
-            if(ROW_MAX != $token->getRow() && $token->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD){
-                //CENTRAL board is like normal mode
-                return false;
-            }
-
-            if( ROW_MAX == $token->getRow()) return true;
-            if( ROW_MIN == $token->getRow()) return true;
-            if( COLUMN_MAX == $token->getCol()) return true;
-            if( COLUMN_MIN == $token->getCol()) return true;
-        }
-        //In all normal modes, we cannot exit the board from any line/col except "J"
-        else if( ROW_MAX == $token->getRow()) return true;
- 
-        return false;
+        return GridUtils::isValidCellToMoveOut($token->getRow(),$token->getCol(),$token->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD);
     }
     /**
      * @param int $playerId

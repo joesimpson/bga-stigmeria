@@ -399,6 +399,7 @@ $machinestates = array(
         "args" => "argSpFastMove",
         "possibleactions" => [
             "actFastMove",
+            "actMoveOutFast",
             "actCancelSpecial",
         ],
         "transitions" => [
