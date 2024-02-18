@@ -1084,9 +1084,15 @@ function (dojo, declare) {
             let newturn = Math.min(TURN_MAX,this.gamedatas.turn);
             let newcount_actions = action;
             let existingMarker = $(`stig_turn_marker_${player_id}`);
+            let previousContainer = null;
             let newTurnContainer = this.addTurnMarker(player_id,newturn,newcount_actions);
             if(! existingMarker ) existingMarker = this.place('tplTurnMarker', player_id, newTurnContainer );
-            this.slide(existingMarker, newTurnContainer, {} ).then( () => {});
+            else previousContainer = existingMarker.parentElement;
+            if(previousContainer != newTurnContainer) {
+                this.slide(existingMarker, newTurnContainer, {} ).then( () => {
+                    dojo.destroy(previousContainer);
+                });
+            }
                 
             let k =0;
             while(k < (turn - TURN_MAX) ){
