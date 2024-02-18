@@ -355,6 +355,10 @@
   text-shadow: 1px 0px 1px black, 0px 1px 1px black, -1px 0px 1px black, 0px -1px 1px black;
 }
 
+.player-board.stig_eliminated {
+  background-color: rgba(134, 134, 134, 0.7490196078);
+}
+
 .stig_panel .stig_player_infos {
   display: flex;
   flex-wrap: wrap;

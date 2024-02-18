@@ -149,8 +149,7 @@ class Players extends \STIG\Helpers\DB_Manager
     if(isset($nextPlayer) && !$nextPlayer->isMultiactive() && $nextPlayer->getLastTurn()< $turn
       && $nextPlayer->getZombie() != 1
     ){
-      //CHECK nextPlayer not active
-      //nextPlayer already played this turn
+      //CHECK nextPlayer not active / not already played this turn/ not zombie
       return $nextPlayer;
     }
     return null;

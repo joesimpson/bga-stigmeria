@@ -43,7 +43,11 @@ trait DebugTrait
     //Formatting prefs as json -> copy the DOM of this log : \n
     Notifications::message("$json",['json' => $json]);
   }
-
+  function debugElim()
+  {
+    $player = Players::getCurrent();
+    Notifications::windElimination($player,null,'TEST');
+  }
   /*
   function debugForceState()
   {

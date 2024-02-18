@@ -82,6 +82,7 @@ function (dojo, declare) {
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['windBlows', 1800],
+                ['windElimination', 10],
                 ['addPoints', 800],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
@@ -817,6 +818,13 @@ function (dojo, declare) {
                 this.slide(div, this.getTokenContainer(token));
             });
         },
+        notif_windElimination(n) {
+            debug('notif_windElimination', n);
+            let player_id = n.args.player_id;
+            let divPanel = `overall_player_board_${player_id}`;
+            $(divPanel).classList.add('stig_eliminated');
+        },
+       
         notif_addPoints(n) {
             debug('notif_addPoints: scoring !', n);
             let points = n.args.n;
@@ -886,7 +894,9 @@ function (dojo, declare) {
             let nPlayers = 0;
             this.forEachPlayer((player) => {
                 let isCurrent = player.id == this.player_id;
-                this.place('tplPlayerPanel', player, `player_panel_content_${player.color}`, 'after');
+                let divPanel = `player_panel_content_${player.color}`;
+                if(player.eliminated == true) $(`overall_player_board_${player.id}`).classList.add('stig_eliminated');
+                this.place('tplPlayerPanel', player, divPanel, 'after');
                 this.place('tplPlayerBoard', player, 'stig_player_boards');
                 
                 document.querySelectorAll('.stig_icon_container_tokens_recruit').forEach((e) => e.dataset.flower_type = this.getFlowerType());
