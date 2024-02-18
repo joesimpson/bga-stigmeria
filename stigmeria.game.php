@@ -152,7 +152,7 @@ class Stigmeria extends Table
 
         $players = Players::getAll();
         $nbActionsInReserve = 0;
-        $nbActionsTOTAL = count($players)* min($turnMax,$turn);
+        $nbActionsTOTAL = max(1, count($players)* min($turnMax,$turn) );
         foreach($players as $player){
             $nbActionsInReserve += $player->countRemainingPersonalActions();
         }
