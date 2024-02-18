@@ -53,6 +53,7 @@ trait SpecialCombinationTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_COMBINATION,$pId);
         Stats::inc("actions",$pId);
 

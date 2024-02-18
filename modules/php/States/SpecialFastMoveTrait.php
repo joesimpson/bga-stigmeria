@@ -58,6 +58,7 @@ trait SpecialFastMoveTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         //EFFECT : MOVE the TOKEN 
         $token->moveToPlayerBoard($player,$row,$column,$actionCost);
         Stats::inc("actions_s".ACTION_TYPE_MOVE_FAST,$pId);
@@ -108,6 +109,7 @@ trait SpecialFastMoveTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_MOVE_FAST,$pId);
         Stats::inc("actions",$pId);
         

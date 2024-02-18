@@ -77,7 +77,6 @@ trait PlayerTurnPersonalBoardTrait
         $pId = $player->id;
 
         $remaining = $player->countRemainingPersonalActions();
-        $nbActionsDone = $player->getNbPersonalActionsDone();
         $actionCost = 1;//TODO JSA ACTION MODEL ?
 
         //CHECK REMAINING ACTIONS VS cost
@@ -85,8 +84,9 @@ trait PlayerTurnPersonalBoardTrait
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
         
-        $player->setNbPersonalActionsDone($nbActionsDone + $actionCost);
+        $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
 
         $token = Tokens::pickOneForLocation(TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
         if($token == null){

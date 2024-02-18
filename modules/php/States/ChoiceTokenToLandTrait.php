@@ -50,7 +50,6 @@ trait ChoiceTokenToLandTrait
         $pId = $player->id;
 
         $remaining = $player->countRemainingPersonalActions();
-        $nbActionsDone = $player->getNbPersonalActionsDone();
         $actionCost = 1;
 
         //CHECK REMAINING ACTIONS VS cost
@@ -68,8 +67,10 @@ trait ChoiceTokenToLandTrait
             throw new UnexpectedException(30,"You cannot place this token at $row, $column");
         }
 
-        $player->setNbPersonalActionsDone($nbActionsDone + $actionCost);
+        
+        $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
 
         //EFFECT : PLACE the TOKEN 
         $token->moveToPlayerBoard($player,$row,$column,$actionCost);

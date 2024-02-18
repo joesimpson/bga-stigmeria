@@ -58,6 +58,7 @@ trait SpecialSwapTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_SWAP,$pId);
         Stats::inc("actions",$player->getId());
 

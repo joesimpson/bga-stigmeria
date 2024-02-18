@@ -64,6 +64,7 @@ trait ChoiceTokenToMoveTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         
         //EFFECT : MOVE the TOKEN 
         $token->moveToPlayerBoard($player,$row,$column,$actionCost);
@@ -111,6 +112,7 @@ trait ChoiceTokenToMoveTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_3",$player->getId());
         Stats::inc("actions",$player->getId());
         

@@ -109,6 +109,7 @@ trait SpecialWhiteTrait
         }
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_WHITE,$pId);
         Stats::inc("actions",$player->getId());
         Stats::inc("tokens_board",$pId,-1);

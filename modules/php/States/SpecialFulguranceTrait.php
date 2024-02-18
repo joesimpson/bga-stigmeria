@@ -57,6 +57,7 @@ trait SpecialFulguranceTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_FULGURANCE,$pId);
         Stats::inc("actions",$pId);
 

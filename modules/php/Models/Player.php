@@ -2,6 +2,7 @@
 
 namespace STIG\Models;
 
+use STIG\Core\Game;
 use STIG\Core\Globals;
 use STIG\Core\Stats;
 use STIG\Core\Notifications;
@@ -99,8 +100,13 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setNbPersonalActionsDone(0);
     $this->setCommonMoveDone(false);
     $this->setSelection([]);
+    $this->giveExtraTime();
 
     if(Globals::isModeCompetitive()) Notifications::startTurn($this,$turnIndex);
+  }
+  
+  public function giveExtraTime(){
+    Game::get()->giveExtraTime($this->getId());
   }
 
   public function countRemainingCommonActions(){

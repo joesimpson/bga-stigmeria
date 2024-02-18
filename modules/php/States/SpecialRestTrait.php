@@ -48,6 +48,7 @@ trait SpecialRestTrait
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_REST,$pId);
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,-1);
