@@ -181,9 +181,9 @@ trait SpecialFastMoveTrait
         };
         $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$nMoves, $costCallback);
         $cells = $cellsMarkers[0];
-        $markers = $cellsMarkers[1];
-        self::trace("listPossibleFastMovesOnBoardFromToken(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
-        return $cellsMarkers[0];
+        //$markers = $cellsMarkers[1];
+        //self::trace("listPossibleFastMovesOnBoardFromToken(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
+        return $cells;
     }
 
     /**

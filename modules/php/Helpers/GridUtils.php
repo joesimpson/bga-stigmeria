@@ -71,6 +71,8 @@ abstract class GridUtils extends \APP_DbObject
     public static function searchCell($cells, $x, $y)
     {
         return self::array_usearch($cells, function ($cell) use ($x, $y) {
+            if(!isset($cell['x'])) return false;
+            if(!isset($cell['y'])) return false;
             return $cell['x'] == $x && $cell['y'] == $y;
         });
     }
