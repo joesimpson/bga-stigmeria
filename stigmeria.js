@@ -61,6 +61,7 @@ function (dojo, declare) {
                 ['newRound', 10],
                 ['newWinds', 10],
                 ['newTurn', 800],
+                ['endTurn', 500],
                 ['updateFirstPlayer', 500],
                 ['useActions', 500],
                 ['drawToken', 900],
@@ -590,7 +591,10 @@ function (dojo, declare) {
                 this.updateTurnMarker(player.id,n.args.n,1);
             }); 
         },
-        
+        notif_endTurn(n) {
+            debug('notif_endTurn: end turn for one player', n);
+            this.updateTurnMarker(n.args.player_id,this.gamedatas.turn,99);
+        },
         notif_updateFirstPlayer(n) {
             debug('Notif: updating first player', n);
             this.gamedatas.firstPlayer = n.args.player_id;
@@ -1089,8 +1093,11 @@ function (dojo, declare) {
         updateTurnMarker(player_id, turn, action) {
             debug('updateTurnMarker', player_id, turn, action);
             this.gamedatas.turn = turn;
+            //FORCE positive value (in case of unexpected behavior Or testing in god mode)
             let newturn = Math.min(TURN_MAX,this.gamedatas.turn);
-            let newcount_actions = action;
+            newturn = Math.max(1,newturn);
+            let newcount_actions = Math.min(newturn + 1,action);
+            newcount_actions = Math.max(1,newcount_actions);
             let existingMarker = $(`stig_turn_marker_${player_id}`);
             let previousContainer = null;
             let newTurnContainer = this.addTurnMarker(player_id,newturn,newcount_actions);
@@ -1117,6 +1124,11 @@ function (dojo, declare) {
             }
         },    
         tplTurnMarkerContainer(datas) {
+            //FORCE positive value (in case of unexpected behavior Or testing in god mode)
+            datas.turn = Math.min(TURN_MAX,datas.turn);
+            datas.turn = Math.max(1,datas.turn);
+            datas.turnActions = Math.min(datas.turn + 1,datas.turnActions);
+            datas.turnActions = Math.max(1,datas.turnActions);
             let marker = datas.init ? this.tplTurnMarker(datas.player_id) : '';
             return `<div class="stig_turn_marker_container" data-player_id="${datas.player_id}" data-turn="${datas.turn}" data-count_actions="${datas.turnActions}">${marker}</div>`;
         },
