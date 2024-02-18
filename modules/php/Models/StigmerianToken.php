@@ -327,7 +327,10 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    */
   public function isPollen()
   {
-    return array_search($this->getType(),TOKEN_POLLENS);
+    if( array_search($this->getType(),TOKEN_POLLENS) === FALSE){
+      return false;
+    }
+    return true;
   }
 
   /**

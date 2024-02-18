@@ -791,6 +791,7 @@ function (dojo, declare) {
         notif_spRest(n) {
             debug('notif_spRest: token is removed !', n);
             let token = n.args.token;
+            let isPollen = token.pollen == true;
             let div = $(`stig_token_${token.id}`);
             if(div){
                 this.slide(div, this.getVisibleTitleContainer(), {
@@ -798,7 +799,11 @@ function (dojo, declare) {
                     destroy: true,    
                     phantom: false,
                     duration: 1200,
-                }).then(() =>{});
+                }).then(() =>{
+                    if(isPollen){
+                        this._counters[n.args.player_id]['pollens'].incValue(-1);
+                    }
+                });
             }
         },
         notif_playJoker(n) {
