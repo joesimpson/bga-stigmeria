@@ -397,7 +397,8 @@
   top: 0px;
   width: 30px;
 }
-.stig_first_player_holder #stig_first_player {
+
+#stig_first_player {
   position: relative;
   width: 30px;
   height: 30px;

@@ -4,16 +4,17 @@
     right: 43px;
     top: 0px;
     width: 30px;
-    #stig_first_player{
-        position: relative;
-        width: 30px;
-        height: 30px;
-        background-image: url("img/tokens.png");
-        background-size: 500% 500%;
-        /** see type 22 */
-        background-position-x: 25%;
-        background-position-y: 100%;
-    }
+}
+//define this outside of its parent, to view it when sliding
+#stig_first_player{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background-image: url("img/tokens.png");
+    background-size: 500% 500%;
+    /** see type 22 */
+    background-position-x: 25%;
+    background-position-y: 100%;
 }
 
 .player_board_inner{
