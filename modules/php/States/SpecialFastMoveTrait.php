@@ -60,7 +60,8 @@ trait SpecialFastMoveTrait
         Notifications::useActions($player);
         $player->giveExtraTime();
         //EFFECT : MOVE the TOKEN 
-        $token->moveToPlayerBoard($player,$row,$column,$actionCost);
+        Notifications::spFastMove($player,$actionCost);
+        $token->moveToPlayerBoard($player,$row,$column,0);
         Stats::inc("actions_s".ACTION_TYPE_MOVE_FAST,$pId);
         Stats::inc("actions",$player->getId());
 
@@ -96,14 +97,15 @@ trait SpecialFastMoveTrait
         }
 
         //EFFECT : 
+        Notifications::spFastMove($player,$actionCost);
         if(Globals::isModeCompetitiveNoLimit()){
             //EFFECT : MOVE the TOKEN oUT
-            $token->moveToRecruitZone($player,$actionCost);
+            $token->moveToRecruitZone($player,0);
         }
         else {
             Stats::inc("tokens_board",$player->getId(),-1);
             //EFFECT : REMOVE the TOKEN 
-            Notifications::moveBackToBox($player, $token,$token->getCoordName(),$actionCost);
+            Notifications::moveBackToBox($player, $token,$token->getCoordName(),0);
             Tokens::delete($token->id);
         }
 

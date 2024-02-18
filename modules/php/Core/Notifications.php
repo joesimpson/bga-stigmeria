@@ -416,6 +416,32 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param int $actionCost
+   */
+  public static function spFastMove($player,$actionCost){
+    self::notifyAll('spFastMove',clienttranslate('${player_name} uses the Fast Step (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'n' => $actionCost,
+      ],
+    );
+  }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param int $actionCost
+   */
+  public static function spDiagonal($player,$actionCost){
+    self::notifyAll('spDiagonal',clienttranslate('${player_name} uses the Diagonal action (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'n' => $actionCost,
+      ],
+    );
+  }
   /**
    * 
    * @param Player $player

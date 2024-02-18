@@ -54,7 +54,8 @@ trait ChoiceTokenDiagonalTrait
         $player->giveExtraTime();
         
         //EFFECT : MOVE the TOKEN 
-        $token->moveToPlayerBoard($player,$row,$column,$actionCost);
+        Notifications::spDiagonal($player,$actionCost);
+        $token->moveToPlayerBoard($player,$row,$column,0);
         Stats::inc("actions_s".ACTION_TYPE_DIAGONAL,$pId);
         Stats::inc("actions",$player->getId());
         
