@@ -45,6 +45,7 @@ function (dojo, declare) {
     
     const PREF_SCHEMA_BOARD_ORDER = 100;
     const PREF_STIGMAREINE_BOARD_ORDER = 101;
+    const PREF_STIGMAREINE_BOARD_AUTO_ORDER = 103;
     const PREF_SP_BUTTONS = 102;
 
     return declare("bgagame.stigmeria", [customgame.game], {
@@ -124,6 +125,7 @@ function (dojo, declare) {
             return {
                 schemaBoardOrder: { type: 'pref', prefId: PREF_SCHEMA_BOARD_ORDER },
                 centralBoardOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_ORDER },
+                centralBoardAutoOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_AUTO_ORDER },
                 boardWidth: {
                   default: 50,
                   name: _('Board width'),
@@ -229,11 +231,12 @@ function (dojo, declare) {
             if(possibleActions.includes('actGoToNext')){
                 this.addDangerActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
             }
+            $('stig_central_board_container_wrapper').classList.add('stig_current_play');
         }, 
         onEnteringStateCentralChoiceTokenToLand: function(args)
         {
             debug( 'onEnteringStateCentralChoiceTokenToLand() ', args );
-            
+            $('stig_central_board_container_wrapper').classList.add('stig_current_play');
             let selectedToken = null;
             let selectedTokenType = null;
             Object.values(args.tokens).forEach((token) => {
@@ -285,7 +288,7 @@ function (dojo, declare) {
         onEnteringStateCentralChoiceTokenToMove: function(args)
         {
             debug( 'onEnteringStateCentralChoiceTokenToMove() ', args );
-            
+            $('stig_central_board_container_wrapper').classList.add('stig_current_play');
             this.initTokenSelectionDest('actCentralMove', args.p_places_m,'central','actCentralMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Cancel'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
@@ -545,6 +548,7 @@ function (dojo, declare) {
             this.inherited(arguments);
             dojo.empty('stig_select_piece_container');
             this.removeEmptyCellHolders();
+            $('stig_central_board_container_wrapper').classList.remove('stig_current_play');
         },
         
         //////////////////////////////////////////////////////////////

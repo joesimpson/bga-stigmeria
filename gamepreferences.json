@@ -33,6 +33,19 @@
         "default": 2,
         "attribute": "stig_stigmareine_order"
     },
+    "103": {
+        "name": "StigmaReine auto position as first when I need to play",
+        "values": {
+            "1": {
+                "name": "Enabled"
+            },
+            "2": {
+                "name": "Disabled"
+            }
+        },
+        "default": 1,
+        "attribute": "stig_stigmareine_auto_order"
+    },
     "102": {
         "name": "Special action buttons",
         "needReload": false,

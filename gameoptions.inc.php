@@ -1081,6 +1081,15 @@ $game_preferences = [
     "default"=> PREF_STIGMAREINE_BOARD_ORDER_RIGHT,
     'attribute' => 'stig_stigmareine_order',
   ],
+  PREF_STIGMAREINE_BOARD_AUTO_ORDER => [
+    'name' => totranslate('StigmaReine auto position as first when I need to play'),
+    'values' => [
+      PREF_STIGMAREINE_BOARD_AUTO_ORDER_ENABLED => [ 'name' => totranslate('Enabled')],
+      PREF_STIGMAREINE_BOARD_AUTO_ORDER_DISABLED => ['name' => totranslate('Disabled')],
+    ],
+    "default"=> PREF_STIGMAREINE_BOARD_AUTO_ORDER_ENABLED,
+    'attribute' => 'stig_stigmareine_auto_order',
+  ],
   
   PREF_SP_BUTTONS => [
     'name' => totranslate('Special action buttons'),

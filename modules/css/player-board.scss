@@ -102,10 +102,18 @@
     }
 }
 
+//place central board first when we need to act on it (see pref PREF_STIGMAREINE_BOARD_AUTO_ORDER)
+body[data-stig_stigmareine_auto_order="1"] {
+    #stig_central_board_container_wrapper.stig_current_play{
+        order: -2 !important;
+    }
+}
+
 
 .stig_schema_board,
 .stig_central_board,
 .stig_player_board{
+    transition: order 1s;
     background-size: 100% auto;
     background-repeat: no-repeat;
     width: 1127px;
