@@ -71,7 +71,7 @@ trait DebugTrait
     $player = Players::getCurrent();
     Tokens::shuffle(TOKEN_LOCATION_PLAYER_DECK.$player->id);
   }
-  
+  */
   // Add many actions ! YEAH
   function debugManyActions()
   {
@@ -80,7 +80,7 @@ trait DebugTrait
     $player->setNbCommonActionsDone(-150);
     $this->gamestate->nextPrivateState($player->id, "continue");
   }
-  
+  /*
   function debugWind()
   {
     $player = Players::getCurrent();
@@ -154,7 +154,6 @@ trait DebugTrait
   {
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
   }
-  
   function debugNewTurn()
   {
     
@@ -167,7 +166,11 @@ trait DebugTrait
     Players::startTurn($players->getIds(),$turn);
     Notifications::newTurn($turn);
   }
-  
+  function debugEndTurn()
+  {
+    $player = Players::getCurrent();
+    Notifications::endTurn($player);
+  }
   function debugCMD()
   {
     $player = Players::getCurrent();
