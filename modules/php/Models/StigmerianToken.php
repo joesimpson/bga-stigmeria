@@ -243,6 +243,31 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   }
 
   /**
+   * @param Player $playerCurrent
+   * @param Player $playerDestination
+   */
+  public function moveToPlayerBag($playerCurrent,$playerDestination)
+  {
+    $fromBoard = false;
+    if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
+      $fromBoard = true;
+      $fromPlayer = $this->getPId();
+    }
+    else if($this->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD ){
+
+    }
+    $this->setLocation(TOKEN_LOCATION_PLAYER_DECK.$playerDestination->getId());
+    $this->setPId($playerDestination->getId());
+    $this->setCol(null);
+    $this->setRow(null);
+
+    if($fromBoard){
+      Stats::inc("tokens_board",$fromPlayer,-1);
+    }
+    Notifications::putTokenInBag($playerCurrent,$this,$playerDestination);
+  }
+  
+  /**
    * Action of mxiing colors
    * @param StigmerianToken $other
    * @param Player $player

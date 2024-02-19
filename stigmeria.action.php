@@ -179,7 +179,18 @@
     {
       self::setAjaxMode();
       self::checkVersion();
-      $this->game->actGiveTokens();
+      $playerDestination = self::getArg( "pid", AT_posint, true );
+      // ---------- ---------- array of token'ids  --------------------
+      $token_ids_raw = self::getArg("tIds", AT_numberlist, true);
+      // Removing last ';' if exists
+      if (substr($token_ids_raw, -1) == ';')
+        $token_ids_raw = substr($token_ids_raw, 0, -1);
+      if ($token_ids_raw == '')
+        $tokensArray = array();
+      else
+        $tokensArray = explode(';', $token_ids_raw);
+      // ---------- ---------- -------------------- --------------------
+      $this->game->actGiveTokens($tokensArray,$playerDestination);
       self::ajaxResponse();
     }
     public function actJoker()

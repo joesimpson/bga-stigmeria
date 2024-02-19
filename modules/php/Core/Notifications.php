@@ -563,6 +563,22 @@ class Notifications
     );
   }
   /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param Player $playerDestination
+   */
+  public static function putTokenInBag($player,$token,$playerDestination){
+    self::notifyAll('putTokenInBag',clienttranslate('${player_name} put a ${token_color} stigmerian in ${player_name2} bag'),[ 
+        'player' => $player,
+        'player2' => $playerDestination,
+        'token' => $token->getUiData(),
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+      ],
+    );
+  }
+  /**
    * @param string $windDir
    * @param Collection $boardTokens StigmerianToken 
    * @param Player $player player board or null if central

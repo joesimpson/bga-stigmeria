@@ -6,27 +6,54 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
+use STIG\Managers\Tokens;
 
 trait GiveTokensTrait
 {
     public function argGiveTokens($playerId)
     {
-        //$player = Players::get($playerId);
-        
+        $player = Players::get($playerId);
+        $alignedTokens =array_unique( $player->getSelection());
         return [
+            'tokens' => $alignedTokens,
         ];
     }
       
     /**
+     * @param array $tokensArray
+     * @param int $playerDestinationId id of who to give to
      */
-    public function actGiveTokens()
+    public function actGiveTokens($tokensArray, $playerDestinationId)
     {
         self::checkAction( 'actGiveTokens' ); 
-        self::trace("actGiveTokens()");
-        //TODO JSA actGiveTokens
+        self::trace("actGiveTokens($playerDestinationId)".json_encode($tokensArray));
         $player = Players::getCurrent();
         $pId = $player->id;
-  
+        
+        $possibleTokenIds = $player->getSelection();
+        if(count($tokensArray) >0){
+            $playerDestination = Players::get($playerDestinationId);
+            if(!isset($playerDestination)) {
+                throw new UnexpectedException(404, "Unknow target player");
+            }
+            $tokens = Tokens::getMany($tokensArray);
+            foreach($tokens as $tokenId => $token){
+                if(!in_array($tokenId, $possibleTokenIds)){
+                    throw new UnexpectedException(405, "You cannot select this token now");
+                }
+                $token->moveToPlayerBag($player,$playerDestination);
+            }
+            //update selection
+            $possibleTokenIds = array_filter($possibleTokenIds, static function ($element) use ($tokensArray) {
+                return !in_array($element, $tokensArray);
+            });
+        }
+        $player->setSelection($possibleTokenIds);
+        if(count($possibleTokenIds) >=1){
+            $this->gamestate->nextPrivateState($pId, "continue");
+            return;
+        }
+
         $this->gamestate->nextPrivateState($pId, "next");
     }
  
