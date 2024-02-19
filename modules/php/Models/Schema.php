@@ -74,4 +74,54 @@ class Schema implements \JsonSerializable
 
     return $data;
   }
+
+  /**
+   * @return array the list of special action types when playing in normal mode
+   */
+  public function getNormalPlayerActions()
+  {
+    $actions = [];
+    $flowerType = $this->type;
+    switch($flowerType){
+      case OPTION_FLOWER_VERTIGHAINEUSE:
+        $actions[] = ['type' =>  ACTION_TYPE_MIXING, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        break;
+      case OPTION_FLOWER_MARONNE:
+        $actions[] = ['type' =>  ACTION_TYPE_COMBINATION, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_FULGURANCE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        break;
+        
+      case OPTION_FLOWER_DENTDINE:
+        $actions[] = ['type' =>  ACTION_TYPE_CHOREOGRAPHY, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        $actions[] = ['type' =>  ACTION_TYPE_DIAGONAL, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_SWAP, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_MOVE_FAST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        break;
+        
+      case OPTION_FLOWER_SIFFLOCHAMP:
+        $actions[] = ['type' =>  ACTION_TYPE_WHITE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_BLACK, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_TWOBEATS, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_REST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        break;
+      case OPTION_FLOWER_INSPIRACTRICE:
+        //ALL THE PREVIOUS ONES
+        $actions[] = ['type' =>  ACTION_TYPE_MIXING, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_COMBINATION, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_FULGURANCE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_CHOREOGRAPHY, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        $actions[] = ['type' =>  ACTION_TYPE_DIAGONAL, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_SWAP, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_MOVE_FAST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        $actions[] = ['type' =>  ACTION_TYPE_WHITE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_BLACK, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_TWOBEATS, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_REST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        break;
+      default:
+        break;
+    }
+
+    return $actions;
+  }
 }

@@ -38,6 +38,7 @@ use STIG\Core\Globals;
 use STIG\Core\Preferences;
 use STIG\Core\Stats;
 use STIG\Exceptions\UserException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 
@@ -122,6 +123,7 @@ class Stigmeria extends Table
           'prefs' => Preferences::getUiData($current_player_id),
           'players' => Players::getUiData($current_player_id),
           'tokens' => Tokens::getUiData($current_player_id),
+          'actions' => PlayerActions::getUiData(),
           'turn' => Globals::getTurn(),
           'firstPlayer' => $firstPlayer,
           'winds' => Globals::getAllWindDir(),

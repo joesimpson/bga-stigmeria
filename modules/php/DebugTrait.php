@@ -6,6 +6,7 @@ use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Helpers\GridUtils;
 use STIG\Helpers\Utils;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -150,6 +151,15 @@ trait DebugTrait
   {
     Tokens::setupNewRound(Players::getAll(),Schemas::getCurrentSchema());
   }
+  */
+  function debugNewRoundActions()
+  {
+    $schema = Schemas::getCurrentSchema();
+    //$schema = Schemas::getTypes()[OPTION_SCHEMA_25];
+    PlayerActions::setupNewRound(Players::getAll(),$schema);
+    Notifications::message("",['a'=>PlayerActions::getAll()->ui()]);
+  }
+  /*
   function debugNewRound()
   {
     $this->gamestate->jumpToState( ST_NEXT_ROUND );

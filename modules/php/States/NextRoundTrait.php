@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -24,8 +25,9 @@ trait NextRoundTrait
     Stats::setupNewRound($players,$schema);
     Tokens::setupNewRound($players,$schema);
     $tokens = Tokens::getUiData();
-
-    Notifications::newRound($round,$schema,$tokens);
+    PlayerActions::setupNewRound($players,$schema);
+    $actions = PlayerActions::getUiData();
+    Notifications::newRound($round,$schema,$tokens,$actions);
 
     $this->gamestate->nextState('next');
   }

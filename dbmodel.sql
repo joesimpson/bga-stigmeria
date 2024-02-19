@@ -37,6 +37,16 @@ CREATE TABLE IF NOT EXISTS `token` (
   PRIMARY KEY (`token_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- Save datas about Unlocked actions during a game (it is a game design point!)
+CREATE TABLE IF NOT EXISTS `player_action` (
+  `action_id` int(5) NOT NULL AUTO_INCREMENT,
+  `action_location` varchar(32) NOT NULL,
+  `action_state` int(3) NOT NULL DEFAULT 0,
+  `player_id` int(10) NOT NULL,
+  `type` int(5) NOT NULL,
+  PRIMARY KEY (`action_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- CORE TABLES from tisaac boilerplate --
 CREATE TABLE IF NOT EXISTS `global_variables` (
