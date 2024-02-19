@@ -232,7 +232,7 @@ function (dojo, declare) {
             if(possibleActions.includes('actGoToNext')){
                 this.addDangerActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
             }
-            $('stig_central_board_container_wrapper').classList.add('stig_current_play');
+            if($('stig_central_board_container_wrapper')) $('stig_central_board_container_wrapper').classList.add('stig_current_play');
         }, 
         onEnteringStateCentralChoiceTokenToLand: function(args)
         {
