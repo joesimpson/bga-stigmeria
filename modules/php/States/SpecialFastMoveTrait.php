@@ -8,6 +8,7 @@ use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
 use STIG\Helpers\Utils;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -41,28 +42,34 @@ trait SpecialFastMoveTrait
         $player = Players::getCurrent();
         $pId = $player->id;
         $turn = Globals::getTurn();
+        $actionType = ACTION_TYPE_MOVE_FAST;
  
-        $actionCost = ACTION_COST_MOVE_FAST* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $token = Tokens::get($token_id);
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
-        //TODO JSA CHECK NOT USED IN player turn
         $boardTokens = Tokens::getAllOnPersonalBoard($pId);
         if(!$this->canMoveFastOnPlayerBoard($pId,$boardTokens,$token,$row, $column, $turn)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
 
+        //This action is now USED IN player turn
+        $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
         $player->giveExtraTime();
         //EFFECT : MOVE the TOKEN 
         Notifications::spFastMove($player,$actionCost);
         $token->moveToPlayerBoard($player,$row,$column,0);
-        Stats::inc("actions_s".ACTION_TYPE_MOVE_FAST,$pId);
+        Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($pId, 'next');
@@ -81,22 +88,28 @@ trait SpecialFastMoveTrait
         $player = Players::getCurrent();
         $pId = $player->id;
         $turn = Globals::getTurn();
-
-        $actionCost = ACTION_COST_MOVE_FAST* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_MOVE_FAST;
+ 
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $token = Tokens::get($token_id);
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
-        //TODO JSA CHECK NOT USED IN player turn
         $boardTokens = Tokens::getAllOnPersonalBoard($pId);
         if(!$this->canMoveOutFastOnPlayerBoard($pId,$boardTokens,$token,$turn)){
             throw new UnexpectedException(101,"You cannot fast move out this token");
         }
 
         //EFFECT : 
+        //This action is now USED IN player turn
+        $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
         Notifications::spFastMove($player,$actionCost);
         if(Globals::isModeCompetitiveNoLimit()){
             //EFFECT : MOVE the TOKEN oUT
@@ -112,7 +125,7 @@ trait SpecialFastMoveTrait
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
         $player->giveExtraTime();
-        Stats::inc("actions_s".ACTION_TYPE_MOVE_FAST,$pId);
+        Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
         
         $this->gamestate->nextPrivateState($player->id, "next");

@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -52,14 +53,18 @@ trait SpecialChoreographyTrait
         $movedTokensIds = $player->getSelection();
         $nbMovesDone = count($player->getSelection());
 
-        $actionCost = ACTION_COST_CHOREOGRAPHY * $this->getGetActionCostModifier();
-        if($nbMovesDone ==0 && $player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_CHOREOGRAPHY;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if($nbMovesDone ==0 && !$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         if($nbMovesMax - $nbMovesDone < 1){
             throw new UnexpectedException(11,"Not enough moves remaining");
         }
-        //TODO JSA check if choreography already done during turn
         $token = Tokens::get($tokenId);
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
@@ -70,8 +75,10 @@ trait SpecialChoreographyTrait
 
         //EFFECT : MOVE the TOKEN 
         if($nbMovesDone ==0 ){
+            //This action is now USED IN player turn
+            $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
             Notifications::spChoreography($player,$nbMovesMax,$actionCost);
-            Stats::inc("actions_s".ACTION_TYPE_CHOREOGRAPHY,$pId);
+            Stats::inc("actions_s".$actionType,$pId);
             Stats::inc("actions",$pId);
             $player->incNbPersonalActionsDone($actionCost);
             Notifications::useActions($player);
@@ -107,10 +114,15 @@ trait SpecialChoreographyTrait
         $movedTokensIds = $player->getSelection();
         $nbMovesDone = count($player->getSelection());
 
-        $actionCost = ACTION_COST_CHOREOGRAPHY * $this->getGetActionCostModifier();
-        if($nbMovesDone ==0 && $player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_CHOREOGRAPHY;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if($nbMovesDone ==0 && !$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         if($nbMovesMax - $nbMovesDone < 1){
             throw new UnexpectedException(11,"Not enough moves remaining");
         }
@@ -124,8 +136,10 @@ trait SpecialChoreographyTrait
 
         //EFFECT : 
         if($nbMovesDone ==0 ){
+            //This action is now USED IN player turn
+            $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
             Notifications::spChoreography($player,$nbMovesMax,$actionCost);
-            Stats::inc("actions_s".ACTION_TYPE_CHOREOGRAPHY,$pId);
+            Stats::inc("actions_s".$actionType,$pId);
             Stats::inc("actions",$pId);
             $player->incNbPersonalActionsDone($actionCost);
             Notifications::useActions($player);

@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -30,15 +31,19 @@ trait SpecialRestTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_REST* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_REST;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $token1 = Tokens::get($tokenId);
         if($token1->pId != $pId || $token1->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(150,"You cannot select this token");
         }
-        //TODO JSA SPECIAL ACTION model to know if action already done
 
         //  EFFECT
         if($token1->id ==$tokenId ){
@@ -46,10 +51,12 @@ trait SpecialRestTrait
             Tokens::delete($tokenId);
         }
 
+        //This action is now USED IN player turn
+        $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
         $player->giveExtraTime();
-        Stats::inc("actions_s".ACTION_TYPE_REST,$pId);
+        Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,-1);
 

@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 
 trait NextTurnTrait
@@ -44,6 +45,7 @@ trait NextTurnTrait
 
     Notifications::newTurn($turn);
     Players::setupNewTurn($players,$turn);
+    PlayerActions::setupNewTurn($players,$turn);
 
     $this->gamestate->nextState('next');
   }

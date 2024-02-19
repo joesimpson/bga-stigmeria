@@ -95,6 +95,15 @@ class PlayerActions extends \STIG\Helpers\Pieces
 
     self::create($actions, ACTION_LOCATION_PLAYER_BOARD);
   }
+  
+  /**
+   * @param Collection $players Players
+   * @param int $turn
+   */
+  public static function setupNewTurn($players,$turn)
+  {
+    self::updateAllState(ACTION_STATE_LOCKED_FOR_TURN,ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN);
+  }
   /**
    * @param PlayerAction $action
   */
@@ -115,12 +124,27 @@ class PlayerActions extends \STIG\Helpers\Pieces
   
   /**
    * @param int $playerId
+   * @param array $types (optional) filter on these types
   * @return Collection
   */
-  public static function getPlayer($playerId)
+  public static function getPlayer($playerId, $types = null)
   { 
-    return self::DB()
-      ->wherePlayer($playerId)
-      ->get();
+    $query = self::DB()
+      ->wherePlayer($playerId);
+    if(isset($types)) $query = $query->whereIn('type',$types);
+    return $query->get();
   } 
+  /**
+   * Update all state of specified to another state
+   * @param int $stateSrc
+   * @param int $stateDest
+   */
+  public static function updateAllState($stateSrc, $stateDest)
+  {
+    $data = [];
+    $data[static::$prefix . 'state'] = $stateDest;
+    $query = self::DB()->update($data);
+    $query->where(static::$prefix . 'state', $stateSrc);
+    return $query->run();
+  }
 }
