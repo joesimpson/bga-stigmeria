@@ -2,7 +2,9 @@
 
 namespace STIG\Models;
 
+use STIG\Core\Globals;
 use STIG\Managers\PlayerActions;
+use STIG\Managers\Schemas;
 
 /*
  * PlayerAction: all utility functions concerning an action unlocked or not, played or not
@@ -35,13 +37,29 @@ class PlayerAction extends \STIG\Helpers\DB_Model
       $this->$attribute = $value;
     }
     $type = $this->type;
-    $this->cost = PlayerActions::getCost($type);
-    $this->difficulty = PlayerActions::getDifficult($type);
+    $this->difficulty = PlayerActions::getDifficulty($type);
+    $this->cost = PlayerActions::getCost($type) * PlayerActions::getGetActionCostModifier();
   }
 
   public function getUiData()
   {
     $data = parent::getUiData();
     return $data;
+  }
+
+  /**
+   * @param int $remainingActions
+   * @param int $deckSize
+   */
+  public function canBePlayed($remainingActions,$deckSize){
+    if($this->getState() == ACTION_STATE_LOCKED ) return false;
+    if($this->getState() == ACTION_STATE_LOCKED_FOR_TURN ) return false;
+    if($remainingActions < $this->getCost()){
+      return false;
+    }
+    if(ACTION_TYPE_FULGURANCE == $this->getType() && $deckSize < FULGURANCE_NB_TOKENS ){
+      return false;
+    }
+    return true;
   }
 }

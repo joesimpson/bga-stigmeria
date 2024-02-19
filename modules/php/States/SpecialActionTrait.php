@@ -5,9 +5,11 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
+use STIG\Models\PlayerAction;
 use STIG\Models\StigmerianToken;
 
 trait SpecialActionTrait
@@ -15,93 +17,22 @@ trait SpecialActionTrait
     public function argSpecialAction($player_id)
     {
         $player = Players::get($player_id);
-        $flowerType = Schemas::getCurrentSchema()->type;
         $deckSize = Tokens::countDeck($player_id);
         $remaining = $player->countRemainingPersonalActions();
-        $cost = $this->getGetActionCostModifier();
-        $actions =[];
-        if($flowerType == OPTION_FLOWER_VERTIGHAINEUSE){
-            if($remaining >= ACTION_COST_MIXING){
-                $actions[] = ACTION_TYPE_MIXING;
-            }
-        }
-        else if($flowerType == OPTION_FLOWER_MARONNE){
-
-            if($remaining >=ACTION_COST_COMBINATION){
-                $actions[] = ACTION_TYPE_COMBINATION;
-            }
-            if($remaining >=ACTION_COST_FULGURANCE && $deckSize>= FULGURANCE_NB_TOKENS ){
-                $actions[] = ACTION_TYPE_FULGURANCE;
-            }
-        }
-        else if($flowerType == OPTION_FLOWER_DENTDINE){
-
-            if($remaining >=ACTION_COST_CHOREOGRAPHY){
-                $actions[] = ACTION_TYPE_CHOREOGRAPHY;
-            }
-            if($remaining >=ACTION_COST_MOVE_DIAGONAL){
-                $actions[] = ACTION_TYPE_DIAGONAL;
-            }
-            if($remaining >=ACTION_COST_SWAP){
-                $actions[] = ACTION_TYPE_SWAP;
-            }
-            if($remaining >=ACTION_COST_MOVE_FAST){
-                $actions[] = ACTION_TYPE_MOVE_FAST;
-            }
-        }
-        else if($flowerType == OPTION_FLOWER_SIFFLOCHAMP){
-
-            if($remaining >=ACTION_COST_WHITE){
-                $actions[] = ACTION_TYPE_WHITE;
-            }
-            if($remaining >=ACTION_COST_BLACK){
-                $actions[] = ACTION_TYPE_BLACK;
-            }
-            if($remaining >=ACTION_COST_TWOBEATS){
-                $actions[] = ACTION_TYPE_TWOBEATS;
-            }
-            if($remaining >=ACTION_COST_REST){
-                $actions[] = ACTION_TYPE_REST;
-            }
-        }
-        else if($flowerType == OPTION_FLOWER_INSPIRACTRICE){
-            // ALL THE PREVIOUS ACTIONS but with a DOUBLE cost
-            if($remaining >= $cost * ACTION_COST_MIXING){
-                $actions[] = ACTION_TYPE_MIXING;
-            }
-            if($remaining >= $cost * ACTION_COST_COMBINATION){
-                $actions[] = ACTION_TYPE_COMBINATION;
-            }
-            if($remaining >= $cost * ACTION_COST_FULGURANCE && $deckSize>= FULGURANCE_NB_TOKENS ){
-                $actions[] = ACTION_TYPE_FULGURANCE;
-            }
-            if($remaining >= $cost * ACTION_COST_CHOREOGRAPHY){
-                $actions[] = ACTION_TYPE_CHOREOGRAPHY;
-            }
-            if($remaining >= $cost * ACTION_COST_MOVE_DIAGONAL){
-                $actions[] = ACTION_TYPE_DIAGONAL;
-            }
-            if($remaining >= $cost * ACTION_COST_SWAP){
-                $actions[] = ACTION_TYPE_SWAP;
-            }
-            if($remaining >= $cost * ACTION_COST_MOVE_FAST){
-                $actions[] = ACTION_TYPE_MOVE_FAST;
-            }
-            if($remaining >= $cost * ACTION_COST_WHITE){
-                $actions[] = ACTION_TYPE_WHITE;
-            }
-            if($remaining >= $cost * ACTION_COST_BLACK){
-                $actions[] = ACTION_TYPE_BLACK;
-            }
-            if($remaining >= $cost * ACTION_COST_TWOBEATS){
-                $actions[] = ACTION_TYPE_TWOBEATS;
-            }
-            if($remaining >= $cost * ACTION_COST_REST){
-                $actions[] = ACTION_TYPE_REST;
-            }
-        }
+        
+        $playerActions = PlayerActions::getPlayer($player_id);
+        $unlockedActions = $playerActions
+            ->filter(function($action) use ($remaining,$deckSize) {
+                if($action->state == ACTION_STATE_LOCKED ) return false;
+                if($action->state == ACTION_STATE_LOCKED_FOR_TURN ) return false;
+                if(!$action->canBePlayed($remaining,$deckSize )) return false;
+                return true;
+            })->map(function($action) {
+                return $action->type;
+            })->toArray();
         return [
-            'a' => $actions,
+            'a' => $unlockedActions,
+            'actions' => $playerActions,
         ];
     }
     /**
@@ -109,13 +40,7 @@ trait SpecialActionTrait
      */
     public function getGetActionCostModifier()
     {
-        $multiplier = 1;
-        $flowerType = Schemas::getCurrentSchema()->type;
-        if(!Globals::isModeCompetitive() && $flowerType == OPTION_FLOWER_INSPIRACTRICE){
-            $multiplier = ACTION_COST_MODIFIER_INSPIRACTRICE;
-        }
-        //For competitive modes it is more complex
-        return $multiplier;
+        return PlayerActions::getGetActionCostModifier();
     }
 
     public function actCancelSpecial()

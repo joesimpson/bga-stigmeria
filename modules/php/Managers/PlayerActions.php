@@ -42,10 +42,24 @@ class PlayerActions extends \STIG\Helpers\Pieces
    * @param int $type
    * @return int 
    */
-  public static function getDifficult($type)
+  public static function getDifficulty($type)
   {
     //TODO JSA SWITCH
     return 2;
+  }
+  
+  /**
+   * @return int
+   */
+  public static function getGetActionCostModifier()
+  {
+    $multiplier = 1;
+    $flowerType = Schemas::getCurrentSchema()->type;
+    if(!Globals::isModeCompetitive() && $flowerType == OPTION_FLOWER_INSPIRACTRICE){
+        $multiplier = ACTION_COST_MODIFIER_INSPIRACTRICE;
+    }
+    //For competitive modes it is more complex
+    return $multiplier;
   }
 
   public static function setupNewGame($players, $options)
@@ -97,5 +111,16 @@ class PlayerActions extends \STIG\Helpers\Pieces
     return self::DB()
       ->wherePlayer($playerId)
       ->count();
+  } 
+  
+  /**
+   * @param int $playerId
+  * @return Collection
+  */
+  public static function getPlayer($playerId)
+  { 
+    return self::DB()
+      ->wherePlayer($playerId)
+      ->get();
   } 
 }
