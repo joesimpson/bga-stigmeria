@@ -21,18 +21,20 @@ trait SpecialActionTrait
         $remaining = $player->countRemainingPersonalActions();
         
         $playerActions = PlayerActions::getPlayer($player_id);
+        $possibleActions = $playerActions->map(function($action) {
+                return $action->type;
+            })->toArray();
         $unlockedActions = $playerActions
             ->filter(function($action) use ($remaining,$deckSize) {
-                if($action->state == ACTION_STATE_LOCKED ) return false;
-                if($action->state == ACTION_STATE_LOCKED_FOR_TURN ) return false;
-                if(!$action->canBePlayed($remaining,$deckSize )) return false;
+                if(!$action->canBePlayed($remaining )) return false;
+                if(!$action->canBePlayedWithCurrentBoard($deckSize )) return false;
                 return true;
             })->map(function($action) {
                 return $action->type;
             })->toArray();
         return [
-            'a' => $unlockedActions,
-            'actions' => $playerActions,
+            'a' => $possibleActions,
+            'e' => $unlockedActions,
         ];
     }
     /**

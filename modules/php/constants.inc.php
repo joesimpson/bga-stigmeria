@@ -118,6 +118,7 @@ const ACTION_TYPE_REST = 23;
 
 /** ACTION DATAS */
 const FULGURANCE_NB_TOKENS = 5;
+const CHOREOGRAPHY_NB_TURNS_BEFORE = 2;
 
 /** ACTIONS STATES */
 const ACTION_LOCATION_PLAYER_BOARD = 'P';//just for the Pieces engine

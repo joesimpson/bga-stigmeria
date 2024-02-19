@@ -13,7 +13,6 @@ trait SpecialDiagonalTrait
 {
     public function argSpDiagonal($player_id)
     {
-        $player = Players::get($player_id);
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
         return [
             'n' => ACTION_COST_MOVE_DIAGONAL,

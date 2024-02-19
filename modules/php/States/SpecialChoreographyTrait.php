@@ -18,7 +18,7 @@ trait SpecialChoreographyTrait
         $player = Players::get($player_id);
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
         $turn = Globals::getTurn();
-        $nbMovesMax = $turn -2;
+        $nbMovesMax = $turn -CHOREOGRAPHY_NB_TURNS_BEFORE;
         $movedTokensIds = $player->getSelection();
         $nbMovesDone = count($movedTokensIds);
         $nbMovesRemaining = $nbMovesMax - $nbMovesDone;
@@ -48,7 +48,7 @@ trait SpecialChoreographyTrait
         $player = Players::getCurrent();
         $pId = $player->id;
         $turn = Globals::getTurn();
-        $nbMovesMax = $turn -2;
+        $nbMovesMax = $turn -CHOREOGRAPHY_NB_TURNS_BEFORE;
         $movedTokensIds = $player->getSelection();
         $nbMovesDone = count($player->getSelection());
 
@@ -103,7 +103,7 @@ trait SpecialChoreographyTrait
         $player = Players::getCurrent();
         $pId = $player->id;
         $turn = Globals::getTurn();
-        $nbMovesMax = $turn -2;
+        $nbMovesMax = $turn -CHOREOGRAPHY_NB_TURNS_BEFORE;
         $movedTokensIds = $player->getSelection();
         $nbMovesDone = count($player->getSelection());
 
