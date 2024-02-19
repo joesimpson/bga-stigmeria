@@ -44,7 +44,8 @@ CREATE TABLE IF NOT EXISTS `player_action` (
   `action_state` int(3) NOT NULL DEFAULT 0,
   `player_id` int(10) NOT NULL,
   `type` int(5) NOT NULL,
-  PRIMARY KEY (`action_id`)
+  PRIMARY KEY (`action_id`),
+  UNIQUE KEY (`player_id`, `type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 

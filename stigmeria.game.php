@@ -45,12 +45,14 @@ use STIG\Managers\Tokens;
 class Stigmeria extends Table
 {
     use STIG\DebugTrait;
+    use STIG\States\CentralGainSpecialTrait;
     use STIG\States\CentralLandTrait;
     use STIG\States\CentralMoveTrait;
     use STIG\States\ChoiceTokenToLandTrait;
     use STIG\States\ChoiceTokenToMoveTrait;
     use STIG\States\SpecialDiagonalTrait;
     use STIG\States\EndRoundTrait;
+    use STIG\States\GiveTokensTrait;
     use STIG\States\NextTurnTrait;
     use STIG\States\NextRoundTrait;
     use STIG\States\PlayerDiceTrait;

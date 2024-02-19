@@ -201,6 +201,7 @@ $machinestates = array(
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,
             //'cancel' => ST_TURN_COMMON_BOARD,
+            'gainSpecialAction' => ST_TURN_CENTRAL_CHOICE_SP,
         ],
     ],
     
@@ -216,7 +217,33 @@ $machinestates = array(
         ],
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,
+            'gainSpecialAction' => ST_TURN_CENTRAL_CHOICE_SP,
             'cancel' => ST_TURN_COMMON_BOARD,
+        ],
+    ],
+    ST_TURN_CENTRAL_CHOICE_SP => [
+        "name" => "gainSpecialAction",
+        "descriptionmyturn" => clienttranslate('${you} must choose ${n}/${n2} special actions to unlock'), 
+        "type" => "private",
+        "args" => "argGainSpecialAction",
+        "possibleactions" => [
+            "actChooseSp",
+        ],
+        "transitions" => [
+            'continue' => ST_TURN_CENTRAL_CHOICE_SP,
+            'next' => ST_TURN_CENTRAL_TOKEN_DISTRIBUTION,
+        ],
+    ],
+    ST_TURN_CENTRAL_TOKEN_DISTRIBUTION => [
+        "name" => "giveTokens",
+        "descriptionmyturn" => clienttranslate('${you} must choose where to put the stigmerians'), 
+        "type" => "private",
+        "args" => "argGiveTokens",
+        "possibleactions" => [
+            "actGiveTokens",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_COMMON_BOARD,
         ],
     ],
     

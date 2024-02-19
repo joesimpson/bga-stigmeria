@@ -117,6 +117,56 @@ trait PlayerTurnCommonBoardTrait
         }
         */
     }
+
+    /**
+     * @param int $tokenType
+     * @param int $tokenRow
+     * @param int $tokenColumn
+     * @return array aligned tokens for actions earned
+     */
+    public function checkBoardForGainingAction( $tokenType,$tokenRow,$tokenColumn)
+    {
+        $alignedTokens = [];
+        $counter = 0;
+        // LOOK for 2 tokens
+        $delta = NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS -1;
+        for($row = max(ROW_MIN, $tokenRow- $delta ); $row <= min(ROW_MAX,$tokenRow+$delta); $row++ ){
+            $token = Tokens::findOnCentralBoard($row,$tokenColumn);
+            //self::trace("checkBoardForGainingAction ($tokenRow,$tokenColumn) DELTA ROW $row,$tokenColumn : ".json_encode($token));
+            if(isset($token) && $tokenType == $token->getType()){
+                $counter++;
+                $alignedTokens[] = $token->getId();
+            }
+            else {
+                $counter = 0;
+                $alignedTokens = [];
+            }
+            if($counter == NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS) {
+                break;
+            }
+        }
+        $counter = 0;
+        $alignedTokensCol = [];
+        for($column = max(COLUMN_MIN, $tokenColumn- $delta ); $column <= min(COLUMN_MAX,$tokenColumn+$delta); $column++ ){
+            $token = Tokens::findOnCentralBoard($tokenRow,$column);
+            //self::trace("checkBoardForGainingAction($tokenRow,$tokenColumn) DELTA COL $tokenRow,$column : ".json_encode($token));
+            if(isset($token) && $tokenType == $token->getType()){
+                $counter++;
+                $alignedTokensCol[] = $token->getId();
+            }
+            else {
+                $counter = 0;
+                $alignedTokensCol = [];
+            }
+            if($counter == NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS) {
+                break;
+            }
+        }
+        $alignedTokens = array_merge($alignedTokens, $alignedTokensCol);
+        //self::trace("checkBoardForGainingAction($tokenRow,$tokenColumn) aligned tokens : ".json_encode($alignedTokens));
+        return $alignedTokens;
+    }
+
     
     //TODO JSA actCommonJoker for Competitive games NOT no limit !
 }

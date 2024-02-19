@@ -141,6 +141,20 @@ class Tokens extends \STIG\Helpers\Pieces
       ->getSingle();
   }
   /**
+   * 
+   * @param int $row
+   * @param int $column
+   * @return StigmerianToken if found at that location, null otherwise
+   */
+  public static function findOnCentralBoard($row, $column)
+  { 
+    return self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD)
+      ->where('y', $row)
+      ->where('x', $column)
+      ->getSingle();
+  }
+  /**
    * SEARCH in memory, not in DB
    * @param Collection $boardTokens StigmerianToken
    * @param int $row

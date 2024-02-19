@@ -112,4 +112,40 @@ class PlayerAction extends \STIG\Helpers\DB_Model
 
     return true;
   }
+
+    /**
+     * @param int $actionType
+     * @return int $state
+     */
+    public function getName()
+    {
+        switch($this->getType()){
+            case ACTION_TYPE_MIXING:
+              return clienttranslate("Mixing");
+            case ACTION_TYPE_COMBINATION:
+              return clienttranslate("Combination");
+            case ACTION_TYPE_FULGURANCE:
+              return clienttranslate("Fulgurance");
+            case ACTION_TYPE_CHOREOGRAPHY:
+              return clienttranslate("Choreography");
+            case ACTION_TYPE_DIAGONAL:
+              return clienttranslate("Diagonal");
+            case ACTION_TYPE_SWAP:
+              return clienttranslate("Exchange");
+            case ACTION_TYPE_MOVE_FAST:
+              return clienttranslate("Fast Step");
+            case ACTION_TYPE_WHITE:
+              return clienttranslate("Half Note");
+            case ACTION_TYPE_BLACK:
+              return clienttranslate("Quarter Note");
+            case ACTION_TYPE_TWOBEATS:
+              return clienttranslate("Two Beats");
+            case ACTION_TYPE_REST:
+              return clienttranslate("Rest");
+            
+            default:
+              return "";
+        }
+    }
+
 }

@@ -293,6 +293,25 @@ function (dojo, declare) {
             this.initTokenSelectionDest('actCentralMove', args.p_places_m,'central','actCentralMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Cancel'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
+        onEnteringStateGainSpecialAction: function(args)
+        {
+            debug( 'onEnteringStateGainSpecialAction() ', args );
+            
+            let possibleActions = args.a;
+            let enabledActions = possibleActions;
+            this.formatSpecialActionButton(_('Mixing'),ACTION_TYPE_MIXING,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Combination'),ACTION_TYPE_COMBINATION,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Fulgurance'),ACTION_TYPE_FULGURANCE,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Choreography'),ACTION_TYPE_CHOREOGRAPHY,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Diagonal'),ACTION_TYPE_DIAGONAL,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Exchange'),ACTION_TYPE_SWAP,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Fast Step'),ACTION_TYPE_MOVE_FAST,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Half Note'),ACTION_TYPE_WHITE,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Quarter Note'),ACTION_TYPE_BLACK,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Two Beats'),ACTION_TYPE_TWOBEATS,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions,'actChooseSp');
+
+        }, 
         
         onEnteringStatePersonalBoardTurn: function(args)
         {
@@ -396,11 +415,11 @@ function (dojo, declare) {
             this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id,'actMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
-        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions) {
+        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions, actionName ='actChoiceSpecial') {
             debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions);
             if(possibleActions.includes(actionType)){
                 let divText = `<div><div class='stig_sp_action_text'>`+_(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
-                this.addImageActionButton('btnStartSp'+actionType,divText , () => this.takeAction('actChoiceSpecial', {act:actionType}));
+                this.addImageActionButton('btnStartSp'+actionType,divText , () => this.takeAction(actionName, {act:actionType}));
                 if(!enabledActions.includes(actionType)){
                     $('btnStartSp'+actionType).classList.add('disabled');
                 }

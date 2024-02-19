@@ -2,6 +2,7 @@
 
 namespace STIG\States;
 
+use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
@@ -56,7 +57,17 @@ trait CentralLandTrait
 
         //EFFECT : PLACE the TOKEN 
         $token->moveToCentralBoard($player,$row,$column,$actionCost);
-        //TODO JSA RULE : gain 1 special action
+        //RULE : gain 1 or 2 special action
+        $alignedTokens = $this->checkBoardForGainingAction($token->getType(),$row,$column);
+        if(count($alignedTokens) >0 ){
+            //TODO JSA AND check max number of actions not reached
+            $player->setSelection($alignedTokens);
+            $nbActions = count($alignedTokens)/ NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS;
+            Globals::setNbSpActions($nbActions);
+            Globals::setNbSpActionsMax($nbActions);
+            $this->gamestate->nextPrivateState($player->id, "gainSpecialAction");
+            return;
+        }
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }

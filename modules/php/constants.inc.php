@@ -21,6 +21,9 @@ const ROW_START = ROW_MIN;
 // 8 : an orthogonal grid with 4 neighbours + 4 in diagonal
 const MAX_GRID_NEIGHBOURS = 8;
 
+//We need 3 aligned tokens to gain special actions
+const NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS = 3;
+
 const WIND_DIR_NORTH = 'N';
 const WIND_DIR_SOUTH = 'S';
 const WIND_DIR_EAST = 'E';
@@ -115,6 +118,19 @@ const ACTION_TYPE_WHITE = 20;
 const ACTION_TYPE_BLACK = 21;
 const ACTION_TYPE_TWOBEATS = 22;
 const ACTION_TYPE_REST = 23;
+const ACTION_TYPES = [
+    ACTION_TYPE_MIXING      ,
+    ACTION_TYPE_COMBINATION ,
+    ACTION_TYPE_FULGURANCE  ,
+    ACTION_TYPE_CHOREOGRAPHY,    
+    ACTION_TYPE_DIAGONAL    ,
+    ACTION_TYPE_SWAP        ,
+    ACTION_TYPE_MOVE_FAST   ,
+    ACTION_TYPE_WHITE       ,
+    ACTION_TYPE_BLACK       ,
+    ACTION_TYPE_TWOBEATS    ,
+    ACTION_TYPE_REST        ,
+];
 
 /** ACTION DATAS */
 const FULGURANCE_NB_TOKENS = 5;
@@ -288,6 +304,8 @@ const ST_PLAYER_DICE = 6;
 
 const ST_NEXT_TURN = 10;
 
+const ST_TURN_CENTRAL_CHOICE_SP = 18;
+const ST_TURN_CENTRAL_TOKEN_DISTRIBUTION = 19;
 const ST_PLAYER_TURN = 20;
 const ST_TURN_COMMON_BOARD = 21;
 const ST_TURN_CENTRAL_CHOICE_TOKEN_LAND = 23;

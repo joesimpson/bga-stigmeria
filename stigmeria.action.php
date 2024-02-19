@@ -167,6 +167,21 @@
       $this->game->actCancelChoiceTokenToMove();
       self::ajaxResponse();
     }
+    public function actChooseSp()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $actionType = self::getArg( "act", AT_posint, true );
+      $this->game->actChooseSp($actionType);
+      self::ajaxResponse();
+    }
+    public function actGiveTokens()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actGiveTokens();
+      self::ajaxResponse();
+    }
     public function actJoker()
     {
       self::setAjaxMode();

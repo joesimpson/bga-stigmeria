@@ -86,15 +86,53 @@ class PlayerActions extends \STIG\Helpers\Pieces
           $actions[] = [
             'type' => $actionType['type'],
             'player_id' => $pId,
-            'state' => $actionType['state'],
+            'state' => PlayerActions::getInitialState($actionType['type']),
             'nbr' => 1,
           ];
         }
       }
     }
 
-    self::create($actions, ACTION_LOCATION_PLAYER_BOARD);
+    if(count($actions)>0){
+      self::create($actions, ACTION_LOCATION_PLAYER_BOARD);
+    }
   }
+
+
+    /**
+     * @param int $actionType
+     * @return int $state
+     */
+    public static function getInitialState($actionType)
+    {
+        switch($actionType){
+            case ACTION_TYPE_MIXING:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_COMBINATION:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_FULGURANCE:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_CHOREOGRAPHY:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_DIAGONAL:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_SWAP:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_MOVE_FAST:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_WHITE:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_BLACK:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_TWOBEATS:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_REST:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            
+            default:
+              return ACTION_STATE_UNLOCKED_FOREVER;
+        }
+    }
   
   /**
    * @param Collection $players Players
@@ -105,7 +143,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
     self::updateAllState(ACTION_STATE_LOCKED_FOR_TURN,ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN);
   }
   /**
-   * @param PlayerAction $action
+   * @param array $action datas
   */
   public static function createAction($action)
   { 

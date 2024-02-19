@@ -6,6 +6,7 @@ use STIG\Managers\Players;
 use STIG\Helpers\Utils;
 use STIG\Core\Globals;
 use STIG\Models\Player;
+use STIG\Models\PlayerAction;
 use STIG\Models\Schema;
 use STIG\Models\StigmerianToken;
 
@@ -543,6 +544,21 @@ class Notifications
         'token_color' => StigmerianToken::getTypeName($token->getType()),
         'token_type' => $token->getType(),
 
+      ],
+    );
+  }
+  
+  /**
+   * Unlock Special action !
+   * @param Player $player
+   * @param PlayerAction $action
+   */
+  public static function unlockSp($player,$action){
+    self::notifyAll('unlockSp',clienttranslate('${player_name} unlocks a special action : ${action_name}'),[ 
+        'i18n' => ['action_name'],
+        'player' => $player,
+        'action' => $action->getUiData(),
+        'action_name' => $action->getName(),
       ],
     );
   }

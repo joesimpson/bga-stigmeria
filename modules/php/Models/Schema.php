@@ -84,39 +84,39 @@ class Schema implements \JsonSerializable
     $flowerType = $this->type;
     switch($flowerType){
       case OPTION_FLOWER_VERTIGHAINEUSE:
-        $actions[] = ['type' =>  ACTION_TYPE_MIXING, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_MIXING];
         break;
       case OPTION_FLOWER_MARONNE:
-        $actions[] = ['type' =>  ACTION_TYPE_COMBINATION, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_FULGURANCE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
+        $actions[] = ['type' =>  ACTION_TYPE_COMBINATION];
+        $actions[] = ['type' =>  ACTION_TYPE_FULGURANCE];
         break;
         
       case OPTION_FLOWER_DENTDINE:
-        $actions[] = ['type' =>  ACTION_TYPE_CHOREOGRAPHY, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
-        $actions[] = ['type' =>  ACTION_TYPE_DIAGONAL, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_SWAP, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_MOVE_FAST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        $actions[] = ['type' =>  ACTION_TYPE_CHOREOGRAPHY];
+        $actions[] = ['type' =>  ACTION_TYPE_DIAGONAL];
+        $actions[] = ['type' =>  ACTION_TYPE_SWAP];
+        $actions[] = ['type' =>  ACTION_TYPE_MOVE_FAST];
         break;
         
       case OPTION_FLOWER_SIFFLOCHAMP:
-        $actions[] = ['type' =>  ACTION_TYPE_WHITE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_BLACK, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_TWOBEATS, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_REST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        $actions[] = ['type' =>  ACTION_TYPE_WHITE];
+        $actions[] = ['type' =>  ACTION_TYPE_BLACK];
+        $actions[] = ['type' =>  ACTION_TYPE_TWOBEATS];
+        $actions[] = ['type' =>  ACTION_TYPE_REST];
         break;
       case OPTION_FLOWER_INSPIRACTRICE:
         //ALL THE PREVIOUS ONES
-        $actions[] = ['type' =>  ACTION_TYPE_MIXING, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_COMBINATION, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_FULGURANCE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_CHOREOGRAPHY, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
-        $actions[] = ['type' =>  ACTION_TYPE_DIAGONAL, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_SWAP, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_MOVE_FAST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
-        $actions[] = ['type' =>  ACTION_TYPE_WHITE, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_BLACK, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_TWOBEATS, 'state'=> ACTION_STATE_UNLOCKED_FOREVER];
-        $actions[] = ['type' =>  ACTION_TYPE_REST, 'state'=> ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN];
+        $actions[] = ['type' =>  ACTION_TYPE_MIXING, ];
+        $actions[] = ['type' =>  ACTION_TYPE_COMBINATION, ];
+        $actions[] = ['type' =>  ACTION_TYPE_FULGURANCE, ];
+        $actions[] = ['type' =>  ACTION_TYPE_CHOREOGRAPHY];
+        $actions[] = ['type' =>  ACTION_TYPE_DIAGONAL, ];
+        $actions[] = ['type' =>  ACTION_TYPE_SWAP, ];
+        $actions[] = ['type' =>  ACTION_TYPE_MOVE_FAST];
+        $actions[] = ['type' =>  ACTION_TYPE_WHITE, ];
+        $actions[] = ['type' =>  ACTION_TYPE_BLACK, ];
+        $actions[] = ['type' =>  ACTION_TYPE_TWOBEATS, ];
+        $actions[] = ['type' =>  ACTION_TYPE_REST];
         break;
       default:
         break;
