@@ -80,6 +80,7 @@ trait PlayerTurnTrait
         else {*/
             Notifications::emptyNotif();
         //}
+        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD, $player->id);
     }
     
     public function actEndTurn()

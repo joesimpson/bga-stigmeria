@@ -51,6 +51,7 @@ trait PlayerTurnCommonBoardTrait
             throw new UnexpectedException(10,"You still have actions to take");
         }
 
+        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD, $player->id);
         //moving current player to different state :
         $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "next");
     }
