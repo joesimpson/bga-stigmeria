@@ -30,6 +30,7 @@ trait SpecialRestTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($player->id, $player->getPrivateState());
  
         $actionType = ACTION_TYPE_REST;
         $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();

@@ -41,6 +41,7 @@ trait SpecialFastMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
         $turn = Globals::getTurn();
         $actionType = ACTION_TYPE_MOVE_FAST;
  
@@ -87,6 +88,7 @@ trait SpecialFastMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
         $turn = Globals::getTurn();
         $actionType = ACTION_TYPE_MOVE_FAST;
  
