@@ -268,6 +268,7 @@ $machinestates = array(
             "actLetNextPlay",
             "actEndTurn",
             //"actBackToCommon",
+            "actRestart",
         ],
         "transitions" => [
             'continue' => ST_TURN_PERSONAL_BOARD,

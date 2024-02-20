@@ -48,6 +48,7 @@ trait ChoiceTokenToLandTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $player->id, $player->getPrivateState());
 
         $remaining = $player->countRemainingPersonalActions();
         $actionCost = 1;

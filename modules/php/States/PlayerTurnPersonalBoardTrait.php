@@ -46,12 +46,14 @@ trait PlayerTurnPersonalBoardTrait
                 }
             }
         }
-        return [
+        $args = [
             'n'=> $player->countRemainingPersonalActions(),
             'done'=> $player->getNbPersonalActionsDone(),
             'a' => $actions,
             'pj' => $possibleJokers,
         ];
+        $this->addArgsForUndo($player_id, $args);
+        return $args;
     }
     
     /**
@@ -75,6 +77,7 @@ trait PlayerTurnPersonalBoardTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $player->id, $player->getPrivateState());
 
         $remaining = $player->countRemainingPersonalActions();
         $actionCost = 1;//TODO JSA ACTION MODEL ?
@@ -99,6 +102,8 @@ trait PlayerTurnPersonalBoardTrait
         Stats::inc("actions",$player->getId());
 
         Notifications::drawToken($player,$token, $actionCost);
+
+        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD, $player->id);
 
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
@@ -159,6 +164,7 @@ trait PlayerTurnPersonalBoardTrait
 
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $player->id, $player->getPrivateState());
 
         if(Globals::getOptionJokers() == 0 || $player->isJokerUsed()){
             throw new UnexpectedException(13,"You cannot replay a joker in the game round");

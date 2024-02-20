@@ -673,7 +673,7 @@ function (dojo, declare) {
                 this._counters[pId].tokens_deck.toValue(player.tokens_deck);
                 this._counters[pId].pollens.toValue(player.pollens);
                 this._counters[pId].jokers.toValue(player.jokerUsed ? 0:1);
-                this._counters[pId].pollens.toValue(player.npad);
+                this._counters[pId].actions.toValue(player.npad);
             });
         },
 
@@ -1333,6 +1333,9 @@ function (dojo, declare) {
                     dojo.place(o, container);
                 }
                 o.dataset.state = token.state;
+                o.dataset.type = token.type;
+                o.dataset.row = token.row;
+                o.dataset.col = token.col;
         
                 return token.id;
             });

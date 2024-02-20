@@ -47,6 +47,7 @@ trait ChoiceTokenToMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $player->id, $player->getPrivateState());
 
         $remaining = $player->countRemainingPersonalActions();
         $actionCost = ACTION_COST_MOVE;
@@ -86,6 +87,7 @@ trait ChoiceTokenToMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $player->id, $player->getPrivateState());
 
         $actionCost = ACTION_COST_MOVE;
         if($player->countRemainingPersonalActions() < $actionCost){
