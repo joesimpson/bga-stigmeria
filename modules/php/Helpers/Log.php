@@ -59,10 +59,10 @@ class Log extends \APP_DbObject
     }
 
     // Create a new checkpoint : anything before that checkpoint cannot be undo (unless in studio)
-    public static function checkpoint($pId = 0)
+    public static function checkpoint($state,$pId = 0)
     {
         self::clearUndoableStepNotifications();
-        return self::addEntry(['type' => 'checkpoint', 'player_id' => $pId]);
+        return self::addEntry(['type' => 'checkpoint', 'affected' => $state, 'player_id' => $pId]);
     }
 
     // Create a new step to allow undo step-by-step

@@ -39,6 +39,7 @@ trait CentralGainSpecialTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $pId, $player->getPrivateState());
  
         $nbRemaining = Globals::getNbSpActions();
         if($nbRemaining < 1){

@@ -82,7 +82,7 @@ trait PlayerTurnCommonBoardTrait
         }
         Stats::inc("tokens_deck",$player->getId(),-1);
         Notifications::drawTokenForCentral($player,$token);
-        $this->addCheckpoint($player->id);
+        $this->addCheckpoint(ST_TURN_CENTRAL_CHOICE_TOKEN_LAND,$pId);
 
         $this->gamestate->nextPrivateState($player->id, "startLand");
         return;

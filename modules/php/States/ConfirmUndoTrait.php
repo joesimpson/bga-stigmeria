@@ -11,10 +11,13 @@ use STIG\Exceptions\UnexpectedException;
 
 trait ConfirmUndoTrait
 {
-    public function addCheckpoint($pId = 0)
+    public function addCheckpoint($stateId,$pId = 0)
     {
-        if($pId>0) PGlobals::setEngineChoices($pId, 0);
-        Log::checkpoint($pId);
+        if($pId>0){
+            PGlobals::setEngineChoices($pId, 0);
+            PGlobals::setState($pId, $stateId);
+        }
+        Log::checkpoint($stateId,$pId);
     }
 
     public function addStep($pId, $stateId)
@@ -56,7 +59,7 @@ trait ConfirmUndoTrait
         }
         $player = Players::getCurrent();
         $pId = $player->getId();
-        $this->addCheckpoint($pId);
+        $this->addCheckpoint($player->getPrivateState(),$pId);
         $this->gamestate->nextPrivateState($pId,'confirm');
     }
 

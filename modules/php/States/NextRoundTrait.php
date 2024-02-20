@@ -28,7 +28,7 @@ trait NextRoundTrait
     PlayerActions::setupNewRound($players,$schema);
     $actions = PlayerActions::getUiData();
     Notifications::newRound($round,$schema,$tokens,$actions);
-    $this->addCheckpoint();
+    $this->addCheckpoint(ST_NEXT_ROUND);
 
     $this->gamestate->nextState('next');
   }

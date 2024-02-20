@@ -93,6 +93,8 @@ function (dojo, declare) {
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
             this._displayNotifsOnTop = false;
+            //TODO JSA disabled if restart is chaotic
+            this._displayRestartButtons = true;
         },
         
         ///////////////////////////////////////////////////

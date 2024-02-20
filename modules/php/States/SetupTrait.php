@@ -33,9 +33,9 @@ trait SetupTrait
     $this->setGameStateInitialValue('logging', true);
       
     // Log the start of engine to allow "restart turn"
-    Log::checkpoint();
+    Log::checkpoint(ST_GAME_SETUP);
     Log::addEntry(['type' => 'engine']);
-    
+
     // Activate first player (which is in general a good idea :) )
     $this->activeNextPlayer();
     /************ End of the game initialization *****/
