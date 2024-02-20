@@ -756,9 +756,21 @@ class Notifications
   }
   public static function clearTurn($player, $notifIds)
   {
-    self::notifyAll('clearTurn', clienttranslate('${player_name} restarts their turn'), [
+    self::notifyAll('clearTurn', '', [
       'player' => $player,
       'notifIds' => $notifIds,
+    ]);
+  }
+  public static function undoStep($player, $stepId)
+  {
+    self::notifyAll('undoStep', clienttranslate('${player_name} undoes their action'), [
+      'player' => $player,
+    ]);
+  }
+  public static function restartTurn($player)
+  {
+    self::notifyAll('restartTurn', clienttranslate('${player_name} restarts their turn'), [
+      'player' => $player,
     ]);
   }
 

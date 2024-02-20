@@ -212,7 +212,7 @@ class Log extends \APP_DbObject
 	      $query = new QueryBuilder('gamelog', null, 'gamelog_packet_id');
 	      $query
 	        ->update(['cancel' => 1])
-	        ->where('gamelog_player', $pId)
+	        //->where('gamelog_player', $pId)
 	        ->where('gamelog_packet_id', '>', $minPacketId)
 	        ->whereIn('gamelog_move_id', $moveIds, true)
 	        ->run();
@@ -237,7 +237,7 @@ class Log extends \APP_DbObject
                 ->delete()
                 //->where('gamelog_move_id', '>=', min($moveIds))
                 // filter by player notif ?
-                ->where('gamelog_player', $pId)
+                //->where('gamelog_player', $pId)
                 ->where('gamelog_move_id', '>=', min($moveIds), true)
                 ->where('gamelog_packet_id', '>', $minPacketId)
                 ->run();

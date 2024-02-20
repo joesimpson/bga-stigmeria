@@ -1085,20 +1085,6 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       });
     },
 
-    /*
-     * [Undocumented] Called by BGA framework on any notification message
-     * Handle cancelling log messages for restart turn
-     */
-    onPlaceLogOnChannel(msg) {
-      var currentLogId = this.notifqueue.next_log_id;
-      var res = this.inherited(arguments);
-      this._notif_uid_to_log_id[msg.uid] = currentLogId;
-      this._last_notif = {
-        logId: currentLogId,
-        msg,
-      };
-      return res;
-    },
 
     /*
      * cancelLogs:

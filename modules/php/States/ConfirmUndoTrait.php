@@ -71,16 +71,20 @@ trait ConfirmUndoTrait
     public function actRestart()
     {
         self::checkAction('actRestart');
-        $pId = Players::getCurrentId();
+        $player = Players::getCurrent();
+        $pId = $player->id;
         if (PGlobals::getEngineChoices($pId) < 1) {
             throw new UnexpectedException(404,'No choice to undo');
         }
         Log::undoTurn($pId);
+        Notifications::restartTurn($player);
     }
 
     public function actUndoToStep($stepId)
     {
         self::checkAction('actRestart');
-        Log::undoToStep(Players::getCurrentId(),$stepId);
+        $player = Players::getCurrent();
+        Log::undoToStep($player->id,$stepId);
+        Notifications::undoStep($player, $stepId);
     }
 }
