@@ -28,6 +28,7 @@ class Tokens extends \STIG\Helpers\Pieces
     return self::DB()
       //FILTER visible TOKENS (not in draw bags)
       ->whereNotLike(static::$prefix . 'location', [TOKEN_LOCATION_PLAYER_DECK.'%'])
+      ->whereNotLike(static::$prefix . 'location', [TOKEN_LOCATION_CENTRAL_RECRUIT_TOPLACE])
       ->get()
       ->map(function ($token) {
         return $token->getUiData();

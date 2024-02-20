@@ -77,6 +77,7 @@ trait PlayerTurnCommonBoardTrait
             throw new UnexpectedException(404,"Not supported draw : empty draw bag for player $pId");
         }
         Stats::inc("tokens_deck",$player->getId(),-1);
+        Notifications::drawTokenForCentral($player,$token);
 
         $this->gamestate->nextPrivateState($player->id, "startLand");
         return;

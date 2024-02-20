@@ -65,6 +65,7 @@ function (dojo, declare) {
                 ['updateFirstPlayer', 500],
                 ['useActions', 500],
                 ['drawToken', 900],
+                ['drawTokenForCentral', 700],
                 ['moveToCentralBoard', 900],
                 ['moveOnCentralBoard', 900],
                 ['moveToCentralRecruit', 900],
@@ -695,6 +696,15 @@ function (dojo, declare) {
             this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             this.slide(div, this.getTokenContainer(token));
         },
+        notif_drawTokenForCentral(n) {
+            debug('notif_drawTokenForCentral: new token on central board', n);
+            let token = n.args.token;
+            let player_id = n.args.player_id;
+            this._counters[player_id]['tokens_deck'].incValue(-1);
+            if(player_id != this.player_id) return;//don't anim to others, but not private
+            let div =  this.addToken(token, `stig_reserve_${player_id}_tokens_deck`);
+            this.slide(div, this.getTokenContainer(token));
+        },
         notif_moveToCentralBoard(n) {
             debug('notif_moveToCentralBoard: new token on central board', n);
             let token = n.args.token;
@@ -703,7 +713,11 @@ function (dojo, declare) {
             div.dataset.row = token.row;
             div.dataset.col = token.col;
             div.dataset.state = token.state;
-            this._counters[n.args.player_id]['tokens_deck'].incValue(-1);
+            /*
+            if(n.args.player_id!=this.player_id){
+                //only for others, because the 'active' player would have updated the counter in their own state
+                this._counters[n.args.player_id]['tokens_deck'].incValue(-1);
+            }*/
             this.slide(div, this.getTokenContainer(token));
         },
         notif_moveOnCentralBoard(n) {
@@ -1328,6 +1342,9 @@ function (dojo, declare) {
                     dojo.place(`<div id=${recruitTypeZone} data-type=${token.type} class='stig_recruits_type'></div>`, `stig_recruits_central`);
                 }
                 return $(`${recruitTypeZone}`);
+            }
+            else if(token.location == 'central_toplace'){
+                return $(`stig_select_piece_container`);
             }
             console.error('Trying to get container of a token', token);
             return 'game_play_area';

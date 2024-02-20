@@ -137,6 +137,20 @@ class Notifications
   /**
    * @param Player $player
    * @param StigmerianToken $token
+   */
+  public static function drawTokenForCentral($player, $token){
+    self::notifyAll('drawTokenForCentral',clienttranslate('${player_name} draws a new ${token_color} stigmerian to be placed on StigmaReine'),[ 
+        'player' => $player,
+        'token' => $token->getUiData(),
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+      ],
+    );
+  }
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
    * @param int $actionCost
    */
   public static function drawToken($player, $token, $actionCost){
