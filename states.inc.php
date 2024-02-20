@@ -201,7 +201,7 @@ $machinestates = array(
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,
             //'cancel' => ST_TURN_COMMON_BOARD,
-            'gainSpecialAction' => ST_TURN_CENTRAL_CHOICE_SP,
+            'gainSp' => ST_TURN_CENTRAL_CHOICE_SP,
         ],
     ],
     
@@ -217,7 +217,7 @@ $machinestates = array(
         ],
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,
-            'gainSpecialAction' => ST_TURN_CENTRAL_CHOICE_SP,
+            'gainSp' => ST_TURN_CENTRAL_CHOICE_SP,
             'cancel' => ST_TURN_COMMON_BOARD,
         ],
     ],

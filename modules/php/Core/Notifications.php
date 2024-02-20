@@ -563,6 +563,20 @@ class Notifications
   }
   
   /**
+   * Will Unlock Special action 
+   * @param Player $player
+   * @param int $nbActions
+   * @param int $nbAlignedTokens
+   */
+  public static function gainSp($player,$nbActions, $nbAlignedTokens){
+    self::notifyAll('gainSp',clienttranslate('${player_name} gains ${n} special action after aligning ${n2} tokens'),[ 
+        'player' => $player,
+        'n' => $nbActions,
+        'n2' => $nbAlignedTokens,
+      ],
+    );
+  }
+  /**
    * Unlock Special action !
    * @param Player $player
    * @param PlayerAction $action
@@ -582,7 +596,7 @@ class Notifications
    * @param Player $playerDestination
    */
   public static function putTokenInBag($player,$token,$playerDestination){
-    self::notifyAll('putTokenInBag',clienttranslate('${player_name} put a ${token_color} stigmerian in ${player_name2} bag'),[ 
+    self::notifyAll('putTokenInBag',clienttranslate('${player_name} puts a ${token_color} stigmerian in ${player_name2} bag'),[ 
         'player' => $player,
         'player2' => $playerDestination,
         'token' => $token->getUiData(),

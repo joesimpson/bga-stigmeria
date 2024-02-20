@@ -61,17 +61,23 @@ trait CentralMoveTrait
         $token->moveToCentralBoard($player,$row,$column,$actionCost);
         //RULE : gain 1 or 2 special action
         $alignedTokens = $this->checkBoardForGainingAction($token->getType(),$row,$column);
-        if(count($alignedTokens) >0 ){
+        $nbActions = (int) (count($alignedTokens)/ NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS);
+        if($nbActions >0 ){
             //TODO JSA AND check max number of actions not reached
             $player->setSelection($alignedTokens);
-            $nbActions = count($alignedTokens)/ NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS;
             Globals::setNbSpActions($nbActions);
             Globals::setNbSpActionsMax($nbActions);
-            $this->gamestate->nextPrivateState($player->id, "gainSpecialAction");
+            Notifications::gainSp($player,$nbActions,count(array_unique($alignedTokens)));
+            $this->gamestate->nextPrivateState($pId, "gainSp");
             return;
         }
-
-        $this->gamestate->nextPrivateState($player->id, "continue");
+        else {
+            $player->setSelection([]);
+            Globals::setNbSpActions(0);
+            Globals::setNbSpActionsMax(0);
+            $this->gamestate->nextPrivateState($pId, "continue");
+            return;
+        }
     }
     
     /**

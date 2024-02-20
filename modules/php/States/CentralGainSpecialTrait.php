@@ -13,12 +13,6 @@ trait CentralGainSpecialTrait
 {
     public function argGainSpecialAction($playerId)
     {
-        $player = Players::get($playerId);
-        //$playerActions = PlayerActions::getPlayer($player_id);
-        //$possibleActions = $playerActions->map(function($action) {
-        //        return $action->type;
-        //    })->toArray();
-        //$lockedActions = array_diff(ACTION_TYPES, $possibleActions);
 
         foreach(ACTION_TYPES as $type){
             if($this->canGainSpecialAction($type, $playerId)){
@@ -27,10 +21,6 @@ trait CentralGainSpecialTrait
         }
         $nbRemaining = Globals::getNbSpActions();
         $nbGains = Globals::getNbSpActionsMax();
-        $alignedTokens = $player->getSelection();
-        if(count($alignedTokens) > NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS){
-            $nbGains = 2;
-        }//TODO JSA other state to move these tokens
 
         return [
             'a' => $lockedActions,
