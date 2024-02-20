@@ -153,6 +153,26 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       if (this.isFastMode()) return;
       if (this._activeStates.includes(stateName) && !this.isCurrentPlayerActive()) return;
 
+      // Restart turn button
+      if (args.args && args.args.previousChoices && args.args.previousChoices >= 1 && !args.args.automaticAction) {
+        if (args.args && args.args.previousSteps) {
+          let lastStep = Math.max(...args.args.previousSteps);
+          if (lastStep > 0)
+            this.addDangerActionButton('btnUndoLastStep', _('Undo last step'), () => this.undoToStep(lastStep), 'restartAction');
+        }
+
+        // Restart whole turn
+        this.addDangerActionButton(
+          'btnRestartTurn',
+          _('Restart turn'),
+          () => {
+            //this.stopActionTimer();
+            this.takeAction('actRestart');
+          },
+          'restartAction'
+        );
+      }
+
       // Call appropriate method
       var methodName = 'onEnteringState' + stateName.charAt(0).toUpperCase() + stateName.slice(1);
       if (this[methodName] !== undefined) this[methodName](args.args);

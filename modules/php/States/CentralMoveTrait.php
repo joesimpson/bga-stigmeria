@@ -35,6 +35,7 @@ trait CentralMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
 
         if($player->isCommonMoveDone()){
             throw new UnexpectedException(9,"You cannot do that action twice in the turn");

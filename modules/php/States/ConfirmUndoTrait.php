@@ -1,0 +1,79 @@
+<?php
+
+namespace STIG\States;
+
+use STIG\Helpers\Log;
+use STIG\Managers\Players;
+use STIG\Core\Notifications;
+use STIG\Core\Globals;
+use STIG\Core\PGlobals;
+use STIG\Exceptions\UnexpectedException;
+
+trait ConfirmUndoTrait
+{
+    public function addCheckpoint($pId = 0)
+    {
+        if($pId>0) PGlobals::setEngineChoices($pId, 0);
+        Log::checkpoint($pId);
+    }
+
+    public function addStep($pId, $stateId)
+    {
+        PGlobals::setState($pId, $stateId);
+        $stepId = Log::step($stateId);
+        PGlobals::incEngineChoices($pId, 1);
+    }
+
+    public function argsConfirmTurn($pId)
+    {
+        $data = [
+            'previousSteps' => Log::getUndoableSteps($pId),
+            'previousChoices' => PGlobals::getEngineChoices($pId),
+        ];
+        return $data;
+    }
+
+    function stConfirmChoices()
+    {
+        $player = Players::getCurrent();
+        $pId = $player->getId();
+        $this->gamestate->nextPrivateState($pId,'confirm');
+    }
+
+    public function stConfirmTurn()
+    {
+        /*
+        if (Globals::getChoices() == 0) {
+            $this->actConfirmTurn(true);
+        }
+        */
+    }
+
+    public function actConfirmTurn($auto = false)
+    {
+        if (!$auto) {
+            self::checkAction('actConfirmTurn');
+        }
+        $player = Players::getCurrent();
+        $pId = $player->getId();
+        $this->addCheckpoint($pId);
+        $this->gamestate->nextPrivateState($pId,'confirm');
+    }
+
+
+    public function actRestart()
+    {
+        self::checkAction('actRestart');
+        $pId = Players::getCurrentId();
+        if (PGlobals::getEngineChoices($pId) < 1) {
+            throw new UnexpectedException(404,'No choice to undo');
+        }
+        Log::undoTurn($pId);
+    }
+
+    public function actUndoToStep($stepId)
+    {
+        self::checkAction('actRestart');
+        Log::undoToStep(Players::getCurrentId(),$stepId);
+    }
+}

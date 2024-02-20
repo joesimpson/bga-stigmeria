@@ -22,29 +22,12 @@ class Stats extends \STIG\Helpers\DB_Manager
     ];
   }
 
-  /*************************
-   **** GENERIC METHODS ****
-   *************************/
-  protected static function init($type, $name, $value = 0)
-  {
-    Game::get()->initStat($type, $name, $value);
-  }
-
-  public static function inc($name, $player = null, $value = 1, $log = true)
+  /** Inc wrapper whith a 1 default increment */
+  public static function inc($name, $player = null, $value = 1)
   {
     $pId = is_null($player) ? null : (is_int($player) ? $player : $player->getId());
-    Game::get()->incStat($value, $name, $pId);
-  }
-
-  protected static function get($name, $player = null)
-  {
-    Game::get()->getStat($name, $player);
-  }
-
-  protected static function set($value, $name, $player = null)
-  {
-    $pId = is_null($player) ? null : (is_int($player) ? $player : $player->getId());
-    Game::get()->setStat($value, $name, $pId);
+    $incrementerName = "inc".ucfirst($name);
+    self::$incrementerName($pId,$value);
   }
 
   /*
@@ -111,16 +94,6 @@ class Stats extends \STIG\Helpers\DB_Manager
     }
   }
   
-  protected static function getValue($id, $pId)
-  {
-    return self::getAll()
-      ->filter(function ($stat) use ($id, $pId) {
-        return $stat['type'] == $id &&
-          ((is_null($pId) && is_null($stat['pId'])) || (!is_null($pId) && $stat['pId'] == (is_int($pId) ? $pId : $pId->getId())));
-      })
-      ->first()['value'];
-  }
-
   protected static function getFilteredQuery($id, $pId)
   {
     $query = self::DB()->where('stats_type', $id);
@@ -131,6 +104,7 @@ class Stats extends \STIG\Helpers\DB_Manager
     }
     return $query;
   }
+
   /*
    * Magic method that intercept not defined static method and do the appropriate stuff
    */
@@ -161,7 +135,8 @@ class Stats extends \STIG\Helpers\DB_Manager
           $pId = $args[0];
         }
 
-        return self::getValue($id, $pId);
+        $row = self::getFilteredQuery($id, $pId)->get(true);
+        return $row['value'];
       } elseif ($match[1] == 'set') {
         // Setters in DB and update cache
         $id = null;
@@ -183,7 +158,6 @@ class Stats extends \STIG\Helpers\DB_Manager
         self::getFilteredQuery($id, $pId)
           ->update(['stats_value' => $value])
           ->run();
-        self::invalidate();
         return $value;
       } elseif ($match[1] == 'inc') {
         $id = null;
@@ -205,7 +179,6 @@ class Stats extends \STIG\Helpers\DB_Manager
         self::getFilteredQuery($id, $pId)
           ->inc(['stats_value' => $value])
           ->run();
-        self::invalidate();
         return $value;
       }
     }

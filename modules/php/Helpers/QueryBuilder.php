@@ -332,14 +332,12 @@ class QueryBuilder extends \APP_DbObject
                 " `{$this->primary}` = " . $this->protect($param[0]);
         }
         // Three params : WHERE $1 OP2 $3
-        elseif ($n == 3) {
-            $this->where .=
-                '`' .
-                trim($param[0]) .
-                '` ' .
-                $param[1] .
-                ' ' .
-                $this->protect($param[2]);
+        elseif ($n >= 3) {
+            $this->where .= '(`' . trim($param[0]) . '` ' . $param[1] . ' ' . $this->protect($param[2]);
+            if ($n == 4) {
+              $this->where .= ' OR `' . trim($param[0]) . '` IS NULL';
+            }
+            $this->where .= ')';
         }
         // Two params : $1 = $2
         elseif ($n == 2) {
@@ -377,7 +375,11 @@ class QueryBuilder extends \APP_DbObject
             return $this;
         }
 
-        $this->where .= "`$field` IN ('" . implode("','", $values) . "')";
+        $this->where .= "(`$field` IN ('" . implode("','", $values) . "')";
+        if ($num_args == 3) {
+          $this->where .= " OR `$field` IS NULL";
+        }
+        $this->where .= ')';
         return $this;
     }
 

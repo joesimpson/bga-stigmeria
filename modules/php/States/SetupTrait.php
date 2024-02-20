@@ -8,6 +8,7 @@ use STIG\Core\Notifications;
 use STIG\Core\Engine;
 use STIG\Core\Stats;
 use STIG\Core\Preferences;
+use STIG\Helpers\Log;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 
@@ -29,7 +30,12 @@ trait SetupTrait
     Stats::setupNewGame();
     Tokens::setupNewGame($players, $options);
 
-    $this->setGameStateInitialValue('logging', false);
+    $this->setGameStateInitialValue('logging', true);
+      
+    // Log the start of engine to allow "restart turn"
+    Log::checkpoint();
+    Log::addEntry(['type' => 'engine']);
+    
     // Activate first player (which is in general a good idea :) )
     $this->activeNextPlayer();
     /************ End of the game initialization *****/

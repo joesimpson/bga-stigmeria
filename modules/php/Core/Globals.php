@@ -47,6 +47,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     //For games with 1 schema in the entire game :(not solo challenge)
     'optionSchema' => 'int',
     'optionJokers' => 'int',
+
   ];
 
   public static function getAllWindDir()

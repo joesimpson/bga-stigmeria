@@ -36,6 +36,7 @@ trait CentralLandTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
 
         $remaining = $player->countRemainingCommonActions();
         $actionCost = ACTION_COST_CENTRAL_LAND;

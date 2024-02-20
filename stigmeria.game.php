@@ -50,6 +50,7 @@ class Stigmeria extends Table
     use STIG\States\CentralMoveTrait;
     use STIG\States\ChoiceTokenToLandTrait;
     use STIG\States\ChoiceTokenToMoveTrait;
+    use STIG\States\ConfirmUndoTrait;
     use STIG\States\SpecialDiagonalTrait;
     use STIG\States\EndRoundTrait;
     use STIG\States\GiveTokensTrait;
@@ -114,7 +115,7 @@ class Stigmeria extends Table
         _ when the game starts
         _ when a player refreshes the game page (F5)
     */
-    protected function getAllDatas()
+    public function getAllDatas()
     {
         // !! We must only return informations visible by this player !!
         $current_player_id = self::getCurrentPId();
@@ -300,9 +301,9 @@ class Stigmeria extends Table
     /////////////////////////////////////////////////////////////
 
     // Exposing protected method getCurrentPlayerId
-    public static function getCurrentPId()
+    public static function getCurrentPId($bReturnNullIfNotLogged = false)
     {
-        return self::getCurrentPlayerId();
+        return self::getCurrentPlayerId($bReturnNullIfNotLogged);
     }
 
     // Exposing protected method translation

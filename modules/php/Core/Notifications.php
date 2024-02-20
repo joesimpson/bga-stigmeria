@@ -736,4 +736,31 @@ class Notifications
       unset($data['n3']);
     }
   }
+
+
+  //UPDATES after confirm/undo :
+  
+  public static function refreshUI($pId,$datas)
+  {
+    // // Keep only the things from getAllDatas that matters
+    $fDatas = [
+      'players' => $datas['players'],
+      'actions' => $datas['actions'],
+      'tokens' => $datas['tokens'],
+    ];
+
+    self::notifyAll('refreshUI', '', [
+      'player_id' => $pId,
+      'datas' => $fDatas,
+    ]);
+  }
+  public static function clearTurn($player, $notifIds)
+  {
+    self::notifyAll('clearTurn', clienttranslate('${player_name} restarts their turn'), [
+      'player' => $player,
+      'notifIds' => $notifIds,
+    ]);
+  }
+
+  
 }

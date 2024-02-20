@@ -4,8 +4,10 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Helpers\Log;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 
@@ -31,10 +33,11 @@ trait PlayerTurnCommonBoardTrait
             $actions[] = 'actGoToNext';
         }
         $actions[] = 'actCommonJoker';
-        return [
+        return array_merge( [
             'n'=> $nbMoves,
             'a' => $actions,
-        ];
+        ], 
+        $this->argsConfirmTurn($player_id));
     }
     /**
      * BEware : it is forbidden to go to next steps before ending this step
@@ -63,6 +66,7 @@ trait PlayerTurnCommonBoardTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($player->id, $player->getPrivateState());
         
         $remaining = $player->countRemainingCommonActions();
         $actionCost = ACTION_COST_CENTRAL_LAND;
@@ -78,6 +82,7 @@ trait PlayerTurnCommonBoardTrait
         }
         Stats::inc("tokens_deck",$player->getId(),-1);
         Notifications::drawTokenForCentral($player,$token);
+        $this->addCheckpoint($player->id);
 
         $this->gamestate->nextPrivateState($player->id, "startLand");
         return;
@@ -97,6 +102,9 @@ trait PlayerTurnCommonBoardTrait
         self::trace("actCommonMove()");
         
         $player = Players::getCurrent();
+        //no need with my white 'cancel' button ?
+        //$this->addStep($player->id, $player->getPrivateState());
+        PGlobals::setState($player->id, $player->getPrivateState());
         
         if($player->isCommonMoveDone()){
             throw new UnexpectedException(9,"You cannot do that action twice in the turn");

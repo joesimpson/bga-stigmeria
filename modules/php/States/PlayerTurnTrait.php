@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Managers\Players;
 
 trait PlayerTurnTrait
@@ -29,6 +30,8 @@ trait PlayerTurnTrait
         Players::startTurn($playersToActive,$turn);
         
         Notifications::emptyNotif();
+        //$this->addCheckpoint(ST_TURN_COMMON_BOARD);
+        foreach($playersToActive as $pId) $this->addCheckpoint($pId);
 
         $this->gamestate->setPlayersMultiactive( $playersToActive, 'end' );
         
@@ -36,6 +39,8 @@ trait PlayerTurnTrait
         $this->gamestate->initializePrivateStateForAllActivePlayers(); 
         
         if ($noCentralBoard) {
+            //$this->addCheckpoint(ST_TURN_PERSONAL_BOARD);
+            foreach($playersToActive as $pId) $this->addCheckpoint($pId);
             //move all players to different state 
             $this->gamestate->nextPrivateStateForAllActivePlayers("next");
         }
