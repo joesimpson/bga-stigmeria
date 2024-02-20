@@ -14,9 +14,11 @@ trait GiveTokensTrait
     {
         $player = Players::get($playerId);
         $alignedTokens =array_unique( $player->getSelection());
-        return [
+        $args = [
             'tokens' => $alignedTokens,
         ];
+        $this->addArgsForUndo($playerId, $args);
+        return $args;
     }
       
     /**
@@ -50,6 +52,7 @@ trait GiveTokensTrait
         }
         $player->setSelection($possibleTokenIds);
         if(count($possibleTokenIds) >=1){
+            $this->addStep( $pId, $player->getPrivateState());
             $this->gamestate->nextPrivateState($pId, "continue");
             return;
         }

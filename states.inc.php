@@ -229,6 +229,7 @@ $machinestates = array(
         "args" => "argGainSpecialAction",
         "possibleactions" => [
             "actChooseSp",
+            'actRestart',
         ],
         "transitions" => [
             'continue' => ST_TURN_CENTRAL_CHOICE_SP,
@@ -242,6 +243,7 @@ $machinestates = array(
         "args" => "argGiveTokens",
         "possibleactions" => [
             "actGiveTokens",
+            'actRestart',
         ],
         "transitions" => [
             'continue' => ST_TURN_CENTRAL_TOKEN_DISTRIBUTION,

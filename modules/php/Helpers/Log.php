@@ -222,6 +222,7 @@ class Log extends \APP_DbObject
 
         // Force to clear cached informations
         Globals::fetch();
+        PGlobals::fetch();
 
         // Notify
         $datas = Game::get()->getAllDatas();

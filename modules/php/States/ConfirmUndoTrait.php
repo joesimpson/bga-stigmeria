@@ -29,11 +29,15 @@ trait ConfirmUndoTrait
 
     public function argsConfirmTurn($pId)
     {
-        $data = [
-            'previousSteps' => Log::getUndoableSteps($pId),
-            'previousChoices' => PGlobals::getEngineChoices($pId),
-        ];
+        $data = [];
+        $this->addArgsForUndo($pId, $data);
         return $data;
+    }
+        
+    function addArgsForUndo($pId, &$args)
+    {
+        $args['previousSteps'] = Log::getUndoableSteps($pId);
+        $args['previousChoices'] = PGlobals::getEngineChoices($pId);
     }
 
     function stConfirmChoices()

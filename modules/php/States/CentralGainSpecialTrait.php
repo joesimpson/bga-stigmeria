@@ -22,11 +22,13 @@ trait CentralGainSpecialTrait
         $nbRemaining = Globals::getNbSpActions();
         $nbGains = Globals::getNbSpActionsMax();
 
-        return [
+        $args = [
             'a' => $lockedActions,
             'n' => $nbRemaining,
             'n2' => $nbGains,
         ];
+        $this->addArgsForUndo($playerId, $args);
+        return $args;
     }
       
     /**
