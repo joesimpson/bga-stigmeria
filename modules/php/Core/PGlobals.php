@@ -12,9 +12,10 @@ class PGlobals extends \STIG\Helpers\DB_Manager
   protected static $initialized = false;
   protected static $variables = [
     'state' => 'obj', 
-    'engine' => 'obj',
     'engineChoices' => 'int',
 
+    'nbSpActions' => 'int',
+    'nbSpActionsMax' => 'int',
   ];
 
   protected static $table = 'pglobal_variables';
@@ -143,9 +144,9 @@ class PGlobals extends \STIG\Helpers\DB_Manager
         }
 
         self::$datas[$pId][$name] = $value;
-        if (in_array($name, ['state', 'engine', 'engineChoices'])) {
+        //if (in_array($name, ['state', 'engine', 'engineChoices'])) {
           self::DB()->update(['value' => \addslashes(\json_encode($value))], $name . '-' . $pId);
-        }
+        //}
 
         return $value;
       } elseif ($match[1] == 'inc') {

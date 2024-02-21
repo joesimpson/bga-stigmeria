@@ -34,6 +34,7 @@ trait GiveTokensTrait
         
         $possibleTokenIds = $player->getSelection();
         if(count($tokensArray) >0){
+            $this->addStep( $pId, $player->getPrivateState());
             $playerDestination = Players::get($playerDestinationId);
             if(!isset($playerDestination)) {
                 throw new UnexpectedException(404, "Unknow target player");
@@ -52,7 +53,6 @@ trait GiveTokensTrait
         }
         $player->setSelection($possibleTokenIds);
         if(count($possibleTokenIds) >=1){
-            $this->addStep( $pId, $player->getPrivateState());
             $this->gamestate->nextPrivateState($pId, "continue");
             return;
         }

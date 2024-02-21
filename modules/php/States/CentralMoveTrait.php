@@ -2,8 +2,8 @@
 
 namespace STIG\States;
 
-use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
@@ -66,16 +66,16 @@ trait CentralMoveTrait
         if($nbActions >0 ){
             //TODO JSA AND check max number of actions not reached
             $player->setSelection($alignedTokens);
-            Globals::setNbSpActions($nbActions);
-            Globals::setNbSpActionsMax($nbActions);
+            PGlobals::setNbSpActions($pId,$nbActions);
+            PGlobals::setNbSpActionsMax($pId,$nbActions);
             Notifications::gainSp($player,$nbActions,count(array_unique($alignedTokens)));
             $this->gamestate->nextPrivateState($pId, "gainSp");
             return;
         }
         else {
             $player->setSelection([]);
-            Globals::setNbSpActions(0);
-            Globals::setNbSpActionsMax(0);
+            PGlobals::setNbSpActions($pId,0);
+            PGlobals::setNbSpActionsMax($pId,0);
             $this->gamestate->nextPrivateState($pId, "continue");
             return;
         }
