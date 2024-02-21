@@ -309,7 +309,9 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateCJoker() ', args );
             
+            $('stig_central_board_container_wrapper').classList.add('stig_current_play');
             let selectedToken = null;
+            let board = $(`stig_central_board`);
             Object.values(args.tokens).forEach((token) => {
                 let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
                 this.onClick(`${elt.id}`, () => {
@@ -317,17 +319,34 @@ function (dojo, declare) {
                     if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
                     selectedToken = token.id + '_tmp';
                     $(`stig_token_${selectedToken}`).classList.add('selected');
-                    $(`btnConfirm`).classList.remove('disabled');
+                            
+                    //possible places to play :
+                    Object.values(args.p_places_p).forEach((coord) => {
+                        let row = coord.row;
+                        let column = coord.col;
+                        let elt2 = this.addSelectableTokenCell('central',row, column);
+                        elt2.dataset.type = elt.dataset.type;
+                        this.onClick(`${elt2.id}`, (evt) => {
+                            //CLICK SELECT DESTINATION
+                            board.querySelectorAll('.stig_token_cell:not(.stig_token_holder)').forEach((oToken) => {
+                                oToken.classList.remove('selected');
+                            });
+                            let div = evt.target;
+                            div.classList.toggle('selected');
+                            $(`btnConfirm`).classList.remove('disabled');
+                        });
+                    });
                 });
             });
             
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedToken = $(`stig_select_piece_container`).querySelector(`.stig_token.selected`);
-                this.takeAction('actCJoker', { t: selectedToken.dataset.id, });
+                let selectedTokenCell = $(`stig_player_boards`).querySelector(`.stig_token_cell.selected`);
+                this.takeAction('actCJoker', { tokenId: selectedToken.dataset.id,  row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });
             }); 
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
-        }, 
+        },
         onEnteringStateGainSpecialAction: function(args)
         {
             debug( 'onEnteringStateGainSpecialAction() ', args );
@@ -1014,11 +1033,13 @@ function (dojo, declare) {
         },
         notif_playCJoker(n) {
             debug('notif_playCJoker: token moved !', n);
+            /*
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
             if(div){
                 this.slide(div, this.getTokenContainer(token));
             }
+            */
             this._counters[n.args.player_id]['tokens_recruit'].incValue(-1);
             this._counters[n.args.player_id]['jokers'].incValue(-1);
         },

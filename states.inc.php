@@ -192,7 +192,7 @@ $machinestates = array(
     
     ST_TURN_CENTRAL_JOKER => [
         "name" => "cJoker",
-        "descriptionmyturn" => clienttranslate('${you} must choose a token in your recruit zone'), 
+        "descriptionmyturn" => clienttranslate('${you} must place a token from your recruit zone'), 
         "type" => "private",
         "args" => "argCJoker",
         "possibleactions" => [
@@ -201,6 +201,7 @@ $machinestates = array(
         ],
         "transitions" => [
             'next' => ST_TURN_COMMON_BOARD,
+            'gainSp' => ST_TURN_CENTRAL_CHOICE_SP,
         ],
     ],
     ST_TURN_CENTRAL_CHOICE_TOKEN_LAND => [

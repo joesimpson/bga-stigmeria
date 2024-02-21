@@ -214,8 +214,10 @@
     {
       self::setAjaxMode();
       self::checkVersion();
-      $tokenId = self::getArg( "t", AT_posint, true );
-      $this->game->actCJoker($tokenId);
+      $tokenId = self::getArg( "tokenId", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actCJoker($tokenId,$row,$col);
       self::ajaxResponse();
     }
     
