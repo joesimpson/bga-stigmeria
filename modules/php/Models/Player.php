@@ -34,12 +34,13 @@ class Player extends \STIG\Helpers\DB_Model
     //GAME SPECIFIC :
     'multiactive' => ['player_is_multiactive', 'bool'],
 
-    'nbCommonActionsDone' => ['player_common_actions', 'int'],
-    'commonMoveDone' => ['player_common_move', 'bool'],
-    'nbPersonalActionsDone' => ['player_personal_actions', 'int'],
     'jokerUsed' => ['player_joker_used', 'bool'],
+
     //Those are replaced by Player Globals 'PGlobals'
+    //'nbCommonActionsDone' => ['player_common_actions', 'int'],
+    //'nbPersonalActionsDone' => ['player_personal_actions', 'int'],
     //'lastTurn' => ['player_turn', 'int'],
+    //'commonMoveDone' => ['player_common_move', 'bool'],
     //for tokens selection :
     //'selection' => ['player_selection', 'obj'],
   ];
@@ -53,13 +54,13 @@ class Player extends \STIG\Helpers\DB_Model
     $data['tokens_deck'] = Tokens::countDeck($this->getId());
     $data['pollens'] = Tokens::countOnPlayerBoard($this->getId(),array_values(TOKEN_POLLENS));
     //decrease JSON SIZE :
-    $data['ncad'] = $this->nbCommonActionsDone;
+    $data['ncad'] = $this->getNbCommonActionsDone();
     unset($data['nbCommonActionsDone']);
     //decrease JSON SIZE :
-    $data['npad'] = $this->nbPersonalActionsDone;
+    $data['npad'] = $this->getNbPersonalActionsDone();
     unset($data['nbPersonalActionsDone']);
     //decrease JSON SIZE :
-    $data['ncmd'] = $this->commonMoveDone;
+    $data['ncmd'] = $this->isCommonMoveDone();
     unset($data['commonMoveDone']);
 
     unset($data['privateState']);
@@ -72,6 +73,41 @@ class Player extends \STIG\Helpers\DB_Model
     return $data;
   }
   
+  public function getNbCommonActionsDone()
+  {
+    return PGlobals::getNbCommonActionsDone($this->getId());
+  }
+  public function setNbCommonActionsDone($nb)
+  {
+    return PGlobals::setNbCommonActionsDone($this->getId(),$nb);
+  }
+  public function incNbCommonActionsDone($nb)
+  {
+    return PGlobals::incNbCommonActionsDone($this->getId(),$nb);
+  }
+
+  public function getNbPersonalActionsDone()
+  {
+    return PGlobals::getNbPersonalActionsDone($this->getId());
+  }
+  public function setNbPersonalActionsDone($nb)
+  {
+    return PGlobals::setNbPersonalActionsDone($this->getId(),$nb);
+  }
+  public function incNbPersonalActionsDone($nb)
+  {
+    return PGlobals::incNbPersonalActionsDone($this->getId(),$nb);
+  }
+  
+  public function isCommonMoveDone()
+  {
+    return PGlobals::isCommonMoveDone($this->getId());
+  }
+  public function setCommonMoveDone($val)
+  {
+    return PGlobals::setCommonMoveDone($this->getId(),$val);
+  }
+
   public function getLastTurn()
   {
     return PGlobals::getLastTurn($this->getId());

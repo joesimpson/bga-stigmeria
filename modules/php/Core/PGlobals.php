@@ -15,6 +15,12 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     'engineChoices' => 'int',
 
     'lastTurn' => 'int',
+    //actions played by this player on central board (during this turn)
+    'nbCommonActionsDone' => 'int',
+    //actions played by this player on their board (during this turn)
+    'nbPersonalActionsDone' => 'int',
+    //This player used the common action move on central board (during this turn) false/true
+    'commonMoveDone' => 'bool',
     //Selected tokens according to current private state
     'selection' => 'obj',
 
