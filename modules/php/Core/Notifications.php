@@ -363,7 +363,7 @@ class Notifications
    */
   public static function playJoker($player,$typeSource, $typeDest, $newTokens){
     $tokens = $newTokens->ui();
-    self::notifyAll('playJoker',clienttranslate('${player_name} plays the unique joker to change ${n} ${token_color} stigmerians to ${token_color2}'),[ 
+    self::notifyAll('playJoker',clienttranslate('${player_name} plays a joker to change ${n} ${token_color} stigmerians to ${token_color2}'),[ 
         'i18n' => ['token_color','token_color2'],  
         'player' => $player,
         'n' => count($tokens),
@@ -373,6 +373,22 @@ class Notifications
         'token_type' => $typeSource,
         'token_color2' => StigmerianToken::getTypeName($typeDest),
         'token_type2' => $typeDest,
+      ],
+    );
+  }
+  
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token 
+   */
+  public static function playCJoker($player,$token){
+    self::notifyAll('playCJoker',clienttranslate('${player_name} plays a joker to move a ${token_color} stigmerian to central recruit zone'),[ 
+        'i18n' => ['token_color'],  
+        'player' => $player,
+        'token' => $token->getUiData(),
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
       ],
     );
   }

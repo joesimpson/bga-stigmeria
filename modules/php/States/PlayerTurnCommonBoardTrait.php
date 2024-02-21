@@ -32,7 +32,9 @@ trait PlayerTurnCommonBoardTrait
         if($nbMoves <1){
             $actions[] = 'actGoToNext';
         }
-        $actions[] = 'actCommonJoker';
+        if($this->canPlayCentralJoker($player)){
+            $actions[] = 'actCJoker';
+        }
         return array_merge( [
             'n'=> $nbMoves,
             'a' => $actions,
@@ -177,6 +179,18 @@ trait PlayerTurnCommonBoardTrait
         return $alignedTokens;
     }
 
-    
-    //TODO JSA actCommonJoker for Competitive games NOT no limit !
+    /**start Joker selection */
+    public function actCJokerS()
+    {
+        self::checkAction('actCJokerS'); 
+        self::trace("actCJokerS()");
+        $player = Players::getCurrent();
+        $pId = $player->id;
+        $this->addStep( $pId, $player->getPrivateState());
+        
+        if(!$this->canPlayCentralJoker($player)){
+            throw new UnexpectedException(13,"You cannot replay a joker in the game round");
+        }
+        $this->gamestate->nextPrivateState($player->id, "cJoker");
+    }
 }

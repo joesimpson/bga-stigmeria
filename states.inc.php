@@ -177,7 +177,7 @@ $machinestates = array(
         "possibleactions" => [
             "actCommonDrawAndLand",
             "actCommonMove",
-            "actCommonJoker",
+            "actCJokerS",
             "actGoToNext",
             "actRestart",
         ],
@@ -186,9 +186,23 @@ $machinestates = array(
             'next' => ST_TURN_PERSONAL_BOARD,
             'startLand' => ST_TURN_CENTRAL_CHOICE_TOKEN_LAND,
             'startMove' => ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE,
+            'cJoker' => ST_TURN_CENTRAL_JOKER,
         ],
     ],
     
+    ST_TURN_CENTRAL_JOKER => [
+        "name" => "cJoker",
+        "descriptionmyturn" => clienttranslate('${you} must choose a token in your recruit zone'), 
+        "type" => "private",
+        "args" => "argCJoker",
+        "possibleactions" => [
+            "actCJoker",
+            'actRestart',
+        ],
+        "transitions" => [
+            'next' => ST_TURN_COMMON_BOARD,
+        ],
+    ],
     ST_TURN_CENTRAL_CHOICE_TOKEN_LAND => [
         "name" => "centralChoiceTokenToLand",
         "descriptionmyturn" => clienttranslate('${you} must choose where to place the token on StigmaReine (cost : ${n} actions)'), 

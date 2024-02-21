@@ -203,6 +203,22 @@
       self::ajaxResponse();
     }
     
+    public function actCJokerS()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actCJokerS();
+      self::ajaxResponse();
+    }
+    public function actCJoker()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $tokenId = self::getArg( "t", AT_posint, true );
+      $this->game->actCJoker($tokenId);
+      self::ajaxResponse();
+    }
+    
     public function actSpecial()
     {
       self::setAjaxMode();

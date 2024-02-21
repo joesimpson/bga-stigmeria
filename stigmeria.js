@@ -88,7 +88,8 @@ function (dojo, declare) {
                 ['spRest', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
-                ['windBlows', 1800],
+                ['playCJoker', 500],
+                ['windBlows', 1000],
                 ['windElimination', 10],
                 ['addPoints', 800],
             ];
@@ -236,6 +237,9 @@ function (dojo, declare) {
                     this.addPrimaryActionButton('btnCommonMove',  _('Move'), () => this.takeAction('actCommonMove', {}));
                 }
             }
+            if(possibleActions.includes('actCJoker')){
+                this.addPrimaryActionButton(`btnCJoker`, _('Joker') , () =>  { this.takeAction('actCJokerS'); });
+            }
             if(possibleActions.includes('actGoToNext')){
                 this.addPrimaryActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
             }
@@ -299,6 +303,30 @@ function (dojo, declare) {
             $('stig_central_board_container_wrapper').classList.add('stig_current_play');
             this.initTokenSelectionDest('actCentralMove', args.p_places_m,'central','actCentralMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Cancel'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
+        }, 
+        
+        onEnteringStateCJoker: function(args)
+        {
+            debug( 'onEnteringStateCJoker() ', args );
+            
+            let selectedToken = null;
+            Object.values(args.tokens).forEach((token) => {
+                let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
+                this.onClick(`${elt.id}`, () => {
+                    //CLICK SELECT TOKEN
+                    if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
+                    selectedToken = token.id + '_tmp';
+                    $(`stig_token_${selectedToken}`).classList.add('selected');
+                    $(`btnConfirm`).classList.remove('disabled');
+                });
+            });
+            
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = $(`stig_select_piece_container`).querySelector(`.stig_token.selected`);
+                this.takeAction('actCJoker', { t: selectedToken.dataset.id, });
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
         }, 
         onEnteringStateGainSpecialAction: function(args)
         {
@@ -665,7 +693,6 @@ function (dojo, declare) {
  
         notif_clearTurn(n) {
             debug('Notif: restarting turn', n);
-            //TODO JSA cancelLogs ?
             this.cancelLogs(n.args.notifIds);
         },
     
@@ -983,6 +1010,16 @@ function (dojo, declare) {
                 this.slide(div, this.getTokenContainer(token));
                 //this.animationBlink2Times(div.id);
             });
+            this._counters[n.args.player_id]['jokers'].incValue(-1);
+        },
+        notif_playCJoker(n) {
+            debug('notif_playCJoker: token moved !', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(div){
+                this.slide(div, this.getTokenContainer(token));
+            }
+            this._counters[n.args.player_id]['tokens_recruit'].incValue(-1);
             this._counters[n.args.player_id]['jokers'].incValue(-1);
         },
         notif_windBlows(n) {
