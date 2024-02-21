@@ -14,6 +14,7 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     'state' => 'obj', 
     'engineChoices' => 'int',
 
+    'lastTurn' => 'int',
     'nbSpActions' => 'int',
     'nbSpActionsMax' => 'int',
     

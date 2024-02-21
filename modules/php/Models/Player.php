@@ -6,6 +6,7 @@ use STIG\Core\Game;
 use STIG\Core\Globals;
 use STIG\Core\Stats;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Preferences;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
@@ -32,12 +33,14 @@ class Player extends \STIG\Helpers\DB_Model
     'zombie' => 'player_zombie',
     //GAME SPECIFIC :
     'multiactive' => ['player_is_multiactive', 'bool'],
-    'lastTurn' => ['player_turn', 'int'],
+
     'nbCommonActionsDone' => ['player_common_actions', 'int'],
     'commonMoveDone' => ['player_common_move', 'bool'],
     'nbPersonalActionsDone' => ['player_personal_actions', 'int'],
     'jokerUsed' => ['player_joker_used', 'bool'],
-    //fo tokens selection :
+    //Those are replaced by Player Globals 'PGlobals'
+    //'lastTurn' => ['player_turn', 'int'],
+    //for tokens selection :
     'selection' => ['player_selection', 'obj'],
   ];
 
@@ -68,6 +71,16 @@ class Player extends \STIG\Helpers\DB_Model
 
     return $data;
   }
+  
+  public function getLastTurn()
+  {
+    return PGlobals::getLastTurn($this->getId());
+  }
+  public function setLastTurn($turn)
+  {
+    return PGlobals::setLastTurn($this->getId(),$turn);
+  }
+
 
   public function getPref($prefId)
   {
@@ -103,7 +116,6 @@ class Player extends \STIG\Helpers\DB_Model
    */
   public function startTurn($turnIndex)
   {
-    //$this->incLastTurn();
     $this->setLastTurn($turnIndex);
     $this->setNbCommonActionsDone(0);
     $this->setNbPersonalActionsDone(0);
