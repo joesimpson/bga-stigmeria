@@ -1081,7 +1081,7 @@ function (dojo, declare) {
                     actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
                     actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, this.gamedatas.turn),
                 };
-        
+                this.updateTurnMarker(pId,this.gamedatas.turn,player.npad+1);
                 // Useful to order boards
                 nPlayers++;
                 if (isCurrent) currentPlayerNo = player.no;
@@ -1263,13 +1263,15 @@ function (dojo, declare) {
             let k =0;
             while(k < (turn - TURN_MAX) ){
                 k++;
-                let token = {id: 'newTurn'+k, player_id: player_id, type: TOKEN_TYPE_NEWTURN };
+                let token = {id: `newTurn_${player_id}_${k}`, player_id: player_id, type: TOKEN_TYPE_NEWTURN };
                 let divId = `stig_token_${token.id}`;
                 if(!$(`${divId}`)){
                     this.addToken(token, this.getVisibleTitleContainer());
-                    div = $(`${divId}`);
+                    let div = $(`${divId}`);
                     div.dataset.turn = turn;
                     div.classList.add('stig_newturn_marker');
+                    //remove common class to Avoid batch deletion :
+                    div.classList.remove('stig_token');
                     this.slide(div, $(`stig_newturn_markers_${token.player_id}` ), { duration: 10 } );
                 }
             }
