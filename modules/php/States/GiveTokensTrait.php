@@ -50,6 +50,10 @@ trait GiveTokensTrait
             $possibleTokenIds = array_filter($possibleTokenIds, static function ($element) use ($tokensArray) {
                 return !in_array($element, $tokensArray);
             });
+            if($playerDestinationId != $player->id && $playerDestination->isMultiactive()){
+                //We cannot cancel if another gets tokens and can play them (could happen with current rules if the other player has let the current one to play while still active )
+                $this->addCheckpoint($player->getPrivateState(), $pId );
+            }
         }
         $player->setSelection($possibleTokenIds);
         if(count($possibleTokenIds) >=1){
