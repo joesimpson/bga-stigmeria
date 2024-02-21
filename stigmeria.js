@@ -752,7 +752,8 @@ function (dojo, declare) {
             this._counters[player_id]['tokens_deck'].incValue(-1);
             if(player_id != this.player_id) return;//don't anim to others, but not private
             let div =  this.addToken(token, `stig_reserve_${player_id}_tokens_deck`);
-            this.slide(div, this.getTokenContainer(token));
+            //destroy after slide because it will be displayed by onEnteringState
+            this.slide(div, this.getTokenContainer(token), {destroy:true, changeParent: false});
         },
         notif_moveToCentralBoard(n) {
             debug('notif_moveToCentralBoard: new token on central board', n);
