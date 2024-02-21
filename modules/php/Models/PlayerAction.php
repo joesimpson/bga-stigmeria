@@ -46,6 +46,10 @@ class PlayerAction extends \STIG\Helpers\DB_Model
   public function getUiData()
   {
     $data = parent::getUiData();
+    $data['d'] = $this->difficulty;
+    unset($data['difficulty']);
+    unset($data['cost']);
+    unset($data['location']);
     return $data;
   }
 

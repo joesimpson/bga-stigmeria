@@ -25,7 +25,12 @@ class PlayerActions extends \STIG\Helpers\Pieces
 
   public static function getUiData()
   {
-    return self::getAll()->ui();
+    $allGroupBy = [];
+    $all = self::getAll();
+    foreach($all as $action){
+      $allGroupBy[$action->getPId()][] = $action->getUiData();
+    }
+    return $allGroupBy;
   }
 
   /**

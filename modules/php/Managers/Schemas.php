@@ -425,6 +425,11 @@ class Schemas
   public static function getUiData()
   {
     $collection = new Collection(self::getTypes());
+    //Send only current schema in normal/compet games, we will see later for challenge when we send the used schemas (new round ?)
+    $ids = [Globals::getOptionSchema()];
+    $collection = $collection->filter(function($schema) use ($ids){
+      return in_array($schema->id,$ids);
+    });
     return $collection->uiAssoc();
   }
   
