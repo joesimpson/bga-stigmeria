@@ -32,6 +32,7 @@ trait SpecialDiagonalTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($player->id, $player->getPrivateState());
 
         $remaining = $player->countRemainingPersonalActions();
         $actionCost = ACTION_COST_MOVE_DIAGONAL* $this->getGetActionCostModifier();

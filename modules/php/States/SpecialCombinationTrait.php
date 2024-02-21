@@ -31,6 +31,7 @@ trait SpecialCombinationTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($player->id, $player->getPrivateState());
  
         $actionCost = ACTION_COST_COMBINATION* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){

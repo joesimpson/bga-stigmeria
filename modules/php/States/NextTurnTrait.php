@@ -46,6 +46,7 @@ trait NextTurnTrait
     Notifications::newTurn($turn);
     Players::setupNewTurn($players,$turn);
     PlayerActions::setupNewTurn($players,$turn);
+    $this->addCheckpoint(ST_NEXT_TURN);
 
     $this->gamestate->nextState('next');
   }

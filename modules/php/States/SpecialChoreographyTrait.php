@@ -48,6 +48,7 @@ trait SpecialChoreographyTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
         $turn = Globals::getTurn();
         $nbMovesMax = $turn -CHOREOGRAPHY_NB_TURNS_BEFORE;
         $movedTokensIds = $player->getSelection();
@@ -109,6 +110,7 @@ trait SpecialChoreographyTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
         $turn = Globals::getTurn();
         $nbMovesMax = $turn -CHOREOGRAPHY_NB_TURNS_BEFORE;
         $movedTokensIds = $player->getSelection();
@@ -176,6 +178,7 @@ trait SpecialChoreographyTrait
         
         $player = Players::getCurrent();
         $player->setSelection([]);
+        $this->addStep($player->id, $player->getPrivateState());
         $this->gamestate->nextPrivateState($player->id, "next");
     }
 

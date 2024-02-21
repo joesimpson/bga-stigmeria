@@ -60,6 +60,8 @@ function (dojo, declare) {
             this._notifications = [
                 ['newRound', 10],
                 ['newWinds', 10],
+                ['clearTurn', 200],
+                ['refreshUI', 200],
                 ['newTurn', 800],
                 ['endTurn', 500],
                 ['updateFirstPlayer', 500],
@@ -91,6 +93,8 @@ function (dojo, declare) {
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
             this._displayNotifsOnTop = false;
+            //TODO JSA disabled if restart is chaotic
+            this._displayRestartButtons = true;
         },
         
         ///////////////////////////////////////////////////
@@ -232,7 +236,7 @@ function (dojo, declare) {
                 }
             }
             if(possibleActions.includes('actGoToNext')){
-                this.addDangerActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
+                this.addPrimaryActionButton('btnNext',  _('Next'), () => this.takeAction('actGoToNext', {}));
             }
             if($('stig_central_board_container_wrapper')) $('stig_central_board_container_wrapper').classList.add('stig_current_play');
         }, 
@@ -390,7 +394,7 @@ function (dojo, declare) {
             Object.values(args.pj).forEach((tokenColor) => {
                 let src = tokenColor.src;
                 let dest = tokenColor.dest;
-                this.addImageActionButton(`btnJoker_${src}_${dest}`, `<div><div class='stig_qty'>4</div><div class='stig_token' data-type='${src}'></div> <i class="fa6 fa6-arrow-right"></i> <div class='stig_qty'>4</div> <div class='stig_token' data-type='${dest}'></div></div>`, () =>  {
+                this.addImageActionButton(`btnJoker_${src}_${dest}`, `<div><div class='stig_qty'>4</div><div class='stig_button_token' data-type='${src}'></div> <i class="fa6 fa6-arrow-right"></i> <div class='stig_qty'>4</div> <div class='stig_button_token' data-type='${dest}'></div></div>`, () =>  {
                     this.confirmationDialog(_("This will update tokens in your recruitment zone. You won't be able to replay a Joker in the game !"), () => {
                         this.takeAction('actJoker', {src:src,dest:dest})
                     });
@@ -626,6 +630,17 @@ function (dojo, declare) {
             this.removeEmptyCellHolders();
             if($('stig_central_board_container_wrapper')) $('stig_central_board_container_wrapper').classList.remove('stig_current_play');
         },
+
+        
+        onEnteringStateConfirmTurn(args) {
+            this.addPrimaryActionButton('btnConfirmTurn', _('Confirm'), () => {
+                this.takeAction('actConfirmTurn');
+            });
+        },
+        undoToStep(stepId) {
+            this.checkAction('actRestart');
+            this.takeAction('actUndoToStep', { stepId }, false);
+        },
         
         //////////////////////////////////////////////////////////////
         //    _   _       _   _  __ _           _   _                 
@@ -638,6 +653,31 @@ function (dojo, declare) {
         //    
         //////////////////////////////////////////////////////////////
  
+        notif_clearTurn(n) {
+            debug('Notif: restarting turn', n);
+            //TODO JSA cancelLogs ?
+            this.cancelLogs(n.args.notifIds);
+        },
+    
+        notif_refreshUI(n) {
+            debug('Notif: refreshing UI', n);
+            if(this.player_id == n.args.player_id) this.clearPossible();
+            [ 'players', 'tokens', 'actions'].forEach((value) => {
+              this.gamedatas[value] = n.args.datas[value];
+            });
+            this.setupTokens();
+            this.forEachPlayer((player) => {
+                let pId = player.id;
+                this.scoreCtrl[pId].toValue(player.score);
+                this._counters[pId].tokens_recruit.toValue(player.tokens_recruit);
+                this._counters[pId].tokens_deck.toValue(player.tokens_deck);
+                this._counters[pId].pollens.toValue(player.pollens);
+                this._counters[pId].jokers.toValue(player.jokerUsed ? 0:1);
+                this._counters[pId].actions.toValue(player.npad);
+                this.updateTurnMarker(pId,this.gamedatas.turn,player.npad+1);
+            });
+        },
+
         notif_newRound(n) {
             debug('notif_newRound: new round', n);
             this.gamedatas.schema = n.args.schema;
@@ -1294,6 +1334,9 @@ function (dojo, declare) {
                     dojo.place(o, container);
                 }
                 o.dataset.state = token.state;
+                o.dataset.type = token.type;
+                o.dataset.row = token.row;
+                o.dataset.col = token.col;
         
                 return token.id;
             });

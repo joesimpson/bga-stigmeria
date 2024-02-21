@@ -98,9 +98,9 @@ class Players extends \STIG\Helpers\DB_Manager
     return Game::get()->getActivePlayerId();
   }
 
-  public function getCurrentId()
+  public function getCurrentId($bReturnNullIfNotLogged = false)
   {
-    return (int) Game::get()->getCurrentPId();
+    return (int) Game::get()->getCurrentPId($bReturnNullIfNotLogged);
   }
 
   public static function getAll()

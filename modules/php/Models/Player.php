@@ -27,6 +27,7 @@ class Player extends \STIG\Helpers\DB_Model
     'eliminated' => 'player_eliminated',
     'score' => ['player_score', 'int'],
     'scoreAux' => ['player_score_aux', 'int'],
+    'privateState' => ['player_state', 'int'],
     'zombie' => 'player_zombie',
     //GAME SPECIFIC :
     'multiactive' => ['player_is_multiactive', 'bool'],
@@ -56,6 +57,8 @@ class Player extends \STIG\Helpers\DB_Model
     //decrease JSON SIZE :
     $data['ncmd'] = $this->commonMoveDone;
     unset($data['commonMoveDone']);
+
+    unset($data['privateState']);
 
     return $data;
   }

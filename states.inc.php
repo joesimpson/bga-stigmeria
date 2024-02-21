@@ -179,6 +179,7 @@ $machinestates = array(
             "actCommonMove",
             "actCommonJoker",
             "actGoToNext",
+            "actRestart",
         ],
         "transitions" => [
             'continue' => ST_TURN_COMMON_BOARD,
@@ -228,6 +229,7 @@ $machinestates = array(
         "args" => "argGainSpecialAction",
         "possibleactions" => [
             "actChooseSp",
+            'actRestart',
         ],
         "transitions" => [
             'continue' => ST_TURN_CENTRAL_CHOICE_SP,
@@ -241,6 +243,7 @@ $machinestates = array(
         "args" => "argGiveTokens",
         "possibleactions" => [
             "actGiveTokens",
+            'actRestart',
         ],
         "transitions" => [
             'continue' => ST_TURN_CENTRAL_TOKEN_DISTRIBUTION,
@@ -265,6 +268,7 @@ $machinestates = array(
             "actLetNextPlay",
             "actEndTurn",
             //"actBackToCommon",
+            "actRestart",
         ],
         "transitions" => [
             'continue' => ST_TURN_PERSONAL_BOARD,
@@ -512,7 +516,29 @@ $machinestates = array(
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
-    
+        /*
+    ST_CONFIRM_CHOICES => [
+        'name' => 'confirmChoices',
+        'descriptionmyturn' => '',
+        'type' => 'game',
+        "type" => "private",
+        'action' => 'stConfirmChoices',
+        "updateGameProgression" => true,
+        'transitions' => [
+            'confirm' => ST_CONFIRM_TURN,
+        ],
+    ],
+    ST_CONFIRM_CHOICES => [
+        'name' => 'confirmTurn',
+        'descriptionmyturn' => clienttranslate('${you} must confirm or restart your action'),
+        "type" => "private",
+        'args' => 'argsConfirmTurn',
+        'action' => 'stConfirmTurn',
+        'possibleactions' => ['actConfirmTurn', 'actRestart'],
+        'transitions' => [ 
+            'confirm' => ST_TURN_PERSONAL_BOARD,
+        ],
+    ],*/
     ST_WIND_EFFECT => array(
         "name" => "windEffect",
         "description" => clienttranslate('Wind blows'),

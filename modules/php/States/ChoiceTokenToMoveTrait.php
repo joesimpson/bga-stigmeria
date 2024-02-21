@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
@@ -30,7 +31,7 @@ trait ChoiceTokenToMoveTrait
         
         $player = Players::getCurrent();
 
-        //NOTHING TO CANCEL In BDD, return to previous state
+        //PGlobals::setEngineChoices($player->id, 0);
 
         $this->gamestate->nextPrivateState($player->id, "cancel");
     }
@@ -46,6 +47,7 @@ trait ChoiceTokenToMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $player->id, $player->getPrivateState());
 
         $remaining = $player->countRemainingPersonalActions();
         $actionCost = ACTION_COST_MOVE;
@@ -85,6 +87,7 @@ trait ChoiceTokenToMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $player->id, $player->getPrivateState());
 
         $actionCost = ACTION_COST_MOVE;
         if($player->countRemainingPersonalActions() < $actionCost){

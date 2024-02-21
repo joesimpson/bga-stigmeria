@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
@@ -19,14 +20,16 @@ trait CentralGainSpecialTrait
                 $lockedActions[] = $type;
             }
         }
-        $nbRemaining = Globals::getNbSpActions();
-        $nbGains = Globals::getNbSpActionsMax();
+        $nbRemaining = PGlobals::getNbSpActions($playerId);
+        $nbGains = PGlobals::getNbSpActionsMax($playerId);
 
-        return [
+        $args = [
             'a' => $lockedActions,
             'n' => $nbRemaining,
             'n2' => $nbGains,
         ];
+        $this->addArgsForUndo($playerId, $args);
+        return $args;
     }
       
     /**
@@ -39,8 +42,9 @@ trait CentralGainSpecialTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep( $pId, $player->getPrivateState());
  
-        $nbRemaining = Globals::getNbSpActions();
+        $nbRemaining = PGlobals::getNbSpActions($pId);
         if($nbRemaining < 1){
             throw new UnexpectedException(450,"You cannot select another action");
         }
@@ -55,7 +59,7 @@ trait CentralGainSpecialTrait
             'state' => PlayerActions::getInitialState($actionType),
         ]);
         $nbRemaining--;
-        Globals::setNbSpActions($nbRemaining);
+        PGlobals::setNbSpActions($pId,$nbRemaining);
         Notifications::unlockSp($player,$action);
 
         if($nbRemaining >=1){

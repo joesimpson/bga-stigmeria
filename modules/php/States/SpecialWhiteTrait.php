@@ -70,6 +70,7 @@ trait SpecialWhiteTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($player->id, $player->getPrivateState());
  
         $actionCost = ACTION_COST_WHITE* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){

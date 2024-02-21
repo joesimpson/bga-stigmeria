@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Managers\Players;
 
 trait PlayerTurnTrait
@@ -19,16 +20,21 @@ trait PlayerTurnTrait
         $playersToActive = [$firstPlayer];
         //During his turn, others may become active...
 
+        $players = Players::getAll();
         //IN NORMAL MODE, we can activate every one
         $noCentralBoard = Globals::isModeNoCentralBoard();
         if($noCentralBoard){
-            $playersToActive = Players::getAll()->map( function ($player) { return $player->getId(); } )->toArray();
+            $playersToActive = $players->map( function ($player) { return $player->getId(); } )->toArray();
         }
         self::trace("stPlayerTurn() playersToActive =".json_encode($playersToActive));
 
         Players::startTurn($playersToActive,$turn);
         
         Notifications::emptyNotif();
+        //$this->addCheckpoint(ST_TURN_COMMON_BOARD);
+        foreach($playersToActive as $pId){
+            $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
+        }
 
         $this->gamestate->setPlayersMultiactive( $playersToActive, 'end' );
         
@@ -36,6 +42,10 @@ trait PlayerTurnTrait
         $this->gamestate->initializePrivateStateForAllActivePlayers(); 
         
         if ($noCentralBoard) {
+            //$this->addCheckpoint(ST_TURN_PERSONAL_BOARD);
+            foreach($playersToActive as $pId){
+                $this->addCheckpoint(ST_TURN_PERSONAL_BOARD,$pId);
+            }
             //move all players to different state 
             $this->gamestate->nextPrivateStateForAllActivePlayers("next");
         }
@@ -70,6 +80,7 @@ trait PlayerTurnTrait
         else {*/
             Notifications::emptyNotif();
         //}
+        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD, $player->id);
     }
     
     public function actEndTurn()
@@ -101,6 +112,8 @@ trait PlayerTurnTrait
         $player_id = $player->getId();
         self::trace( "startNextPlayerTurn($player_id, $turn, $automatic)" ); 
         
+        $this->addStep( $player_id, $player->getPrivateState());
+
         $turn = Globals::getTurn();
         $nextPlayer = Players::getNextInactivePlayerInTurn($player_id, $turn);
         if(isset($nextPlayer)){
@@ -108,6 +121,8 @@ trait PlayerTurnTrait
                 Notifications::letNextPlay($player,$nextPlayer);
             }
             $nextPlayer->startTurn($turn);
+
+            $this->addStep( $nextPlayer->id, $nextPlayer->getPrivateState());
 
             $this->gamestate->setPlayersMultiactive( [$nextPlayer->id], 'end' );
             $this->gamestate->initializePrivateState($nextPlayer->id); 

@@ -91,3 +91,17 @@
     border: none;
     box-shadow: none;
 }
+
+/* Cancelled notification messages */
+.log.cancel {
+    color: #c62828 !important;
+    text-decoration: line-through;
+}
+/* Desktop logs */
+.log.cancel .roundedbox {
+    background-color: rgba(240, 186, 117, 0.6) !important;
+}
+/* Mobile logs */
+.log.cancel.roundedbox {
+    background-color: #ef9a9a;
+}

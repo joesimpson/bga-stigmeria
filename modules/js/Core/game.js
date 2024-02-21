@@ -28,6 +28,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       this._registeredCustomTooltips = {};
 
       this._notif_uid_to_log_id = {};
+      this._notif_uid_to_mobile_log_id = {};
       this._last_notif = null;
       dojo.place('loader_mask', 'overall-content', 'before');
       dojo.style('loader_mask', {
@@ -35,6 +36,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         position: 'fixed',
       });
       this._displayNotifsOnTop = true;
+      this._displayRestartButtons = true;
     },
 
     showMessage(msg, type) {
@@ -152,6 +154,26 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       debug('Entering state: ' + stateName, args);
       if (this.isFastMode()) return;
       if (this._activeStates.includes(stateName) && !this.isCurrentPlayerActive()) return;
+
+      // Restart turn button
+      if (this._displayRestartButtons && args.args && args.args.previousChoices && args.args.previousChoices >= 1 && !args.args.automaticAction) {
+        if (args.args && args.args.previousSteps) {
+          let lastStep = Math.max(...args.args.previousSteps);
+          if (lastStep > 0)
+            this.addDangerActionButton('btnUndoLastStep', _('Undo last step'), () => this.undoToStep(lastStep), 'restartAction');
+        }
+
+        // Restart whole turn
+        this.addDangerActionButton(
+          'btnRestartTurn',
+          _('Restart turn'),
+          () => {
+            //this.stopActionTimer();
+            this.takeAction('actRestart');
+          },
+          'restartAction'
+        );
+      }
 
       // Call appropriate method
       var methodName = 'onEnteringState' + stateName.charAt(0).toUpperCase() + stateName.slice(1);
@@ -1063,20 +1085,6 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       });
     },
 
-    /*
-     * [Undocumented] Called by BGA framework on any notification message
-     * Handle cancelling log messages for restart turn
-     */
-    onPlaceLogOnChannel(msg) {
-      var currentLogId = this.notifqueue.next_log_id;
-      var res = this.inherited(arguments);
-      this._notif_uid_to_log_id[msg.uid] = currentLogId;
-      this._last_notif = {
-        logId: currentLogId,
-        msg,
-      };
-      return res;
-    },
 
     /*
      * cancelLogs:
@@ -1088,23 +1096,52 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       }
     },
 
+    /*
+     * [Undocumented] Called by BGA framework on any notification message
+     * Handle cancelling log messages for restart turn
+     */
+    onPlaceLogOnChannel(msg) {
+      var currentLogId = this.notifqueue.next_log_id;
+      var currentMobileLogId = this.next_log_id;
+      var res = this.inherited(arguments);
+      this._notif_uid_to_log_id[msg.uid] = currentLogId;
+      this._notif_uid_to_mobile_log_id[msg.uid] = currentMobileLogId;
+      this._last_notif = {
+        logId: currentLogId,
+        mobileLogId: currentMobileLogId,
+        msg,
+      };
+      return res;
+    },
+
     cancelLogs(notifIds) {
       notifIds.forEach((uid) => {
         if (this._notif_uid_to_log_id.hasOwnProperty(uid)) {
           let logId = this._notif_uid_to_log_id[uid];
           if ($('log_' + logId)) dojo.addClass('log_' + logId, 'cancel');
         }
+        if (this._notif_uid_to_mobile_log_id.hasOwnProperty(uid)) {
+          let mobileLogId = this._notif_uid_to_mobile_log_id[uid];
+          if ($('dockedlog_' + mobileLogId)) dojo.addClass('dockedlog_' + mobileLogId, 'cancel');
+        }
       });
     },
 
     addLogClass() {
       if (this._last_notif == null) return;
-      let notif = this._last_notif;
-      if ($('log_' + notif.logId)) {
-        let type = notif.msg.type;
-        if (type == 'history_history') type = notif.msg.args.originalType;
 
+      let notif = this._last_notif;
+      let type = notif.msg.type;
+      if (type == 'history_history') type = notif.msg.args.originalType;
+
+      if ($('log_' + notif.logId)) {
         dojo.addClass('log_' + notif.logId, 'notif_' + type);
+
+        var methodName = 'onAdding' + type.charAt(0).toUpperCase() + type.slice(1) + 'ToLog';
+        if (this[methodName] !== undefined) this[methodName](notif);
+      }
+      if ($('dockedlog_' + notif.mobileLogId)) {
+        dojo.addClass('dockedlog_' + notif.mobileLogId, 'notif_' + type);
       }
     },
 

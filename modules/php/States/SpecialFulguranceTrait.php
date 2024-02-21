@@ -32,6 +32,7 @@ trait SpecialFulguranceTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($player->id, $player->getPrivateState());
  
         $actionCost = ACTION_COST_FULGURANCE* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){
@@ -60,6 +61,8 @@ trait SpecialFulguranceTrait
         $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_FULGURANCE,$pId);
         Stats::inc("actions",$pId);
+
+        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD,$pId);
 
         $this->gamestate->nextPrivateState($pId, 'next');
     }

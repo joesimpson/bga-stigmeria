@@ -108,6 +108,7 @@
 .stig_token_cell.selectable:hover,
 .stig_token_cell.selected,
 .stig_token,
+.stig_button_token,
 .stig_subicon_token,
 .stig_subicon_token_log,
 .stig_subicon_tokens_recruit {
@@ -123,6 +124,7 @@
 .stig_token_cell.selectable:hover[data-type=null],
 .stig_token_cell.selected[data-type=null],
 .stig_token[data-type=null],
+.stig_button_token[data-type=null],
 .stig_subicon_token[data-type=null],
 .stig_subicon_token_log[data-type=null],
 .stig_subicon_tokens_recruit[data-type=null] {
@@ -131,6 +133,7 @@
 .stig_token_cell.selectable:hover[data-type="1"],
 .stig_token_cell.selected[data-type="1"],
 .stig_token[data-type="1"],
+.stig_button_token[data-type="1"],
 .stig_subicon_token[data-type="1"],
 .stig_subicon_token_log[data-type="1"],
 .stig_subicon_tokens_recruit[data-type="1"] {
@@ -140,6 +143,7 @@
 .stig_token_cell.selectable:hover[data-type="2"],
 .stig_token_cell.selected[data-type="2"],
 .stig_token[data-type="2"],
+.stig_button_token[data-type="2"],
 .stig_subicon_token[data-type="2"],
 .stig_subicon_token_log[data-type="2"],
 .stig_subicon_tokens_recruit[data-type="2"] {
@@ -149,6 +153,7 @@
 .stig_token_cell.selectable:hover[data-type="3"],
 .stig_token_cell.selected[data-type="3"],
 .stig_token[data-type="3"],
+.stig_button_token[data-type="3"],
 .stig_subicon_token[data-type="3"],
 .stig_subicon_token_log[data-type="3"],
 .stig_subicon_tokens_recruit[data-type="3"] {
@@ -158,6 +163,7 @@
 .stig_token_cell.selectable:hover[data-type="4"],
 .stig_token_cell.selected[data-type="4"],
 .stig_token[data-type="4"],
+.stig_button_token[data-type="4"],
 .stig_subicon_token[data-type="4"],
 .stig_subicon_token_log[data-type="4"],
 .stig_subicon_tokens_recruit[data-type="4"] {
@@ -167,6 +173,7 @@
 .stig_token_cell.selectable:hover[data-type="5"],
 .stig_token_cell.selected[data-type="5"],
 .stig_token[data-type="5"],
+.stig_button_token[data-type="5"],
 .stig_subicon_token[data-type="5"],
 .stig_subicon_token_log[data-type="5"],
 .stig_subicon_tokens_recruit[data-type="5"] {
@@ -176,6 +183,7 @@
 .stig_token_cell.selectable:hover[data-type="6"],
 .stig_token_cell.selected[data-type="6"],
 .stig_token[data-type="6"],
+.stig_button_token[data-type="6"],
 .stig_subicon_token[data-type="6"],
 .stig_subicon_token_log[data-type="6"],
 .stig_subicon_tokens_recruit[data-type="6"] {
@@ -185,6 +193,7 @@
 .stig_token_cell.selectable:hover[data-type="7"],
 .stig_token_cell.selected[data-type="7"],
 .stig_token[data-type="7"],
+.stig_button_token[data-type="7"],
 .stig_subicon_token[data-type="7"],
 .stig_subicon_token_log[data-type="7"],
 .stig_subicon_tokens_recruit[data-type="7"] {
@@ -194,6 +203,7 @@
 .stig_token_cell.selectable:hover[data-type="8"],
 .stig_token_cell.selected[data-type="8"],
 .stig_token[data-type="8"],
+.stig_button_token[data-type="8"],
 .stig_subicon_token[data-type="8"],
 .stig_subicon_token_log[data-type="8"],
 .stig_subicon_tokens_recruit[data-type="8"] {
@@ -203,6 +213,7 @@
 .stig_token_cell.selectable:hover[data-type="9"],
 .stig_token_cell.selected[data-type="9"],
 .stig_token[data-type="9"],
+.stig_button_token[data-type="9"],
 .stig_subicon_token[data-type="9"],
 .stig_subicon_token_log[data-type="9"],
 .stig_subicon_tokens_recruit[data-type="9"] {
@@ -212,6 +223,7 @@
 .stig_token_cell.selectable:hover[data-type="10"],
 .stig_token_cell.selected[data-type="10"],
 .stig_token[data-type="10"],
+.stig_button_token[data-type="10"],
 .stig_subicon_token[data-type="10"],
 .stig_subicon_token_log[data-type="10"],
 .stig_subicon_tokens_recruit[data-type="10"] {
@@ -221,6 +233,7 @@
 .stig_token_cell.selectable:hover[data-type="11"],
 .stig_token_cell.selected[data-type="11"],
 .stig_token[data-type="11"],
+.stig_button_token[data-type="11"],
 .stig_subicon_token[data-type="11"],
 .stig_subicon_token_log[data-type="11"],
 .stig_subicon_tokens_recruit[data-type="11"] {
@@ -230,6 +243,7 @@
 .stig_token_cell.selectable:hover[data-type="12"],
 .stig_token_cell.selected[data-type="12"],
 .stig_token[data-type="12"],
+.stig_button_token[data-type="12"],
 .stig_subicon_token[data-type="12"],
 .stig_subicon_token_log[data-type="12"],
 .stig_subicon_tokens_recruit[data-type="12"] {
@@ -239,6 +253,7 @@
 .stig_token_cell.selectable:hover[data-type="13"],
 .stig_token_cell.selected[data-type="13"],
 .stig_token[data-type="13"],
+.stig_button_token[data-type="13"],
 .stig_subicon_token[data-type="13"],
 .stig_subicon_token_log[data-type="13"],
 .stig_subicon_tokens_recruit[data-type="13"] {
@@ -248,6 +263,7 @@
 .stig_token_cell.selectable:hover[data-type="14"],
 .stig_token_cell.selected[data-type="14"],
 .stig_token[data-type="14"],
+.stig_button_token[data-type="14"],
 .stig_subicon_token[data-type="14"],
 .stig_subicon_token_log[data-type="14"],
 .stig_subicon_tokens_recruit[data-type="14"] {
@@ -257,6 +273,7 @@
 .stig_token_cell.selectable:hover[data-type="15"],
 .stig_token_cell.selected[data-type="15"],
 .stig_token[data-type="15"],
+.stig_button_token[data-type="15"],
 .stig_subicon_token[data-type="15"],
 .stig_subicon_token_log[data-type="15"],
 .stig_subicon_tokens_recruit[data-type="15"] {
@@ -266,6 +283,7 @@
 .stig_token_cell.selectable:hover[data-type="16"],
 .stig_token_cell.selected[data-type="16"],
 .stig_token[data-type="16"],
+.stig_button_token[data-type="16"],
 .stig_subicon_token[data-type="16"],
 .stig_subicon_token_log[data-type="16"],
 .stig_subicon_tokens_recruit[data-type="16"] {
@@ -275,6 +293,7 @@
 .stig_token_cell.selectable:hover[data-type="17"],
 .stig_token_cell.selected[data-type="17"],
 .stig_token[data-type="17"],
+.stig_button_token[data-type="17"],
 .stig_subicon_token[data-type="17"],
 .stig_subicon_token_log[data-type="17"],
 .stig_subicon_tokens_recruit[data-type="17"] {
@@ -284,6 +303,7 @@
 .stig_token_cell.selectable:hover[data-type="18"],
 .stig_token_cell.selected[data-type="18"],
 .stig_token[data-type="18"],
+.stig_button_token[data-type="18"],
 .stig_subicon_token[data-type="18"],
 .stig_subicon_token_log[data-type="18"],
 .stig_subicon_tokens_recruit[data-type="18"] {
@@ -293,6 +313,7 @@
 .stig_token_cell.selectable:hover[data-type="19"],
 .stig_token_cell.selected[data-type="19"],
 .stig_token[data-type="19"],
+.stig_button_token[data-type="19"],
 .stig_subicon_token[data-type="19"],
 .stig_subicon_token_log[data-type="19"],
 .stig_subicon_tokens_recruit[data-type="19"] {
@@ -302,6 +323,7 @@
 .stig_token_cell.selectable:hover[data-type="20"],
 .stig_token_cell.selected[data-type="20"],
 .stig_token[data-type="20"],
+.stig_button_token[data-type="20"],
 .stig_subicon_token[data-type="20"],
 .stig_subicon_token_log[data-type="20"],
 .stig_subicon_tokens_recruit[data-type="20"] {
@@ -311,6 +333,7 @@
 .stig_token_cell.selectable:hover[data-type="21"],
 .stig_token_cell.selected[data-type="21"],
 .stig_token[data-type="21"],
+.stig_button_token[data-type="21"],
 .stig_subicon_token[data-type="21"],
 .stig_subicon_token_log[data-type="21"],
 .stig_subicon_tokens_recruit[data-type="21"] {
@@ -320,6 +343,7 @@
 .stig_token_cell.selectable:hover[data-type="22"],
 .stig_token_cell.selected[data-type="22"],
 .stig_token[data-type="22"],
+.stig_button_token[data-type="22"],
 .stig_subicon_token[data-type="22"],
 .stig_subicon_token_log[data-type="22"],
 .stig_subicon_tokens_recruit[data-type="22"] {
@@ -329,6 +353,7 @@
 .stig_token_cell.selectable:hover[data-type="23"],
 .stig_token_cell.selected[data-type="23"],
 .stig_token[data-type="23"],
+.stig_button_token[data-type="23"],
 .stig_subicon_token[data-type="23"],
 .stig_subicon_token_log[data-type="23"],
 .stig_subicon_tokens_recruit[data-type="23"] {
@@ -338,6 +363,7 @@
 .stig_token_cell.selectable:hover[data-type="24"],
 .stig_token_cell.selected[data-type="24"],
 .stig_token[data-type="24"],
+.stig_button_token[data-type="24"],
 .stig_subicon_token[data-type="24"],
 .stig_subicon_token_log[data-type="24"],
 .stig_subicon_tokens_recruit[data-type="24"] {
@@ -347,6 +373,7 @@
 .stig_token_cell.selectable:hover[data-type="25"],
 .stig_token_cell.selected[data-type="25"],
 .stig_token[data-type="25"],
+.stig_button_token[data-type="25"],
 .stig_subicon_token[data-type="25"],
 .stig_subicon_token_log[data-type="25"],
 .stig_subicon_tokens_recruit[data-type="25"] {
@@ -356,6 +383,7 @@
 .stig_token_cell.selectable:hover.selectable,
 .stig_token_cell.selected.selectable,
 .stig_token.selectable,
+.stig_button_token.selectable,
 .stig_subicon_token.selectable,
 .stig_subicon_token_log.selectable,
 .stig_subicon_tokens_recruit.selectable {
@@ -365,6 +393,7 @@
 .stig_token_cell.selectable:hover.selectable:hover,
 .stig_token_cell.selected.selectable:hover,
 .stig_token.selectable:hover,
+.stig_button_token.selectable:hover,
 .stig_subicon_token.selectable:hover,
 .stig_subicon_token_log.selectable:hover,
 .stig_subicon_tokens_recruit.selectable:hover {
@@ -375,6 +404,8 @@
 .stig_token_cell.selected.selected:hover,
 .stig_token.selected,
 .stig_token.selected:hover,
+.stig_button_token.selected,
+.stig_button_token.selected:hover,
 .stig_subicon_token.selected,
 .stig_subicon_token.selected:hover,
 .stig_subicon_token_log.selected,
@@ -2979,4 +3010,20 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   vertical-align: middle;
   border: none;
   box-shadow: none;
+}
+
+/* Cancelled notification messages */
+.log.cancel {
+  color: #c62828 !important;
+  text-decoration: line-through;
+}
+
+/* Desktop logs */
+.log.cancel .roundedbox {
+  background-color: rgba(240, 186, 117, 0.6) !important;
+}
+
+/* Mobile logs */
+.log.cancel.roundedbox {
+  background-color: #ef9a9a;
 }

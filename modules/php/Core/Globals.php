@@ -23,10 +23,6 @@ class Globals extends \STIG\Helpers\DB_Manager
     'firstPlayer' => 'int',
     'winnersIds' => 'obj',
 
-    //Two players should not be able to use this global at the same time, because it is used during central board actions
-    'nbSpActions' => 'int',
-    'nbSpActionsMax' => 'int',
-
     //We manage the wind direction for the 10 first turns, then the wind will be saved in windDirection11 (no need to display them)
     'windDirection1' => 'str',
     'windDirection2' => 'str',
@@ -47,6 +43,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     //For games with 1 schema in the entire game :(not solo challenge)
     'optionSchema' => 'int',
     'optionJokers' => 'int',
+
   ];
 
   public static function getAllWindDir()

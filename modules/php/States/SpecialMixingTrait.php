@@ -34,6 +34,7 @@ trait SpecialMixingTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
  
         $actionCost = ACTION_COST_MIXING* $this->getGetActionCostModifier();
         if($player->countRemainingPersonalActions() < $actionCost){

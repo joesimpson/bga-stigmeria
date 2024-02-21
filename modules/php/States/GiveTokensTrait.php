@@ -14,9 +14,11 @@ trait GiveTokensTrait
     {
         $player = Players::get($playerId);
         $alignedTokens =array_unique( $player->getSelection());
-        return [
+        $args = [
             'tokens' => $alignedTokens,
         ];
+        $this->addArgsForUndo($playerId, $args);
+        return $args;
     }
       
     /**
@@ -32,6 +34,7 @@ trait GiveTokensTrait
         
         $possibleTokenIds = $player->getSelection();
         if(count($tokensArray) >0){
+            $this->addStep( $pId, $player->getPrivateState());
             $playerDestination = Players::get($playerDestinationId);
             if(!isset($playerDestination)) {
                 throw new UnexpectedException(404, "Unknow target player");
@@ -47,6 +50,10 @@ trait GiveTokensTrait
             $possibleTokenIds = array_filter($possibleTokenIds, static function ($element) use ($tokensArray) {
                 return !in_array($element, $tokensArray);
             });
+            if($playerDestinationId != $player->id && $playerDestination->isMultiactive()){
+                //We cannot cancel if another gets tokens and can play them (could happen with current rules if the other player has let the current one to play while still active )
+                $this->addCheckpoint($player->getPrivateState(), $pId );
+            }
         }
         $player->setSelection($possibleTokenIds);
         if(count($possibleTokenIds) >=1){

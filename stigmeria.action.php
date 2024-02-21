@@ -379,6 +379,34 @@
       self::ajaxResponse();
     }
     
+
+
+    ///////////////////
+    /////  UNDO   /////
+    ///////////////////
+    
+    public function actConfirmTurn()
+    {
+      self::setAjaxMode();
+      $this->game->actConfirmTurn();
+      self::ajaxResponse();
+    }
+
+    public function actRestart()
+    {
+      self::setAjaxMode();
+      $this->game->actRestart();
+      self::ajaxResponse();
+    }
+
+    public function actUndoToStep()
+    {
+      self::setAjaxMode();
+      $stepId = self::getArg('stepId', AT_posint, false);
+      $this->game->actUndoToStep($stepId);
+      self::ajaxResponse();
+    }
+
     ///////////////////
     /////  PREFS  /////
     ///////////////////
