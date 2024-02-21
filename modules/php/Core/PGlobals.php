@@ -15,6 +15,9 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     'engineChoices' => 'int',
 
     'lastTurn' => 'int',
+    //Selected tokens according to current private state
+    'selection' => 'obj',
+
     'nbSpActions' => 'int',
     'nbSpActionsMax' => 'int',
     
@@ -173,6 +176,8 @@ class PGlobals extends \STIG\Helpers\DB_Manager
   {
     foreach($players as $playerId => $player){
       self::setEliminated($playerId,false);
+      //the first state to be activated:
+      self::setState($playerId,ST_TURN_COMMON_BOARD);
     }
   }
 }

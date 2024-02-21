@@ -41,7 +41,7 @@ class Player extends \STIG\Helpers\DB_Model
     //Those are replaced by Player Globals 'PGlobals'
     //'lastTurn' => ['player_turn', 'int'],
     //for tokens selection :
-    'selection' => ['player_selection', 'obj'],
+    //'selection' => ['player_selection', 'obj'],
   ];
 
   public function getUiData($currentPlayerId = null)
@@ -79,6 +79,14 @@ class Player extends \STIG\Helpers\DB_Model
   public function setLastTurn($turn)
   {
     return PGlobals::setLastTurn($this->getId(),$turn);
+  }
+  public function getSelection()
+  {
+    return PGlobals::getSelection($this->getId());
+  }
+  public function setSelection($selection)
+  {
+    return PGlobals::setSelection($this->getId(),$selection);
   }
 
 
