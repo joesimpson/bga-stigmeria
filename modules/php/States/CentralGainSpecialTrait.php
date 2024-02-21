@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\PGlobals;
+use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
@@ -61,6 +62,7 @@ trait CentralGainSpecialTrait
         $nbRemaining--;
         PGlobals::setNbSpActions($pId,$nbRemaining);
         Notifications::unlockSp($player,$action);
+        Stats::inc("unlocked_sp",$pId);
 
         if($nbRemaining >=1){
             $this->gamestate->nextPrivateState($pId, "continue");

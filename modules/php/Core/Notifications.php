@@ -131,6 +131,8 @@ class Notifications
         'ncad' => $player->getNbCommonActionsDone(),
         'npad' => $player->getNbPersonalActionsDone(),
         'npan' => $player->countRemainingPersonalActions(),
+        'la' => $player->countLockedActions(),
+        'ua' => $player->countUnLockedActions(),
       ],
     );
   }
@@ -745,7 +747,7 @@ class Notifications
     // // Keep only the things from getAllDatas that matters
     $fDatas = [
       'players' => $datas['players'],
-      'actions' => $datas['actions'],
+      //'actions' => $datas['actions'],
       'tokens' => $datas['tokens'],
     ];
 

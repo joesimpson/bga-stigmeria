@@ -78,6 +78,7 @@ function (dojo, declare) {
                 ['moveFromDeckToPlayerBoard', 900],
                 ['moveBackToRecruit', 900],
                 ['moveBackToBox', 900],
+                ['unlockSp',100],
                 ['spMixing', 900],
                 ['spCombination', 900],
                 ['spSwap', 900],
@@ -683,6 +684,8 @@ function (dojo, declare) {
                 this._counters[pId].pollens.toValue(player.pollens);
                 this._counters[pId].jokers.toValue(player.jokerUsed ? 0:1);
                 this._counters[pId].actions.toValue(player.npad);
+                this._counters[pId].unlockedActions.toValue(player.ua);
+                this._counters[pId].lockedActions.toValue(player.la);
                 this.updateTurnMarker(pId,this.gamedatas.turn,player.npad+1);
             });
         },
@@ -702,6 +705,8 @@ function (dojo, declare) {
                 this._counters[player.id]['jokers'].setValue(player.jokerUsed ? 0:1);
                 this._counters[player.id]['actions'].setValue(player.npad);
                 this._counters[player.id]['actionsMax'].setValue(this.gamedatas.turn);
+                this._counters[player.id]['unlockedActions'].setValue(player.ua);
+                this._counters[player.id]['lockedActions'].setValue(player.la);
             });
             
             this.setupTokens();
@@ -733,6 +738,8 @@ function (dojo, declare) {
             debug('notif_useActions: player spent actions', n);
             this.gamedatas.winds = n.args.winds;
             this._counters[n.args.player_id]['actions'].toValue(n.args.npad);
+            this._counters[n.args.player_id]['unlockedActions'].toValue(n.args.ua);
+            this._counters[n.args.player_id]['lockedActions'].toValue(n.args.la);
             this.updateTurnMarker(n.args.player_id,this.gamedatas.turn,n.args.npad+1);
         },
         notif_drawToken(n) {
@@ -884,6 +891,11 @@ function (dojo, declare) {
             div.dataset.type = token.type;
             this.slide(div, this.getTokenContainer(token));
             this._counters[n.args.player_id]['pollens'].incValue(1);
+        },
+        notif_unlockSp(n) {
+            debug('notif_unlockSp: new special action !', n);
+            let spAction = n.args.action;
+            this._counters[n.args.player_id]['unlockedActions'].incValue(1);
         },
         notif_spMixing(n) {
             debug('notif_spMixing: tokens are mixed !', n);
@@ -1071,8 +1083,11 @@ function (dojo, declare) {
                 this.addTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'),'');
                 this.addTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'),'');
                 this.addTooltip(`stig_reserve_${player.id}_actions`, _('Actions on player board'),'');
+                this.addTooltip(`stig_reserve_${player.id}_unlockedActions`, _('Unlocked special actions'),'');
+                this.addTooltip(`stig_reserve_${player.id}_lockedActions`, _('Locked special actions'),'');
 
                 let pId = player.id;
+                //let nbUnlockedActions = (this.gamedatas.actions[pId]!=undefined) ? this.gamedatas.actions[pId].length : 0;
                 this._counters[pId] = {
                     tokens_recruit: this.createCounter(`stig_counter_${pId}_tokens_recruit`, player.tokens_recruit),
                     tokens_deck: this.createCounter(`stig_counter_${pId}_tokens_deck`, player.tokens_deck),
@@ -1081,6 +1096,8 @@ function (dojo, declare) {
                     jokers: this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1),
                     actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
                     actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, this.gamedatas.turn),
+                    unlockedActions: this.createCounter(`stig_counter_${pId}_unlockedActions`, player.ua),
+                    lockedActions: this.createCounter(`stig_counter_${pId}_lockedActions`, player.la),
                 };
                 this.updateTurnMarker(pId,this.gamedatas.turn,player.npad+1);
                 // Useful to order boards
@@ -1126,6 +1143,8 @@ function (dojo, declare) {
                 ${this.tplResourceCounter(player, 'actions', 0, this.gamedatas.turn)}
                 ${this.tplResourceCounter(player, 'tokens_recruit',3)}
                 ${this.tplResourceCounter(player, 'pollens',9, this.getFlowerTotalPollens())}
+                ${this.tplResourceCounter(player, 'unlockedActions')}
+                ${this.tplResourceCounter(player, 'lockedActions')}
                 ${this.gamedatas.jokerMode>0 ? this.tplResourceCounter(player, 'jokers') :''}
             </div>
             </div>`;

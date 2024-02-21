@@ -56,6 +56,8 @@
             height: 100%;
         }
 
+        .stig_resource_unlockedActions,
+        .stig_resource_lockedActions,
         .stig_resource_jokers,
         .stig_resource_tokens_recruit,
         .stig_resource_tokens_deck {
@@ -134,6 +136,23 @@
                     background-size: 6000%;
                     background-position-x: 480px;
                     background-position-y: 35px;
+                }
+                &.stig_lockedActions,
+                &.stig_unlockedActions{
+                    width: 2em;
+                    height: 2em;
+                    background-image: url("img/tokens.png");
+                    background-size: 500% 500%;
+                }
+                &.stig_unlockedActions{
+                    /** see sprite type 23 */
+                    background-position-x: 50%;
+                    background-position-y: 100%;
+                }
+                &.stig_lockedActions{
+                    /** see sprite type 24 */
+                    background-position-x: 75%;
+                    background-position-y: 100%;
                 }
                 &.stig_pollens{
                     display: flex;

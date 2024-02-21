@@ -86,6 +86,12 @@
         "name": "Joker actions",
         "type": "int"
       }
+      
+      ,"unlocked_sp": {
+        "id": 55,
+        "name": "Unlocked special actions",
+        "type": "int"
+      }
 
       ,"actions_s10": {
         "id": 20,

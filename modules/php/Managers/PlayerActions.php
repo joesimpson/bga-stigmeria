@@ -156,13 +156,17 @@ class PlayerActions extends \STIG\Helpers\Pieces
   }
   /**
    * @param int $playerId
+   * @param array $states (optional)
   * @return int nb of actions on player board
   */
-  public static function countActions($playerId)
+  public static function countActions($playerId,$states = null)
   { 
-    return self::DB()
-      ->wherePlayer($playerId)
-      ->count();
+    $query = self::DB()
+      ->wherePlayer($playerId);
+      if(isset($states)){
+        $query->whereIn(self::$prefix.'state',$states );
+      }
+    return $query->count();
   } 
   
   /**

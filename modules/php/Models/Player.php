@@ -7,6 +7,7 @@ use STIG\Core\Globals;
 use STIG\Core\Stats;
 use STIG\Core\Notifications;
 use STIG\Core\Preferences;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 
@@ -59,6 +60,11 @@ class Player extends \STIG\Helpers\DB_Model
     unset($data['commonMoveDone']);
 
     unset($data['privateState']);
+
+    //unlocked
+    $data['ua'] = $this->countUnLockedActions();
+    //locked
+    $data['la'] = $this->countLockedActions();
 
     return $data;
   }
@@ -123,5 +129,12 @@ class Player extends \STIG\Helpers\DB_Model
     $max = min(MAX_PERSONAL_ACTIONS_BY_TURN, $turn); //10 actions for turns 11,12,...
     $done = $this->getNbPersonalActionsDone();
     return $max - $done;
+  }
+  
+  public function countUnLockedActions(){
+    return PlayerActions::countActions($this->getId(), [ACTION_STATE_UNLOCKED_FOREVER, ACTION_STATE_UNLOCKED_FOR_ONCE_GAME,ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN]);
+  }
+  public function countLockedActions(){
+    return PlayerActions::countActions($this->getId(), [ACTION_STATE_LOCKED,ACTION_STATE_LOCKED_FOR_TURN]);
   }
 }

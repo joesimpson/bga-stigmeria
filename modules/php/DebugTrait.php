@@ -44,7 +44,12 @@ trait DebugTrait
     //Formatting prefs as json -> copy the DOM of this log : \n
     Notifications::message("$json",['json' => $json]);
   }
+  
   /*
+  function debugStats()
+  {
+    Stats::checkExistence();
+  }
   function debugElim()
   {
     $player = Players::getCurrent();
