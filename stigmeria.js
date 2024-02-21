@@ -674,6 +674,7 @@ function (dojo, declare) {
                 this._counters[pId].pollens.toValue(player.pollens);
                 this._counters[pId].jokers.toValue(player.jokerUsed ? 0:1);
                 this._counters[pId].actions.toValue(player.npad);
+                this.updateTurnMarker(pId,this.gamedatas.turn,player.npad+1);
             });
         },
 
