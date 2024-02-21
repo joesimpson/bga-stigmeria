@@ -131,7 +131,10 @@ class Globals extends \STIG\Helpers\DB_Manager
     //              --------------------------------------------
     $optionMode = $options[OPTION_MODE];
     self::setOptionGameMode($optionMode);
-    self::setOptionJokers($options[OPTION_JOKER]);
+
+    $optionJoker = OPTION_JOKER_0;
+    Utils::updateDataFromArray($options,OPTION_JOKER,$optionJoker);
+    self::setOptionJokers($optionJoker);
 
     $flowerType = $options[OPTION_FLOWER];
     self::setOptionFlowerType($flowerType);

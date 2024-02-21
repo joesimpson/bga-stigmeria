@@ -834,6 +834,18 @@
             }
         ],
         "default": 1,
-        "level": "additional"
+        "level": "additional",
+        "displaycondition": [
+            {
+                "type": "otheroptionisnot",
+                "id": 100,
+                "value": 3
+            },
+            {
+                "type": "otheroptionisnot",
+                "id": 100,
+                "value": 4
+            }
+        ]
     }
 }

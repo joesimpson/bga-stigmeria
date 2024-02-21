@@ -1053,6 +1053,18 @@ $game_options = [
           ), 
     'default' => OPTION_JOKER_1,
     'level' => 'additional',
+    'displaycondition'=>  [
+      [
+        "type" => "otheroptionisnot",
+        "id" => OPTION_MODE,
+        "value"=> OPTION_MODE_COMPETITIVE,
+      ],
+      [
+        "type" => "otheroptionisnot",
+        "id" => OPTION_MODE,
+        "value"=> OPTION_MODE_NOLIMIT,
+      ],
+    ],
   ),
 
 ];
