@@ -26,7 +26,9 @@ trait PlayerTurnCommonBoardTrait
     {
         $player = Players::get($player_id);
         $nbMoves = $player->countRemainingCommonActions();
-        $actions[] = 'actCommonDrawAndLand';
+        if(Tokens::countDeck($player_id)>0){
+            $actions[] = 'actCommonDrawAndLand';
+        }
         if(!$player->isCommonMoveDone()){
             $actions[] = 'actCommonMove';
         }

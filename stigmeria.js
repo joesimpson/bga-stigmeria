@@ -227,15 +227,17 @@ function (dojo, declare) {
             let possibleActions = args.a;
             let nbActions = args.n;
             if(nbActions>0){
-                if(possibleActions.includes('actCommonDrawAndLand')){
-                    this.addPrimaryActionButton('btnCommonDrawAndPlace', _('Draw and Place'), () => {
-                        this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
-                            this.takeAction('actCommonDrawAndLand', {});
-                        });
+                this.addPrimaryActionButton('btnCommonDrawAndPlace', _('Draw and Place'), () => {
+                    this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
+                        this.takeAction('actCommonDrawAndLand', {});
                     });
+                });
+                if(!possibleActions.includes('actCommonDrawAndLand')){
+                    $('btnCommonDrawAndPlace').classList.add('disabled');
                 }
-                if(possibleActions.includes('actCommonMove')){
-                    this.addPrimaryActionButton('btnCommonMove',  _('Move'), () => this.takeAction('actCommonMove', {}));
+                this.addPrimaryActionButton('btnCommonMove',  _('Move'), () => this.takeAction('actCommonMove', {}));
+                if(!possibleActions.includes('actCommonMove')){
+                    $('btnCommonMove').classList.add('disabled');
                 }
             }
             if(possibleActions.includes('actCJoker')){
@@ -729,7 +731,7 @@ function (dojo, declare) {
                 this._counters[pId].tokens_recruit.toValue(player.tokens_recruit);
                 this._counters[pId].tokens_deck.toValue(player.tokens_deck);
                 this._counters[pId].pollens.toValue(player.pollens);
-                this._counters[pId].jokers.toValue(player.jokerUsed ? 0:1);
+                if(this.gamedatas.jokerMode>0) this._counters[pId].jokers.toValue(player.jokerUsed ? 0:1);
                 this._counters[pId].actions.toValue(player.npad);
                 this._counters[pId].unlockedActions.toValue(player.ua);
                 this._counters[pId].lockedActions.toValue(player.la);
@@ -749,7 +751,7 @@ function (dojo, declare) {
                 this._counters[player.id]['tokens_deck'].setValue(player.tokens_deck);
                 this._counters[player.id]['pollens'].setValue(player.pollens);
                 this._counters[player.id]['pollensMax'].setValue(this.getFlowerTotalPollens());
-                this._counters[player.id]['jokers'].setValue(player.jokerUsed ? 0:1);
+                if(this.gamedatas.jokerMode>0) this._counters[player.id]['jokers'].setValue(player.jokerUsed ? 0:1);
                 this._counters[player.id]['actions'].setValue(player.npad);
                 this._counters[player.id]['actionsMax'].setValue(this.gamedatas.turn);
                 this._counters[player.id]['unlockedActions'].setValue(player.ua);
