@@ -151,12 +151,13 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
 
     if($fromBoard){
       if($sendNotif) Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
-    } else if($fromDeck){
-      if($sendNotif) Notifications::moveFromDeckToPlayerBoard($player, $this,$actionCost);
     }
     else {
       Stats::inc("tokens_board",$player->getId());
-      if($sendNotif) Notifications::moveToPlayerBoard($player, $this,$actionCost);
+      if($fromDeck){
+        if($sendNotif) Notifications::moveFromDeckToPlayerBoard($player, $this,$actionCost);
+      }
+      else if($sendNotif) Notifications::moveToPlayerBoard($player, $this,$actionCost);
     }
 
     $this->checkAndBecomesPollen($player);
