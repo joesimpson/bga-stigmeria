@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -61,6 +62,7 @@ trait GiveTokensTrait
             return;
         }
 
+        PGlobals::setState($pId, ST_TURN_COMMON_BOARD);
         $this->gamestate->nextPrivateState($pId, "next");
     }
  

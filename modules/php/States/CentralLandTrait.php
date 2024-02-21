@@ -58,26 +58,8 @@ trait CentralLandTrait
 
         //EFFECT : PLACE the TOKEN 
         $token->moveToCentralBoard($player,$row,$column,$actionCost);
-        //RULE : gain 1 or 2 special action
-        $alignedTokens = $this->checkBoardForGainingAction($token->getType(),$row,$column);
-        $nbActions = (int) (count($alignedTokens)/ NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS);
-        //Notifications::message("DEBUG: $nbActions actions for alignedTokens ".json_encode($alignedTokens ));
-        if($nbActions > 0 ){
-            //TODO JSA AND check max number of actions not reached
-            $player->setSelection($alignedTokens);
-            PGlobals::setNbSpActions($pId,$nbActions);
-            PGlobals::setNbSpActionsMax($pId,$nbActions);
-            Notifications::gainSp($player,$nbActions,count(array_unique($alignedTokens)));
-            $this->gamestate->nextPrivateState($pId, "gainSp");
-            return;
-        }
-        else {
-            $player->setSelection([]);
-            PGlobals::setNbSpActions($pId,0);
-            PGlobals::setNbSpActionsMax($pId,0);
-            $this->gamestate->nextPrivateState($pId, "continue");
-            return;
-        }
+        
+        $this->checkGainSpecialAction($player,$token, "continue", ST_TURN_COMMON_BOARD);
     }
 
     /**

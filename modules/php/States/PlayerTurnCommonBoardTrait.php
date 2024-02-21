@@ -192,6 +192,8 @@ trait PlayerTurnCommonBoardTrait
         if(!$this->canPlayCentralJoker($player)){
             throw new UnexpectedException(13,"You cannot replay a joker in the game round");
         }
+        
+        PGlobals::setState($pId, ST_TURN_CENTRAL_JOKER);
         $this->gamestate->nextPrivateState($player->id, "cJoker");
     }
 
@@ -201,7 +203,7 @@ trait PlayerTurnCommonBoardTrait
      * @param StigmerianToken $token
      * @param string $nextTransition
      */
-    public function checkGainSpecialAction($player,$token, $nextTransition){
+    public function checkGainSpecialAction($player,$token, $nextTransition, $nextState){
         $pId = $player->id;
         $row = $token->row;
         $column = $token->col;
@@ -213,6 +215,7 @@ trait PlayerTurnCommonBoardTrait
             PGlobals::setNbSpActions($pId,$nbActions);
             PGlobals::setNbSpActionsMax($pId,$nbActions);
             Notifications::gainSp($player,$nbActions,count(array_unique($alignedTokens)));
+            PGlobals::setState($pId, ST_TURN_CHOICE_SPECIAL_ACTION);
             $this->gamestate->nextPrivateState($pId, "gainSp");
             return;
         }
@@ -220,6 +223,7 @@ trait PlayerTurnCommonBoardTrait
             $player->setSelection([]);
             PGlobals::setNbSpActions($pId,0);
             PGlobals::setNbSpActionsMax($pId,0);
+            PGlobals::setState($pId, $nextState);
             $this->gamestate->nextPrivateState($pId, $nextTransition);
             return;
         }

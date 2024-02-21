@@ -61,7 +61,7 @@ trait CentralJokerTrait
         $player->incNbCommonActionsDone(1);
         Notifications::useActions($player);
         
-        $this->checkGainSpecialAction($player,$token, "next");
+        $this->checkGainSpecialAction($player,$token, "next", ST_TURN_COMMON_BOARD);
     }
 
     public function canPlayCentralJoker($player){

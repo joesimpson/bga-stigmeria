@@ -68,6 +68,8 @@ trait CentralGainSpecialTrait
             $this->gamestate->nextPrivateState($pId, "continue");
             return;
         }
+        
+        PGlobals::setState($pId, ST_TURN_CENTRAL_TOKEN_DISTRIBUTION);
         $this->gamestate->nextPrivateState($pId, "next");
     }
 
