@@ -16,6 +16,8 @@ class PGlobals extends \STIG\Helpers\DB_Manager
 
     'nbSpActions' => 'int',
     'nbSpActionsMax' => 'int',
+    
+    'eliminated' => 'bool',
   ];
 
   protected static $table = 'pglobal_variables';
@@ -168,5 +170,8 @@ class PGlobals extends \STIG\Helpers\DB_Manager
    */
   public static function setupNewGame($players, $options)
   {
+    foreach($players as $playerId => $player){
+      self::setEliminated($playerId,false);
+    }
   }
 }

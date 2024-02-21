@@ -37,7 +37,7 @@ trait PlayerTurnPersonalBoardTrait
         if(Tokens::countRecruits($player_id) > 0){
             $actions[] = 'actLand';
         }
-        if(Tokens::countOnPlayerBoard($player_id) > 0){
+        if(Tokens::countOnPlayerBoard($player_id, STIG_COLORS ) > 0){
             $actions[] = 'actMove';
         }
         if(isset($nextPlayer)){

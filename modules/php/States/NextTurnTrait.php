@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
@@ -36,6 +37,23 @@ trait NextTurnTrait
       Notifications::lastTurnEnd($turn);
       $this->gamestate->nextState('end');
       return;
+    }
+    //-------------------------------------------
+    // CHECK ELIMINATED
+    //-------------------------------------------
+    $eliminatedPids = [];
+    foreach($players as $playerId => $player){
+      if(PGlobals::isEliminated($playerId)) $eliminatedPids[] = $playerId;
+    }
+    if(count($eliminatedPids) == count($players)){
+      //Eliminate ALL players -> go to end
+      $this->gamestate->nextState('end');
+      return;
+    }
+    else if(count($eliminatedPids) >0) {//Eliminate some players
+      foreach($eliminatedPids as $playerId){
+        self::eliminatePlayer( $playerId );
+      }
     }
     //-------------------------------------------
 

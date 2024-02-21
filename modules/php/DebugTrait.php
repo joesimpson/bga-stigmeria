@@ -49,7 +49,14 @@ trait DebugTrait
   {
     $player = Players::getCurrent();
     Notifications::windElimination($player,null,'TEST');
+    $lastPlayer = Players::getRemainingPlayer();
+    if($lastPlayer  == $player->id ){
+      Notifications::message("debugElim getRemainingPlayer is current player ");
+    } else {
+      Notifications::message("debugElim getRemainingPlayer is $lastPlayer ");
+    }
   }
+  /*
   function debugForceState()
   {
     $this->gamestate->jumpToState( ST_NEXT_ROUND );

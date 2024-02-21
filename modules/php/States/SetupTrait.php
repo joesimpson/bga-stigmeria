@@ -6,6 +6,7 @@ use STIG\Core\Game;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Engine;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Core\Preferences;
 use STIG\Helpers\Log;
@@ -26,6 +27,7 @@ trait SetupTrait
   {
     Players::setupNewGame($players, $options);
     Globals::setupNewGame($players, $options);
+    PGlobals::setupNewGame($players, $options);
     Preferences::setupNewGame($players, $this->player_preferences);
     Stats::setupNewGame();
     Tokens::setupNewGame($players, $options);

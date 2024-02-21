@@ -176,6 +176,18 @@ class Players extends \STIG\Helpers\DB_Manager
   }
 
   /**
+   * @return int $playerId of last player still in game (if only one), else null
+   */
+  public static function getRemainingPlayer()
+  {
+    $remaining = self::DB()
+      ->where('player_zombie', 0)
+      ->where('player_eliminated', 0)
+      ->get();
+    if(count($remaining) == 1) return $remaining->first()->getId();
+    else return null;
+  }
+  /**
    * Get current turn order according to first player variable
    */
   public static function getTurnOrder($firstPlayer = null)

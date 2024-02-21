@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\Collection;
@@ -125,7 +126,14 @@ trait WindEffectTrait
           //ELIMINATE player WHEN NORMAL MODE
           $token->setLocation(TOKEN_LOCATION_OUT);
           Notifications::windElimination($player,$token,$fromCoord);
-          self::eliminatePlayer( $player->id );
+          PGlobals::setEliminated($player->id, true);
+          //if(Players::getRemainingPlayer() == $player->id ){
+          //  //We cannot eliminated everyone ?
+          //  return true;
+          //}
+          //else {
+          //  //self::eliminatePlayer( $player->id );
+          //}
           return true;
         }
       }
