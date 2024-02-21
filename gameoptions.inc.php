@@ -47,12 +47,14 @@ $game_options = [
                   'description' => totranslate('Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.'),
                   'tmdisplay' => totranslate('Competitive'),
                   'nobeginner' => true, 
+                  'alpha' => true, 
                   ),
                 OPTION_MODE_NOLIMIT => array( 
                   'name' => totranslate('No Limit'), 
                   'description' => totranslate('Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.'), 
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
+                  'alpha' => true, 
                   ),
                 OPTION_MODE_CHALLENGE => [
                   'name' => totranslate('Challenge'), 
@@ -92,8 +94,10 @@ $game_options = [
       OPTION_MODE_NOLIMIT => [
         [
           'type' => 'minplayers', 
-          'value' => 2, 
-          'message' => totranslate('Competitive modes are not for solo play'),
+          'value' => 99, 
+          'message' => totranslate('No Limit not available in current version'),
+          //'value' => 2, 
+          //'message' => totranslate('Competitive modes are not for solo play'),
         ],
       ],
       OPTION_MODE_CHALLENGE => [
