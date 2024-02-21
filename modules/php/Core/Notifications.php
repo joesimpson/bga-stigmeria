@@ -382,7 +382,7 @@ class Notifications
    * @param StigmerianToken $token 
    */
   public static function playCJoker($player,$token){
-    self::notifyAll('playCJoker',clienttranslate('${player_name} plays a joker to move a ${token_color} stigmerian to central recruit zone'),[ 
+    self::notifyAll('playCJoker',clienttranslate('${player_name} plays a joker to move a ${token_color} stigmerian to StigmaReine'),[ 
         'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
@@ -500,7 +500,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spWhite($player,$token1,$token2,$actionCost){
-    self::notifyAll('spWhite',clienttranslate('${player_name} use the Half Note action to merge 2 ${token_color}${token_color} stigmerians at ${L1} and ${L2} into a ${token_color2} ${L1} (cost: ${n} actions)'),[ 
+    self::notifyAll('spWhite',clienttranslate('${player_name} use the Half Note action to merge 2 ${token_color}${token_color} stigmerians at ${L1} and ${L2} into a ${token_color2} at ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
