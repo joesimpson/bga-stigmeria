@@ -664,6 +664,16 @@ class Notifications
     );
   }
   
+  /**
+   * @param Player $player
+   */
+  public static function deckElimination($player){
+    $message = clienttranslate('Empty deck eliminates ${player_name} !');
+    self::notifyAll('deckElimination',$message,[ 
+        'player' => $player,
+      ],
+    );
+  }
   
   /**
    * @param Player $player

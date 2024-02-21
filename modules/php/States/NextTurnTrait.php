@@ -8,6 +8,7 @@ use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
+use STIG\Managers\Tokens;
 
 trait NextTurnTrait
 {
@@ -37,6 +38,10 @@ trait NextTurnTrait
       Notifications::lastTurnEnd($turn);
       $this->gamestate->nextState('end');
       return;
+    }
+    //-------------------------------------------
+    if(Globals::isModeCompetitive()){
+      $this->eliminatePlayersWithEmptyDeck($players);
     }
     //-------------------------------------------
     // CHECK ELIMINATED
@@ -69,4 +74,15 @@ trait NextTurnTrait
     $this->gamestate->nextState('next');
   }
 
+  /**
+   * @param Collection $players
+   */
+  public function eliminatePlayersWithEmptyDeck($players){
+    foreach($players as $pid => $player){
+      if(Tokens::countDeck($pid) ==0){
+        PGlobals::setEliminated($pid, true);
+        Notifications::deckElimination($player);
+      }
+    }
+  }
 }

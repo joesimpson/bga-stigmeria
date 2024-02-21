@@ -60,6 +60,11 @@ class Players extends \STIG\Helpers\DB_Manager
   {
     Game::get()->trace("setupNewTurn($turn)");
     if(!Globals::isModeCompetitive()) return;
+
+    $players = $players->filter(function ($player) { 
+      return $player->getZombie() ==0 && $player->getEliminated() == 0;
+    });
+
     //First player calculation is for competitive games 
     $maxRecruits = Tokens::getPlayerIdsWithMaxRecruit($players); 
     Game::get()->trace("setupNewTurn() : maxRecruits =".json_encode($maxRecruits));
@@ -147,7 +152,7 @@ class Players extends \STIG\Helpers\DB_Manager
     $nextPlayer_id = Players::getNextId($player_id);
     $nextPlayer = Players::get($nextPlayer_id);
     if(isset($nextPlayer) && !$nextPlayer->isMultiactive() && $nextPlayer->getLastTurn()< $turn
-      && $nextPlayer->getZombie() != 1
+      && $nextPlayer->getZombie() != 1 && $nextPlayer->getEliminated() == 0
     ){
       //CHECK nextPlayer not active / not already played this turn/ not zombie
       return $nextPlayer;

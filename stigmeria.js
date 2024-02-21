@@ -91,6 +91,7 @@ function (dojo, declare) {
                 ['playCJoker', 500],
                 ['windBlows', 1000],
                 ['windElimination', 10],
+                ['decklimination', 10],
                 ['addPoints', 800],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
@@ -308,7 +309,7 @@ function (dojo, declare) {
         onEnteringStateCJoker: function(args)
         {
             debug( 'onEnteringStateCJoker() ', args );
-            
+
             $('stig_central_board_container_wrapper').classList.add('stig_current_play');
             let selectedToken = null;
             let board = $(`stig_central_board`);
@@ -1056,6 +1057,12 @@ function (dojo, declare) {
         },
         notif_windElimination(n) {
             debug('notif_windElimination', n);
+            let player_id = n.args.player_id;
+            let divPanel = `overall_player_board_${player_id}`;
+            $(divPanel).classList.add('stig_eliminated');
+        },
+        notif_deckElimination(n) {
+            debug('notif_deckElimination', n);
             let player_id = n.args.player_id;
             let divPanel = `overall_player_board_${player_id}`;
             $(divPanel).classList.add('stig_eliminated');
