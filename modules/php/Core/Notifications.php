@@ -706,7 +706,7 @@ class Notifications
    * (Usually not needed if we send another notif or if we change state of a player)
    * */
   public static function emptyNotif(){
-    self::notifyAll('emptyNotif','',[],);
+    self::notifyAll('e','',[],);
   }
   /*********************
    **** UPDATE ARGS ****

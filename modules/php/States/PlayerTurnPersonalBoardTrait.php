@@ -31,6 +31,15 @@ trait PlayerTurnPersonalBoardTrait
         $nextPlayer = Players::getNextInactivePlayerInTurn($player->id, $turn);
         
         $actions[] = '';
+        if(Tokens::countDeck($player_id) > 0){
+            $actions[] = 'actDraw';
+        }
+        if(Tokens::countRecruits($player_id) > 0){
+            $actions[] = 'actLand';
+        }
+        if(Tokens::countOnPlayerBoard($player_id) > 0){
+            $actions[] = 'actMove';
+        }
         if(isset($nextPlayer)){
             $actions[] = 'actLetNextPlay';
         }

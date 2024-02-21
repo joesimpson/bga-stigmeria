@@ -380,15 +380,24 @@ function (dojo, declare) {
                         this.takeAction('actDraw', {});
                     });
                 });
+                if(!possibleActions.includes('actDraw')){
+                    $('btnDraw').classList.add("disabled");
+                }
                 this.addPrimaryActionButton('btnPlace', _('Land'), () => this.takeAction('actLand', {}));
+                if(!possibleActions.includes('actLand')){
+                    $('btnPlace').classList.add("disabled");
+                }
                 this.addPrimaryActionButton('btnMove', _('Move'), () => this.takeAction('actMove', {}));
-                    
+                if(!possibleActions.includes('actMove')){
+                    $('btnMove').classList.add("disabled");
+                }
                 this.gamedatas.players[this.player_id].npad = args.done;
                 //updated via notif_useActions
                 //this.updateTurnMarker(this.player_id,this.gamedatas.turn,args.done +1 );
-                    
-                if(possibleActions.includes('actSpecial')){
-                    this.addImageActionButton('btnSpecialAction', `<div><div class='stig_icon_flower_violet'></div>`+_('Special')+`<div class='stig_icon_flower_violet stig_icon_flipped'></div></div>`, () => { this.takeAction('actSpecial', {}); });
+
+                this.addImageActionButton('btnSpecialAction', `<div><div class='stig_icon_flower_violet'></div>`+_('Special')+`<div class='stig_icon_flower_violet stig_icon_flipped'></div></div>`, () => { this.takeAction('actSpecial', {}); });
+                if(!possibleActions.includes('actSpecial')){
+                    $('btnSpecialAction').classList.add("disabled");
                 }
             }
             Object.values(args.pj).forEach((tokenColor) => {
