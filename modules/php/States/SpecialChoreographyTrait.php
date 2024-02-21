@@ -70,7 +70,8 @@ trait SpecialChoreographyTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
-        if(!$this->canMoveChoreographyOnPlayerBoard($pId,$token,$row, $column,$movedTokensIds)){
+        $boardTokens = Tokens::getAllOnPersonalBoard($pId);
+        if(!$this->canMoveChoreographyOnPlayerBoard($pId,$token,$boardTokens,$row, $column,$movedTokensIds)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
 
@@ -186,24 +187,24 @@ trait SpecialChoreographyTrait
     /**
      * @param int $playerId
      * @param StigmerianToken $token
+     * @param Collection $boardTokens
      * @param int $row
      * @param int $col
      * @param array $movedTokensIds already moved tokens
      * @return bool TRUE if this token can be move on this player board ( Empty adjacent spot),
      *  FALSE otherwise
      */
-    public function canMoveChoreographyOnPlayerBoard($playerId,$token,$row, $column,$movedTokensIds)
+    public function canMoveChoreographyOnPlayerBoard($playerId,$token,$boardTokens,$row, $column,$movedTokensIds)
     {
         if(in_array($token->getId(),$movedTokensIds)) return false;
-        //TODO JSA PERFS
-        if(!$this->canMoveOnPlayerBoard($playerId,$token,$row, $column)) return false;
+        if(!$this->canMoveOnPlayerBoard($playerId,$token,$boardTokens,$row, $column)) return false;
 
         return true;
     }
 
     /**
      * @param int $playerId
-     * @param array $boardTokens of StigmerianToken
+     * @param Collection $boardTokens of StigmerianToken
      * @param array $movedTokensIds already moved tokens
      * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
      */
@@ -215,7 +216,7 @@ trait SpecialChoreographyTrait
             }
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                    if(isset($playerId) && $this->canMoveChoreographyOnPlayerBoard($playerId,$token,$row, $column,$movedTokensIds)){
+                    if(isset($playerId) && $this->canMoveChoreographyOnPlayerBoard($playerId,$token,$boardTokens,$row, $column,$movedTokensIds)){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }
                 }

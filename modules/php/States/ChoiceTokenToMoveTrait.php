@@ -60,7 +60,8 @@ trait ChoiceTokenToMoveTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
-        if(!$this->canMoveOnPlayerBoard($pId,$token,$row, $column)){
+        $boardTokens = Tokens::getAllOnPersonalBoard($pId);
+        if(!$this->canMoveOnPlayerBoard($pId,$token,$boardTokens,$row, $column)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
 
@@ -125,12 +126,13 @@ trait ChoiceTokenToMoveTrait
     /**
      * @param int $playerId
      * @param StigmerianToken $token
+     * @param Collection $boardTokens
      * @param int $row
      * @param int $col
      * @return bool TRUE if this token can be moved on this player board ( Empty adjacent spot),
      *  FALSE otherwise
      */
-    public function canMoveOnPlayerBoard($playerId,$token,$row, $column)
+    public function canMoveOnPlayerBoard($playerId,$token,$boardTokens,$row, $column)
     {
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
         if($token->isPollen()) return false;
@@ -139,9 +141,7 @@ trait ChoiceTokenToMoveTrait
             return false;
         }
 
-        //TODO JSA PERFS We could read all tokens on personal board before calling this function if we want to loop on this func
-        $existingToken = Tokens::findOnPersonalBoard($playerId,$row, $column);
-        if(isset($existingToken)) return false;//not empty
+        if(null !== (Tokens::findTokenOnBoardWithCoord($boardTokens,$row, $column))) return false;//not empty
 
         return true;
     }
@@ -169,10 +169,10 @@ trait ChoiceTokenToMoveTrait
             }
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                    if(isset($playerId) && $this->canMoveOnPlayerBoard($playerId,$token,$row, $column)){
+                    if(isset($playerId) && $this->canMoveOnPlayerBoard($playerId,$token,$tokens,$row, $column)){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }
-                    else if(!isset($playerId) && $this->canMoveOnCentralBoard($token,$row, $column)){
+                    else if(!isset($playerId) && $this->canMoveOnCentralBoard($token,$tokens,$row, $column)){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }
                 }

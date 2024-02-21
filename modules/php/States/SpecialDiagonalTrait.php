@@ -45,7 +45,8 @@ trait SpecialDiagonalTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
-        if(!$this->canMoveDiagonalOnPlayerBoard($pId,$token,$row, $column)){
+        $boardTokens = Tokens::getAllOnPersonalBoard($pId);
+        if(!$this->canMoveDiagonalOnPlayerBoard($pId,$token,$boardTokens,$row, $column)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
 
@@ -66,12 +67,13 @@ trait SpecialDiagonalTrait
     /**
      * @param int $playerId
      * @param StigmerianToken $token
+     * @param Collection $boardTokens
      * @param int $row
      * @param int $col
      * @return bool TRUE if this token can be move on this player board ( Empty adjacent spot),
      *  FALSE otherwise
      */
-    public function canMoveDiagonalOnPlayerBoard($playerId,$token,$row, $column)
+    public function canMoveDiagonalOnPlayerBoard($playerId,$token,$boardTokens,$row, $column)
     {
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
         if($token->isPollen()) return false;
@@ -80,9 +82,7 @@ trait SpecialDiagonalTrait
             return false;
         }
 
-        //TODO JSA PERFS We could read all tokens on personal board before calling this function if we want to loop on this func
-        $existingToken = Tokens::findOnPersonalBoard($playerId,$row, $column);
-        if(isset($existingToken)) return false;//not empty
+        if(null !== (Tokens::findTokenOnBoardWithCoord($boardTokens,$row, $column))) return false;//not empty
 
         return true;
     }
@@ -97,7 +97,7 @@ trait SpecialDiagonalTrait
         foreach($tokens as $tokenId => $token){
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                    if(isset($playerId) && $this->canMoveDiagonalOnPlayerBoard($playerId,$token,$row, $column)){
+                    if(isset($playerId) && $this->canMoveDiagonalOnPlayerBoard($playerId,$token,$tokens,$row, $column)){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }
                 }

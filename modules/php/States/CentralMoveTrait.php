@@ -49,7 +49,8 @@ trait CentralMoveTrait
         if($token->location != TOKEN_LOCATION_CENTRAL_BOARD ){
             throw new UnexpectedException(20,"You cannot move this token");
         }
-        if(!$this->canMoveOnCentralBoard($token,$row, $column)){
+        $boardTokens = Tokens::getAllOnCentralBoard();
+        if(!$this->canMoveOnCentralBoard($token,$boardTokens,$row, $column)){
             throw new UnexpectedException(30,"You cannot move this token at $row, $column");
         }
 
@@ -121,19 +122,20 @@ trait CentralMoveTrait
      
     /**
      * @param StigmerianToken $token
+     * @param Collection $boardTokens
      * @param int $row
      * @param int $column
      * @return bool TRUE if this token can be moved on central board ( Empty spot + Either Line A or adjacent to another token),
      *  FALSE otherwise
      */
-    public function canMoveOnCentralBoard($token,$row, $column)
+    public function canMoveOnCentralBoard($token,$boardTokens,$row, $column)
     {
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
-        if(Tokens::countOnCentralBoard($row, $column) > 0) return false;//not empty
-
+        
         if(!$token->isAdjacentCoord($row, $column)){
             return false;
         }
+        if(null !== (Tokens::findTokenOnBoardWithCoord($boardTokens,$row, $column))) return false;//not empty
 
         return true;
     }
