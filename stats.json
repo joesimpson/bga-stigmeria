@@ -68,17 +68,17 @@
       }
       ,"actions_1": {
         "id": 14,
-        "name": "Recruit actions",
+        "name": "Recruit",
         "type": "int"
       }
       ,"actions_2": {
         "id": 15,
-        "name": "Land actions",
+        "name": "Land",
         "type": "int"
       }
       ,"actions_3": {
         "id": 16,
-        "name": "Move actions",
+        "name": "Move",
         "type": "int"
       }
       ,"actions_j": {
@@ -87,62 +87,59 @@
         "type": "int"
       }
 
-      ,"actions_s11": {
-        "id": 30,
-        "name": "Combination actions",
-        "type": "int"
-      }
-      ,"actions_s22": {
-        "id": 28,
-        "name": "Two Beats actions",
-        "type": "int"
-      }
-      ,"actions_s14": {
-        "id": 23,
-        "name": "Diagonal actions",
-        "type": "int"
-      }
       ,"actions_s10": {
         "id": 20,
-        "name": "Mixing actions",
+        "name": "Mixing",
         "type": "int"
       }
-
-      ,"actions_s21": {
-        "id": 27,
-        "name": "Quarter Note actions",
-        "type": "int"
-      }
-      ,"actions_s20": {
-        "id": 26,
-        "name": "Half Note actions",
-        "type": "int"
-      }
-      ,"actions_s15": {
-        "id": 24,
-        "name": "Exchange actions",
+      ,"actions_s11": {
+        "id": 30,
+        "name": "Combination",
         "type": "int"
       }
       ,"actions_s12": {
         "id": 31,
-        "name": "Fulgurance actions",
+        "name": "Fulgurance",
         "type": "int"
       }
       ,"actions_s13": {
         "id": 32,
-        "name": "Choreography actions",
+        "name": "Choreography",
         "type": "int"
       }
-
+      ,"actions_s14": {
+        "id": 23,
+        "name": "Diagonal",
+        "type": "int"
+      }
+      ,"actions_s15": {
+        "id": 24,
+        "name": "Exchange",
+        "type": "int"
+      }
       ,"actions_s16": {
         "id": 25,
-        "name": "Fast Step actions",
+        "name": "Fast Step",
         "type": "int"
       }
-      
+      ,"actions_s20": {
+        "id": 26,
+        "name": "Half Note",
+        "type": "int"
+      }
+      ,"actions_s21": {
+        "id": 27,
+        "name": "Quarter Note",
+        "type": "int"
+      }
+      ,"actions_s22": {
+        "id": 28,
+        "name": "Two Beats",
+        "type": "int"
+      }
       ,"actions_s23": {
         "id": 29,
-        "name": "Rest actions",
+        "name": "Rest",
         "type": "int"
       }
     }
