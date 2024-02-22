@@ -38,6 +38,7 @@ function (dojo, declare) {
     const ACTION_TYPE_BLACK = 21;
     const ACTION_TYPE_TWOBEATS = 22;
     const ACTION_TYPE_REST = 23;
+    const ACTION_TYPE_NSNK = 24;
 
     const TOKEN_STIG_WHITE =    8;
     const TOKEN_STIG_BLACK =    9;
@@ -88,6 +89,7 @@ function (dojo, declare) {
                 ['spBlack', 900],
                 ['spTwoBeats', 900],
                 ['spRest', 900],
+                ['spNSNK', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -396,6 +398,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Quarter Note'),ACTION_TYPE_BLACK,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Two Beats'),ACTION_TYPE_TWOBEATS,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions,'actChooseSp');
 
         }, 
             
@@ -614,6 +617,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Quarter Note'),ACTION_TYPE_BLACK,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Two Beats'),ACTION_TYPE_TWOBEATS,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -712,6 +716,20 @@ function (dojo, declare) {
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actRest', args.tokensIds);
         }, 
+
+        onEnteringStateSpNSNK: function(args)
+        {
+            debug( 'onEnteringStateSpNSNK() ', args );
+            //Like normal joker
+            Object.values(args.p).forEach((tokenColor) => {
+                let src = tokenColor.src;
+                let dest = tokenColor.dest;
+                this.addImageActionButton(`btnNSNK_${src}_${dest}`, `<div><div class='stig_qty'>4</div><div class='stig_button_token' data-type='${src}'></div> <i class="fa6 fa6-arrow-right"></i> <div class='stig_qty'>4</div> <div class='stig_button_token' data-type='${dest}'></div></div>`, () =>  {
+                    this.takeAction('actNSNK', {src:src,dest:dest})
+                });
+            });
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+        },
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );
@@ -1102,6 +1120,15 @@ function (dojo, declare) {
                     }
                 });
             }
+        },
+        notif_spNSNK(n) {
+            debug('notif_spNSNK: tokens change color !', n);
+            let tokens = n.args.tokens;
+            Object.values(tokens).forEach((token) => {
+                let div = $(`stig_token_${token.id}`);
+                div.dataset.type = token.type;
+                this.slide(div, this.getTokenContainer(token));
+            });
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);

@@ -378,6 +378,7 @@ $machinestates = array(
             'startCombination' => ST_TURN_SPECIAL_ACT_COMBINATION,
             'startFulgurance' => ST_TURN_SPECIAL_ACT_FULGURANCE,
             'startChoreography' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
+            'startNSNK' => ST_TURN_SPECIAL_ACT_NSNK,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -563,7 +564,22 @@ $machinestates = array(
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
-        /*
+    
+    ST_TURN_SPECIAL_ACT_NSNK => [
+        "name" => "spNSNK",
+        "descriptionmyturn" => clienttranslate('${you} must select which change of tokens you want to apply in your recruit zone'), 
+        "type" => "private",
+        "args" => "argSpNSNK",
+        "possibleactions" => [
+            "actNSNK",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    /*
     ST_CONFIRM_CHOICES => [
         'name' => 'confirmChoices',
         'descriptionmyturn' => '',
@@ -586,6 +602,7 @@ $machinestates = array(
             'confirm' => ST_TURN_PERSONAL_BOARD,
         ],
     ],*/
+      
     ST_WIND_EFFECT => array(
         "name" => "windEffect",
         "description" => clienttranslate('Wind blows'),

@@ -415,6 +415,28 @@ class Notifications
   
   /**
    * @param Player $player
+   * @param int $typeSource
+   * @param int $typeDest
+   * @param Collection $newTokens StigmerianToken
+   */
+  public static function spNSNK($player,$typeSource, $typeDest, $newTokens){
+    $tokens = $newTokens->ui();
+    self::notifyAll('spNSNK',clienttranslate('${player_name} plays the action No Harm No Foul to change ${n} ${token_color} stigmerians to ${token_color2}'),[ 
+        'i18n' => ['token_color','token_color2'],  
+        'player' => $player,
+        'n' => count($tokens),
+        'tokens' => $tokens,
+        'preserve' => [ 'token_type','token_type2' ],
+        'token_color' => StigmerianToken::getTypeName($typeSource),
+        'token_type' => $typeSource,
+        'token_color2' => StigmerianToken::getTypeName($typeDest),
+        'token_type2' => $typeDest,
+      ],
+    );
+  }
+  
+  /**
+   * @param Player $player
    * @param StigmerianToken $token 
    */
   public static function playCJoker($player,$token){

@@ -112,6 +112,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
       case ACTION_TYPE_REST:
         if(Tokens::countOnPlayerBoard($playerId) == 0) return false;
         break;
+      case ACTION_TYPE_NSNK:
+        if(count(Game::get()->listPossibleNSNK($playerId)) == 0) return false;
+        break;
     }
 
     return true;

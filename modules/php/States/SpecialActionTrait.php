@@ -116,6 +116,10 @@ trait SpecialActionTrait
                 $actionCost = ACTION_COST_REST;
                 $nextState = "startRest";
                 break;
+            case ACTION_TYPE_NSNK:
+                $actionCost = ACTION_COST_NSNK;
+                $nextState = "startNSNK";
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

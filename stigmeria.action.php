@@ -411,6 +411,15 @@
       $this->game->actRest($tokenId);
       self::ajaxResponse();
     } 
+    public function actNSNK()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $typeSource = self::getArg( "src", AT_posint, true );
+      $typeDest = self::getArg( "dest", AT_posint, true );
+      $this->game->actNSNK($typeSource,$typeDest);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();
