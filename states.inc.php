@@ -293,6 +293,7 @@ $machinestates = array(
             "actDraw",
             "actLand",
             "actMove",
+            "actSRecruit",
             "actSpecial",
             "actJoker",
             "actPass",
@@ -307,9 +308,24 @@ $machinestates = array(
             'startLand' => ST_TURN_CHOICE_TOKEN_LAND,
             'startMove' => ST_TURN_CHOICE_TOKEN_MOVE,
             'startSpecial' => ST_TURN_CHOICE_SPECIAL_ACTION,
+            'sRecruit' => ST_TURN_CHOICE_RECRUIT_CENTRAL,
         ],
     ],
     
+    ST_TURN_CHOICE_RECRUIT_CENTRAL => [
+        "name" => "sRecruit",
+        "descriptionmyturn" => clienttranslate('${you} must choose a token for your recruit zone (cost : ${n} actions)'), 
+        "type" => "private",
+        "args" => "argSRecruit",
+        "possibleactions" => [
+            "actSRecruitToken",
+            'actCancel',
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_PERSONAL_BOARD,
+        ],
+    ],
     ST_TURN_CHOICE_TOKEN_LAND => [
         "name" => "choiceTokenToLand",
         "descriptionmyturn" => clienttranslate('${you} must choose a token to place (cost : ${n} actions)'), 

@@ -44,7 +44,6 @@ trait FirstTokenTrait
       $pId = $player->id;
       $this->addStep( $player->id, ST_FIRST_TOKEN);
  
-      //NORMAL mode joker : 4 same tokens from  recruit zone -> 4 same tokens
       if(!in_array($typeSource, STIG_PRIMARY_COLORS)){
           throw new UnexpectedException(11,"You cannot select this color $typeSource");
       }

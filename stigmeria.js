@@ -78,6 +78,7 @@ function (dojo, declare) {
                 ['moveOnPlayerBoard', 900],
                 ['moveFromDeckToPlayerBoard', 900],
                 ['moveBackToRecruit', 900],
+                ['sRecruit', 900],
                 ['moveBackToBox', 900],
                 ['unlockSp',100],
                 ['spMixing', 900],
@@ -470,6 +471,12 @@ function (dojo, declare) {
                 if(!possibleActions.includes('actMove')){
                     $('btnMove').classList.add("disabled");
                 }
+                if(! this.gamedatas.nocb){
+                    this.addPrimaryActionButton('btnSRecruit', _('Recruit on StigmaReine'), () => this.takeAction('actSRecruit', {}));
+                    if(!possibleActions.includes('actSRecruit')){
+                        $('btnSRecruit').classList.add("disabled");
+                    }
+                }
                 this.gamedatas.players[this.player_id].npad = args.done;
                 //updated via notif_useActions
                 //this.updateTurnMarker(this.player_id,this.gamedatas.turn,args.done +1 );
@@ -506,7 +513,29 @@ function (dojo, declare) {
             });
             //this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
-        
+        onEnteringStateSRecruit: function(args)
+        {
+            debug( 'onEnteringStateSRecruit() ', args );
+            this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancel', {}));
+            
+            let selectedToken = null;
+            Object.values(args.p).forEach((token) => {
+                let elt = this.addToken(token, $('stig_select_piece_container'), '_tmp');
+                this.onClick(`${elt.id}`, () => {
+                    //CLICK SELECT TOKEN
+                    if (selectedToken) $(`stig_token_${selectedToken}`).classList.remove('selected');
+                    selectedToken = token.id + '_tmp';
+                    $(`stig_token_${selectedToken}`).classList.add('selected');
+                    $(`btnConfirm`).classList.remove('disabled');
+                });
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                let selectedToken = $(`stig_select_piece_container`).querySelector(`.stig_token.selected`);
+                this.takeAction('actSRecruitToken', { t: selectedToken.dataset.id, });
+            }); 
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
+        }, 
         onEnteringStateChoiceTokenToLand: function(args)
         {
             debug( 'onEnteringStateChoiceTokenToLand() ', args );
@@ -953,6 +982,17 @@ function (dojo, declare) {
             let oldParent = div.parentElement;//token_holder
             div.dataset.row = null;
             div.dataset.col = null;
+            this.slide(div, this.getTokenContainer(token)).then(() =>{
+                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
+            });
+        },
+        notif_sRecruit(n) {
+            debug('notif_sRecruit: token taken from StigmaReine to recruit zone', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(!div) return;
+            let oldParent = div.parentElement;//token_holder
             this.slide(div, this.getTokenContainer(token)).then(() =>{
                 if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
                 this._counters[n.args.player_id]['tokens_recruit'].incValue(1);

@@ -224,6 +224,28 @@ class Tokens extends \STIG\Helpers\Pieces
     if(isset($token_types)) $query = $query->whereIn('type',$token_types);
     return  $query->count();
   }
+  /**
+   * 
+   * @param array $token_types (optional) filter on these types
+   * @return int nb of tokens on player board recruit zone
+   */
+  public static function countCentralRecruits($token_types = null)
+  { 
+    $query = self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_RECRUIT);
+    if(isset($token_types)) $query = $query->whereIn('type',$token_types);
+    return  $query->count();
+  }
+  /**
+  * @return Collection of StigmerianToken found at that location
+  */
+ public static function getAllCentralRecruits()
+ { 
+   //Game::get()->trace("getAllCentralRecruits()");
+   return self::DB()
+     ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_RECRUIT)
+     ->get();
+ }
    /**
    * @return Collection of StigmerianToken found at that location
    */

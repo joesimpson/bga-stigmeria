@@ -60,6 +60,11 @@
         "name": "Central Move actions",
         "type": "int"
       }
+      ,"actions_c4": {
+        "id": 77,
+        "name": "Recruit on StigmaReine actions",
+        "type": "int"
+      }
 
       ,"actions": {
         "id": 11,

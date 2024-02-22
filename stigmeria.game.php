@@ -74,6 +74,7 @@ class Stigmeria extends Table
     use STIG\States\SpecialTwoBeatsTrait;
     use STIG\States\SpecialWhiteTrait;
     use STIG\States\SpecialBlackTrait;
+    use STIG\States\StigmaReineRecruitTrait;
     use STIG\States\WindEffectTrait;
     use STIG\States\WindGenerationTrait;
 

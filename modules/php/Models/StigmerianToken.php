@@ -198,9 +198,12 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   public function moveToRecruitZone($player,$actionCost)
   {
     $fromBoard = false;
+    $fromStigmaReine = false;
     if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
       $fromBoard = true;
       $fromCoord = $this->getCoordName();
+    } else if($this->getLocation() == TOKEN_LOCATION_CENTRAL_RECRUIT ){
+      $fromStigmaReine = true;
     }
     $this->setLocation(TOKEN_LOCATION_PLAYER_RECRUIT);
     $this->setPId($player->getId());
@@ -215,10 +218,9 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
         $player->addTieBreakerPoints(1);
       }
     }
-    /* TODO if neeeded
-    else {
-      Notifications::moveToRecruitZone($player, $this,$actionCost);
-    }*/
+    else if($fromStigmaReine){
+      Notifications::sRecruit($player, $this,$actionCost);
+    }
   }
   
   /**

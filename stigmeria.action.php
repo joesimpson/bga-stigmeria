@@ -123,6 +123,21 @@
       $this->game->actMoveOut($token_id);
       self::ajaxResponse();
     }
+    public function actSRecruit()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actSRecruit();
+      self::ajaxResponse();
+    }
+    public function actSRecruitToken()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "t", AT_posint, true );
+      $this->game->actSRecruitToken($token_id);
+      self::ajaxResponse();
+    }
     public function actCentralMoveOut()
     {
       self::setAjaxMode();
@@ -159,6 +174,13 @@
       $row = self::getArg( "row", AT_posint, true );
       $col = self::getArg( "col", AT_posint, true );
       $this->game->actCentralMove($token_id, $row, $col);
+      self::ajaxResponse();
+    }
+    public function actCancel()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actCancel();
       self::ajaxResponse();
     }
     public function actCancelChoiceTokenToLand()

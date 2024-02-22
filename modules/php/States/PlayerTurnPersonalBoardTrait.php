@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Exceptions\UserException;
@@ -36,6 +37,9 @@ trait PlayerTurnPersonalBoardTrait
         }
         if(Tokens::countRecruits($player_id) > 0){
             $actions[] = 'actLand';
+        }
+        if(Tokens::countCentralRecruits() > 0 && $player->countRemainingPersonalActions() >= ACTION_COST_CENTRAL_RECRUIT){
+            $actions[] = 'actSRecruit';
         }
         if(Tokens::countOnPlayerBoard($player_id, STIG_COLORS ) > 0){
             $actions[] = 'actMove';
@@ -161,6 +165,14 @@ trait PlayerTurnPersonalBoardTrait
         $this->gamestate->nextPrivateState($player->id, "startMove");
     }
 
+    public function actCancel()
+    {
+        self::checkAction( 'actCancel' ); 
+        self::trace("actCancel()");
+        
+        $player = Players::getCurrent();
+        $this->gamestate->nextPrivateState($player->id, "cancel");
+    }
     /**
      * Joker action
      * @param int $typeSource
@@ -211,6 +223,20 @@ trait PlayerTurnPersonalBoardTrait
         $pId = $player->id;
 
         $this->gamestate->nextPrivateState($player->id, "startSpecial");
+    }
+    
+    /**
+     * Recruit on StigmaReine
+     */
+    public function actSRecruit()
+    {
+        self::checkAction( 'actSRecruit' ); 
+        self::trace("actSRecruit()");
+        
+        $player = Players::getCurrent();
+
+        PGlobals::setState($player->id, $player->getPrivateState());
+        $this->gamestate->nextPrivateState($player->id, "sRecruit");
     }
     
     /**

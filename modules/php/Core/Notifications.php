@@ -332,6 +332,23 @@ class Notifications
       ],
     );
   }
+  /**
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param int $actionCost
+   */
+  public static function sRecruit($player, $token, $actionCost){
+    self::notifyAll('sRecruit',clienttranslate('${player_name} recruits a ${token_color} stigmerian from StigmaReine (cost : ${n} actions)'),[ 
+        'i18n' => [ 'token_color'],
+        'player' => $player,
+        'token' => $token->getUiData(),
+        'n' => $actionCost,
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+      ],
+    );
+  }
   
   /**
    * @param Player $player
