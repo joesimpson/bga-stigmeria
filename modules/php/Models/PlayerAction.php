@@ -40,7 +40,7 @@ class PlayerAction extends \STIG\Helpers\DB_Model
     }
     $type = $this->type;
     $this->difficulty = PlayerActions::getDifficulty($type);
-    $this->cost = PlayerActions::getCost($type) * PlayerActions::getGetActionCostModifier();
+    $this->cost = PlayerActions::getCost($type);
   }
 
   public function getUiData()

@@ -35,12 +35,20 @@ class PlayerActions extends \STIG\Helpers\Pieces
 
   /**
    * @param int $type
-   * @return int 
+   * @return int cost
    */
   public static function getCost($type)
   {
-    //TODO JSA SWITCH
-    return 1;
+    switch($type){
+      
+      case ACTION_TYPE_DIAGONAL:
+        //this action doesn t cost double for Inspir
+        return 1;
+      default:
+        $modifier = PlayerActions::getGetActionCostModifier();
+    }
+    //DEFAULT 1
+    return $modifier*1;
   }
   
   /**
