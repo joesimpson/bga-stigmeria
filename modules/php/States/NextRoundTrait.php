@@ -9,7 +9,6 @@ use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
-use STIG\Models\Schema;
 
 trait NextRoundTrait
 {
@@ -18,6 +17,7 @@ trait NextRoundTrait
   { 
     self::trace("stNewRound()");
 
+    $this->addCheckpoint(ST_NEXT_ROUND);
     $players = Players::setupNewRound();
     Globals::setupNewRound();
     $round = Globals::getRound();
@@ -28,8 +28,7 @@ trait NextRoundTrait
     PlayerActions::setupNewRound($players,$schema);
     $actions = PlayerActions::getUiData();
     Notifications::newRound($round,$schema,$tokens,$actions);
-    $this->addCheckpoint(ST_NEXT_ROUND);
-
+    
     $this->gamestate->nextState('next');
   }
 }

@@ -20,6 +20,7 @@ trait WindEffectTrait
   public function stWindEffect()
   {
     self::trace("stWindEffect()");
+    $this->addCheckpoint(ST_WIND_EFFECT);
     $players = Players::getAll();
 
     $turn = Globals::getTurn();

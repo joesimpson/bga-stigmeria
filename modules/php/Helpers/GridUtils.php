@@ -31,6 +31,17 @@ abstract class GridUtils extends \APP_DbObject
 
         return false;
     }
+      /**
+     * @return string Example "J5"
+     */
+    public static function getCoordName($row, $column)
+    {
+      if($row == null || $column == null) return '';
+      $all_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      $rowLetter = substr($all_letters, $row - 1, 1);
+      return $rowLetter.$column;
+    }
+
     protected function isValidCell($cell)
     {
         return !GridUtils::isCoordOutOfGrid($cell['y'],$cell['x']);

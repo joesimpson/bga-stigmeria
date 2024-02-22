@@ -102,6 +102,21 @@ class Notifications
   }
   /**
    * @param Player $player
+   * @param StigmerianToken $token
+   */
+  public static function firstToken($player,$token){
+    self::notifyAll('firstToken',clienttranslate('${player_name} places a ${token_color} stigmerian on StigmaReine at ${L}'),[ 
+        'player' => $player,
+        'L' => $token->getCoordName(),
+        'token' => $token->getUiData(),
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+      ],
+    );
+  }
+  /**
+   * @param Player $player
    * @param int $turn
    */
   public static function startTurn($player,$turn){

@@ -10,6 +10,7 @@ trait WindGenerationTrait
   
   public function stGenerateWind()
   {
+    $this->addCheckpoint(ST_GENERATE_WIND);
     //DEFAULT SOUTH if not NO LIMIT
     Globals::setWindDirection1(WIND_DIR_SOUTH);
     Globals::setWindDirection2(WIND_DIR_SOUTH);

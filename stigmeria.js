@@ -66,6 +66,7 @@ function (dojo, declare) {
                 ['endTurn', 500],
                 ['updateFirstPlayer', 500],
                 ['useActions', 500],
+                ['firstToken', 700],
                 ['drawToken', 900],
                 ['drawTokenForCentral', 700],
                 ['moveToCentralBoard', 900],
@@ -213,6 +214,16 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateNextRound() ', args );
             
+        }, 
+        onEnteringStateFT: function(args)
+        {
+            debug( 'onEnteringStateFirstToken() ', args );
+            
+            Object.values(args.p).forEach((tokenColor) => {
+                this.addImageActionButton(`btnFT_${tokenColor}`, `<div><div class='stig_button_token' data-type='${tokenColor}'></div> </div>`, () =>  {
+                    this.takeAction('actFT', {t:tokenColor})
+                });
+            });
         }, 
         onEnteringStateGenerateWind: function(args)
         {
@@ -873,6 +884,13 @@ function (dojo, declare) {
                 if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
                 this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
+        },
+        notif_firstToken(n) {
+            debug('notif_firstToken: token added on central board', n);
+            let token = n.args.token;
+            this.addToken(token, this.getVisibleTitleContainer());
+            let div = $(`stig_token_${token.id}`);
+            this.slide(div, this.getTokenContainer(token));
         },
         notif_putTokenInBag(n) {
             debug('notif_putTokenInBag: token moved to player bag', n);

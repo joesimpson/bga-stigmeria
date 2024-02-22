@@ -47,6 +47,14 @@
     }
   	// TODO: defines your action entry points there
 
+    public function actFT()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $typeSource = self::getArg( "t", AT_posint, true );
+      $this->game->actFT($typeSource);
+      self::ajaxResponse();
+    }
     public function actCommonDrawAndLand()
     {
       self::setAjaxMode();

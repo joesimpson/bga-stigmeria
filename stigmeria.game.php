@@ -36,7 +36,6 @@ require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 use STIG\Managers\Players;
 use STIG\Core\Globals;
 use STIG\Core\Preferences;
-use STIG\Core\Stats;
 use STIG\Exceptions\UserException;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Schemas;
@@ -54,6 +53,7 @@ class Stigmeria extends Table
     use STIG\States\ConfirmUndoTrait;
     use STIG\States\SpecialDiagonalTrait;
     use STIG\States\EndRoundTrait;
+    use STIG\States\FirstTokenTrait;
     use STIG\States\GiveTokensTrait;
     use STIG\States\NextTurnTrait;
     use STIG\States\NextRoundTrait;

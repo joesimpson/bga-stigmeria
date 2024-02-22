@@ -55,7 +55,7 @@
         SETUP
         |
         v
-        nextRound
+        newRound
         ^       |
         |       v
         |       generateWind <------\
@@ -65,6 +65,8 @@
  |      ^       | 
  |      |       v
  |      \<----- nextTurn   <-------------------------------------------\
+ |                |                                                    |
+ |                firstToken                                           |
  |                |                                                    |
  |                v                                                    |
  |              playerTurn                                             |
@@ -145,10 +147,24 @@ $machinestates = array(
         "updateGameProgression" => true,
         "transitions" => [ 
             "next" => ST_PLAYER_TURN,
+            "FT" => ST_FIRST_TOKEN,
             "end" => ST_END_ROUND,
         ],
     ),
    
+    ST_FIRST_TOKEN => array(
+        "name" => "FT",
+        "args" => "argFT",
+        "action" => "stFT",
+        "description" => clienttranslate('${actplayer} must select the token to be placed on ${L}'),
+        "descriptionmyturn" => clienttranslate('${you} must select the token to be placed on ${L}'),
+        "type" => "activeplayer",
+        "possibleactions" => ["actFT", ],
+        "transitions" => [ 
+            "next" => ST_PLAYER_TURN, 
+            "zombiePass" => ST_PLAYER_TURN,
+        ],
+    ),
     ST_PLAYER_TURN => array(
         "name" => "playerTurn",
         "description" => clienttranslate('Players may play actions or pass'),

@@ -18,6 +18,10 @@ const ROW_START = ROW_MIN;
 //55 max : if we go from A1 to J10, from column 1, then 3, then 5, then 7, then 9
 //const MAX_MOVES_TO_REACH_A_PLACE = (COLUMN_MAX -COLUMN_MIN +1 ) /2 *(1+ (ROW_MAX -ROW_MIN +1)  );
 
+//A5
+const FIRST_TOKEN_ROW = 1;
+const FIRST_TOKEN_COLUMN = 5;
+
 // 8 : an orthogonal grid with 4 neighbours + 4 in diagonal
 const MAX_GRID_NEIGHBOURS = 8;
 
@@ -299,6 +303,7 @@ const ST_GAME_SETUP = 1;
 
 const ST_NEXT_ROUND = 3;
 
+const ST_FIRST_TOKEN = 4;
 const ST_GENERATE_WIND = 5;
 const ST_PLAYER_DICE = 6;
 

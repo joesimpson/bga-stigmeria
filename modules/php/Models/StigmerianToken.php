@@ -53,10 +53,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    */
   public function getCoordName()
   {
-    if($this->row == null || $this->col == null) return '';
-    $all_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $rowLetter = substr($all_letters, $this->row - 1, 1);
-    return $rowLetter.$this->col;
+    return GridUtils::getCoordName($this->row,$this->col);
   }
   /**
    * @param StigmerianToken $other
