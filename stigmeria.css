@@ -15,6 +15,7 @@
  */
 :root {
   --stig_board_display_scale: 1;
+  --stig_sp_board_display_scale: 1;
   --stig_takePieceWidth: 56px;
 }
 
@@ -110,6 +111,7 @@
 .stig_token,
 .stig_newturn_marker,
 .stig_button_token,
+.stig_sp_action_token,
 .stig_subicon_token,
 .stig_subicon_token_log,
 .stig_subicon_tokens_recruit {
@@ -127,6 +129,7 @@
 .stig_token[data-type=null],
 .stig_newturn_marker[data-type=null],
 .stig_button_token[data-type=null],
+.stig_sp_action_token[data-type=null],
 .stig_subicon_token[data-type=null],
 .stig_subicon_token_log[data-type=null],
 .stig_subicon_tokens_recruit[data-type=null] {
@@ -137,6 +140,7 @@
 .stig_token[data-type="1"],
 .stig_newturn_marker[data-type="1"],
 .stig_button_token[data-type="1"],
+.stig_sp_action_token[data-type="1"],
 .stig_subicon_token[data-type="1"],
 .stig_subicon_token_log[data-type="1"],
 .stig_subicon_tokens_recruit[data-type="1"] {
@@ -148,6 +152,7 @@
 .stig_token[data-type="2"],
 .stig_newturn_marker[data-type="2"],
 .stig_button_token[data-type="2"],
+.stig_sp_action_token[data-type="2"],
 .stig_subicon_token[data-type="2"],
 .stig_subicon_token_log[data-type="2"],
 .stig_subicon_tokens_recruit[data-type="2"] {
@@ -159,6 +164,7 @@
 .stig_token[data-type="3"],
 .stig_newturn_marker[data-type="3"],
 .stig_button_token[data-type="3"],
+.stig_sp_action_token[data-type="3"],
 .stig_subicon_token[data-type="3"],
 .stig_subicon_token_log[data-type="3"],
 .stig_subicon_tokens_recruit[data-type="3"] {
@@ -170,6 +176,7 @@
 .stig_token[data-type="4"],
 .stig_newturn_marker[data-type="4"],
 .stig_button_token[data-type="4"],
+.stig_sp_action_token[data-type="4"],
 .stig_subicon_token[data-type="4"],
 .stig_subicon_token_log[data-type="4"],
 .stig_subicon_tokens_recruit[data-type="4"] {
@@ -181,6 +188,7 @@
 .stig_token[data-type="5"],
 .stig_newturn_marker[data-type="5"],
 .stig_button_token[data-type="5"],
+.stig_sp_action_token[data-type="5"],
 .stig_subicon_token[data-type="5"],
 .stig_subicon_token_log[data-type="5"],
 .stig_subicon_tokens_recruit[data-type="5"] {
@@ -192,6 +200,7 @@
 .stig_token[data-type="6"],
 .stig_newturn_marker[data-type="6"],
 .stig_button_token[data-type="6"],
+.stig_sp_action_token[data-type="6"],
 .stig_subicon_token[data-type="6"],
 .stig_subicon_token_log[data-type="6"],
 .stig_subicon_tokens_recruit[data-type="6"] {
@@ -203,6 +212,7 @@
 .stig_token[data-type="7"],
 .stig_newturn_marker[data-type="7"],
 .stig_button_token[data-type="7"],
+.stig_sp_action_token[data-type="7"],
 .stig_subicon_token[data-type="7"],
 .stig_subicon_token_log[data-type="7"],
 .stig_subicon_tokens_recruit[data-type="7"] {
@@ -214,6 +224,7 @@
 .stig_token[data-type="8"],
 .stig_newturn_marker[data-type="8"],
 .stig_button_token[data-type="8"],
+.stig_sp_action_token[data-type="8"],
 .stig_subicon_token[data-type="8"],
 .stig_subicon_token_log[data-type="8"],
 .stig_subicon_tokens_recruit[data-type="8"] {
@@ -225,6 +236,7 @@
 .stig_token[data-type="9"],
 .stig_newturn_marker[data-type="9"],
 .stig_button_token[data-type="9"],
+.stig_sp_action_token[data-type="9"],
 .stig_subicon_token[data-type="9"],
 .stig_subicon_token_log[data-type="9"],
 .stig_subicon_tokens_recruit[data-type="9"] {
@@ -236,6 +248,7 @@
 .stig_token[data-type="10"],
 .stig_newturn_marker[data-type="10"],
 .stig_button_token[data-type="10"],
+.stig_sp_action_token[data-type="10"],
 .stig_subicon_token[data-type="10"],
 .stig_subicon_token_log[data-type="10"],
 .stig_subicon_tokens_recruit[data-type="10"] {
@@ -247,6 +260,7 @@
 .stig_token[data-type="11"],
 .stig_newturn_marker[data-type="11"],
 .stig_button_token[data-type="11"],
+.stig_sp_action_token[data-type="11"],
 .stig_subicon_token[data-type="11"],
 .stig_subicon_token_log[data-type="11"],
 .stig_subicon_tokens_recruit[data-type="11"] {
@@ -258,6 +272,7 @@
 .stig_token[data-type="12"],
 .stig_newturn_marker[data-type="12"],
 .stig_button_token[data-type="12"],
+.stig_sp_action_token[data-type="12"],
 .stig_subicon_token[data-type="12"],
 .stig_subicon_token_log[data-type="12"],
 .stig_subicon_tokens_recruit[data-type="12"] {
@@ -269,6 +284,7 @@
 .stig_token[data-type="13"],
 .stig_newturn_marker[data-type="13"],
 .stig_button_token[data-type="13"],
+.stig_sp_action_token[data-type="13"],
 .stig_subicon_token[data-type="13"],
 .stig_subicon_token_log[data-type="13"],
 .stig_subicon_tokens_recruit[data-type="13"] {
@@ -280,6 +296,7 @@
 .stig_token[data-type="14"],
 .stig_newturn_marker[data-type="14"],
 .stig_button_token[data-type="14"],
+.stig_sp_action_token[data-type="14"],
 .stig_subicon_token[data-type="14"],
 .stig_subicon_token_log[data-type="14"],
 .stig_subicon_tokens_recruit[data-type="14"] {
@@ -291,6 +308,7 @@
 .stig_token[data-type="15"],
 .stig_newturn_marker[data-type="15"],
 .stig_button_token[data-type="15"],
+.stig_sp_action_token[data-type="15"],
 .stig_subicon_token[data-type="15"],
 .stig_subicon_token_log[data-type="15"],
 .stig_subicon_tokens_recruit[data-type="15"] {
@@ -302,6 +320,7 @@
 .stig_token[data-type="16"],
 .stig_newturn_marker[data-type="16"],
 .stig_button_token[data-type="16"],
+.stig_sp_action_token[data-type="16"],
 .stig_subicon_token[data-type="16"],
 .stig_subicon_token_log[data-type="16"],
 .stig_subicon_tokens_recruit[data-type="16"] {
@@ -313,6 +332,7 @@
 .stig_token[data-type="17"],
 .stig_newturn_marker[data-type="17"],
 .stig_button_token[data-type="17"],
+.stig_sp_action_token[data-type="17"],
 .stig_subicon_token[data-type="17"],
 .stig_subicon_token_log[data-type="17"],
 .stig_subicon_tokens_recruit[data-type="17"] {
@@ -324,6 +344,7 @@
 .stig_token[data-type="18"],
 .stig_newturn_marker[data-type="18"],
 .stig_button_token[data-type="18"],
+.stig_sp_action_token[data-type="18"],
 .stig_subicon_token[data-type="18"],
 .stig_subicon_token_log[data-type="18"],
 .stig_subicon_tokens_recruit[data-type="18"] {
@@ -335,6 +356,7 @@
 .stig_token[data-type="19"],
 .stig_newturn_marker[data-type="19"],
 .stig_button_token[data-type="19"],
+.stig_sp_action_token[data-type="19"],
 .stig_subicon_token[data-type="19"],
 .stig_subicon_token_log[data-type="19"],
 .stig_subicon_tokens_recruit[data-type="19"] {
@@ -346,6 +368,7 @@
 .stig_token[data-type="20"],
 .stig_newturn_marker[data-type="20"],
 .stig_button_token[data-type="20"],
+.stig_sp_action_token[data-type="20"],
 .stig_subicon_token[data-type="20"],
 .stig_subicon_token_log[data-type="20"],
 .stig_subicon_tokens_recruit[data-type="20"] {
@@ -357,6 +380,7 @@
 .stig_token[data-type="21"],
 .stig_newturn_marker[data-type="21"],
 .stig_button_token[data-type="21"],
+.stig_sp_action_token[data-type="21"],
 .stig_subicon_token[data-type="21"],
 .stig_subicon_token_log[data-type="21"],
 .stig_subicon_tokens_recruit[data-type="21"] {
@@ -368,6 +392,7 @@
 .stig_token[data-type="22"],
 .stig_newturn_marker[data-type="22"],
 .stig_button_token[data-type="22"],
+.stig_sp_action_token[data-type="22"],
 .stig_subicon_token[data-type="22"],
 .stig_subicon_token_log[data-type="22"],
 .stig_subicon_tokens_recruit[data-type="22"] {
@@ -379,6 +404,7 @@
 .stig_token[data-type="23"],
 .stig_newturn_marker[data-type="23"],
 .stig_button_token[data-type="23"],
+.stig_sp_action_token[data-type="23"],
 .stig_subicon_token[data-type="23"],
 .stig_subicon_token_log[data-type="23"],
 .stig_subicon_tokens_recruit[data-type="23"] {
@@ -390,6 +416,7 @@
 .stig_token[data-type="24"],
 .stig_newturn_marker[data-type="24"],
 .stig_button_token[data-type="24"],
+.stig_sp_action_token[data-type="24"],
 .stig_subicon_token[data-type="24"],
 .stig_subicon_token_log[data-type="24"],
 .stig_subicon_tokens_recruit[data-type="24"] {
@@ -401,6 +428,7 @@
 .stig_token[data-type="25"],
 .stig_newturn_marker[data-type="25"],
 .stig_button_token[data-type="25"],
+.stig_sp_action_token[data-type="25"],
 .stig_subicon_token[data-type="25"],
 .stig_subicon_token_log[data-type="25"],
 .stig_subicon_tokens_recruit[data-type="25"] {
@@ -412,6 +440,7 @@
 .stig_token.selectable,
 .stig_newturn_marker.selectable,
 .stig_button_token.selectable,
+.stig_sp_action_token.selectable,
 .stig_subicon_token.selectable,
 .stig_subicon_token_log.selectable,
 .stig_subicon_tokens_recruit.selectable {
@@ -423,6 +452,7 @@
 .stig_token.selectable:hover,
 .stig_newturn_marker.selectable:hover,
 .stig_button_token.selectable:hover,
+.stig_sp_action_token.selectable:hover,
 .stig_subicon_token.selectable:hover,
 .stig_subicon_token_log.selectable:hover,
 .stig_subicon_tokens_recruit.selectable:hover {
@@ -437,6 +467,8 @@
 .stig_newturn_marker.selected:hover,
 .stig_button_token.selected,
 .stig_button_token.selected:hover,
+.stig_sp_action_token.selected,
+.stig_sp_action_token.selected:hover,
 .stig_subicon_token.selected,
 .stig_subicon_token.selected:hover,
 .stig_subicon_token_log.selected,
@@ -664,6 +696,124 @@
   /* prevents vertical invisible overflow on BGA bottom elements*/
   height: inherit;
 }
+#stig_main_zone .stig_resizable_action_board {
+  width: calc(var(--stig_sp_board_display_scale) * 1167px);
+  height: calc(var(--stig_sp_board_display_scale) * 1176px);
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container {
+  height: inherit;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board {
+  transform: scale(var(--stig_sp_board_display_scale));
+  transform-origin: top left;
+  border-radius: 10px;
+  border: 2px solid black;
+  box-shadow: 1px 1px 10px black;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  transition: order 1s;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  width: 1167px;
+  height: 1176px;
+  background-image: url("img/actions.jpg");
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name {
+  position: absolute;
+  text-align: center;
+  background-color: rgb(206, 247, 158);
+  padding: 6px 20px;
+  font-size: 26px;
+  box-shadow: 0 0 20px gold;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  /** Safari issue : recreate the outline from scratch with after element */
+  right: 460px;
+  bottom: 134px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 25px;
+  border-style: solid;
+  border-width: 5px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name {
+  background: linear-gradient(90deg, #92b559 15%, #88b36e 25%, #67aca4 50%, #93ff67 75%, #61c64e 85%);
+  text-shadow: 2px 0px 2px black, 0px 2px 2px black, -2px 0px 2px black, 0px -2px 2px black;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name[style*="color:#0000ff"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name[style*="color:#000000"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name[style*="color:#008000"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name[style*="color:#773300"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name[style*="color:#982fff"] {
+  text-shadow: 2px 0px 2px white, 0px 2px 2px white, -2px 0px 2px white, 0px -2px 2px white;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell .stig_sp_action_token {
+  width: 125px;
+  height: 125px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell .stig_sp_action_token[data-state="0"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell .stig_sp_action_token[data-state="3"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell .stig_sp_action_token[data-state="4"] {
+  /** ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN */
+  /** see sprite type 23 */
+  background-position-x: 50%;
+  background-position-y: 100%;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell .stig_sp_action_token[data-state="1"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell .stig_sp_action_token[data-state="2"] {
+  /** ACTION_STATE_LOCKED see sprite type 24 */
+  background-position-x: 75%;
+  background-position-y: 100%;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="10"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="14"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="21"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"] {
+  left: 240px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"] {
+  left: 590px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="13"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="16"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="23"] {
+  left: 950px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="13"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"] {
+  top: 83px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"] {
+  top: 214px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"] {
+  top: 350px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="14"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="16"] {
+  top: 480px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="10"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"] {
+  top: 615px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="23"] {
+  top: 747px;
+}
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="21"] {
+  top: 878px;
+}
 #stig_main_zone .stig_schema_board,
 #stig_main_zone .stig_central_board,
 #stig_main_zone .stig_player_board {
@@ -677,6 +827,7 @@
   flex-wrap: wrap;
 }
 
+#stig_sp_action_boards,
 #stig_player_boards {
   display: flex;
   justify-content: center;

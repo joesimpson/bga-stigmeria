@@ -13,6 +13,167 @@
             height: inherit;
         }
     }
+    .stig_resizable_action_board{
+        width: calc(var(--stig_sp_board_display_scale) * 1167px);
+        height: calc(var(--stig_sp_board_display_scale) * 1176px);
+        margin-bottom: 10px;
+        margin-right: 10px;
+        .stig_sp_action_board_container{
+            height: inherit;
+
+            .stig_sp_action_board{
+                transform: scale(var(--stig_sp_board_display_scale));
+                transform-origin: top left;
+                border-radius: 10px;
+                border: 2px solid black;
+                box-shadow: 1px 1px 10px black;
+                position: relative;
+        
+                display: flex;
+                flex-wrap: wrap;
+
+                transition: order 1s;
+                background-size: 100% auto;
+                background-repeat: no-repeat;
+                width: 1167px;
+                height: 1176px;
+
+                background-image: url('img/actions.jpg');
+                
+                .player-name {
+                    position: absolute;
+                    text-align: center;
+                    background-color: rgb(206 247 158);
+                    //border-radius: 25px;
+                    padding: 6px 20px;
+                    font-size: 26px;
+                    //outline: 5px solid gold;
+                    box-shadow: 0 0 20px gold;
+                        
+                    border-top-left-radius: 100px;
+                    border-top-right-radius: 100px;
+                    border-bottom-right-radius: 100px;
+                    border-bottom-left-radius: 100px;
+                    /** Safari issue : recreate the outline from scratch with after element */
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        left:  -5px;
+                        top:   -5px;
+                        right: -5px;
+                        bottom:-5px;
+                        border-radius: 25px;
+                        border-style: solid;
+                        border-width: 5px;
+                        border-top-left-radius: 100px;
+                        border-top-right-radius: 100px;
+                        border-bottom-right-radius: 100px;
+                        border-bottom-left-radius: 100px;
+                    }
+                    right: 460px;
+                    bottom: 134px;
+                }
+                .player-name{
+                    background: linear-gradient(90deg, #92b559 15%, #88b36e 25%, #67aca4 50%, #93ff67 75%, #61c64e 85%);
+                    text-shadow: 2px 0px 2px black, 0px 2px 2px black, -2px 0px 2px black, 0px -2px 2px black;
+                    &[style*='color:#0000ff'],
+                    &[style*='color:#000000'],
+                    &[style*='color:#008000'],
+                    &[style*='color:#773300'],
+                    &[style*='color:#982fff']
+                    {
+                        text-shadow: 2px 0px 2px white, 0px 2px 2px white, -2px 0px 2px white, 0px -2px 2px white;
+                    }
+                }
+                
+                .stig_sp_grid {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-rows: repeat(8, 1fr);
+
+                    .stig_sp_action_cell{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: absolute;
+            
+                        .stig_sp_action_token{
+                            width: 125px;
+                            height: 125px;
+                            &[data-state='0'],
+                            &[data-state='3'],
+                            &[data-state='4']{
+                                /** ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN */
+                                /** see sprite type 23 */
+                                background-position-x: 50%;
+                                background-position-y: 100%;
+                            }
+                            &[data-state='1'],
+                            &[data-state='2']{
+                                /** ACTION_STATE_LOCKED see sprite type 24 */
+                                background-position-x: 75%;
+                                background-position-y: 100%;
+                            }
+                        }
+                        //TODO JSA POSITIONS
+                        // COLUMN 1
+                        &[data-type='10'],
+                        &[data-type='11'],
+                        &[data-type='14'],
+                        &[data-type='21'] ,
+                        &[data-type='22']  {
+                            left: 240px;
+                        }
+                        // COLUMN 2
+                        &[data-type='12'],
+                        &[data-type='15'],
+                        &[data-type='20']  {
+                            left: 590px;
+                        }
+                        // COLUMN 3
+                        &[data-type='13'],
+                        &[data-type='16'],
+                        &[data-type='23']  {
+                            left: 950px;
+                        }
+
+                        // ROW 1
+                        &[data-type='13'],
+                        &[data-type='20'] {
+                            top: 83px;
+                        }
+                        // ROW 2
+                        &[data-type='11'] {
+                            top: 214px;
+                        }
+                        // ROW 3
+                        &[data-type='22'] {
+                            top: 350px;
+                        }
+                        // ROW 4
+                        &[data-type='14'],
+                        &[data-type='15'],
+                        &[data-type='16'] {
+                            top: 480px;
+                        }
+                        // ROW 5
+                        &[data-type='10'],
+                        &[data-type='12'] {
+                            top: 615px;
+                        }
+                        // ROW 6
+                        &[data-type='23'] {
+                            top: 747px;
+                        }
+                        // ROW 7
+                        &[data-type='21'] {
+                            top: 878px;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     .stig_schema_board,
     .stig_central_board,
@@ -28,6 +189,7 @@
         flex-wrap: wrap;
     }
 }
+#stig_sp_action_boards,
 #stig_player_boards{
     display: flex;
     justify-content: center;

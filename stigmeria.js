@@ -125,6 +125,7 @@ function (dojo, declare) {
             this.setupPlayers();
             this.setupInfoPanel();
             this.setupTokens();
+            this.setupSpecialActions();
             
             console.log( "Ending specific game setup" );
 
@@ -138,7 +139,7 @@ function (dojo, declare) {
                 centralBoardAutoOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_AUTO_ORDER },
                 boardWidth: {
                   default: 50,
-                  name: _('Board width'),
+                  name: _('Flower Board width'),
                   type: 'slider',
                   sliderConfig: {
                     step: 2,
@@ -149,6 +150,19 @@ function (dojo, declare) {
                     },
                   },
                 },
+                spActionBoardWidth: {
+                    default: 30,
+                    name: _('Special Action Board width'),
+                    type: 'slider',
+                    sliderConfig: {
+                      step: 2,
+                      padding: 0,
+                      range: {
+                        min: [10],
+                        max: [100],
+                      },
+                    },
+                  },
                 takePieceWidth: {
                   default: 40,
                   name: _('Token width in selection'),
@@ -167,6 +181,9 @@ function (dojo, declare) {
         },
         
         onChangeBoardWidthSetting(val) {
+            this.updateLayout();
+        },
+        onChangeSpActionBoardWidthSetting(val) {
             this.updateLayout();
         },
         onChangeTakePieceWidthSetting(val) {
@@ -1104,13 +1121,23 @@ function (dojo, declare) {
             //scale = Math.min(widthScale, heightScale);
             scale = widthScale;
             ROOT.style.setProperty('--stig_board_display_scale', scale);
-    
+
+            const SP_ACTION_BOARD_WIDTH = 1167;
+            scale = ((this.settings.spActionBoardWidth / 100) * WIDTH) / SP_ACTION_BOARD_WIDTH,
+            ROOT.style.setProperty('--stig_sp_board_display_scale', scale);
         },
 
         getFlowerType(){
             if(this.gamedatas.schema && this.gamedatas.schemas){
                 let schema = this.gamedatas.schemas[this.gamedatas.schema];
                 return schema.type;
+            }
+            return 1;
+        },
+        getFlowerDifficulty(){
+            if(this.gamedatas.schema && this.gamedatas.schemas){
+                let schema = this.gamedatas.schemas[this.gamedatas.schema];
+                return schema.difficulty;
             }
             return 1;
         },
@@ -1142,6 +1169,7 @@ function (dojo, declare) {
                 if(player.eliminated == true) $(`overall_player_board_${player.id}`).classList.add('stig_eliminated');
                 this.place('tplPlayerPanel', player, divPanel, 'after');
                 this.place('tplPlayerBoard', player, 'stig_player_boards');
+                this.place('tplSpecialActionsBoard', player, 'stig_sp_action_boards');
                 
                 document.querySelectorAll('.stig_icon_container_tokens_recruit').forEach((e) => e.dataset.flower_type = this.getFlowerType());
 
@@ -1260,6 +1288,17 @@ function (dojo, declare) {
                     </div>
                     <div id="stig_grid_out_${player.id}" class='stig_grid_out'>
                     </div>
+                </div>
+            </div>
+            </div>`;
+        },
+        tplSpecialActionsBoard(player) {
+            //TODO JSA not needed in normal mode 
+            return `<div class='stig_resizable_action_board' id='stig_sp_action_board_container_wrapper_${player.id}' data-player='${player.id}'>
+            <div class='stig_sp_action_board_container'>
+                <div class="stig_sp_action_board" id='stig_sp_action_board_${player.id}' data-difficulty="${this.getFlowerDifficulty()}">
+                    <div class='player-name' style='color:#${player.color};'>${player.name}</div>
+                    <div id="stig_sp_grid_${player.id}" class='stig_sp_grid'></div>
                 </div>
             </div>
             </div>`;
@@ -1410,6 +1449,29 @@ function (dojo, declare) {
         tplToken(token) {
             return `<div class="stig_token" id="stig_token_${token.id}${token.divIdSuffix}" data-id="${token.id}" data-player_id="${token.pId}" data-type="${token.type}" data-state="${token.state}" data-row="${token.row}" data-col="${token.col}"></div>`;
         },   
+        addSpecialActionCell(action) {
+            debug("addSpecialActionCell",action);
+            let playerGrid = $(`stig_sp_grid_${action.pId}`);
+            let tokenDivId = `stig_sp_action_cell_${action.pId}_${action.type}`;
+            if ( $(tokenDivId) ) return $(tokenDivId);
+            
+            let token = this.place('tplSpecialActionCell', action, playerGrid);
+            return token;
+        },
+        addSpecialActionToken(action) {
+            debug("addSpecialActionToken",action);
+            let tokenDivId = `stig_sp_action_${action.id}`;
+            if ( $(tokenDivId) ) return $(tokenDivId);
+            let tokenHolder = this.addSpecialActionCell(action);
+            let elt = this.place('tplSpecialActionToken', action, tokenHolder);
+            return elt;
+        },
+        tplSpecialActionCell(action) {
+            return `<div class="stig_sp_action_cell" id="stig_sp_action_cell_${action.pId}_${action.type}" data-type="${action.type}"></div>`;
+        },
+        tplSpecialActionToken(action) {
+            return `<div class="stig_sp_action_token" id="stig_sp_action_${action.id}" data-id="${action.id}" data-pId="${action.pId}" data-type="${action.type}" data-state="${action.state}"></div>`;
+        },
         tplWindDirContainer(datas) {
             let winds = '';
             for(let k=1; k< TURN_MAX;k++){
@@ -1490,6 +1552,36 @@ function (dojo, declare) {
             console.error('Trying to get container of a token', token);
             return 'game_play_area';
           },
+        setupSpecialActions() {
+            debug("setupSpecialActions");
+            let actionIds = [];
+            Object.values(this.gamedatas.actions).forEach((actions) => {
+            //this.gamedatas.actions[playerId].map((action) => {
+                return actions.map((action) => {
+                    if (!$(`stig_sp_action_${action.id}`)) {
+                        this.addSpecialActionToken(action);
+                    }
+                    let o = $(`stig_sp_action_${action.id}`);
+                    if (!o) return null;
+
+                    let container = `stig_sp_action_cell_${action.pId}_${action.type}`;
+                    if (o.parentNode != $(container)) {
+                        dojo.place(o, container);
+                    }
+                    o.dataset.state = action.state;
+                    o.dataset.type = action.type;
+                    o.dataset.pid = action.pid;
+                    actionIds.push( action.id );
+                    return action.id;
+                });
+            });
+            //Clean obsolete action tokens:
+            document.querySelectorAll('.stig_sp_action_token').forEach((oAction) => {
+                if (!actionIds.includes(parseInt(oAction.getAttribute('data-id')))) {
+                    dojo.destroy(oAction);
+                }
+            });
+        },
         //Direct selection of a cell, independent of a token
         initCellSelection(actionName, possiblePlaces, playerBoardId = 'central',newType = null,
             confirmMessage = null    

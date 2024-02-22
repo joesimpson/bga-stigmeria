@@ -127,8 +127,7 @@ class Stigmeria extends Table
           'prefs' => Preferences::getUiData($current_player_id),
           'players' => Players::getUiData($current_player_id),
           'tokens' => Tokens::getUiData($current_player_id),
-          //Actions are included in each player Ui
-          //'actions' => PlayerActions::getUiData(),
+          'actions' => PlayerActions::getUiData(),
           'turn' => Globals::getTurn(),
           'firstPlayer' => $firstPlayer,
           'winds' => Globals::getAllWindDir(),

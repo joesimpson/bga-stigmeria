@@ -18,6 +18,8 @@
     <div id="stig_main_zone">
         <div id="stig_player_boards">
         </div>
+        <div id="stig_sp_action_boards">
+        </div>
     </div>
 
 </div>
