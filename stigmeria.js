@@ -138,7 +138,7 @@ function (dojo, declare) {
                 centralBoardOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_ORDER },
                 centralBoardAutoOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_AUTO_ORDER },
                 boardWidth: {
-                  default: 50,
+                  default: 30,
                   name: _('Flower Board width'),
                   type: 'slider',
                   sliderConfig: {
@@ -1212,6 +1212,7 @@ function (dojo, declare) {
                 let order = ((player.no - currentPlayerNo + nPlayers) % nPlayers) + 3;
                 if (isCurrent) order = 1;
                 $(`stig_player_board_container_wrapper_${player.id}`).style.order = order;
+                $(`stig_sp_action_board_container_wrapper_${player.id}`).style.order = order;
             });
     
             this.updateFirstPlayer();
@@ -1298,7 +1299,6 @@ function (dojo, declare) {
             </div>`;
         },
         tplSpecialActionsBoard(player) {
-            //TODO JSA not needed in normal mode 
             return `<div class='stig_resizable_action_board' id='stig_sp_action_board_container_wrapper_${player.id}' data-player='${player.id}'>
             <div class='stig_sp_action_board_container'>
                 <div class="stig_sp_action_board" id='stig_sp_action_board_${player.id}' data-difficulty="${this.getFlowerDifficulty()}">

@@ -696,6 +696,9 @@
   /* prevents vertical invisible overflow on BGA bottom elements*/
   height: inherit;
 }
+#stig_main_zone #stig_sp_action_boards {
+  margin-left: 10px;
+}
 #stig_main_zone .stig_resizable_action_board {
   width: calc(var(--stig_sp_board_display_scale) * 1167px);
   height: calc(var(--stig_sp_board_display_scale) * 1176px);

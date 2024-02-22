@@ -13,6 +13,9 @@
             height: inherit;
         }
     }
+    #stig_sp_action_boards{
+        margin-left: 10px;
+    }
     .stig_resizable_action_board{
         width: calc(var(--stig_sp_board_display_scale) * 1167px);
         height: calc(var(--stig_sp_board_display_scale) * 1176px);
