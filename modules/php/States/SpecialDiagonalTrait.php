@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -15,7 +16,6 @@ trait SpecialDiagonalTrait
     {
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
         return [
-            'n' => ACTION_COST_MOVE_DIAGONAL,
             'p_places_m' => $this->listPossibleDiagonalMovesOnBoard($player_id,$boardTokens),
         ];
     }
@@ -34,13 +34,15 @@ trait SpecialDiagonalTrait
         $pId = $player->id;
         $this->addStep($player->id, $player->getPrivateState());
 
-        $remaining = $player->countRemainingPersonalActions();
-        $actionCost = ACTION_COST_MOVE_DIAGONAL* $this->getGetActionCostModifier();
-
-        //CHECK REMAINING ACTIONS VS cost
-        if($remaining < $actionCost){
+        $actionType = ACTION_TYPE_DIAGONAL;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $token = Tokens::get($token_id);
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
@@ -57,7 +59,7 @@ trait SpecialDiagonalTrait
         //EFFECT : MOVE the TOKEN 
         Notifications::spDiagonal($player,$actionCost);
         $token->moveToPlayerBoard($player,$row,$column,0);
-        Stats::inc("actions_s".ACTION_TYPE_DIAGONAL,$pId);
+        Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
         
         $this->gamestate->nextPrivateState($player->id, "next");

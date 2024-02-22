@@ -73,57 +73,49 @@ trait SpecialActionTrait
         $player->setSelection([]);
         switch($actionType){
             case ACTION_TYPE_MIXING:
-                $actionCost = ACTION_COST_MIXING;
                 $nextState = "startMixing";
                 break;
             case ACTION_TYPE_COMBINATION:
-                $actionCost = ACTION_COST_COMBINATION;
                 $nextState = "startCombination";
                 break;
             case ACTION_TYPE_FULGURANCE:
-                $actionCost = ACTION_COST_FULGURANCE;
                 $nextState = "startFulgurance";
                 break;
             case ACTION_TYPE_CHOREOGRAPHY:
-                $actionCost = ACTION_COST_CHOREOGRAPHY;
                 $nextState = "startChoreography";
                 break;
             case ACTION_TYPE_DIAGONAL:
-                $actionCost = ACTION_COST_MOVE_DIAGONAL;
                 $nextState = "startDiagonal";
                 break;
             case ACTION_TYPE_SWAP:
-                $actionCost = ACTION_COST_SWAP;
                 $nextState = "startSwap";
                 break;
             case ACTION_TYPE_MOVE_FAST:
-                $actionCost = ACTION_COST_MOVE_FAST;
                 $nextState = "startFastMove";
                 break;
             case ACTION_TYPE_WHITE:
-                $actionCost = ACTION_COST_WHITE;
                 $nextState = "startWhite";
                 break;
             case ACTION_TYPE_BLACK:
-                $actionCost = ACTION_COST_BLACK;
                 $nextState = "startBlack";
                 break;
             case ACTION_TYPE_TWOBEATS:
-                $actionCost = ACTION_COST_TWOBEATS;
                 $nextState = "startTwoBeats";
                 break;
             case ACTION_TYPE_REST:
-                $actionCost = ACTION_COST_REST;
                 $nextState = "startRest";
                 break;
             case ACTION_TYPE_NSNK:
-                $actionCost = ACTION_COST_NSNK;
                 $nextState = "startNSNK";
                 break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
         $this->gamestate->nextPrivateState($pId, $nextState);

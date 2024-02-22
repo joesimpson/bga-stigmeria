@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -40,8 +41,12 @@ trait SpecialWhiteTrait
         $player = Players::getCurrent();
         $pId = $player->id;
  
-        $actionCost = ACTION_COST_WHITE* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_WHITE;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
         $token1 = Tokens::get($tokenId1);
@@ -72,10 +77,15 @@ trait SpecialWhiteTrait
         $pId = $player->id;
         $this->addStep($player->id, $player->getPrivateState());
  
-        $actionCost = ACTION_COST_WHITE* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_WHITE;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $selectedTokens = $player->getSelection();
         if(count($selectedTokens) != 2) {
             throw new UnexpectedException(132,"Wrong selection");
@@ -111,7 +121,7 @@ trait SpecialWhiteTrait
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
         $player->giveExtraTime();
-        Stats::inc("actions_s".ACTION_TYPE_WHITE,$pId);
+        Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
         Stats::inc("tokens_board",$pId,-1);
         $player->setSelection([]);

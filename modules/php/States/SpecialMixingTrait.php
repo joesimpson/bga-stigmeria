@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -35,11 +36,16 @@ trait SpecialMixingTrait
         $player = Players::getCurrent();
         $pId = $player->id;
         $this->addStep($pId, $player->getPrivateState());
- 
-        $actionCost = ACTION_COST_MIXING* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        
+        $actionType = ACTION_TYPE_MIXING;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $token1 = Tokens::get($tokenId1);
         if($token1->pId != $pId || $token1->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(130,"You cannot Mix this token");
@@ -56,7 +62,7 @@ trait SpecialMixingTrait
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
         $player->giveExtraTime();
-        Stats::inc("actions_s".ACTION_TYPE_MIXING,$pId);
+        Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
 
         $this->gamestate->nextPrivateState($pId, 'next');

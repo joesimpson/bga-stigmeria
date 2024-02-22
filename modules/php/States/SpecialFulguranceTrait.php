@@ -6,6 +6,7 @@ use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -34,10 +35,15 @@ trait SpecialFulguranceTrait
         $pId = $player->id;
         $this->addStep($player->id, $player->getPrivateState());
  
-        $actionCost = ACTION_COST_FULGURANCE* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_FULGURANCE;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         if( Tokens::countDeck($pId)< FULGURANCE_NB_TOKENS ){
             throw new UnexpectedException(153,"You cannot play Fulgurance now");
         }

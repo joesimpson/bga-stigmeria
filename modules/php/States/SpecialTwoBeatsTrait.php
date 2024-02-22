@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -33,10 +34,15 @@ trait SpecialTwoBeatsTrait
         $pId = $player->id;
         $this->addStep($player->id, $player->getPrivateState());
  
-        $actionCost = ACTION_COST_TWOBEATS* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_TWOBEATS;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $boardTokens = Tokens::getAllOnPersonalBoard($pId);
         if(!$this->canPlayTwoBeats($row, $column,$boardTokens)){
             throw new UnexpectedException(153,"You cannot Two beats there");

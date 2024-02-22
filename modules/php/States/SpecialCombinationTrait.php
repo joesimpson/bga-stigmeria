@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -33,10 +34,15 @@ trait SpecialCombinationTrait
         $pId = $player->id;
         $this->addStep($player->id, $player->getPrivateState());
  
-        $actionCost = ACTION_COST_COMBINATION* $this->getGetActionCostModifier();
-        if($player->countRemainingPersonalActions() < $actionCost){
+        $actionType = ACTION_TYPE_COMBINATION;
+        $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        if(!isset($playerAction)){
+            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+        }
+        if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $actionCost = $playerAction->getCost();
         $token = Tokens::get($tokenId);
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(150,"You cannot select this token");
@@ -55,7 +61,7 @@ trait SpecialCombinationTrait
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);
         $player->giveExtraTime();
-        Stats::inc("actions_s".ACTION_TYPE_COMBINATION,$pId);
+        Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
 
         $this->gamestate->nextPrivateState($pId, 'next');
