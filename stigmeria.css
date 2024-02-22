@@ -2605,6 +2605,10 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
   background-position-x: 1040px;
   background-position-y: 268px;
 }
+#customActions .stig_sp_action_image[data-type="24"] {
+  background-position-x: 733px;
+  background-position-y: 251px;
+}
 
 body {
   /*
