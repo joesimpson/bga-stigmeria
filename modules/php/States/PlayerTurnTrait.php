@@ -122,8 +122,10 @@ trait PlayerTurnTrait
             }
             $nextPlayer->startTurn($turn);
 
-            $this->addStep( $nextPlayer->id, $nextPlayer->getPrivateState());
-
+            //No ! next Player currently does not have a privateState to save !, don't save null PLEASE
+            //$this->addStep( $nextPlayer->id, $nextPlayer->getPrivateState());
+            $this->addCheckpoint(ST_TURN_COMMON_BOARD, $nextPlayer->id);
+            
             $this->gamestate->setPlayersMultiactive( [$nextPlayer->id], 'end' );
             $this->gamestate->initializePrivateState($nextPlayer->id); 
         }
