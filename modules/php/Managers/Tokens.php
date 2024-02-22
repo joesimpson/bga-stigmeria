@@ -81,7 +81,7 @@ class Tokens extends \STIG\Helpers\Pieces
     self::create($tokens);
 
     foreach ($players as $pId => $player) {
-        self::shuffle(TOKEN_LOCATION_PLAYER_DECK.$pId);
+        Tokens::shuffleBag($pId);
         //Draw 1 to each recruit zone :
         $token = self::pickOneForLocation(TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_PLAYER_RECRUIT, TOKEN_STATE_STIGMERIAN);
         Stats::inc("tokens_deck",$pId, -1);
@@ -112,6 +112,13 @@ class Tokens extends \STIG\Helpers\Pieces
     return self::create($tokens);
     */
     return self::singleCreate($token);
+  }
+  /**
+   * @param int $playerId
+  */
+  public static function shuffleBag($playerId)
+  { 
+    self::shuffle(TOKEN_LOCATION_PLAYER_DECK.$playerId);
   }
   /**
    * @param int $playerId
@@ -452,7 +459,7 @@ class Tokens extends \STIG\Helpers\Pieces
 
     //Reshuffle players bags to simulate another randomness, as when players put tokens in the bags IRL
     foreach($playersIds as $pId){
-      self::shuffle(TOKEN_LOCATION_PLAYER_DECK.$pId);
+      Tokens::shuffleBag($pId);
     }
       
     return $winTiePlayerId;

@@ -60,7 +60,7 @@ trait SpecialFulguranceTrait
             $token->moveToPlayerBoard($player,$row,$column + $k,0);
             $k++;
         }
-        Tokens::shuffle(TOKEN_LOCATION_PLAYER_DECK.$pId);
+        Tokens::shuffleBag($pId);
 
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player);

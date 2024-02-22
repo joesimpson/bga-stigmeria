@@ -47,6 +47,7 @@ trait GiveTokensTrait
                 }
                 $token->moveToPlayerBag($player,$playerDestination);
             }
+            Tokens::shuffleBag($playerDestinationId);
             //update selection
             $possibleTokenIds = array_filter($possibleTokenIds, static function ($element) use ($tokensArray) {
                 return !in_array($element, $tokensArray);
