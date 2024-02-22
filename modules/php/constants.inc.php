@@ -27,6 +27,7 @@ const MAX_GRID_NEIGHBOURS = 8;
 
 //We need 3 aligned tokens to gain special actions
 const NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS = 3;
+const MAX_SPECIAL_ACTIONS = 9;
 
 const WIND_DIR_NORTH = 'N';
 const WIND_DIR_SOUTH = 'S';

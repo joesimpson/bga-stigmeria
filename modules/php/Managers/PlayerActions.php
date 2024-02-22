@@ -57,8 +57,21 @@ class PlayerActions extends \STIG\Helpers\Pieces
    */
   public static function getDifficulty($type)
   {
-    //TODO JSA SWITCH
-    return 2;
+    
+    switch($type){
+      
+      case ACTION_TYPE_WHITE:
+      case ACTION_TYPE_SWAP:
+      case ACTION_TYPE_FULGURANCE:
+        return 2;
+      case ACTION_TYPE_CHOREOGRAPHY:
+      case ACTION_TYPE_MOVE_FAST:
+      case ACTION_TYPE_REST:
+        return 3;
+      default:
+        return 1;
+    }
+    
   }
   
   /**

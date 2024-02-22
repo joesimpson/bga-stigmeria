@@ -9,18 +9,14 @@ use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
+use STIG\Managers\Schemas;
 use STIG\Models\PlayerAction;
 
 trait CentralGainSpecialTrait
 {
     public function argGainSpecialAction($playerId)
     {
-
-        foreach(ACTION_TYPES as $type){
-            if($this->canGainSpecialAction($type, $playerId)){
-                $lockedActions[] = $type;
-            }
-        }
+        $lockedActions = $this->listPossibleNewSpAction($playerId);
         $nbRemaining = PGlobals::getNbSpActions($playerId);
         $nbGains = PGlobals::getNbSpActionsMax($playerId);
 
@@ -79,9 +75,25 @@ trait CentralGainSpecialTrait
      */
     public function canGainSpecialAction($actionType, $playerId)
     {
+        //Check action not already set
         if(PlayerActions::getPlayer($playerId, [$actionType])->count() > 0) return false;
-        //TODO JSA filter difficulty
+        
+        //Difficulty filter
+        $minDiff = PlayerActions::getDifficulty($actionType);
+        $currentDiff = Schemas::getCurrentSchema()->difficulty;
+        if($minDiff > $currentDiff) return false;
 
         return true;
+    }
+
+    public function listPossibleNewSpAction($playerId){
+        $lockedActions = [];
+        foreach(ACTION_TYPES as $type){
+            //TODO JSA PERFS read all once 
+            if($this->canGainSpecialAction($type, $playerId)){
+                $lockedActions[] = $type;
+            }
+        }
+        return $lockedActions;
     }
 }

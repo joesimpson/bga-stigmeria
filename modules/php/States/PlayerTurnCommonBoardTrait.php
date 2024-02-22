@@ -8,6 +8,7 @@ use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\Log;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -211,8 +212,8 @@ trait PlayerTurnCommonBoardTrait
         $column = $token->col;
         $alignedTokens = $this->checkBoardForGainingAction($token->getType(),$row,$column);
         $nbActions = (int) (count($alignedTokens)/ NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS);
-        if($nbActions > 0 ){
-            //TODO JSA AND check max number of actions not reached
+        $canGainSp = (PlayerActions::countActions($pId) < MAX_SPECIAL_ACTIONS ) && count($this->listPossibleNewSpAction($pId))>0;
+        if($nbActions > 0 && $canGainSp){
             $player->setSelection($alignedTokens);
             PGlobals::setNbSpActions($pId,$nbActions);
             PGlobals::setNbSpActionsMax($pId,$nbActions);
