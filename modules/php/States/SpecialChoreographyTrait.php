@@ -83,7 +83,7 @@ trait SpecialChoreographyTrait
             Stats::inc("actions_s".$actionType,$pId);
             Stats::inc("actions",$pId);
             $player->incNbPersonalActionsDone($actionCost);
-            Notifications::useActions($player);
+            Notifications::useActions($player,$playerAction);
             $player->giveExtraTime();
         }
         $token->moveToPlayerBoard($player,$row,$column,0);
@@ -145,7 +145,7 @@ trait SpecialChoreographyTrait
             Stats::inc("actions_s".$actionType,$pId);
             Stats::inc("actions",$pId);
             $player->incNbPersonalActionsDone($actionCost);
-            Notifications::useActions($player);
+            Notifications::useActions($player,$playerAction);
             $player->giveExtraTime();
         }
         if(Globals::isModeCompetitiveNoLimit()){

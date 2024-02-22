@@ -742,6 +742,7 @@ function (dojo, declare) {
               this.gamedatas[value] = n.args.datas[value];
             });
             this.setupTokens();
+            this.setupSpecialActions();
             this.forEachPlayer((player) => {
                 let pId = player.id;
                 this.scoreCtrl[pId].toValue(player.score);
@@ -807,6 +808,10 @@ function (dojo, declare) {
             this._counters[n.args.player_id]['unlockedActions'].toValue(n.args.ua);
             this._counters[n.args.player_id]['lockedActions'].toValue(n.args.la);
             this.updateTurnMarker(n.args.player_id,this.gamedatas.turn,n.args.npad+1);
+            let playerAction = n.args.pa;
+            if (playerAction && $(`stig_sp_action_${playerAction.id}`)) {
+                $(`stig_sp_action_${playerAction.id}`).dataset.state = playerAction.state;
+            }
         },
         notif_drawToken(n) {
             debug('notif_drawToken: new token on player board', n);

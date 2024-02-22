@@ -124,8 +124,11 @@ class Notifications
   /**
    * Update number of actions
    * @param Player $player
+   * @param PlayerAction $playerAction (optional) infos about updated player action status
    */
-  public static function useActions($player){
+  public static function useActions($player,$playerAction = null){
+    $playerActionUi = '';
+    if(isset($playerAction)) $playerActionUi = $playerAction->getUiData();
     self::notifyAll('useActions','',[ 
         'player' => $player,
         'ncad' => $player->getNbCommonActionsDone(),
@@ -133,6 +136,7 @@ class Notifications
         'npan' => $player->countRemainingPersonalActions(),
         'la' => $player->countLockedActions(),
         'ua' => $player->countUnLockedActions(),
+        'pa' => $playerActionUi,
       ],
     );
   }
