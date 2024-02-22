@@ -30,126 +30,126 @@
       }
       
       ,"tokens_board": {
-        "id": 51,
+        "id": 11,
         "name": "Tokens on board",
         "type": "int"
       }
       ,"tokens_recruit": {
-        "id": 52,
+        "id": 12,
         "name": "Tokens in recruit zone",
         "type": "int"
       }
       ,"tokens_deck": {
-        "id": 53,
+        "id": 13,
         "name": "Tokens in bag",
         "type": "int"
       }
       ,"pollens_board": {
-        "id": 54,
+        "id": 14,
         "name": "Pollens on flower",
         "type": "int"
       }
 
       ,"actions_c1": {
-        "id": 12,
+        "id": 20,
         "name": "Central Draw and Place actions",
         "type": "int"
       }
       ,"actions_c2": {
-        "id": 13,
+        "id": 21,
         "name": "Central Move actions",
         "type": "int"
       }
       ,"actions_c4": {
-        "id": 77,
+        "id": 22,
         "name": "Recruit on StigmaReine actions",
         "type": "int"
       }
 
       ,"actions": {
-        "id": 11,
+        "id": 30,
         "name": "Actions on player board",
         "type": "int"
       }
       ,"actions_1": {
-        "id": 14,
+        "id": 31,
         "name": "Recruit",
         "type": "int"
       }
       ,"actions_2": {
-        "id": 15,
+        "id": 32,
         "name": "Land",
         "type": "int"
       }
       ,"actions_3": {
-        "id": 16,
+        "id": 33,
         "name": "Move",
         "type": "int"
       }
       ,"actions_j": {
-        "id": 17,
+        "id": 34,
         "name": "Joker actions",
         "type": "int"
       }
       
       ,"unlocked_sp": {
-        "id": 55,
+        "id": 40,
         "name": "Unlocked special actions",
         "type": "int"
       }
 
       ,"actions_s10": {
-        "id": 20,
+        "id": 41,
         "name": "Mixing",
         "type": "int"
       }
       ,"actions_s11": {
-        "id": 30,
+        "id": 42,
         "name": "Combination",
         "type": "int"
       }
       ,"actions_s12": {
-        "id": 31,
+        "id": 43,
         "name": "Fulgurance",
         "type": "int"
       }
       ,"actions_s13": {
-        "id": 32,
+        "id": 44,
         "name": "Choreography",
         "type": "int"
       }
       ,"actions_s14": {
-        "id": 23,
+        "id": 45,
         "name": "Diagonal",
         "type": "int"
       }
       ,"actions_s15": {
-        "id": 24,
+        "id": 46,
         "name": "Exchange",
         "type": "int"
       }
       ,"actions_s16": {
-        "id": 25,
+        "id": 47,
         "name": "Fast Step",
         "type": "int"
       }
       ,"actions_s20": {
-        "id": 26,
+        "id": 48,
         "name": "Half Note",
         "type": "int"
       }
       ,"actions_s21": {
-        "id": 27,
+        "id": 49,
         "name": "Quarter Note",
         "type": "int"
       }
       ,"actions_s22": {
-        "id": 28,
+        "id": 50,
         "name": "Two Beats",
         "type": "int"
       }
       ,"actions_s23": {
-        "id": 29,
+        "id": 51,
         "name": "Rest",
         "type": "int"
       }
