@@ -186,9 +186,19 @@ class PGlobals extends \STIG\Helpers\DB_Manager
   public static function setupNewGame($players, $options)
   {
     foreach($players as $playerId => $player){
+      self::setLastTurn($playerId,0);
+      self::setNbCommonActionsDone($playerId,0);
+      self::setNbPersonalActionsDone($playerId,0);
+      self::setCommonMoveDone($playerId,0);
+      self::setSelection($playerId,[]);
+      self::setNbSpActions($playerId,0);
+      self::setNbSpActionsMax($playerId,0);
+      self::setLastLanded($playerId,null);
+      self::setMimicColorUsed($playerId,[]);
       self::setEliminated($playerId,false);
       //the first state to be activated:
       self::setState($playerId,ST_TURN_COMMON_BOARD);
+      self::setEngineChoices($playerId, 0);
     }
   }
 }

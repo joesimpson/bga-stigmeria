@@ -31,6 +31,7 @@ trait SetupTrait
     Preferences::setupNewGame($players, $this->player_preferences);
     Stats::setupNewGame();
     Tokens::setupNewGame($players, $options);
+    PGlobals::fetch();
 
     $this->setGameStateInitialValue('logging', true);
       
