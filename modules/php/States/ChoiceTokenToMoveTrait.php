@@ -30,9 +30,8 @@ trait ChoiceTokenToMoveTrait
         self::trace("actCancelChoiceTokenToMove()");
         
         $player = Players::getCurrent();
-
         //PGlobals::setEngineChoices($player->id, 0);
-
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "cancel");
     }
     /**
@@ -74,6 +73,7 @@ trait ChoiceTokenToMoveTrait
         Stats::inc("actions_3",$player->getId());
         Stats::inc("actions",$player->getId());
         
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
 
@@ -120,6 +120,7 @@ trait ChoiceTokenToMoveTrait
         Stats::inc("actions_3",$player->getId());
         Stats::inc("actions",$player->getId());
         
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
     

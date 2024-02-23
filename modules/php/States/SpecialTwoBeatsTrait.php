@@ -67,6 +67,7 @@ trait SpecialTwoBeatsTrait
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,+1);
 
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
  

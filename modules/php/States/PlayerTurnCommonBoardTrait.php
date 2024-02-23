@@ -93,15 +93,6 @@ trait PlayerTurnCommonBoardTrait
 
         $this->gamestate->nextPrivateState($player->id, "startLand");
         return;
-        /*
-        if($player->countRemainingCommonActions() == 0){
-            //IF NO MORE ACTIONS on common board, go to personal board actions :
-            $this->gamestate->nextPrivateState($player->id, "next");
-        }
-        else {
-            $this->gamestate->nextPrivateState($player->id, "continue");
-        }
-        */
     }
     public function actCommonMove()
     {
@@ -122,16 +113,8 @@ trait PlayerTurnCommonBoardTrait
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
 
+        PGlobals::setState($player->id, ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE);
         $this->gamestate->nextPrivateState($player->id, "startMove");
-        /*
-        if($player->countRemainingCommonActions() == 0){
-            //IF NO MORE ACTIONS on common board, go to personal board actions :
-            $this->gamestate->nextPrivateState($player->id, "next");
-        }
-        else {
-            $this->gamestate->nextPrivateState($player->id, "continue");
-        }
-        */
     }
 
     /**

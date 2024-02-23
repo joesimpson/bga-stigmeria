@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\PlayerActions;
@@ -61,6 +62,7 @@ trait SpecialRestTrait
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,-1);
 
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
  

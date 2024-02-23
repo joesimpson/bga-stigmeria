@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
@@ -73,6 +74,7 @@ trait SpecialFastMoveTrait
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
 
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
 
@@ -130,6 +132,7 @@ trait SpecialFastMoveTrait
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
         
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "next");
     }
 

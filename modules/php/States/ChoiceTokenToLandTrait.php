@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\Players;
@@ -28,11 +29,7 @@ trait ChoiceTokenToLandTrait
         self::trace("actCancelChoiceTokenToLand()");
         
         $player = Players::getCurrent();
-
-        //TODO JSA CHECK STATE  ST_TURN_CENTRAL_CHOICE_TOKEN_LAND cannot cancel if token revealed
-
-        //NOTHING TO CANCEL In BDD, return to previous state
-
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "cancel");
     }
     /**
@@ -79,6 +76,7 @@ trait ChoiceTokenToLandTrait
         Stats::inc("actions_2",$player->getId());
         Stats::inc("actions",$player->getId());
 
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
 

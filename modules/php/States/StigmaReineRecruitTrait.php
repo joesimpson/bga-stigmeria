@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
@@ -53,6 +54,7 @@ trait StigmaReineRecruitTrait
       $player->giveExtraTime();
       Stats::inc("actions_c4",$player->getId());
 
+      PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
       $this->gamestate->nextPrivateState($player->id, "next");
   }
 }

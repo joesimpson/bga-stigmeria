@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\PlayerActions;
@@ -61,6 +62,7 @@ trait SpecialWhiteTrait
             throw new UnexpectedException(131,"You cannot white these tokens");
         }
         $player->setSelection([$tokenId1, $tokenId2]);
+        PGlobals::setState($player->id, ST_TURN_SPECIAL_ACT_WHITE_STEP2);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
     
@@ -126,6 +128,7 @@ trait SpecialWhiteTrait
         Stats::inc("tokens_board",$pId,-1);
         $player->setSelection([]);
 
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
 

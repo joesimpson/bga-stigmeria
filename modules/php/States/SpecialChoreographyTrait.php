@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\PlayerActions;
@@ -93,9 +94,11 @@ trait SpecialChoreographyTrait
         $nbMovesDone++;
 
         if($nbMovesMax - $nbMovesDone >= 1){
+            PGlobals::setState($player->id, ST_TURN_SPECIAL_ACT_CHOREOGRAPHY);
             $this->gamestate->nextPrivateState($player->id, "continue");
         }
         else {
+            PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
             $this->gamestate->nextPrivateState($player->id, "next");
         }
     }
@@ -164,9 +167,11 @@ trait SpecialChoreographyTrait
         $nbMovesDone++;
 
         if($nbMovesMax - $nbMovesDone >= 1){
+            PGlobals::setState($player->id, ST_TURN_SPECIAL_ACT_CHOREOGRAPHY);
             $this->gamestate->nextPrivateState($player->id, "continue");
         }
         else {
+            PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
             $this->gamestate->nextPrivateState($player->id, "next");
         }
     }
@@ -180,6 +185,7 @@ trait SpecialChoreographyTrait
         $player = Players::getCurrent();
         $player->setSelection([]);
         $this->addStep($player->id, $player->getPrivateState());
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "next");
     }
 

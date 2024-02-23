@@ -139,6 +139,7 @@ trait PlayerTurnPersonalBoardTrait
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
         
+        PGlobals::setState($player->id, ST_TURN_CHOICE_TOKEN_LAND);
         $this->gamestate->nextPrivateState($player->id, "startLand");
     }
     
@@ -161,6 +162,7 @@ trait PlayerTurnPersonalBoardTrait
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
 
+        PGlobals::setState($player->id, ST_TURN_CHOICE_TOKEN_MOVE);
         $this->gamestate->nextPrivateState($player->id, "startMove");
     }
 
@@ -170,6 +172,8 @@ trait PlayerTurnPersonalBoardTrait
         self::trace("actCancel()");
         
         $player = Players::getCurrent();
+        
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "cancel");
     }
     /**
@@ -207,6 +211,7 @@ trait PlayerTurnPersonalBoardTrait
         Stats::inc("actions_j",$player->getId());
         Notifications::playJoker($player,$typeSource, $typeDest, $newTokens);
 
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, "continue");
     }
     
@@ -221,6 +226,7 @@ trait PlayerTurnPersonalBoardTrait
         $player = Players::getCurrent();
         $pId = $player->id;
 
+        PGlobals::setState($player->id, ST_TURN_CHOICE_SPECIAL_ACTION);
         $this->gamestate->nextPrivateState($player->id, "startSpecial");
     }
     
@@ -234,7 +240,7 @@ trait PlayerTurnPersonalBoardTrait
         
         $player = Players::getCurrent();
 
-        PGlobals::setState($player->id, $player->getPrivateState());
+        PGlobals::setState($player->id, ST_TURN_CHOICE_RECRUIT_CENTRAL);
         $this->gamestate->nextPrivateState($player->id, "sRecruit");
     }
     
