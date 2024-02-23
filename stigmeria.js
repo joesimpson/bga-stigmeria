@@ -1543,11 +1543,16 @@ function (dojo, declare) {
             </div>`;
         },
         tplSpecialActionsBoard(player) {
+            let difficulty = this.getFlowerDifficulty();
             return `<div class='stig_resizable_action_board' id='stig_sp_action_board_container_wrapper_${player.id}' data-player='${player.id}'>
             <div class='stig_sp_action_board_container'>
                 <div class="stig_sp_action_board" id='stig_sp_action_board_${player.id}' data-difficulty="${this.getFlowerDifficulty()}">
                     <div class='player-name' style='color:#${player.color};'>${player.name}</div>
-                    <div id="stig_sp_grid_${player.id}" class='stig_sp_grid'></div>
+                    <div id="stig_sp_grid_${player.id}" class='stig_sp_grid'>
+                        <div class="stig_sp_col ${ difficulty>=1 ? 'stig_hidden' :'' }" id="stig_sp_col_1_${player.id}" data-col="1"></div>
+                        <div class="stig_sp_col ${ difficulty>=2 ? 'stig_hidden' :'' }" id="stig_sp_col_2_${player.id}" data-col="2"></div>
+                        <div class="stig_sp_col ${ difficulty>=3 ? 'stig_hidden' :'' }" id="stig_sp_col_3_${player.id}" data-col="3"></div>
+                    </div>
                 </div>
             </div>
             </div>`;

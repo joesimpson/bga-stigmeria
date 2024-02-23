@@ -118,3 +118,27 @@ body{
         }
     }
 }
+
+.stig_sp_grid{
+    .stig_sp_col{
+        //Mask to mark a column as not playable : not visible by default
+        z-index: 1;
+        position: absolute;
+        background-color: gray;
+        width: 319px;
+        height: 826px;
+        opacity: 0.7;
+
+        &[data-col="1"]{
+            visibility: hidden;
+        }
+        &[data-col="2"]{
+            top: 78px;
+            left: 411px;
+        }
+        &[data-col="3"]{
+            top: 78px;
+            left: 768px;
+        }
+    }
+}

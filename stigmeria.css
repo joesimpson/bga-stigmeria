@@ -2649,6 +2649,26 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   display: none;
 }
 
+.stig_sp_grid .stig_sp_col {
+  z-index: 1;
+  position: absolute;
+  background-color: gray;
+  width: 319px;
+  height: 826px;
+  opacity: 0.7;
+}
+.stig_sp_grid .stig_sp_col[data-col="1"] {
+  visibility: hidden;
+}
+.stig_sp_grid .stig_sp_col[data-col="2"] {
+  top: 78px;
+  left: 411px;
+}
+.stig_sp_grid .stig_sp_col[data-col="3"] {
+  top: 78px;
+  left: 768px;
+}
+
 /**
  * Player panel settings
  * AUTHOR : © Tisaac
@@ -3193,6 +3213,10 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 /* Hide the "You may note something for next time..." popup that would appear any refresh when not active ? */
 #turnBasedNotesIncent {
   display: none;
+}
+
+.stig_hidden {
+  visibility: hidden;
 }
 
 #btnLetNextPlay {
