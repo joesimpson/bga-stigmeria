@@ -792,6 +792,9 @@ function (dojo, declare) {
                     let div = $(buttonId);
                     div.classList.add('stig_selected_button');
                     this.selectedTokenTypes.push(tokenColor);
+                    //Fix: only different colors:
+                    this.selectedTokenTypes = [...new Set(this.selectedTokenTypes)];
+
                     let counterDiv = div.querySelector('.stig_qty');
                     counterDiv.innerHTML = this.selectedTokenTypes.filter(function(x){return x==tokenColor}).length;
                     

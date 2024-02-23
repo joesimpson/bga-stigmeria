@@ -598,7 +598,7 @@ $machinestates = array(
     
     ST_TURN_SPECIAL_ACT_PREDICTION => [
         "name" => "spPrediction",
-        "descriptionmyturn" => clienttranslate('${you} must select ${n} new colors to take'), 
+        "descriptionmyturn" => clienttranslate('${you} must select ${n} different colors to take'), 
         "type" => "private",
         "args" => "argSpPrediction",
         "possibleactions" => [

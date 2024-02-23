@@ -43,8 +43,9 @@ trait SpecialPredictionTrait
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
         $actionCost = $playerAction->getCost();
+        $typesDestArray = array_unique($typesDestArray);
         if(count($typesDestArray) != NB_TOKENS_PREDICTION) {
-            throw new UnexpectedException(505,"You must select 3 colors");
+            throw new UnexpectedException(505,"You must select 3 different colors");
         }
         //  EFFECT : create 3 tokens and put them in my bag
         foreach($typesDestArray as $typeDest){
