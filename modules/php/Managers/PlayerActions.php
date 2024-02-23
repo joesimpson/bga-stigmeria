@@ -4,6 +4,7 @@ namespace STIG\Managers;
 
 use STIG\Core\Game;
 use STIG\Core\Globals;
+use STIG\Core\Notifications;
 use STIG\Models\PlayerAction;
 
 /* 
@@ -174,7 +175,11 @@ class PlayerActions extends \STIG\Helpers\Pieces
    */
   public static function setupNewTurn($players,$turn)
   {
-    self::updateAllState(ACTION_STATE_LOCKED_FOR_TURN,ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN);
+    $oldState = ACTION_STATE_LOCKED_FOR_TURN;
+    $newState = ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+    $actionsToUpdate = self::DB()->where(static::$prefix . 'state', $oldState)->get()->getIds();
+    self::updateAllState($oldState,$newState);
+    Notifications::updateSp($actionsToUpdate,$newState);
   }
   /**
    * @param array $action datas

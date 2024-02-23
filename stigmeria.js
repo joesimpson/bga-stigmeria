@@ -99,6 +99,7 @@ function (dojo, declare) {
                 ['sRecruit', 900],
                 ['moveBackToBox', 900],
                 ['unlockSp',100],
+                ['updateSp',100],
                 ['spMixing', 900],
                 ['spCombination', 900],
                 ['spSwap', 900],
@@ -1131,6 +1132,21 @@ function (dojo, declare) {
             let spAction = n.args.action;
             this._counters[n.args.player_id]['unlockedActions'].incValue(1);
         },
+        notif_updateSp(n) {
+            debug('notif_updateSp: special action state changed', n);
+            let spActionList = n.args.a;
+            let newState = n.args.s;
+            Object.values(spActionList).forEach( (actionId) =>{
+                let div = $(`stig_sp_action_${actionId}`);
+                if(!div) return;
+                div.dataset.state = newState;
+                let player_id = div.dataset.pid;
+                if(player_id != undefined){
+                    this._counters[player_id]['unlockedActions'].incValue(+1);
+                    this._counters[player_id]['lockedActions'].incValue(-1);
+                }
+            });
+        },
         notif_spMixing(n) {
             debug('notif_spMixing: tokens are mixed !', n);
             let token1 = n.args.token1;
@@ -1658,7 +1674,7 @@ function (dojo, declare) {
             return `<div class="stig_sp_action_cell" id="stig_sp_action_cell_${action.pId}_${action.type}" data-type="${action.type}"></div>`;
         },
         tplSpecialActionToken(action) {
-            return `<div class="stig_sp_action_token" id="stig_sp_action_${action.id}" data-id="${action.id}" data-pId="${action.pId}" data-type="${action.type}" data-state="${action.state}"></div>`;
+            return `<div class="stig_sp_action_token" id="stig_sp_action_${action.id}" data-id="${action.id}" data-pid="${action.pId}" data-type="${action.type}" data-state="${action.state}"></div>`;
         },
         tplWindDirContainer(datas) {
             let winds = '';
@@ -1758,7 +1774,7 @@ function (dojo, declare) {
                     }
                     o.dataset.state = action.state;
                     o.dataset.type = action.type;
-                    o.dataset.pid = action.pid;
+                    o.dataset.pid = action.pId;
                     actionIds.push( action.id );
                     return action.id;
                 });

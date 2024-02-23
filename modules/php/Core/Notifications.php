@@ -713,6 +713,18 @@ class Notifications
     );
   }
   /**
+   * Unlock Special action !
+   * @param array $actionsIds
+   * @param int $newState
+   */
+  public static function updateSp($actionsIds,$newState){
+    self::notifyAll('updateSp',clienttranslate('The game update special actions locked status'),[ 
+        'a' => $actionsIds,
+        's' => $newState,
+      ],
+    );
+  }
+  /**
    * @param Player $player
    * @param StigmerianToken $token
    * @param Player $playerDestination
