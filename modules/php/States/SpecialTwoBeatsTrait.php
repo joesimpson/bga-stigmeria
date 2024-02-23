@@ -57,7 +57,6 @@ trait SpecialTwoBeatsTrait
             'y'=>$row,
             'x'=>$column,
         ]);
-        PGlobals::setLastLanded($player->getId(),$token->getId());
         Notifications::spTwoBeats($player,$token,$actionCost);
         $token->checkAndBecomesPollen($player);
 

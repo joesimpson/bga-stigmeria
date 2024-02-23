@@ -65,7 +65,6 @@ trait SpecialBlackTrait
             'x'=>$column2,
         ]);
         $token1->setType(TOKEN_STIG_BLACK);
-        PGlobals::setLastLanded($player->getId(),$token2->getId());
         Notifications::spBlack($player,$token1,$token2,$actionCost);
         $token1->checkAndBecomesPollen($player);
         $token2->checkAndBecomesPollen($player);

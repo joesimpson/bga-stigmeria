@@ -138,6 +138,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       $fromDeck = true;
     }
     else if($this->getLocation() == TOKEN_LOCATION_PLAYER_RECRUIT ){
+      PGlobals::setLastLanded($player->getId(),$this->getId());
       if(TOKEN_STIG_YELLOW == $this->getType()){
         $player->addTieBreakerPoints(-1);
       }
@@ -151,7 +152,6 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       if($sendNotif) Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
     }
     else {
-      PGlobals::setLastLanded($player->getId(),$this->getId());
       Stats::inc("tokens_board",$player->getId());
       if($fromDeck){
         if($sendNotif) Notifications::moveFromDeckToPlayerBoard($player, $this,$actionCost);
