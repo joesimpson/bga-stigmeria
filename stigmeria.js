@@ -43,6 +43,7 @@ function (dojo, declare) {
     const ACTION_TYPE_NSNK = 24;
     const ACTION_TYPE_COPY = 25;
     const ACTION_TYPE_PREDICTION = 26;
+    const ACTION_TYPE_MIMICRY = 27;
 
     const TOKEN_TYPE_NEWTURN = 21;
     /* TOKEN TYPES : stigmerians, then pollens*/
@@ -110,6 +111,7 @@ function (dojo, declare) {
                 ['spNSNK', 900],
                 ['spCopy', 900],
                 ['spPrediction', 500],
+                ['spMimicry', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -421,6 +423,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions,'actChooseSp');
 
         }, 
             
@@ -642,6 +645,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -821,6 +825,35 @@ function (dojo, declare) {
             $(`btnConfirm`).classList.add('disabled');
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
+        onEnteringStateSpMimicry: function(args)
+        {
+            debug( 'onEnteringStateSpMimicry() ', args );
+            let token = $(`stig_token_${args.tokenId}`);
+            if(token){
+                token.classList.add('stig_selected');
+            }
+            
+            this.selectedTokenType = null;
+            Object.values(args.colors).forEach((tokenColor) => {
+                let buttonId = `btnMimicry_${tokenColor}`;
+                this.addImageActionButton(buttonId, `<div><div class='stig_button_token' data-type='${tokenColor}'></div></div>`, () =>  {
+                    [...document.querySelectorAll(`.stig_button_mimicry`)].forEach((o) => {
+                        o.classList.remove('stig_selected_button');
+                        this.selectedTokenType = null;
+                    });
+                    let div = $(buttonId);
+                    div.classList.add('stig_selected_button');
+                    this.selectedTokenType = tokenColor;
+                    $(`btnConfirm`).classList.remove('disabled');
+                });
+                $(buttonId).classList.add('stig_button_mimicry');
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                this.takeAction('actMimicry', { dest: this.selectedTokenType,});
+            }); 
+            $(`btnConfirm`).classList.add('disabled');
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+        }, 
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );
@@ -855,8 +888,9 @@ function (dojo, declare) {
             dojo.empty('stig_select_piece_container');
             this.removeEmptyCellHolders();
             if($('stig_central_board_container_wrapper')) $('stig_central_board_container_wrapper').classList.remove('stig_current_play');
-        },
 
+            [...document.querySelectorAll('.stig_selected')].forEach( o => o.classList.remove('stig_selected'));
+        },
         
         onEnteringStateConfirmTurn(args) {
             this.addPrimaryActionButton('btnConfirmTurn', _('Confirm'), () => {
@@ -1247,6 +1281,13 @@ function (dojo, declare) {
         notif_spPrediction(n) {
             debug('notif_spPrediction: new tokens in bags', n);
             this._counters[n.args.player_id]['tokens_deck'].incValue(+3);
+        },
+        notif_spMimicry(n) {
+            debug('notif_spMimicry: token change color !', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.type = token.type;
+            this.animationBlink2Times(div);
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);

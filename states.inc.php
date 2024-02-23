@@ -381,6 +381,7 @@ $machinestates = array(
             'startNSNK' => ST_TURN_SPECIAL_ACT_NSNK,
             'startCopy' => ST_TURN_SPECIAL_ACT_COPY,
             'startPrediction' => ST_TURN_SPECIAL_ACT_PREDICTION,
+            'startMimicry' => ST_TURN_SPECIAL_ACT_MIMICRY,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -603,6 +604,20 @@ $machinestates = array(
         "args" => "argSpPrediction",
         "possibleactions" => [
             "actPrediction",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    ST_TURN_SPECIAL_ACT_MIMICRY => [
+        "name" => "spMimicry",
+        "descriptionmyturn" => clienttranslate('${you} must select a new color for your last landed stigmerian at ${L}'), 
+        "type" => "private",
+        "args" => "argSpMimicry",
+        "possibleactions" => [
+            "actMimicry",
             "actCancelSpecial",
         ],
         "transitions" => [

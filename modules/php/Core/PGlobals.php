@@ -27,6 +27,11 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     'nbSpActions' => 'int',
     'nbSpActionsMax' => 'int',
     
+    //Last landed token id
+    'lastLanded' => 'int',
+    //list of colors used for Mimicry in turn
+    'mimicColorUsed' => 'obj',
+    
     'eliminated' => 'bool',
   ];
 

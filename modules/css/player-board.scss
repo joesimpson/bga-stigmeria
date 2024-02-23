@@ -137,8 +137,9 @@
                         // COLUMN 3
                         &[data-type='13'],
                         &[data-type='16'],
-                        &[data-type='23'], 
-                        &[data-type='26']  {
+                        &[data-type='23'],  
+                        &[data-type='26'],
+                        &[data-type='27']  {
                             left: 950px;
                         }
 
@@ -153,7 +154,8 @@
                         }
                         // ROW 3
                         &[data-type='22'],
-                        &[data-type='25'] {
+                        &[data-type='25'],
+                        &[data-type='27'] {
                             top: 350px;
                         }
                         // ROW 4

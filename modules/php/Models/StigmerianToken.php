@@ -4,6 +4,7 @@ namespace STIG\Models;
 
 use STIG\Core\Game;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Helpers\GridUtils;
 use STIG\Managers\Schemas;
@@ -150,6 +151,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
       if($sendNotif) Notifications::moveOnPlayerBoard($player, $this,$fromCoord,$this->getCoordName(),$actionCost);
     }
     else {
+      PGlobals::setLastLanded($player->getId(),$this->getId());
       Stats::inc("tokens_board",$player->getId());
       if($fromDeck){
         if($sendNotif) Notifications::moveFromDeckToPlayerBoard($player, $this,$actionCost);

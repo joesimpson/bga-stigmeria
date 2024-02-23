@@ -684,6 +684,28 @@ class Notifications
       ],
     );
   }
+    
+  /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param int $previousColor
+   * @param int $actionCost
+   */
+  public static function spMimicry($player,$token,$previousColor,$actionCost){
+    self::notifyAll('spMimicry',clienttranslate('${player_name} use the Mimicry to change a ${token_color} stigmerian to ${token_color2} at ${L} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'n' => $actionCost,
+        'L' => $token->getCoordName(),
+        'token' => $token->getUiData(),
+        'preserve' => [ 'token_type','token_type2' ],
+        'token_color' => StigmerianToken::getTypeName($previousColor),
+        'token_type' => $previousColor,
+        'token_color2' => StigmerianToken::getTypeName($token->getType()),
+        'token_type2' => $token->getType(),
+      ],
+    );
+  }
   /**
    * Will Unlock Special action 
    * @param Player $player

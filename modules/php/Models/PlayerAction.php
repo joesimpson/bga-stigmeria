@@ -120,6 +120,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
         break;
       case ACTION_TYPE_PREDICTION:
         break;
+      case ACTION_TYPE_MIMICRY:
+        if(Game::get()->listPossibleMimicry($playerId)['colors']->count() == 0) return false;
+        break;
     }
 
     return true;

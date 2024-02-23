@@ -42,6 +42,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
   {
     switch($type){
       
+      case ACTION_TYPE_MIMICRY:
+        return 3;
       case ACTION_TYPE_DIAGONAL:
         //this action doesn t cost double for Inspir
         return 1;
@@ -67,6 +69,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
       case ACTION_TYPE_COPY:
         return 2;
       case ACTION_TYPE_CHOREOGRAPHY:
+      case ACTION_TYPE_MIMICRY:
       case ACTION_TYPE_MOVE_FAST:
       case ACTION_TYPE_PREDICTION:
       case ACTION_TYPE_REST:
@@ -163,6 +166,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             case ACTION_TYPE_PREDICTION:
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_MIMICRY:
+                return ACTION_STATE_UNLOCKED_FOREVER;
             
             default:
               return ACTION_STATE_UNLOCKED_FOREVER;

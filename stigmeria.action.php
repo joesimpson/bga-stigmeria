@@ -446,6 +446,14 @@
       $this->game->actPrediction($tokensArray);
       self::ajaxResponse();
     }
+    public function actMimicry()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $typeDest = self::getArg( "dest", AT_posint, true );
+      $this->game->actMimicry($typeDest);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();

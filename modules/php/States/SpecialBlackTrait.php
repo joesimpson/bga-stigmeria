@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
@@ -64,6 +65,7 @@ trait SpecialBlackTrait
             'x'=>$column2,
         ]);
         $token1->setType(TOKEN_STIG_BLACK);
+        PGlobals::setLastLanded($player->getId(),$token2->getId());
         Notifications::spBlack($player,$token1,$token2,$actionCost);
         $token1->checkAndBecomesPollen($player);
         $token2->checkAndBecomesPollen($player);

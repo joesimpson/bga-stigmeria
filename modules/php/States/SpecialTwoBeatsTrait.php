@@ -3,6 +3,7 @@
 namespace STIG\States;
 
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Managers\PlayerActions;
@@ -56,6 +57,7 @@ trait SpecialTwoBeatsTrait
             'y'=>$row,
             'x'=>$column,
         ]);
+        PGlobals::setLastLanded($player->getId(),$token->getId());
         Notifications::spTwoBeats($player,$token,$actionCost);
         $token->checkAndBecomesPollen($player);
 

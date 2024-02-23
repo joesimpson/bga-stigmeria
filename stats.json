@@ -168,5 +168,10 @@
         "name": "Prediction",
         "type": "int"
       }
+      ,"actions_s27": {
+        "id": 55,
+        "name": "Mimicry",
+        "type": "int"
+      }
     }
   }

@@ -124,6 +124,22 @@ class Player extends \STIG\Helpers\DB_Model
   {
     return PGlobals::setSelection($this->getId(),$selection);
   }
+  
+  public function getMimicColorUsed()
+  {
+    return PGlobals::getMimicColorUsed($this->getId());
+  }
+  public function setMimicColorUsed($selection)
+  {
+    return PGlobals::setMimicColorUsed($this->getId(),$selection);
+  }
+  public function addMimicColorUsed($type)
+  {
+    $colorsUsed = PGlobals::getMimicColorUsed($this->getId());
+    $colorsUsed[] = $type;
+    PGlobals::setMimicColorUsed($this->getId(),$colorsUsed);
+    return $colorsUsed;
+  }
 
 
   public function getPref($prefId)
@@ -166,6 +182,7 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setCommonMoveDone(false);
     $this->setSelection([]);
     $this->giveExtraTime();
+    $this->setMimicColorUsed([]);
 
     if(Globals::isModeCompetitive()) Notifications::startTurn($this,$turnIndex);
   }

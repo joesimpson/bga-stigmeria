@@ -114,6 +114,9 @@ trait SpecialActionTrait
             case ACTION_TYPE_PREDICTION:
                 $nextState = "startPrediction";
                 break;
+            case ACTION_TYPE_MIMICRY:
+                $nextState = "startMimicry";
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

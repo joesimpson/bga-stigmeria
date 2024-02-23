@@ -3,6 +3,7 @@
 namespace STIG\Managers;
 
 use STIG\Core\Game;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Models\StigmerianToken;
 
@@ -465,5 +466,16 @@ class Tokens extends \STIG\Helpers\Pieces
     }
       
     return $winTiePlayerId;
+  }
+
+  public static function getLastLanded($pId){
+    $lastLandedId = PGlobals::getLastLanded($pId);
+    if(!isset($lastLandedId) || $lastLandedId ==0) return null;
+    $token = self::get($lastLandedId);
+    if($token->pId != $pId || TOKEN_LOCATION_PLAYER_BOARD != $token->getLocation()){
+      //if token has changed since it was landed
+      return null;
+    }
+    return $token;
   }
 }
