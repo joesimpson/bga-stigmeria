@@ -58,6 +58,8 @@ trait SpecialCopyTrait
         //  EFFECT
         $token1->setType($typeDest);
         Notifications::spCopy($player,$token1,$typeSrc,$actionCost); 
+        //Don't forget to check !
+        $token1->checkAndBecomesPollen($player);
 
         //This action is now USED IN player turn
         $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
