@@ -67,6 +67,7 @@ trait SpecialPredictionTrait
         Notifications::useActions($player,$playerAction);
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
+        Stats::inc("tokens_deck",$player->getId(),+ NB_TOKENS_PREDICTION);
         $player->giveExtraTime();
 
         PGlobals::setState($pId,ST_TURN_PERSONAL_BOARD);
