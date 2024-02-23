@@ -39,10 +39,20 @@ function (dojo, declare) {
     const ACTION_TYPE_TWOBEATS = 22;
     const ACTION_TYPE_REST = 23;
     const ACTION_TYPE_NSNK = 24;
+    const ACTION_TYPE_COPY = 25;
 
+    const TOKEN_TYPE_NEWTURN = 21;
+    /* TOKEN TYPES : stigmerians, then pollens*/
+    const TOKEN_STIG_BLUE =     1;
+    const TOKEN_STIG_YELLOW =   2;
+    const TOKEN_STIG_RED =      3;
+    const TOKEN_STIG_ORANGE =   4;
+    const TOKEN_STIG_GREEN =    5;
+    const TOKEN_STIG_VIOLET =   6;
+    const TOKEN_STIG_BROWN =    7;
     const TOKEN_STIG_WHITE =    8;
     const TOKEN_STIG_BLACK =    9;
-    const TOKEN_TYPE_NEWTURN = 21;
+    const STIG_PRIMARY_COLORS = [TOKEN_STIG_BLUE,TOKEN_STIG_RED,TOKEN_STIG_YELLOW, ];
     
     const PREF_SCHEMA_BOARD_ORDER = 100;
     const PREF_STIGMAREINE_BOARD_ORDER = 101;
@@ -90,6 +100,7 @@ function (dojo, declare) {
                 ['spTwoBeats', 900],
                 ['spRest', 900],
                 ['spNSNK', 900],
+                ['spCopy', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -399,6 +410,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Two Beats'),ACTION_TYPE_TWOBEATS,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions,'actChooseSp');
 
         }, 
             
@@ -618,6 +630,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Two Beats'),ACTION_TYPE_TWOBEATS,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -730,6 +743,34 @@ function (dojo, declare) {
             });
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         },
+        onEnteringStateSpCopy: function(args)
+        {
+            debug( 'onEnteringStateSpCopy() ', args );
+
+            let callbackSelectionDone = (div) => { 
+                let typeSrc = div.dataset.type;
+                document.querySelectorAll('.stig_button_copy').forEach( (e) => dojo.destroy(e) );
+                Object.values(STIG_PRIMARY_COLORS).forEach((tokenColor) => {
+                    if(typeSrc == tokenColor) return;
+                    let buttonId = `btnCopy_${tokenColor}`;
+                    this.addImageActionButton(buttonId, `<div class='stig_button_token' data-type='${tokenColor}'></div>`, () =>  {
+                        document.querySelectorAll('.stig_button_copy').forEach( (e) => e.classList.remove('stig_selected_button') );
+                        $(buttonId).classList.add('stig_selected_button');
+                        
+                    });
+                    $(buttonId).classList.toggle('stig_button_copy');
+                });
+            };
+            let callbackConfirm = (selectedToken) => { 
+                let typeDest = document.querySelector('.stig_button_copy.stig_selected_button .stig_button_token');
+                if(typeDest){
+                    this.takeAction('actCopy', { tokenId: selectedToken.dataset.id, dest: typeDest.dataset.type});
+                }
+            };
+            this.initTokenSimpleSelection('actCopy', args.tokensIds,callbackSelectionDone,callbackConfirm);
+            
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+        }, 
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );
@@ -1129,6 +1170,13 @@ function (dojo, declare) {
                 div.dataset.type = token.type;
                 this.slide(div, this.getTokenContainer(token));
             });
+        },
+        notif_spCopy(n) {
+            debug('notif_spCopy: token change color !', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            div.dataset.type = token.type;
+            this.animationBlink2Times(div);
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);
@@ -1717,7 +1765,7 @@ function (dojo, declare) {
         },
         
         //Direct selection of a token, independent of any other
-        initTokenSimpleSelection(actionName, tokensIds){
+        initTokenSimpleSelection(actionName, tokensIds, callbackSelectionDone =null, callbackConfirm =null){
             debug( 'initTokenSimpleSelection() ', actionName, tokensIds );
             //possible places to play :
             Object.values(tokensIds).forEach((tokensId) => {
@@ -1729,11 +1777,18 @@ function (dojo, declare) {
                     });
                     div.classList.add('selected');
                     $(`btnConfirm`).classList.remove('disabled');
+                    if(callbackSelectionDone !=null){
+                        callbackSelectionDone(div);
+                    }
                 });
             });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedToken = document.querySelector(`.stig_token.selected`);
-                this.takeAction(actionName, { tokenId: selectedToken.dataset.id,});
+                if(callbackConfirm !=null){
+                    callbackConfirm(selectedToken);
+                } else {
+                    this.takeAction(actionName, { tokenId: selectedToken.dataset.id,});
+                }
             }); 
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');

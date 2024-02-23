@@ -158,5 +158,10 @@
         "name": "No harm No foul",
         "type": "int"
       }
+      ,"actions_s25": {
+        "id": 53,
+        "name": "Copy",
+        "type": "int"
+      }
     }
   }

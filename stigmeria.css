@@ -790,7 +790,7 @@
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="10"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="14"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="21"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="24"] {
   left: 240px;
 }
-#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"] {
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="25"] {
   left: 590px;
 }
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="13"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="16"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="23"] {
@@ -802,7 +802,7 @@
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"] {
   top: 214px;
 }
-#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"] {
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="25"] {
   top: 350px;
 }
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="14"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="16"] {
@@ -2609,6 +2609,13 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
   background-position-x: 733px;
   background-position-y: 251px;
 }
+#customActions .stig_sp_action_image[data-type="25"] {
+  background-position-x: 548px;
+  background-position-y: 627px;
+  height: 67px;
+  width: 62px;
+  background-size: 1490%;
+}
 
 body {
   /*
@@ -3172,6 +3179,13 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 
 #btnLetNextPlay {
   background-color: lightgreen;
+}
+
+.stig_selected_button {
+  background-color: rgb(255, 115, 0);
+}
+.stig_selected_button:hover {
+  background-color: rgb(255, 115, 0) !important;
 }
 
 .customimagebutton {

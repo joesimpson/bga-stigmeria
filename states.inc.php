@@ -379,6 +379,7 @@ $machinestates = array(
             'startFulgurance' => ST_TURN_SPECIAL_ACT_FULGURANCE,
             'startChoreography' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
             'startNSNK' => ST_TURN_SPECIAL_ACT_NSNK,
+            'startCopy' => ST_TURN_SPECIAL_ACT_COPY,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -572,6 +573,20 @@ $machinestates = array(
         "args" => "argSpNSNK",
         "possibleactions" => [
             "actNSNK",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    ST_TURN_SPECIAL_ACT_COPY => [
+        "name" => "spCopy",
+        "descriptionmyturn" => clienttranslate('${you} must select a token and its new color'), 
+        "type" => "private",
+        "args" => "argSpCopy",
+        "possibleactions" => [
+            "actCopy",
             "actCancelSpecial",
         ],
         "transitions" => [

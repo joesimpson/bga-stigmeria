@@ -108,6 +108,9 @@ trait SpecialActionTrait
             case ACTION_TYPE_NSNK:
                 $nextState = "startNSNK";
                 break;
+            case ACTION_TYPE_COPY:
+                $nextState = "startCopy";
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

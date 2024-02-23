@@ -63,6 +63,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
       case ACTION_TYPE_WHITE:
       case ACTION_TYPE_SWAP:
       case ACTION_TYPE_FULGURANCE:
+      case ACTION_TYPE_COPY:
         return 2;
       case ACTION_TYPE_CHOREOGRAPHY:
       case ACTION_TYPE_MOVE_FAST:
@@ -153,6 +154,10 @@ class PlayerActions extends \STIG\Helpers\Pieces
             case ACTION_TYPE_TWOBEATS:
                 return ACTION_STATE_UNLOCKED_FOREVER;
             case ACTION_TYPE_REST:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_NSNK:
+                return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_COPY:
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             
             default:

@@ -193,18 +193,20 @@ class Tokens extends \STIG\Helpers\Pieces
   }
   /**
    * @param int $playerId
+   * @param array $token_types (optional) filter on these types
    * @return Collection of StigmerianToken found at that location
    */
-  public static function getAllOnPersonalBoard($playerId)
+  public static function getAllOnPersonalBoard($playerId, $token_types = null)
   { 
-    Game::get()->trace("getAllOnPersonalBoard($playerId)");
-    return self::DB()
+    //Game::get()->trace("getAllOnPersonalBoard($playerId)");
+    $query = self::DB()
       ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_BOARD)
       ->wherePlayer($playerId)
       //Order by row, then column -> will be used to avoid sorting this collection when comparing with schema
       ->orderBy('y', 'ASC')
-      ->orderBy('x', 'ASC')
-      ->get();
+      ->orderBy('x', 'ASC');
+      if(isset($token_types)) $query = $query->whereIn('type',$token_types);
+      return  $query->get();
   }
   /**
    * @param int $playerId

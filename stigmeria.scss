@@ -43,6 +43,13 @@
 #btnLetNextPlay{
     background-color: lightgreen;
 }
+.stig_selected_button{
+    background-color: rgb(255, 115, 0);
+    &:hover{
+        // overrides BGA default
+        background-color: rgb(255, 115, 0) !important;
+    }
+}
 .customimagebutton{
     border: medium none;
     display: flex;

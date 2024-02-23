@@ -420,6 +420,15 @@
       $this->game->actNSNK($typeSource,$typeDest);
       self::ajaxResponse();
     } 
+    public function actCopy()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $tokenId = self::getArg( "tokenId", AT_posint, true );
+      $typeDest = self::getArg( "dest", AT_posint, true );
+      $this->game->actCopy($tokenId,$typeDest);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();

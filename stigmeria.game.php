@@ -66,6 +66,7 @@ class Stigmeria extends Table
     use STIG\States\SpecialActionTrait;
     use STIG\States\SpecialChoreographyTrait;
     use STIG\States\SpecialCombinationTrait;
+    use STIG\States\SpecialCopyTrait;
     use STIG\States\SpecialFastMoveTrait;
     use STIG\States\SpecialFulguranceTrait;
     use STIG\States\SpecialMixingTrait;

@@ -639,6 +639,28 @@ class Notifications
   }
   
   /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param int $typeSrc
+   * @param int $actionCost
+   */
+  public static function spCopy($player,$token,$typeSrc,$actionCost){
+    self::notifyAll('spCopy',clienttranslate('${player_name} use the Copy action to replace a ${token_color} at ${L} into a ${token_color2} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'L' => $token->getCoordName(),
+        'token' => $token->getUiData(),
+        'n' => $actionCost,
+        'preserve' => [ 'token_type','token_type2' ],
+        'token_color' => StigmerianToken::getTypeName($typeSrc),
+        'token_type' => $typeSrc,
+        'token_color2' => StigmerianToken::getTypeName($token->getType()),
+        'token_type2' => $token->getType(),
+
+      ],
+    );
+  }
+  /**
    * Will Unlock Special action 
    * @param Player $player
    * @param int $nbActions
