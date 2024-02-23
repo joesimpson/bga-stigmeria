@@ -429,6 +429,23 @@
       $this->game->actCopy($tokenId,$typeDest);
       self::ajaxResponse();
     } 
+    public function actPrediction()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      // ---------- ---------- array of token'types  --------------------
+      $token_types_raw = self::getArg("dest", AT_numberlist, true);
+      // Removing last ';' if exists
+      if (substr($token_types_raw, -1) == ';')
+        $token_types_raw = substr($token_types_raw, 0, -1);
+      if ($token_types_raw == '')
+        $tokensArray = array();
+      else
+        $tokensArray = explode(';', $token_types_raw);
+      // ---------- ---------- -------------------- --------------------
+      $this->game->actPrediction($tokensArray);
+      self::ajaxResponse();
+    }
     public function actLetNextPlay()
     {
       self::setAjaxMode();

@@ -118,6 +118,8 @@ class PlayerAction extends \STIG\Helpers\DB_Model
       case ACTION_TYPE_COPY:
         if(Tokens::countOnPlayerBoard($playerId,STIG_PRIMARY_COLORS) == 0) return false;
         break;
+      case ACTION_TYPE_PREDICTION:
+        break;
     }
 
     return true;

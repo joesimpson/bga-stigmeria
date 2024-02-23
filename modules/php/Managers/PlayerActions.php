@@ -67,6 +67,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
         return 2;
       case ACTION_TYPE_CHOREOGRAPHY:
       case ACTION_TYPE_MOVE_FAST:
+      case ACTION_TYPE_PREDICTION:
       case ACTION_TYPE_REST:
         return 3;
       default:
@@ -158,6 +159,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
             case ACTION_TYPE_NSNK:
                 return ACTION_STATE_UNLOCKED_FOREVER;
             case ACTION_TYPE_COPY:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_PREDICTION:
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             
             default:

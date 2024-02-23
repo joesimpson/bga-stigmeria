@@ -27,6 +27,8 @@ define([
 ],
 function (dojo, declare) {
     const TURN_MAX = 10;
+    const NB_TOKENS_PREDICTION = 3;
+
     const ACTION_TYPE_MIXING = 10;
     const ACTION_TYPE_COMBINATION = 11;
     const ACTION_TYPE_FULGURANCE = 12;
@@ -40,6 +42,7 @@ function (dojo, declare) {
     const ACTION_TYPE_REST = 23;
     const ACTION_TYPE_NSNK = 24;
     const ACTION_TYPE_COPY = 25;
+    const ACTION_TYPE_PREDICTION = 26;
 
     const TOKEN_TYPE_NEWTURN = 21;
     /* TOKEN TYPES : stigmerians, then pollens*/
@@ -53,6 +56,10 @@ function (dojo, declare) {
     const TOKEN_STIG_WHITE =    8;
     const TOKEN_STIG_BLACK =    9;
     const STIG_PRIMARY_COLORS = [TOKEN_STIG_BLUE,TOKEN_STIG_RED,TOKEN_STIG_YELLOW, ];
+    const STIG_COLORS = [TOKEN_STIG_BLUE,TOKEN_STIG_RED,TOKEN_STIG_YELLOW,
+        TOKEN_STIG_ORANGE,TOKEN_STIG_GREEN,TOKEN_STIG_VIOLET,
+        TOKEN_STIG_BROWN,TOKEN_STIG_WHITE,TOKEN_STIG_BLACK,
+    ];
     
     const PREF_SCHEMA_BOARD_ORDER = 100;
     const PREF_STIGMAREINE_BOARD_ORDER = 101;
@@ -101,6 +108,7 @@ function (dojo, declare) {
                 ['spRest', 900],
                 ['spNSNK', 900],
                 ['spCopy', 900],
+                ['spPrediction', 500],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -411,6 +419,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions,'actChooseSp');
 
         }, 
             
@@ -631,6 +640,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -755,10 +765,10 @@ function (dojo, declare) {
                     let buttonId = `btnCopy_${tokenColor}`;
                     this.addImageActionButton(buttonId, `<div class='stig_button_token' data-type='${tokenColor}'></div>`, () =>  {
                         document.querySelectorAll('.stig_button_copy').forEach( (e) => e.classList.remove('stig_selected_button') );
-                        $(buttonId).classList.add('stig_selected_button');
+                        $(buttonId).classList.toggle('stig_selected_button');
                         
                     });
-                    $(buttonId).classList.toggle('stig_button_copy');
+                    $(buttonId).classList.add('stig_button_copy');
                 });
             };
             let callbackConfirm = (selectedToken) => { 
@@ -769,6 +779,42 @@ function (dojo, declare) {
             };
             this.initTokenSimpleSelection('actCopy', args.tokensIds,callbackSelectionDone,callbackConfirm);
             
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+        }, 
+        onEnteringStateSpPrediction: function(args)
+        {
+            debug( 'onEnteringStateSpPrediction() ', args );
+            this.selectedTokenTypes = [];
+            Object.values(STIG_COLORS).forEach((tokenColor) => {
+                let buttonId = `btnPrediction_${tokenColor}`;
+                this.addImageActionButton(buttonId, `<div><div id="stig_qty_${tokenColor}" class='stig_qty'>0</div><div class='stig_button_token' data-type='${tokenColor}'></div></div>`, () =>  {
+                    let div = $(buttonId);
+                    div.classList.add('stig_selected_button');
+                    this.selectedTokenTypes.push(tokenColor);
+                    let counterDiv = div.querySelector('.stig_qty');
+                    counterDiv.innerHTML = this.selectedTokenTypes.filter(function(x){return x==tokenColor}).length;
+                    
+                    if(this.selectedTokenTypes.length == NB_TOKENS_PREDICTION){
+                        $(`btnConfirm`).classList.remove('disabled');
+                    }
+                    else {
+                        $(`btnConfirm`).classList.add('disabled');
+                    }
+                });
+                $(buttonId).classList.add('stig_button_prediction');
+            });
+            this.addSecondaryActionButton('btnClearSelection', _('Clear selection'), () =>  {
+                [...document.querySelectorAll(`.stig_button_prediction`)].forEach((o) => {
+                    o.classList.remove('stig_selected_button');
+                    o.querySelector('.stig_qty').innerHTML = 0;
+                    this.selectedTokenTypes = [];
+                });
+                $(`btnConfirm`).classList.add('disabled');
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                this.takeAction('actPrediction', { dest: this.selectedTokenTypes.join(';'),});
+            }); 
+            $(`btnConfirm`).classList.add('disabled');
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateWindEffect: function(args)
@@ -1177,6 +1223,10 @@ function (dojo, declare) {
             let div = $(`stig_token_${token.id}`);
             div.dataset.type = token.type;
             this.animationBlink2Times(div);
+        },
+        notif_spPrediction(n) {
+            debug('notif_spPrediction: new tokens in bags', n);
+            this._counters[n.args.player_id]['tokens_deck'].incValue(+3);
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);
@@ -1953,7 +2003,7 @@ function (dojo, declare) {
         //                                                 |___/
         ////////////////////////////////////////////////////////////
         /**
-         * Format log strings
+         * Format log strings (alias fsr)
          *  @Override
          */
         format_string_recursive(log, args) {
@@ -1973,6 +2023,12 @@ function (dojo, declare) {
                 if(token_color2 in args && token_type2 in args) {
                     args.token_color2 = this.formatIcon("token_log",args.token_type2,args.token_type2);
                     args.token_type2 = "";
+                }
+                let token_color3 = 'token_color3';
+                let token_type3 = 'token_type3';
+                if(token_color3 in args && token_type3 in args) {
+                    args.token_color3 = this.formatIcon("token_log",args.token_type3,args.token_type3);
+                    args.token_type3 = "";
                 }
 
             }

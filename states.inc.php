@@ -380,6 +380,7 @@ $machinestates = array(
             'startChoreography' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
             'startNSNK' => ST_TURN_SPECIAL_ACT_NSNK,
             'startCopy' => ST_TURN_SPECIAL_ACT_COPY,
+            'startPrediction' => ST_TURN_SPECIAL_ACT_PREDICTION,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -587,6 +588,21 @@ $machinestates = array(
         "args" => "argSpCopy",
         "possibleactions" => [
             "actCopy",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_PREDICTION => [
+        "name" => "spPrediction",
+        "descriptionmyturn" => clienttranslate('${you} must select ${n} new colors to take'), 
+        "type" => "private",
+        "args" => "argSpPrediction",
+        "possibleactions" => [
+            "actPrediction",
             "actCancelSpecial",
         ],
         "transitions" => [

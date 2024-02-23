@@ -28,6 +28,7 @@ const MAX_GRID_NEIGHBOURS = 8;
 //We need 3 aligned tokens to gain special actions
 const NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS = 3;
 const MAX_SPECIAL_ACTIONS = 9;
+const NB_TOKENS_PREDICTION = 3;
 
 const WIND_DIR_NORTH = 'N';
 const WIND_DIR_SOUTH = 'S';
@@ -116,6 +117,7 @@ const ACTION_TYPE_REST = 23;
 //Neither Seen Nor Known, 'Ni Vu ni Connu'
 const ACTION_TYPE_NSNK = 24;
 const ACTION_TYPE_COPY = 25;
+const ACTION_TYPE_PREDICTION = 26;
 const ACTION_TYPES = [
     ACTION_TYPE_MIXING      ,
     ACTION_TYPE_COMBINATION ,
@@ -130,6 +132,7 @@ const ACTION_TYPES = [
     ACTION_TYPE_REST        ,
     ACTION_TYPE_NSNK        ,
     ACTION_TYPE_COPY        ,
+    ACTION_TYPE_PREDICTION  ,
 ];
 
 /** ACTION DATAS */
@@ -333,6 +336,7 @@ const ST_TURN_SPECIAL_ACT_FULGURANCE =42;
 const ST_TURN_SPECIAL_ACT_CHOREOGRAPHY = 43;
 const ST_TURN_SPECIAL_ACT_NSNK = 44;
 const ST_TURN_SPECIAL_ACT_COPY = 45;
+const ST_TURN_SPECIAL_ACT_PREDICTION = 46;
 
 
 const ST_CONFIRM_CHOICES = 78;

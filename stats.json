@@ -163,5 +163,10 @@
         "name": "Copy",
         "type": "int"
       }
+      ,"actions_s26": {
+        "id": 54,
+        "name": "Prediction",
+        "type": "int"
+      }
     }
   }

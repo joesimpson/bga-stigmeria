@@ -84,6 +84,12 @@
             width: 62px;
             background-size: 1490%;
         }
+        &[data-type="26"]{
+            //ACTION_TYPE_PREDICTION
+            background-position-x: 918px;
+            background-position-y: 312px;
+            background-size: 700%;
+        }
     }
     
 }

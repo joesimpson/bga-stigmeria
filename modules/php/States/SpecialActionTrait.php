@@ -111,6 +111,9 @@ trait SpecialActionTrait
             case ACTION_TYPE_COPY:
                 $nextState = "startCopy";
                 break;
+            case ACTION_TYPE_PREDICTION:
+                $nextState = "startPrediction";
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

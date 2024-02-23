@@ -118,7 +118,6 @@
                                 background-position-y: 100%;
                             }
                         }
-                        //TODO JSA POSITIONS
                         // COLUMN 1
                         &[data-type='10'],
                         &[data-type='11'],
@@ -138,7 +137,8 @@
                         // COLUMN 3
                         &[data-type='13'],
                         &[data-type='16'],
-                        &[data-type='23']  {
+                        &[data-type='23'], 
+                        &[data-type='26']  {
                             left: 950px;
                         }
 
@@ -164,7 +164,8 @@
                         }
                         // ROW 5
                         &[data-type='10'],
-                        &[data-type='12'] {
+                        &[data-type='12'],
+                        &[data-type='26']  {
                             top: 615px;
                         }
                         // ROW 6
