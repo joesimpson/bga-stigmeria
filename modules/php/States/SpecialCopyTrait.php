@@ -62,7 +62,7 @@ trait SpecialCopyTrait
         $token1->checkAndBecomesPollen($player);
 
         //This action is now USED IN player turn
-        $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
+        $playerAction->setNewStateAfterUse();
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player,$playerAction);
         Stats::inc("actions_s".$actionType,$pId);

@@ -54,7 +54,7 @@ trait SpecialRestTrait
         }
 
         //This action is now USED IN player turn
-        $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
+        $playerAction->setNewStateAfterUse();
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player,$playerAction);
         $player->giveExtraTime();

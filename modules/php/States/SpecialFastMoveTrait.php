@@ -64,7 +64,7 @@ trait SpecialFastMoveTrait
         }
 
         //This action is now USED IN player turn
-        $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
+        $playerAction->setNewStateAfterUse();
         $player->incNbPersonalActionsDone($actionCost);
         Notifications::useActions($player,$playerAction);
         $player->giveExtraTime();
@@ -113,7 +113,7 @@ trait SpecialFastMoveTrait
 
         //EFFECT : 
         //This action is now USED IN player turn
-        $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
+        $playerAction->setNewStateAfterUse();
         Notifications::spFastMove($player,$actionCost);
         if(Globals::isModeCompetitiveNoLimit()){
             //EFFECT : MOVE the TOKEN oUT

@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\PGlobals;
 use STIG\Exceptions\UnexpectedException;
+use STIG\Managers\DiceRoll;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
@@ -135,6 +136,7 @@ trait SpecialActionTrait
             case ACTION_TYPE_FOGDIE:
                 $nextState = "startFogDie";
                 $nextStateId = ST_TURN_SPECIAL_ACT_FOGDIE;
+                PGlobals::setLastDie($pId, DiceRoll::rollNew());
                 break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");

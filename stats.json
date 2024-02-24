@@ -173,5 +173,10 @@
         "name": "Mimicry",
         "type": "int"
       }
+      ,"actions_s28": {
+        "id": 56,
+        "name": "Fog Die",
+        "type": "int"
+      }
     }
   }

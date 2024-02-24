@@ -132,6 +132,16 @@ class PlayerAction extends \STIG\Helpers\DB_Model
     return true;
   }
 
+  public function setNewStateAfterUse(){
+    if(ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN == $this->getState())
+    {
+      $this->setState(ACTION_STATE_LOCKED_FOR_TURN);
+    } else if(ACTION_STATE_UNLOCKED_FOR_ONCE_GAME == $this->getState())
+    {
+      $this->setState(ACTION_STATE_LOCKED);
+    }
+  }
+
     /**
      * @param int $actionType
      * @return int $state

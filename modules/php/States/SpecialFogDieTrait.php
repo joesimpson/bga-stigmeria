@@ -10,13 +10,13 @@ use STIG\Managers\DiceRoll;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
+use STIG\Models\StigmerianToken;
 
 trait SpecialFogDieTrait
 {
     public function stSpFogDie($pId)
     { 
       self::trace("stSpFogDie($pId)");
-      PGlobals::setLastDie($pId, DiceRoll::rollNew());
   
       $this->addCheckpoint(ST_TURN_SPECIAL_ACT_FOGDIE,$pId);
     }
@@ -29,7 +29,8 @@ trait SpecialFogDieTrait
         return [
             'p' => $spots,
             'd' => $dieType,
-            'token_color' => $token_color,
+            'token_type' => $token_color,
+            'token_color' => StigmerianToken::getTypeName($token_color),
         ];
     }
     
@@ -77,7 +78,8 @@ trait SpecialFogDieTrait
         $token->checkAndBecomesPollen($player);
 
         $player->incNbPersonalActionsDone($actionCost);
-        Notifications::useActions($player);
+        $playerAction->setNewStateAfterUse();
+        Notifications::useActions($player,$playerAction);
         $player->giveExtraTime();
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);

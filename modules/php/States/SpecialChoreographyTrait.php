@@ -79,7 +79,7 @@ trait SpecialChoreographyTrait
         //EFFECT : MOVE the TOKEN 
         if($nbMovesDone ==0 ){
             //This action is now USED IN player turn
-            $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
+            $playerAction->setNewStateAfterUse();
             Notifications::spChoreography($player,$nbMovesMax,$actionCost);
             Stats::inc("actions_s".$actionType,$pId);
             Stats::inc("actions",$pId);
@@ -143,7 +143,7 @@ trait SpecialChoreographyTrait
         //EFFECT : 
         if($nbMovesDone ==0 ){
             //This action is now USED IN player turn
-            $playerAction->setState(ACTION_STATE_LOCKED_FOR_TURN);
+            $playerAction->setNewStateAfterUse();
             Notifications::spChoreography($player,$nbMovesMax,$actionCost);
             Stats::inc("actions_s".$actionType,$pId);
             Stats::inc("actions",$pId);
