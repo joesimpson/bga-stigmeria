@@ -69,6 +69,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
       case ACTION_TYPE_COPY:
         return 2;
       case ACTION_TYPE_CHOREOGRAPHY:
+      case ACTION_TYPE_FOGDIE:
       case ACTION_TYPE_MIMICRY:
       case ACTION_TYPE_MOVE_FAST:
       case ACTION_TYPE_PREDICTION:
@@ -168,6 +169,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             case ACTION_TYPE_MIMICRY:
                 return ACTION_STATE_UNLOCKED_FOREVER;
+            case ACTION_TYPE_FOGDIE:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             
             default:
               return ACTION_STATE_UNLOCKED_FOREVER;

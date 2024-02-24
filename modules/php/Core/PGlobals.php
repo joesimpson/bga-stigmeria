@@ -32,6 +32,9 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     //list of colors used for Mimicry in turn
     'mimicColorUsed' => 'obj',
     
+    //Last dice roll result
+    'lastDie' => 'int',
+
     'eliminated' => 'bool',
   ];
 
@@ -195,7 +198,9 @@ class PGlobals extends \STIG\Helpers\DB_Manager
       self::setNbSpActionsMax($playerId,0);
       self::setLastLanded($playerId,null);
       self::setMimicColorUsed($playerId,[]);
+      self::setLastDie($playerId,null);
       self::setEliminated($playerId,false);
+
       //the first state to be activated:
       self::setState($playerId,ST_TURN_COMMON_BOARD);
       self::setEngineChoices($playerId, 0);

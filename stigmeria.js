@@ -44,6 +44,7 @@ function (dojo, declare) {
     const ACTION_TYPE_COPY = 25;
     const ACTION_TYPE_PREDICTION = 26;
     const ACTION_TYPE_MIMICRY = 27;
+    const ACTION_TYPE_FOGDIE = 28;
 
     const TOKEN_TYPE_NEWTURN = 21;
     /* TOKEN TYPES : stigmerians, then pollens*/
@@ -112,6 +113,7 @@ function (dojo, declare) {
                 ['spCopy', 900],
                 ['spPrediction', 500],
                 ['spMimicry', 900],
+                ['spFogDie', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -424,6 +426,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,'actChooseSp');
 
         }, 
             
@@ -646,6 +649,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -734,7 +738,7 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpTwoBeats() ', args );
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
-            this.initCellSelection('actTwoBeats', args.p_places_p, this.player_id,TOKEN_STIG_WHITE)
+            this.initCellSelection('actTwoBeats', args.p_places_p, this.player_id,TOKEN_STIG_WHITE);
         }, 
         
         onEnteringStateSpRest: function(args)
@@ -854,6 +858,11 @@ function (dojo, declare) {
             $(`btnConfirm`).classList.add('disabled');
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
+        onEnteringStateSpFogDie: function(args)
+        {
+            debug( 'onEnteringStateSpFogDie() ', args );
+            this.initCellSelection('actFogDie', args.p, this.player_id,args.token_color);
+        },
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );
@@ -1288,6 +1297,12 @@ function (dojo, declare) {
             let div = $(`stig_token_${token.id}`);
             div.dataset.type = token.type;
             this.animationBlink2Times(div);
+        },
+        notif_spFogDie(n) {
+            debug('notif_spFogDie: token added', n);
+            let token = n.args.token;
+            let div = this.addToken(token,this.getVisibleTitleContainer());
+            this.slide(div, this.getTokenContainer(token));
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);

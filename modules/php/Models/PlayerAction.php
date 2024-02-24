@@ -4,6 +4,7 @@ namespace STIG\Models;
 
 use STIG\Core\Game;
 use STIG\Core\Globals;
+use STIG\Helpers\GridUtils;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -122,6 +123,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
         break;
       case ACTION_TYPE_MIMICRY:
         if(Game::get()->listPossibleMimicry($playerId)['colors']->count() == 0) return false;
+        break;
+      case ACTION_TYPE_FOGDIE:
+        if(Tokens::countOnPlayerBoard($playerId)>=GridUtils::getNbCells()) return false;
         break;
     }
 

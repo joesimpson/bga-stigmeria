@@ -31,6 +31,13 @@ abstract class GridUtils extends \APP_DbObject
 
         return false;
     }
+    /**
+     * @return int
+     */
+    public static function getNbCells()
+    {
+      return (COLUMN_MAX - COLUMN_MIN +1) *(ROW_MAX - ROW_MIN +1);
+    }
       /**
      * @return string Example "J5"
      */

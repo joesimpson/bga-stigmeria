@@ -138,7 +138,8 @@
                         &[data-type='13'],
                         &[data-type='16'],
                         &[data-type='23'],  
-                        &[data-type='26'],
+                        &[data-type='26'],  
+                        &[data-type='28'],
                         &[data-type='27']  {
                             left: 950px;
                         }
@@ -149,7 +150,8 @@
                             top: 83px;
                         }
                         // ROW 2
-                        &[data-type='11'] {
+                        &[data-type='11'], 
+                        &[data-type='28'] {
                             top: 214px;
                         }
                         // ROW 3

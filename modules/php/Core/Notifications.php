@@ -707,6 +707,24 @@ class Notifications
     );
   }
   /**
+   * 
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param int $actionCost
+   */
+  public static function spFogDie($player,$token,$actionCost){
+    self::notifyAll('spFogDie',clienttranslate('${player_name} use the Fog Die to place a ${token_color} stigmerian at ${L} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'n' => $actionCost,
+        'L' => $token->getCoordName(),
+        'token' => $token->getUiData(),
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+      ],
+    );
+  }
+  /**
    * Will Unlock Special action 
    * @param Player $player
    * @param int $nbActions

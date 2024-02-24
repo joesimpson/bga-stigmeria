@@ -132,6 +132,10 @@ trait SpecialActionTrait
                 $nextState = "startMimicry";
                 $nextStateId = ST_TURN_SPECIAL_ACT_MIMICRY;
                 break;
+            case ACTION_TYPE_FOGDIE:
+                $nextState = "startFogDie";
+                $nextStateId = ST_TURN_SPECIAL_ACT_FOGDIE;
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

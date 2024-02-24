@@ -125,6 +125,7 @@ $machinestates = array(
         ],
     ),    
 
+    /* TBD
     ST_PLAYER_DICE => array(
         "name" => "playerDice",
         "description" => clienttranslate('${actplayer} must choose a dice result'),
@@ -138,6 +139,7 @@ $machinestates = array(
             "zombiePass" => ST_GENERATE_WIND,
         ],
     ),
+    */
 
     ST_NEXT_TURN => array(
         "name" => "nextTurn",
@@ -382,6 +384,7 @@ $machinestates = array(
             'startCopy' => ST_TURN_SPECIAL_ACT_COPY,
             'startPrediction' => ST_TURN_SPECIAL_ACT_PREDICTION,
             'startMimicry' => ST_TURN_SPECIAL_ACT_MIMICRY,
+            'startFogDie' => ST_TURN_SPECIAL_ACT_FOGDIE,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -625,6 +628,19 @@ $machinestates = array(
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
+    ST_TURN_SPECIAL_ACT_FOGDIE => [
+        "name" => "spFogDie",
+        "descriptionmyturn" => clienttranslate('Die roll ${d} : ${you} must place a new ${token_color} stigmerian on your board'), 
+        "type" => "private",
+        "args" => "argSpFogDie",
+        "action" => "stSpFogDie",
+        "possibleactions" => [
+            "actFogDie",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+        ],
+    ],
     /*
     ST_CONFIRM_CHOICES => [
         'name' => 'confirmChoices',
@@ -656,7 +672,7 @@ $machinestates = array(
         "action" => "stWindEffect",
         "transitions" => [ 
             "next" => ST_NEXT_TURN,
-            "playerDice" => ST_PLAYER_DICE,
+            //"playerDice" => ST_PLAYER_DICE2,
         ],
     ),
     ST_END_ROUND => array(

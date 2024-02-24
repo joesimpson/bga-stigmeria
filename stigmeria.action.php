@@ -454,6 +454,15 @@
       $this->game->actMimicry($typeDest);
       self::ajaxResponse();
     } 
+    public function actFogDie()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actFogDie($row,$col);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();
