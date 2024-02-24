@@ -381,7 +381,7 @@ function (dojo, declare) {
             debug( 'onEnteringStateCentralChoiceTokenToMove() ', args );
             $('stig_central_board_container_wrapper').classList.add('stig_current_play');
             this.initTokenSelectionDest('actCentralMove', args.p_places_m,'central','actCentralMoveOut');
-            this.addSecondaryActionButton('btnCancel',  _('Cancel'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
+            this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
         
         onEnteringStateCJoker: function(args)
@@ -640,11 +640,16 @@ function (dojo, declare) {
             this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id,'actMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
-        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions, actionName ='actChoiceSpecial') {
-            debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions);
+        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions, actionName ='actChoiceSpecial',confirmMessage = null) {
+            debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions,confirmMessage);
             if(possibleActions.includes(actionType)){
                 let divText = `<div><div class='stig_sp_action_text'>`+_(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
-                this.addImageActionButton('btnStartSp'+actionType,divText , () => this.takeAction(actionName, {act:actionType}));
+                this.addImageActionButton('btnStartSp'+actionType,divText , () => {
+                    if(confirmMessage !=null) this.confirmationDialog(confirmMessage, () => {
+                        this.takeAction(actionName, {act:actionType});
+                    });
+                    else this.takeAction(actionName, {act:actionType});
+                });
                 if(!enabledActions.includes(actionType)){
                     $('btnStartSp'+actionType).classList.add('disabled');
                 }
@@ -671,7 +676,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions);
-            this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,'actChoiceSpecial', _('Are you sure to roll a die to get a free stigmerian ? You cannot cancel after that.'));
             this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
