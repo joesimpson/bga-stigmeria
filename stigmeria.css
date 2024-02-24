@@ -2673,6 +2673,83 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   left: 768px;
 }
 
+.stig_icon_container_die_log,
+.stig_subicon_die_log {
+  width: 40px;
+  height: 40px;
+  background-image: url("img/dice.png");
+  background-size: 300% 400%;
+  display: inline-block;
+  line-height: 40px;
+  max-height: 40px;
+  text-align: center;
+  vertical-align: middle;
+}
+.stig_icon_container_die_log[data-type=null],
+.stig_subicon_die_log[data-type=null] {
+  background-image: none;
+}
+.stig_icon_container_die_log[data-type="1"],
+.stig_subicon_die_log[data-type="1"] {
+  background-position-x: 0%;
+  background-position-y: 0%;
+}
+.stig_icon_container_die_log[data-type="2"],
+.stig_subicon_die_log[data-type="2"] {
+  background-position-x: 50%;
+  background-position-y: 0%;
+}
+.stig_icon_container_die_log[data-type="3"],
+.stig_subicon_die_log[data-type="3"] {
+  background-position-x: 100%;
+  background-position-y: 0%;
+}
+.stig_icon_container_die_log[data-type="4"],
+.stig_subicon_die_log[data-type="4"] {
+  background-position-x: 0%;
+  background-position-y: 33.3333333333%;
+}
+.stig_icon_container_die_log[data-type="5"],
+.stig_subicon_die_log[data-type="5"] {
+  background-position-x: 50%;
+  background-position-y: 33.3333333333%;
+}
+.stig_icon_container_die_log[data-type="6"],
+.stig_subicon_die_log[data-type="6"] {
+  background-position-x: 100%;
+  background-position-y: 33.3333333333%;
+}
+.stig_icon_container_die_log[data-type="7"],
+.stig_subicon_die_log[data-type="7"] {
+  background-position-x: 0%;
+  background-position-y: 66.6666666667%;
+}
+.stig_icon_container_die_log[data-type="8"],
+.stig_subicon_die_log[data-type="8"] {
+  background-position-x: 50%;
+  background-position-y: 66.6666666667%;
+}
+.stig_icon_container_die_log[data-type="9"],
+.stig_subicon_die_log[data-type="9"] {
+  background-position-x: 100%;
+  background-position-y: 66.6666666667%;
+}
+.stig_icon_container_die_log[data-type="10"],
+.stig_subicon_die_log[data-type="10"] {
+  background-position-x: 0%;
+  background-position-y: 100%;
+}
+.stig_icon_container_die_log[data-type="11"],
+.stig_subicon_die_log[data-type="11"] {
+  background-position-x: 50%;
+  background-position-y: 100%;
+}
+.stig_icon_container_die_log[data-type="12"],
+.stig_subicon_die_log[data-type="12"] {
+  background-position-x: 100%;
+  background-position-y: 100%;
+}
+
 /**
  * Player panel settings
  * AUTHOR : © Tisaac
@@ -3270,11 +3347,11 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 
 .stig_icon_container_token_log,
 .stig_subicon_token_log {
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   display: inline-block;
-  line-height: 16px;
-  max-height: 20px;
+  line-height: 30px;
+  max-height: 30px;
   text-align: center;
   vertical-align: middle;
   border: none;

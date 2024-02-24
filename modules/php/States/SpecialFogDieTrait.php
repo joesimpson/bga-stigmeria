@@ -28,7 +28,7 @@ trait SpecialFogDieTrait
         $spots = $this->listPossiblePlacesOnPersonalBoard($player_id);
         return [
             'p' => $spots,
-            'd' => $dieType,
+            'die_face' => $dieType,
             'token_type' => $token_color,
             'token_color' => StigmerianToken::getTypeName($token_color),
         ];

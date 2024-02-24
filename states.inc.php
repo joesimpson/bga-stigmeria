@@ -630,7 +630,7 @@ $machinestates = array(
     ],
     ST_TURN_SPECIAL_ACT_FOGDIE => [
         "name" => "spFogDie",
-        "descriptionmyturn" => clienttranslate('Die roll ${d} : ${you} must place a new ${token_color} stigmerian on your board'), 
+        "descriptionmyturn" => clienttranslate('Die roll ${die_face} : ${you} must place a new ${token_color} stigmerian on your board'), 
         "type" => "private",
         "args" => "argSpFogDie",
         "action" => "stSpFogDie",

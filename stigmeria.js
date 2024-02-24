@@ -861,7 +861,7 @@ function (dojo, declare) {
         onEnteringStateSpFogDie: function(args)
         {
             debug( 'onEnteringStateSpFogDie() ', args );
-            this.initCellSelection('actFogDie', args.p, this.player_id,args.token_color);
+            this.initCellSelection('actFogDie', args.p, this.player_id,args.token_type);
         },
         onEnteringStateWindEffect: function(args)
         {
@@ -2111,6 +2111,10 @@ function (dojo, declare) {
                 if(token_color3 in args && token_type3 in args) {
                     args.token_color3 = this.formatIcon("token_log",args.token_type3,args.token_type3);
                     args.token_type3 = "";
+                }
+                let die_face = 'die_face';
+                if(die_face in args) {
+                    args.die_face = this.formatIcon("die_log",args.die_face,args.die_face);
                 }
 
             }

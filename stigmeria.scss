@@ -18,6 +18,7 @@
 @import "modules/css/player-panel";
 @import "modules/css/player-board";
 @import "modules/css/actions";
+@import "modules/css/dice";
 @import "modules/css/settings";
 @import "modules/css/nouislider";
 /**
@@ -92,11 +93,11 @@
 //LOGS
 .stig_icon_container_token_log,
 .stig_subicon_token_log{
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
     display: inline-block;
-    line-height: 16px;
-    max-height: 20px;
+    line-height: 30px;
+    max-height: 30px;
     text-align: center;
     vertical-align: middle;
     border: none;
