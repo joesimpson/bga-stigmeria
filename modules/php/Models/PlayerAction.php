@@ -26,7 +26,6 @@ class PlayerAction extends \STIG\Helpers\DB_Model
   ];
   
   protected $staticAttributes = [
-    //TODO JSA check useful attributes
     //Cost in actions to play the action
     'cost' => ['cost', 'int'],
     //Min difficulty to play the action
@@ -192,4 +191,11 @@ class PlayerAction extends \STIG\Helpers\DB_Model
         }
     }
 
+    /**
+     * @return bool true if this action is played VERSUS an opponent
+     */
+    public function isVS()
+    { 
+      return in_array($this->getType(),ACTION_VS_TYPES);
+    }
 }

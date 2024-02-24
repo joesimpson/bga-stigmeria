@@ -84,7 +84,6 @@ trait PlayerTurnCommonBoardTrait
         //ACTION EFFECT
         $token = Tokens::pickOneForLocation(TOKEN_LOCATION_PLAYER_DECK.$pId, TOKEN_LOCATION_CENTRAL_RECRUIT_TOPLACE, TOKEN_STATE_STIGMERIAN);
         if($token == null){
-            //TODO JSA LOST GAME (maybe already lost before looking in the bag ?)
             throw new UnexpectedException(404,"Not supported draw : empty draw bag for player $pId");
         }
         Stats::inc("tokens_deck",$player->getId(),-1);

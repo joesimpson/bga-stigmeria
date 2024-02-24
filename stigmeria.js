@@ -195,7 +195,7 @@ function (dojo, declare) {
                   },
                 takePieceWidth: {
                   default: 40,
-                  name: _('Token width in selection'),
+                  name: _('Token width in upper selection'),
                   type: 'slider',
                   sliderConfig: {
                     step: 3,
@@ -1129,6 +1129,14 @@ function (dojo, declare) {
         notif_letNextPlay(n) {
             debug('notif_letNextPlay: ', n);
             if($(`btnLetNextPlay`) ) dojo.destroy($(`btnLetNextPlay`));
+            Object.values(n.args.actions).forEach((playerAction) => {
+                if ($(`stig_sp_action_${playerAction.id}`)) {
+                    $(`stig_sp_action_${playerAction.id}`).dataset.state = playerAction.state;
+                }
+            });
+            let player_id = n.args.player_id;
+            this._counters[player_id]['unlockedActions'].setValue(n.args.ua);
+            this._counters[player_id]['lockedActions'].setValue(n.args.la);
         },
         notif_moveFromDeckToPlayerBoard(n) {
             debug('notif_moveFromDeckToPlayerBoard: new token on player board from deck', n);

@@ -5,6 +5,7 @@ namespace STIG\States;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\PGlobals;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 
 trait PlayerTurnTrait
@@ -70,8 +71,6 @@ trait PlayerTurnTrait
         $player_name = $player->getName();
         self::trace("actLetNextPlay($player_id,$player_name )");
 
-        //TODO JSA SAVE THIS INFO TO AVOID $player_id playing VS actions
-
         $turn = Globals::getTurn();
         $nextPlayer = $this->startNextPlayerTurn($player, $turn, false);
         /*if(isset($nextPlayer)){
@@ -118,7 +117,12 @@ trait PlayerTurnTrait
         $nextPlayer = Players::getNextInactivePlayerInTurn($player_id, $turn);
         if(isset($nextPlayer)){
             if(!$automatic){
-                Notifications::letNextPlay($player,$nextPlayer);
+                // SAVE THIS INFO TO AVOID $player_id playing VS actions
+                PlayerActions::lockVSActionsForTurn($player_id);
+                $actions = PlayerActions::getPlayer($player_id)->filter(function($action) {
+                        return $action->state == ACTION_STATE_LOCKED_FOR_TURN;
+                    });
+                Notifications::letNextPlay($player,$nextPlayer,$actions);
             }
             $nextPlayer->startTurn($turn);
 

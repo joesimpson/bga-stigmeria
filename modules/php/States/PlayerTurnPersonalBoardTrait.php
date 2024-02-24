@@ -93,7 +93,7 @@ trait PlayerTurnPersonalBoardTrait
         $this->addStep( $player->id, $player->getPrivateState());
 
         $remaining = $player->countRemainingPersonalActions();
-        $actionCost = 1;//TODO JSA ACTION MODEL ?
+        $actionCost = 1;
 
         //CHECK REMAINING ACTIONS VS cost
         if($remaining < $actionCost){

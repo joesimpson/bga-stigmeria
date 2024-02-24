@@ -92,11 +92,15 @@ class Notifications
   /**
    * @param Player $player1
    * @param Player $player2
+   * @param Collection $actions PlayerAction
    */
-  public static function letNextPlay($player1,$player2){
+  public static function letNextPlay($player1,$player2,$actions){
     self::notifyAll('letNextPlay',clienttranslate('${player_name} lets ${player_name2} start to play for this turn'),[ 
         'player' => $player1,
         'player2' => $player2,
+        'actions' => $actions->ui(),
+        'ua' => $player1->countUnlockedActions(),
+        'la' => $player1->countLockedActions(),
       ],
     );
   }
