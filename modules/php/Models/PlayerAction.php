@@ -127,6 +127,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
       case ACTION_TYPE_FOGDIE:
         if(Tokens::countOnPlayerBoard($playerId)>=GridUtils::getNbCells()) return false;
         break;
+      case ACTION_TYPE_PILFERER:
+        if(count(Game::get()->listPilfererTargets($playerId)) == 0) return false;
+        break;
     }
 
     return true;

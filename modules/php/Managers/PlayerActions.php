@@ -42,6 +42,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
   {
     switch($type){
       
+      case ACTION_TYPE_PILFERER:
+        return 0;
       case ACTION_TYPE_MIMICRY:
         return 3;
       case ACTION_TYPE_DIAGONAL:
@@ -170,6 +172,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
             case ACTION_TYPE_MIMICRY:
                 return ACTION_STATE_UNLOCKED_FOREVER;
             case ACTION_TYPE_FOGDIE:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_PILFERER:
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             
             default:

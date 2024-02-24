@@ -178,5 +178,10 @@
         "name": "Fog Die",
         "type": "int"
       }
+      ,"actions_s29": {
+        "id": 57,
+        "name": "Pilferer",
+        "type": "int"
+      }
     }
   }

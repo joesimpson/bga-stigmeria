@@ -138,6 +138,10 @@ trait SpecialActionTrait
                 $nextStateId = ST_TURN_SPECIAL_ACT_FOGDIE;
                 PGlobals::setLastDie($pId, DiceRoll::rollNew());
                 break;
+            case ACTION_TYPE_PILFERER:
+                $nextState = "startPilferer";
+                $nextStateId = ST_TURN_SPECIAL_ACT_PILFERER;
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

@@ -385,6 +385,7 @@ $machinestates = array(
             'startPrediction' => ST_TURN_SPECIAL_ACT_PREDICTION,
             'startMimicry' => ST_TURN_SPECIAL_ACT_MIMICRY,
             'startFogDie' => ST_TURN_SPECIAL_ACT_FOGDIE,
+            'startPilferer' => ST_TURN_SPECIAL_ACT_PILFERER,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -639,6 +640,20 @@ $machinestates = array(
         ],
         "transitions" => [
             'next' => ST_TURN_PERSONAL_BOARD,
+        ],
+    ],
+    ST_TURN_SPECIAL_ACT_PILFERER => [
+        "name" => "spPilferer",
+        "descriptionmyturn" => clienttranslate('${you} must select a player bag to draw from'), 
+        "type" => "private",
+        "args" => "argSpPilferer",
+        "possibleactions" => [
+            "actPilferer",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
     /*

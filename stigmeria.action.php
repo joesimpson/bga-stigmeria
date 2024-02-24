@@ -463,6 +463,14 @@
       $this->game->actFogDie($row,$col);
       self::ajaxResponse();
     } 
+    public function actPilferer()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $pid = self::getArg( "p", AT_posint, true );
+      $this->game->actPilferer($pid);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();

@@ -45,6 +45,7 @@ function (dojo, declare) {
     const ACTION_TYPE_PREDICTION = 26;
     const ACTION_TYPE_MIMICRY = 27;
     const ACTION_TYPE_FOGDIE = 28;
+    const ACTION_TYPE_PILFERER = 29;
 
     const TOKEN_TYPE_NEWTURN = 21;
     /* TOKEN TYPES : stigmerians, then pollens*/
@@ -114,6 +115,7 @@ function (dojo, declare) {
                 ['spPrediction', 500],
                 ['spMimicry', 900],
                 ['spFogDie', 900],
+                ['spPilferer', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -446,7 +448,8 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,'actChooseSp');
-
+            this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions,'actChooseSp');
+            
         }, 
             
         onEnteringStateGiveTokens: function(args)
@@ -459,7 +462,7 @@ function (dojo, declare) {
             let possibleTokens = args.tokens;
             let playerDestination = null;
             this.forEachPlayer((player) => {
-                let buttonText = (this.player_id == player.id) ? _('Put in my bag') : this.fsr(_('Put in ${player} bag'), { player: player.name });
+                let buttonText = (this.player_id == player.id) ? _('Put in my bag') : this.fsr(_('Put in ${player} bag'), { player: this.formatPlayerNameButton(player) });
                 this.addPrimaryActionButton('btnConfirm'+player.id,  buttonText, () => { 
                     this.takeAction('actGiveTokens', {tIds: this.currentSelection.join(';'), pid: player.id, }); 
                 } );
@@ -669,6 +672,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -881,6 +885,22 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpFogDie() ', args );
             this.initCellSelection('actFogDie', args.p, this.player_id,args.token_type);
+        },
+        onEnteringStateSpPilferer: function(args)
+        {
+            debug( 'onEnteringStateSpPilferer() ', args );
+            Object.values(args.p).forEach((playerId) => {
+                let player = this.gamedatas.players[playerId];
+                let buttonText = this.fsr(_('Draw from ${player} bag'), { player: this.formatPlayerNameButton(player) });
+                let confirmText = this.fsr(_('Are you sure to draw a token from ${player} bag ? Action will not be undoable.'), { player: this.formatPlayerNameButton(player) });
+                this.addPrimaryActionButton('btnConfirm_'+player.id,  buttonText, () => { 
+                    this.confirmationDialog(confirmText, () => {
+                        this.takeAction('actPilferer', {p: player.id, }); 
+                    });
+                } );
+                $('btnConfirm_'+player.id).classList.add('stig_button_pilferer');
+            });
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         },
         onEnteringStateWindEffect: function(args)
         {
@@ -1321,6 +1341,16 @@ function (dojo, declare) {
             debug('notif_spFogDie: token added', n);
             let token = n.args.token;
             let div = this.addToken(token,this.getVisibleTitleContainer());
+            this.slide(div, this.getTokenContainer(token));
+        },
+        notif_spPilferer(n) {
+            debug('notif_spPilferer: token from other bag', n);
+            let token = n.args.token;
+            let toPid = n.args.player_id;
+            let fromPid = n.args.player_id2;
+            let div = this.addToken(token, `stig_reserve_${fromPid}_tokens_deck`);
+            this._counters[fromPid]['tokens_deck'].incValue(-1);
+            this._counters[toPid]['tokens_recruit'].incValue(+1);
             this.slide(div, this.getTokenContainer(token));
         },
         notif_playJoker(n) {
@@ -2163,6 +2193,11 @@ function (dojo, declare) {
             return `<div class="stig_icon_container stig_icon_container_${type}">
                 <div class="stig_icon stig_${type}">${text}${tplSubIcons}</div>
                 </div>`;
+        },
+        formatPlayerNameButton: function(player)
+        {
+            debug( 'formatPlayerNameButton() ', player );
+            return `<span class='stig_button_player_name' style='color:#${player.color};'>${player.name}</span>`;
         },
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
