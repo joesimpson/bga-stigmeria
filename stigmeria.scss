@@ -93,11 +93,11 @@
 //LOGS
 .stig_icon_container_token_log,
 .stig_subicon_token_log{
-    height: 30px;
-    width: 30px;
+    height: var(--stig_tokenLogWidth);
+    width: var(--stig_tokenLogWidth);
     display: inline-block;
-    line-height: 30px;
-    max-height: 30px;
+    line-height: var(--stig_tokenLogWidth);
+    max-height: var(--stig_tokenLogWidth);
     text-align: center;
     vertical-align: middle;
     border: none;

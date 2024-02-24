@@ -204,6 +204,19 @@ function (dojo, declare) {
                     },
                   },
                 },
+                tokenLogWidth: {
+                  default: 100,
+                  name: _('Token width in logs'),
+                  type: 'slider',
+                  sliderConfig: {
+                    step: 10,
+                    padding: 0,
+                    range: {
+                      min: [50],
+                      max: [200],
+                    },
+                  },
+                },
                 spButtonsStyle: { type: 'pref', prefId: PREF_SP_BUTTONS },
             };
         },
@@ -225,6 +238,12 @@ function (dojo, declare) {
                 });
             */
             ROOT.style.setProperty('--stig_takePieceWidth', `${newWidth}px`);
+        },
+        onChangeTokenLogWidthSetting(val) {
+            const ROOT = document.documentElement;
+            const WIDTH = 30;
+            let newWidth = (this.settings.tokenLogWidth / 100) * WIDTH; 
+            ROOT.style.setProperty('--stig_tokenLogWidth', `${newWidth}px`);
         },
        
 
