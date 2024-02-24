@@ -44,6 +44,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
       
       case ACTION_TYPE_PILFERER:
       case ACTION_TYPE_SOWER:
+      case ACTION_TYPE_CHARMER:
         return 0;
       case ACTION_TYPE_MIMICRY:
         return 3;
@@ -70,6 +71,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
       case ACTION_TYPE_SWAP:
       case ACTION_TYPE_FULGURANCE:
       case ACTION_TYPE_COPY:
+      case ACTION_TYPE_CHARMER:
         return 2;
       case ACTION_TYPE_CHOREOGRAPHY:
       case ACTION_TYPE_FOGDIE:
@@ -177,6 +179,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
             case ACTION_TYPE_PILFERER:
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             case ACTION_TYPE_SOWER:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_CHARMER:
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             
             default:

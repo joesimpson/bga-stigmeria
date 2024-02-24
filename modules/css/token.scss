@@ -1,4 +1,5 @@
-#stig_select_piece_container {
+#stig_select_piece_container,
+.stig_select_piece_player_container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -16,6 +17,17 @@
             
         }
     }
+}
+.stig_select_piece_player_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row;
+
+    .player-name{
+        margin-right: 20px;
+    }
+
 }
 
 .stig_token_cell.selectable:hover,

@@ -27,6 +27,17 @@ trait ConfirmUndoTrait
         PGlobals::incEngineChoices($pId, 1);
     }
 
+    public function argConfirmChoices()
+    {
+        $player = Players::getCurrent();
+        $pId = $player->id;
+        $data = [];
+        //TODO JSA see how to Undo Charmer
+        //$this->addArgsForUndo($pId, $data);
+        return $data;
+    }
+    
+    //When private state
     public function argsConfirmTurn($pId)
     {
         $data = [];
@@ -40,22 +51,6 @@ trait ConfirmUndoTrait
         $args['previousChoices'] = PGlobals::getEngineChoices($pId);
     }
 
-    function stConfirmChoices()
-    {
-        $player = Players::getCurrent();
-        $pId = $player->getId();
-        $this->gamestate->nextPrivateState($pId,'confirm');
-    }
-
-    public function stConfirmTurn()
-    {
-        /*
-        if (Globals::getChoices() == 0) {
-            $this->actConfirmTurn(true);
-        }
-        */
-    }
-
     public function actConfirmTurn($auto = false)
     {
         if (!$auto) {
@@ -63,10 +58,13 @@ trait ConfirmUndoTrait
         }
         $player = Players::getCurrent();
         $pId = $player->getId();
+        /*
         $this->addCheckpoint($player->getPrivateState(),$pId);
         $this->gamestate->nextPrivateState($pId,'confirm');
+        */
+        $this->addCheckpoint(ST_AFTER_TURN);
+        $this->gamestate->nextState("confirm");
     }
-
 
     public function actRestart()
     {

@@ -756,7 +756,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spSower($player,$targetPlayer,$token,$actionCost){
-    self::notifyAll('spSower',clienttranslate('${player_name} use the Sower put 1 ${token_color} stigmerian in ${player_name2} bag (cost: ${n} actions)'),[ 
+    self::notifyAll('spSower',clienttranslate('${player_name} use the Sower to put 1 ${token_color} stigmerian in ${player_name2} bag (cost: ${n} actions)'),[ 
         'player' => $player,
         'player2' => $targetPlayer,
         'n' => $actionCost,
@@ -764,6 +764,40 @@ class Notifications
         'preserve' => [ 'token_type' ],
         'token_color' => StigmerianToken::getTypeName($token->getType()),
         'token_type' => $token->getType(),
+      ],
+    );
+  }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param Player $player1
+   * @param Player $player2
+   * @param StigmerianToken $token1
+   * @param StigmerianToken $token2
+   */
+  public static function spCharmer($player,$player1,$player2,$token1,$token2){
+    self::notifyAll('spCharmer',clienttranslate('${player_name} use the Charmer to exchange ${token_color} in ${player_name2} recruit zone with ${token_color2} in ${player_name3} recruit zone'),[ 
+        'player' => $player,
+        'player2' => $player1,
+        'player3' => $player2,
+        't1' => $token1->getUiData(),
+        't2' => $token2->getUiData(),
+        'preserve' => [ 'token_type','token_type2' ],
+        'token_color' => StigmerianToken::getTypeName($token1->getType()),
+        'token_type' => $token1->getType(),
+        'token_color2' => StigmerianToken::getTypeName($token2->getType()),
+        'token_type2' => $token2->getType(),
+      ],
+    );
+  }
+  /**
+   * 
+   * @param Player $player
+   */
+  public static function passCharmer($player){
+    self::notifyAll('passCharmer',clienttranslate('${player_name} passes the Charmer action'),[ 
+        'player' => $player,
       ],
     );
   }
@@ -954,6 +988,12 @@ class Notifications
       $data['player_name2'] = $data['player2']->getName();
       $data['player_id2'] = $data['player2']->getId();
       unset($data['player2']);
+    }
+    
+    if (isset($data['player3'])) {
+      $data['player_name3'] = $data['player3']->getName();
+      $data['player_id3'] = $data['player3']->getId();
+      unset($data['player3']);
     }
     
     if (array_key_exists('n2',$data) && $data['n2'] == null) {

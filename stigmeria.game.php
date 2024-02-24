@@ -44,6 +44,7 @@ use STIG\Managers\Tokens;
 class Stigmeria extends Table
 {
     use STIG\DebugTrait;
+    use STIG\States\AfterTurnTrait;
     use STIG\States\CentralGainSpecialTrait;
     use STIG\States\CentralJokerTrait;
     use STIG\States\CentralLandTrait;

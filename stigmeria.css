@@ -20,91 +20,128 @@
   --stig_tokenLogWidth: 30px;
 }
 
-#stig_select_piece_container {
+#stig_select_piece_container,
+.stig_select_piece_player_container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
-#stig_select_piece_container .stig_token {
+#stig_select_piece_container .stig_token,
+.stig_select_piece_player_container .stig_token {
   margin: 5px 0px;
   width: var(--stig_takePieceWidth);
   height: var(--stig_takePieceWidth);
 }
-#stig_select_piece_container .stig_token[data-type="1"] {
+#stig_select_piece_container .stig_token[data-type="1"],
+.stig_select_piece_player_container .stig_token[data-type="1"] {
   order: 0;
 }
-#stig_select_piece_container .stig_token[data-type="2"] {
+#stig_select_piece_container .stig_token[data-type="2"],
+.stig_select_piece_player_container .stig_token[data-type="2"] {
   order: 1;
 }
-#stig_select_piece_container .stig_token[data-type="3"] {
+#stig_select_piece_container .stig_token[data-type="3"],
+.stig_select_piece_player_container .stig_token[data-type="3"] {
   order: 2;
 }
-#stig_select_piece_container .stig_token[data-type="4"] {
+#stig_select_piece_container .stig_token[data-type="4"],
+.stig_select_piece_player_container .stig_token[data-type="4"] {
   order: 3;
 }
-#stig_select_piece_container .stig_token[data-type="5"] {
+#stig_select_piece_container .stig_token[data-type="5"],
+.stig_select_piece_player_container .stig_token[data-type="5"] {
   order: 4;
 }
-#stig_select_piece_container .stig_token[data-type="6"] {
+#stig_select_piece_container .stig_token[data-type="6"],
+.stig_select_piece_player_container .stig_token[data-type="6"] {
   order: 5;
 }
-#stig_select_piece_container .stig_token[data-type="7"] {
+#stig_select_piece_container .stig_token[data-type="7"],
+.stig_select_piece_player_container .stig_token[data-type="7"] {
   order: 6;
 }
-#stig_select_piece_container .stig_token[data-type="8"] {
+#stig_select_piece_container .stig_token[data-type="8"],
+.stig_select_piece_player_container .stig_token[data-type="8"] {
   order: 7;
 }
-#stig_select_piece_container .stig_token[data-type="9"] {
+#stig_select_piece_container .stig_token[data-type="9"],
+.stig_select_piece_player_container .stig_token[data-type="9"] {
   order: 8;
 }
-#stig_select_piece_container .stig_token[data-type="10"] {
+#stig_select_piece_container .stig_token[data-type="10"],
+.stig_select_piece_player_container .stig_token[data-type="10"] {
   order: 9;
 }
-#stig_select_piece_container .stig_token[data-type="11"] {
+#stig_select_piece_container .stig_token[data-type="11"],
+.stig_select_piece_player_container .stig_token[data-type="11"] {
   order: 10;
 }
-#stig_select_piece_container .stig_token[data-type="12"] {
+#stig_select_piece_container .stig_token[data-type="12"],
+.stig_select_piece_player_container .stig_token[data-type="12"] {
   order: 11;
 }
-#stig_select_piece_container .stig_token[data-type="13"] {
+#stig_select_piece_container .stig_token[data-type="13"],
+.stig_select_piece_player_container .stig_token[data-type="13"] {
   order: 12;
 }
-#stig_select_piece_container .stig_token[data-type="14"] {
+#stig_select_piece_container .stig_token[data-type="14"],
+.stig_select_piece_player_container .stig_token[data-type="14"] {
   order: 13;
 }
-#stig_select_piece_container .stig_token[data-type="15"] {
+#stig_select_piece_container .stig_token[data-type="15"],
+.stig_select_piece_player_container .stig_token[data-type="15"] {
   order: 14;
 }
-#stig_select_piece_container .stig_token[data-type="16"] {
+#stig_select_piece_container .stig_token[data-type="16"],
+.stig_select_piece_player_container .stig_token[data-type="16"] {
   order: 15;
 }
-#stig_select_piece_container .stig_token[data-type="17"] {
+#stig_select_piece_container .stig_token[data-type="17"],
+.stig_select_piece_player_container .stig_token[data-type="17"] {
   order: 16;
 }
-#stig_select_piece_container .stig_token[data-type="18"] {
+#stig_select_piece_container .stig_token[data-type="18"],
+.stig_select_piece_player_container .stig_token[data-type="18"] {
   order: 17;
 }
-#stig_select_piece_container .stig_token[data-type="19"] {
+#stig_select_piece_container .stig_token[data-type="19"],
+.stig_select_piece_player_container .stig_token[data-type="19"] {
   order: 18;
 }
-#stig_select_piece_container .stig_token[data-type="20"] {
+#stig_select_piece_container .stig_token[data-type="20"],
+.stig_select_piece_player_container .stig_token[data-type="20"] {
   order: 19;
 }
-#stig_select_piece_container .stig_token[data-type="21"] {
+#stig_select_piece_container .stig_token[data-type="21"],
+.stig_select_piece_player_container .stig_token[data-type="21"] {
   order: 20;
 }
-#stig_select_piece_container .stig_token[data-type="22"] {
+#stig_select_piece_container .stig_token[data-type="22"],
+.stig_select_piece_player_container .stig_token[data-type="22"] {
   order: 21;
 }
-#stig_select_piece_container .stig_token[data-type="23"] {
+#stig_select_piece_container .stig_token[data-type="23"],
+.stig_select_piece_player_container .stig_token[data-type="23"] {
   order: 22;
 }
-#stig_select_piece_container .stig_token[data-type="24"] {
+#stig_select_piece_container .stig_token[data-type="24"],
+.stig_select_piece_player_container .stig_token[data-type="24"] {
   order: 23;
 }
-#stig_select_piece_container .stig_token[data-type="25"] {
+#stig_select_piece_container .stig_token[data-type="25"],
+.stig_select_piece_player_container .stig_token[data-type="25"] {
   order: 24;
+}
+
+.stig_select_piece_player_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+}
+.stig_select_piece_player_container .player-name {
+  margin-right: 20px;
 }
 
 .stig_token_cell.selectable:hover,
@@ -799,7 +836,7 @@
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="10"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="14"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="21"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="24"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="29"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="30"] {
   left: 240px;
 }
-#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="25"] {
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="31"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="25"] {
   left: 590px;
 }
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="13"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="16"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="23"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="26"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="28"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="27"] {
@@ -808,7 +845,7 @@
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="13"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="29"] {
   top: 83px;
 }
-#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="28"] {
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="31"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="28"] {
   top: 214px;
 }
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="25"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="27"] {
@@ -2649,6 +2686,10 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
 #customActions .stig_sp_action_image[data-type="30"] {
   background-position-x: 734px;
   background-position-y: 89px;
+}
+#customActions .stig_sp_action_image[data-type="31"] {
+  background-position-x: 1276px;
+  background-position-y: 622px;
 }
 
 body {

@@ -133,6 +133,7 @@
                         &[data-type='12'],
                         &[data-type='15'],
                         &[data-type='20'],
+                        &[data-type='31'],
                         &[data-type='25'] {
                             left: 590px;
                         }
@@ -154,6 +155,7 @@
                         }
                         // ROW 2
                         &[data-type='11'], 
+                        &[data-type='31'], 
                         &[data-type='28'] {
                             top: 214px;
                         }

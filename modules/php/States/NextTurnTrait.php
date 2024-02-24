@@ -62,8 +62,7 @@ trait NextTurnTrait
       }
     }
     //-------------------------------------------
-
-    Globals::incTurn(1);
+    Globals::setupNewTurn();
     $turn = Globals::getTurn();
     Stats::inc( "turns_number");
 

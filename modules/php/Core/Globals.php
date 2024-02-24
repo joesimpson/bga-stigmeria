@@ -23,6 +23,11 @@ class Globals extends \STIG\Helpers\DB_Manager
     'firstPlayer' => 'int',
     'winnersIds' => 'obj',
 
+    //Keep a trace of tokens charmed by players during the turn
+    'charmedTokens' => 'obj',
+    //Keep a trace of players who played or pass Charmed
+    'afterTurnPlayers' => 'obj',
+
     //We manage the wind direction for the 10 first turns, then the wind will be saved in windDirection11 (no need to display them)
     'windDirection1' => 'str',
     'windDirection2' => 'str',
@@ -216,6 +221,15 @@ class Globals extends \STIG\Helpers\DB_Manager
     self::incRound();
   }
 
+  /**
+   * Setup new game turn
+   */
+  public static function setupNewTurn()
+  {
+    self::incTurn(1);
+    self::setCharmedTokens([]);
+    self::setAfterTurnPlayers([]);
+  }
 
   protected static $table = 'global_variables';
   protected static $primary = 'name';

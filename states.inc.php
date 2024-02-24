@@ -66,7 +66,7 @@
  |      |       v
  |      \<----- nextTurn   <-------------------------------------------\
  |                |                                                    |
- |                firstToken                                           |
+ |                FT (firstToken)                                      |
  |                |                                                    |
  |                v                                                    |
  |              playerTurn                                             |
@@ -75,7 +75,7 @@
  |              |commonBoard personalBoard                             |
  |              |    |          |                                      |
  |              v    v          v                                      |
- |               --------------------\                                 |
+ |              afterTurn -----------\                                 |
  |                                   |                                 |
  |                                   v                                 |
  |                                 windEffect -------------------------/
@@ -180,8 +180,8 @@ $machinestates = array(
             //this actions are possible if player is not in any private state which usually happens when they are inactive
         ],
         "transitions" => [ 
-            "end" => ST_WIND_EFFECT,
-            "zombiePass" => ST_WIND_EFFECT,
+            "end" => ST_AFTER_TURN_NEXT_PLAYER,
+            "zombiePass" => ST_AFTER_TURN_NEXT_PLAYER,
         ],
     ),
     
@@ -298,7 +298,6 @@ $machinestates = array(
             "actSRecruit",
             "actSpecial",
             "actJoker",
-            "actPass",
             "actLetNextPlay",
             "actEndTurn",
             //"actBackToCommon",
@@ -671,30 +670,79 @@ $machinestates = array(
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],
+    
+    ST_AFTER_TURN_NEXT_PLAYER => array(
+        "name" => "afterTurnNext",
+        "description" => '',
+        "type" => "game",
+        "action" => "stAfterTurnNext",
+        "transitions" => [ 
+            "loopback" => ST_AFTER_TURN,
+            "next" => ST_AFTER_TURN,
+            "end" => ST_WIND_EFFECT,
+        ],
+    ),
+    ST_AFTER_TURN => array(
+        "name" => "afterTurn",
+        //"args" => "argAfterTurn",
+        "action" => "stAfterTurn",
+        "description" => clienttranslate('${actplayer} may play Charmer or pass'),
+        "descriptionmyturn" => clienttranslate('${you} may play Charmer or pass'),
+        "type" => "activeplayer",
+        "possibleactions" => ["actCharmer1","actPass" ],
+        "transitions" => [ 
+            "nextPlayer" => ST_AFTER_TURN_NEXT_PLAYER, 
+            "zombiePass" => ST_AFTER_TURN_NEXT_PLAYER,
+            "startCharmer" => ST_AFTER_TURN_CHARMER_STEP1, 
+        ],
+    ),
+    
+    ST_AFTER_TURN_CHARMER_STEP1 => array(
+        "name" => "charmer1",
+        "args" => "argCharmer1",
+        "description" => clienttranslate('Charmer : ${actplayer} must select 2 tokens to exchange between players'),
+        "descriptionmyturn" => clienttranslate('Charmer : ${you} must select 2 tokens to exchange between players'),
+        "type" => "activeplayer",
+        "possibleactions" => ["actCharmer2" ],
+        "transitions" => [ 
+            "next" => ST_AFTER_TURN_CONFIRM_CHOICES, 
+        ],
+    ),
     /*
-    ST_CONFIRM_CHOICES => [
-        'name' => 'confirmChoices',
-        'descriptionmyturn' => '',
-        'type' => 'game',
-        "type" => "private",
-        'action' => 'stConfirmChoices',
-        "updateGameProgression" => true,
-        'transitions' => [
-            'confirm' => ST_CONFIRM_TURN,
+    ST_AFTER_TURN_CHARMER_STEP2 => array(
+        "name" => "charmer2",
+        "args" => "argCharmer2",
+        "description" => clienttranslate('Charmer : ${actplayer} must select a second token to exchange'),
+        "descriptionmyturn" => clienttranslate('Charmer : ${you} must select a second token to exchange'),
+        "type" => "activeplayer",
+        "possibleactions" => ["actCharmer" ],
+        "transitions" => [ 
+            "next" => ST_AFTER_TURN_CONFIRM_CHOICES, 
+        ],
+    ),*/
+    ST_AFTER_TURN_CONFIRM_CHOICES => [
+        'name' => 'confirmTurn',
+        'description' => clienttranslate('${actplayer} must confirm or restart the action'),
+        'descriptionmyturn' => clienttranslate('${you} must confirm or restart your action'),
+        "type" => "activeplayer",
+        'args' => 'argConfirmChoices',
+        'possibleactions' => ['actConfirmTurn', 'actRestart'],
+        'transitions' => [ 
+            'confirm' => ST_AFTER_TURN_NEXT_PLAYER,
         ],
     ],
+    /*
     ST_CONFIRM_CHOICES => [
         'name' => 'confirmTurn',
         'descriptionmyturn' => clienttranslate('${you} must confirm or restart your action'),
         "type" => "private",
         'args' => 'argsConfirmTurn',
-        'action' => 'stConfirmTurn',
         'possibleactions' => ['actConfirmTurn', 'actRestart'],
         'transitions' => [ 
             'confirm' => ST_TURN_PERSONAL_BOARD,
         ],
     ],*/
-      
+
     ST_WIND_EFFECT => array(
         "name" => "windEffect",
         "description" => clienttranslate('Wind blows'),

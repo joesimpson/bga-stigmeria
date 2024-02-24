@@ -213,13 +213,13 @@ class Tokens extends \STIG\Helpers\Pieces
    * @param int $playerId
    * @return Collection of StigmerianToken found at that location
    */
-  public static function getAllRecruits($playerId)
+  public static function getAllRecruits($playerId = null)
   { 
-    Game::get()->trace("getAllRecruits($playerId)");
-    return self::DB()
-      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_RECRUIT)
-      ->wherePlayer($playerId)
-      ->get();
+    //Game::get()->trace("getAllRecruits($playerId)");
+    $query = self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_RECRUIT);
+    if(isset($playerId)) $query = $query->wherePlayer($playerId);
+    return  $query->get();
   }
   /**
    * @param int $playerId

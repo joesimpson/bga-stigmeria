@@ -497,7 +497,27 @@
     }
     
 
-
+    public function actPass()
+    {
+      self::setAjaxMode();
+      $this->game->actPass();
+      self::ajaxResponse();
+    }
+    public function actCharmer1()
+    {
+      self::setAjaxMode();
+      $this->game->actCharmer1();
+      self::ajaxResponse();
+    }
+    public function actCharmer2()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $tokenId1 = self::getArg( "t1", AT_posint, true );
+      $tokenId2 = self::getArg( "t2", AT_posint, true );
+      $this->game->actCharmer2($tokenId1,$tokenId2);
+      self::ajaxResponse();
+    } 
     ///////////////////
     /////  UNDO   /////
     ///////////////////

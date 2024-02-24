@@ -47,6 +47,7 @@ function (dojo, declare) {
     const ACTION_TYPE_FOGDIE = 28;
     const ACTION_TYPE_PILFERER = 29;
     const ACTION_TYPE_SOWER = 30;
+    const ACTION_TYPE_CHARMER = 31;
 
     const TOKEN_TYPE_NEWTURN = 21;
     /* TOKEN TYPES : stigmerians, then pollens*/
@@ -118,6 +119,7 @@ function (dojo, declare) {
                 ['spFogDie', 900],
                 ['spPilferer', 900],
                 ['spSower', 900],
+                ['spCharmer', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -452,7 +454,8 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Sower'),ACTION_TYPE_SOWER,possibleActions,enabledActions,'actChooseSp');
-            
+            this.formatSpecialActionButton(_('Charmer'),ACTION_TYPE_CHARMER,possibleActions,enabledActions,'actChooseSp');
+           
         }, 
             
         onEnteringStateGiveTokens: function(args)
@@ -960,6 +963,65 @@ function (dojo, declare) {
             $(`btnConfirm`).classList.add('disabled');
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
+        
+        onEnteringStateAfterTurn: function(args)
+        {
+            debug( 'onEnteringStateAfterTurn() ', args );
+            this.addPrimaryActionButton('btnCharmer', _('Charmer'), () => { this.takeAction('actCharmer1', {  });  }); 
+            this.addPrimaryActionButton('btnPass', _('Pass'), () => { this.takeAction('actPass', {  });  }); 
+        },
+        onEnteringStateCharmer1: function(args)
+        {
+            debug( 'onEnteringStateCharmer1() ', args );
+            let actionName = 'actCharmer2';
+            this.currentSelection = [];
+            this.currentPlayersSelection = [];
+            this.addPrimaryActionButton('btnConfirm',  _('Confirm'), () => { 
+                let selection = $('stig_select_piece_container_perplayer').querySelectorAll('.selected');
+                this.takeAction(actionName, {t1: selection[0].dataset.id, t2: selection[1].dataset.id}); 
+            } );
+            //DISABLED by default
+            $(`btnConfirm`).classList.add('disabled');
+            Object.values(args.tokens).forEach((token) => {
+                let player = this.gamedatas.players[token.pId];
+                let player_color = player.color;
+                let player_name = player.name;
+                let playerContainer = `stig_select_piece_player_container_${player.id}`;
+                if(!$(playerContainer)) dojo.place(`<div id=${playerContainer} class='stig_select_piece_player_container'><div class="player-name" style="color:#${player_color};">${player_name}</div></div>` ,'stig_select_piece_container_perplayer');
+                let elt = this.addToken(token, $(playerContainer), '_tmp');
+                this.onClick(`${elt.id}`, (evt) => {
+                    let tokenIdInt = parseInt(token.id);
+                    let div = evt.target;
+                    container = div.parentNode;
+                    div.dataset.id = token.id;
+                    
+                    if(div.classList.contains('selected')){
+                        //UNSELECT
+                        div.classList.remove('selected');
+                        this.currentSelection.splice(this.currentSelection.indexOf(tokenIdInt), 1); 
+                        this.currentPlayersSelection.splice(this.currentSelection.indexOf(token.pId), 1); 
+                    }
+                    else {
+                        //SELECT
+                        [...$(container).querySelectorAll('.selected')].forEach( (o) => {
+                            o.classList.remove('selected');
+                            this.currentSelection.splice(this.currentSelection.indexOf(token.id), 1); 
+                        });
+                        this.currentSelection.push(tokenIdInt);
+                        this.currentPlayersSelection.push(token.pId);
+                        this.currentSelection = [...new Set(this.currentSelection)];
+                        this.currentPlayersSelection = [...new Set(this.currentPlayersSelection)];
+                        div.classList.add('selected');
+                    }
+                    $(`btnConfirm`).classList.add('disabled');
+                    if ( //this.currentSelection.length == 2 && this.currentPlayersSelection.length == 2
+                         $('stig_select_piece_container_perplayer').querySelectorAll('.selected').length  == 2
+                        ) {
+                        $(`btnConfirm`).classList.remove('disabled');
+                    }
+                });
+            });
+        },
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );
@@ -992,6 +1054,7 @@ function (dojo, declare) {
         onLeavingState(stateName) {
             this.inherited(arguments);
             dojo.empty('stig_select_piece_container');
+            dojo.empty('stig_select_piece_container_perplayer');
             this.removeEmptyCellHolders();
             if($('stig_central_board_container_wrapper')) $('stig_central_board_container_wrapper').classList.remove('stig_current_play');
 
@@ -1426,6 +1489,15 @@ function (dojo, declare) {
             let div = this.addToken(token, this.getVisibleTitleContainer());
             this._counters[toPid]['tokens_deck'].incValue(+1);
             this.slide(div, `stig_reserve_${toPid}_tokens_deck`, { destroy:true});
+        },
+        notif_spCharmer(n) {
+            debug('notif_spCharmer: tokens exchanged', n);
+            let token1 = n.args.t1;
+            let token2 = n.args.t2;
+            let div1 = $(`stig_token_${token1.id}`);
+            let div2 = $(`stig_token_${token2.id}`); 
+            this.slide(div1, this.getTokenContainer(token1));
+            this.slide(div2, this.getTokenContainer(token2));
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);

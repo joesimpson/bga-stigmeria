@@ -14,6 +14,7 @@
 <div id="stig_game_container">
     
     <div id="stig_select_piece_container"></div>
+    <div id="stig_select_piece_container_perplayer"></div>
 
     <div id="stig_main_zone">
         <div id="stig_player_boards">

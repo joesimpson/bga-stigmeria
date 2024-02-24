@@ -132,6 +132,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
       case ACTION_TYPE_SOWER:
         //nothing special
         break;
+      case ACTION_TYPE_CHARMER:
+        //not playable through the same path-> after the turn
+        return false;
     }
 
     return true;

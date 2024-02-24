@@ -188,5 +188,10 @@
         "name": "Sower",
         "type": "int"
       }
+      ,"actions_s31": {
+        "id": 59,
+        "name": "Charmer",
+        "type": "int"
+      }
     }
   }
