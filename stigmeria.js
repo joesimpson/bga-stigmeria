@@ -46,6 +46,7 @@ function (dojo, declare) {
     const ACTION_TYPE_MIMICRY = 27;
     const ACTION_TYPE_FOGDIE = 28;
     const ACTION_TYPE_PILFERER = 29;
+    const ACTION_TYPE_SOWER = 30;
 
     const TOKEN_TYPE_NEWTURN = 21;
     /* TOKEN TYPES : stigmerians, then pollens*/
@@ -116,6 +117,7 @@ function (dojo, declare) {
                 ['spMimicry', 900],
                 ['spFogDie', 900],
                 ['spPilferer', 900],
+                ['spSower', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -449,6 +451,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions,'actChooseSp');
+            this.formatSpecialActionButton(_('Sower'),ACTION_TYPE_SOWER,possibleActions,enabledActions,'actChooseSp');
             
         }, 
             
@@ -678,6 +681,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,'actChoiceSpecial', _('Are you sure to roll a die to get a free stigmerian ? You cannot cancel after that.'));
             this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Sower'),ACTION_TYPE_SOWER,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -907,6 +911,55 @@ function (dojo, declare) {
             });
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         },
+        onEnteringStateSpSower: function(args)
+        {
+            debug( 'onEnteringStateSpSower() ', args );
+            this.selectedTokenType = null;
+            this.selectedplayer = null;
+            Object.values(args.colors).forEach((tokenColor) => {
+                let buttonId = `btnSower_${tokenColor}`;
+                this.addImageActionButton(buttonId, `<div><div class='stig_button_token' data-type='${tokenColor}'></div></div>`, () =>  {
+                    [...document.querySelectorAll(`.stig_button_sower_type`)].forEach((o) => {
+                        o.classList.remove('stig_selected_button');
+                        this.selectedTokenType = null;
+                    });
+                    let div = $(buttonId);
+                    div.classList.add('stig_selected_button');
+                    this.selectedTokenType = tokenColor;
+                    if(this.selectedplayer != null){
+                        $(`btnConfirm`).classList.remove('disabled');
+                    }
+                });
+                $(buttonId).classList.add('stig_button_sower_type');
+            });
+            this.forEachPlayer((player) => {
+                if(player.id == this.player_id) return;
+                let buttonText = this.fsr(_('Put in ${player} bag'), { player: this.formatPlayerNameButton(player) });
+                let buttonId = `btnSowerPid_${player.id}`;
+                this.addPrimaryActionButton(buttonId,  buttonText, () => { 
+                    [...document.querySelectorAll(`.stig_button_sower_pid`)].forEach((o) => {
+                        o.classList.remove('stig_selected_button');
+                        this.selectedplayer = null;
+                    });
+                    let div = $(buttonId);
+                    div.classList.add('stig_selected_button');
+                    this.selectedplayer = player;
+                    if(this.selectedTokenType != null){
+                        $(`btnConfirm`).classList.remove('disabled');
+                    }
+                } );
+                $(buttonId).classList.add('stig_button_sower_pid');
+                
+            });
+            this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
+                this.confirmText = this.fsr(_('Are you sure to put a token in ${player} bag ? Action will not be undoable.'), { player: this.formatPlayerNameButton(this.selectedplayer ) });
+                this.confirmationDialog(this.confirmText, () => {
+                    this.takeAction('actSower', { t: this.selectedTokenType, p: this.selectedplayer .id, }); 
+                });
+            }); 
+            $(`btnConfirm`).classList.add('disabled');
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+        }, 
         onEnteringStateWindEffect: function(args)
         {
             debug( 'onEnteringStateWindEffect() ', args );
@@ -1365,6 +1418,14 @@ function (dojo, declare) {
             this._counters[fromPid]['tokens_deck'].incValue(-1);
             this._counters[toPid]['tokens_recruit'].incValue(+1);
             this.slide(div, this.getTokenContainer(token));
+        },
+        notif_spSower(n) {
+            debug('notif_spSower: token to other bag', n);
+            let token = n.args.token;
+            let toPid = n.args.player_id2;
+            let div = this.addToken(token, this.getVisibleTitleContainer());
+            this._counters[toPid]['tokens_deck'].incValue(+1);
+            this.slide(div, `stig_reserve_${toPid}_tokens_deck`, { destroy:true});
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);

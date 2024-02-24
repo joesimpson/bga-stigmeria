@@ -142,6 +142,10 @@ trait SpecialActionTrait
                 $nextState = "startPilferer";
                 $nextStateId = ST_TURN_SPECIAL_ACT_PILFERER;
                 break;
+            case ACTION_TYPE_SOWER:
+                $nextState = "startSower";
+                $nextStateId = ST_TURN_SPECIAL_ACT_SOWER;
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

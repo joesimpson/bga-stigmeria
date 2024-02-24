@@ -747,6 +747,26 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param Player $targetPlayer
+   * @param StigmerianToken $token
+   * @param int $actionCost
+   */
+  public static function spSower($player,$targetPlayer,$token,$actionCost){
+    self::notifyAll('spSower',clienttranslate('${player_name} use the Sower put 1 ${token_color} stigmerian in ${player_name2} bag (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'player2' => $targetPlayer,
+        'n' => $actionCost,
+        'token' => $token->getUiData(),
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+      ],
+    );
+  }
   /**
    * Will Unlock Special action 
    * @param Player $player

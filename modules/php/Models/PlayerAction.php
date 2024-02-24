@@ -129,6 +129,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
       case ACTION_TYPE_PILFERER:
         if(count(Game::get()->listPilfererTargets($playerId)) == 0) return false;
         break;
+      case ACTION_TYPE_SOWER:
+        //nothing special
+        break;
     }
 
     return true;
@@ -185,6 +188,8 @@ class PlayerAction extends \STIG\Helpers\DB_Model
               return clienttranslate("Fog Die");
             case ACTION_TYPE_PILFERER:
               return clienttranslate("Pilferer");
+            case ACTION_TYPE_SOWER:
+              return clienttranslate("Sower");
             
             default:
               return "";

@@ -183,5 +183,10 @@
         "name": "Pilferer",
         "type": "int"
       }
+      ,"actions_s30": {
+        "id": 58,
+        "name": "Sower",
+        "type": "int"
+      }
     }
   }

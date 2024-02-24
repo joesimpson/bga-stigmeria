@@ -125,7 +125,8 @@
                         &[data-type='21'],
                         &[data-type='22'],
                         &[data-type='24'],
-                        &[data-type='29'] {
+                        &[data-type='29'],
+                        &[data-type='30'] {
                             left: 240px;
                         }
                         // COLUMN 2
@@ -182,6 +183,10 @@
                         // ROW 7
                         &[data-type='21'] {
                             top: 878px;
+                        }
+                        // ROW 8
+                        &[data-type='30'] {
+                            top: 1010px;
                         }
                     }
                 }

@@ -471,6 +471,15 @@
       $this->game->actPilferer($pid);
       self::ajaxResponse();
     } 
+    public function actSower()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $pid = self::getArg( "p", AT_posint, true );
+      $typeDest = self::getArg( "t", AT_posint, true );
+      $this->game->actSower($pid,$typeDest);
+      self::ajaxResponse();
+    } 
     public function actLetNextPlay()
     {
       self::setAjaxMode();

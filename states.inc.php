@@ -386,6 +386,7 @@ $machinestates = array(
             'startMimicry' => ST_TURN_SPECIAL_ACT_MIMICRY,
             'startFogDie' => ST_TURN_SPECIAL_ACT_FOGDIE,
             'startPilferer' => ST_TURN_SPECIAL_ACT_PILFERER,
+            'startSower' => ST_TURN_SPECIAL_ACT_SOWER,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -649,6 +650,20 @@ $machinestates = array(
         "args" => "argSpPilferer",
         "possibleactions" => [
             "actPilferer",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    ST_TURN_SPECIAL_ACT_SOWER => [
+        "name" => "spSower",
+        "descriptionmyturn" => clienttranslate('${you} must select a color and an opponent bag'), 
+        "type" => "private",
+        "args" => "argSpSower",
+        "possibleactions" => [
+            "actSower",
             "actCancelSpecial",
         ],
         "transitions" => [

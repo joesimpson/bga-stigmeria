@@ -77,6 +77,7 @@ class Stigmeria extends Table
     use STIG\States\SpecialPilfererTrait;
     use STIG\States\SpecialRestTrait;
     use STIG\States\SpecialSwapTrait;
+    use STIG\States\SpecialSowerTrait;
     use STIG\States\SpecialTwoBeatsTrait;
     use STIG\States\SpecialWhiteTrait;
     use STIG\States\SpecialBlackTrait;
