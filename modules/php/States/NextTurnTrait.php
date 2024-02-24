@@ -49,6 +49,7 @@ trait NextTurnTrait
     $eliminatedPids = [];
     foreach($players as $playerId => $player){
       if(PGlobals::isEliminated($playerId)) $eliminatedPids[] = $playerId;
+      PGlobals::setEngineChoices($playerId, 0);
     }
     if(count($eliminatedPids) == count($players)){
       //Eliminate ALL players -> go to end
