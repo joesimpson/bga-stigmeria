@@ -174,6 +174,18 @@ class PlayerAction extends \STIG\Helpers\DB_Model
               return clienttranslate("Two Beats");
             case ACTION_TYPE_REST:
               return clienttranslate("Rest");
+            case ACTION_TYPE_NSNK:
+              return clienttranslate("No harm No foul");
+            case ACTION_TYPE_COPY:
+              return clienttranslate("Copy");
+            case ACTION_TYPE_PREDICTION:
+              return clienttranslate("Prediction");
+            case ACTION_TYPE_MIMICRY:
+              return clienttranslate("Mimicry");
+            case ACTION_TYPE_FOGDIE:
+              return clienttranslate("Fog Die");
+            case ACTION_TYPE_PILFERER:
+              return clienttranslate("Pilferer");
             
             default:
               return "";
