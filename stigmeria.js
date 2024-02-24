@@ -1455,10 +1455,24 @@ function (dojo, declare) {
             let tokens = n.args.tokens;
             Object.values(tokens).forEach((token) => {
                 let div = $(`stig_token_${token.id}`);
+                if(!div) return;
+                let oldParent = div.parentElement;//token_holder
                 div.dataset.row = token.row;
                 div.dataset.col = token.col;
                 div.dataset.state = token.state;
-                this.slide(div, this.getTokenContainer(token));
+                let newParent = this.getTokenContainer(token);
+                this.slide(div, newParent).then(() =>{
+                    //if(newParent.id && newParent.id.startsWith('stig_grid')){
+                    //    return;
+                    //}
+                    if(token.pId >0 && token.location == 'player_recruit'){
+                        this._counters[token.pId]['tokens_recruit'].incValue(1);
+                        if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                    }
+                    else if( token.location == 'central_recruit'){
+                        if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                    }
+                });
             });
         },
         notif_windElimination(n) {

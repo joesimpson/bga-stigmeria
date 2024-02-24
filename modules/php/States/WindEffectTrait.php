@@ -137,13 +137,12 @@ trait WindEffectTrait
           //}
           return true;
         }
+        //COMPETITIVE MODE : MOVE it TO RECRUIT ZONE
+        $token->moveToRecruitZone($player,0, false);
       }
-      
-      //TODO JSA COMPETITIVE MODE : MOVE it TO RECRUIT ZONE
-      $token->setLocation(TOKEN_LOCATION_OUT);
-      $token->setRow(null);
-      $token->setCol(null);
-      
+      else {
+        $token->moveToRecruitZoneCentral($player,0, false);
+      }
     }
     else {
       //self::trace("doWindBlowsTo($windDir) token is still in grid :".json_encode($token));

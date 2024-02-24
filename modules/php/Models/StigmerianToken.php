@@ -196,8 +196,9 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   /**
    * @param Player $player
    * @param int $actionCost
+   * @param bool $sendNotif (default false) : tells if we want to send a notif for this move
    */
-  public function moveToRecruitZone($player,$actionCost)
+  public function moveToRecruitZone($player,$actionCost, $sendNotif = true)
   {
     $fromBoard = false;
     $fromStigmaReine = false;
@@ -215,21 +216,22 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     Stats::inc("tokens_recruit",$player->getId(),1);
     if($fromBoard){
       Stats::inc("tokens_board",$player->getId(),-1);
-      Notifications::moveBackToRecruit($player, $this,$fromCoord,$actionCost);
+      if($sendNotif) Notifications::moveBackToRecruit($player, $this,$fromCoord,$actionCost);
       if(TOKEN_STIG_YELLOW == $this->getType()){
         $player->addTieBreakerPoints(1);
       }
     }
     else if($fromStigmaReine){
-      Notifications::sRecruit($player, $this,$actionCost);
+      if($sendNotif) Notifications::sRecruit($player, $this,$actionCost);
     }
   }
   
   /**
    * @param Player $player
    * @param int $actionCost
+   * @param bool $sendNotif (default false) : tells if we want to send a notif for this move
    */
-  public function moveToRecruitZoneCentral($player,$actionCost)
+  public function moveToRecruitZoneCentral($player,$actionCost, $sendNotif = true)
   {
     if($this->getLocation() == TOKEN_LOCATION_PLAYER_RECRUIT ){
       if(TOKEN_STIG_YELLOW == $this->getType()){
@@ -241,7 +243,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     $this->setPId(null);
     $this->setCol(null);
     $this->setRow(null);
-    Notifications::moveToCentralRecruit($player, $this,$fromCoord,$actionCost);
+    if($sendNotif) Notifications::moveToCentralRecruit($player, $this,$fromCoord,$actionCost);
   }
 
   /**
