@@ -15,24 +15,15 @@
             },
             "3": {
                 "name": "Competitive",
-                "description": "Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.",
+                "description": "You must have learned normal games ! Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.",
                 "tmdisplay": "Competitive",
-                "nobeginner": true,
-                "alpha": true
+                "nobeginner": true
             },
             "4": {
                 "name": "No Limit",
-                "description": "Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.",
+                "description": "You must have learned normal games ! Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.",
                 "tmdisplay": "No Limit",
-                "nobeginner": true,
-                "alpha": true
-            },
-            "5": {
-                "name": "Challenge",
-                "description": "Challenge",
-                "tmdisplay": "Challenge",
-                "nobeginner": true,
-                "alpha": true
+                "nobeginner": true
             }
         },
         "default": 2,

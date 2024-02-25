@@ -44,18 +44,17 @@ $game_options = [
                 
                 OPTION_MODE_COMPETITIVE => array( 
                   'name' => totranslate('Competitive'), 
-                  'description' => totranslate('Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.'),
+                  'description' => totranslate('You must have learned normal games ! Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.'),
                   'tmdisplay' => totranslate('Competitive'),
                   'nobeginner' => true, 
-                  'alpha' => true, 
                   ),
                 OPTION_MODE_NOLIMIT => array( 
                   'name' => totranslate('No Limit'), 
-                  'description' => totranslate('Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.'), 
+                  'description' => totranslate('You must have learned normal games ! Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns or more. Unleash the wind power. All actions will be possible.'), 
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
-                  'alpha' => true, 
                   ),
+                /*  
                 OPTION_MODE_CHALLENGE => [
                   'name' => totranslate('Challenge'), 
                   'description' => totranslate('Challenge'), 
@@ -63,6 +62,7 @@ $game_options = [
                   'nobeginner' => true, 
                   'alpha' => true, 
                 ],
+                */
             ),
     'default' => OPTION_MODE_NORMAL,
     
