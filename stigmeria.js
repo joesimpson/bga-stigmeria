@@ -86,7 +86,8 @@ function (dojo, declare) {
                 ['newWinds', 10],
                 ['clearTurn', 200],
                 ['refreshUI', 200],
-                ['newTurn', 800],
+                ['newTurn', 400],
+                ['startTurn', 800],
                 ['endTurn', 500],
                 ['updateFirstPlayer', 500],
                 ['useActions', 500],
@@ -1151,12 +1152,22 @@ function (dojo, declare) {
         },
         notif_newTurn(n) {
             debug('notif_newTurn: new turn', n);
+            this.gamedatas.turn = n.args.n;
             this._counters['turn'].toValue(n.args.n);
+            // Good, but for now (in Competitive) the backend doesn't increment numbers about players that don't start
+            if(!this.gamedatas.nocb) return;
             this.forEachPlayer((player) => {
                 this._counters[player.id]['actions'].setValue(0);
                 this._counters[player.id]['actionsMax'].setValue(n.args.n);
                 this.updateTurnMarker(player.id,n.args.n,1);
-            }); 
+            });
+        },
+        notif_startTurn(n) {
+            debug('notif_startTurn: new turn for a player', n);
+            let player_id = n.args.player_id;
+            this._counters[player_id]['actions'].setValue(0);
+            this._counters[player_id]['actionsMax'].setValue(n.args.n);
+            this.updateTurnMarker(player_id,n.args.n,1);
         },
         notif_endTurn(n) {
             debug('notif_endTurn: end turn for one player', n);
