@@ -530,6 +530,31 @@
   position: absolute;
 }
 
+.stig_icon_container_wind_dir_log,
+.stig_subicon_wind_dir_log {
+  position: relative;
+  background-image: url("img/tokens.png");
+  background-size: 500% 500%;
+  background-position-x: 100%;
+  background-position-y: 75%;
+}
+.stig_icon_container_wind_dir_log[data-type="1"],
+.stig_subicon_wind_dir_log[data-type="1"] {
+  transform: rotate(180deg);
+}
+.stig_icon_container_wind_dir_log[data-type="2"],
+.stig_subicon_wind_dir_log[data-type="2"] {
+  transform: rotate(0deg);
+}
+.stig_icon_container_wind_dir_log[data-type="3"],
+.stig_subicon_wind_dir_log[data-type="3"] {
+  transform: rotate(-90deg);
+}
+.stig_icon_container_wind_dir_log[data-type="4"],
+.stig_subicon_wind_dir_log[data-type="4"] {
+  transform: rotate(90deg);
+}
+
 .stig_first_player_holder {
   position: absolute;
   height: 35px;
@@ -3412,6 +3437,8 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   text-shadow: 2px 0px 2px white, 0px 2px 2px white, -2px 0px 2px white, 0px -2px 2px white;
 }
 
+.stig_icon_container_wind_dir_log,
+.stig_subicon_wind_dir_log,
 .stig_icon_container_token_log,
 .stig_subicon_token_log {
   height: var(--stig_tokenLogWidth);

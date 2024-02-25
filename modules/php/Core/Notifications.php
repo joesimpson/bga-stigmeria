@@ -892,9 +892,10 @@ class Notifications
 
     self::notifyAll('windBlows',$message,[ 
         'i18n'=>['dir'],
+        'preserve'=>['dir_type'],
         'player' => $player,
         'tokens' => $tokens,
-        'windDir' => $windDir,
+        'dir_type' => $windDir,
         'dir' => Globals::getWindDirName($windDir),
         'n' => $nbTokens,
       ],

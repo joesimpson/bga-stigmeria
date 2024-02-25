@@ -83,3 +83,31 @@
         position: absolute;
     }
 }
+
+
+.stig_icon_container_wind_dir_log,
+.stig_subicon_wind_dir_log {
+    position: relative;
+    background-image: url("img/tokens.png");
+    background-size: 500% 500%;
+    //type 20 in sprite
+    background-position-x: 100%;
+    background-position-y: 75%;
+
+    &[data-type='1']{
+        //WIND_DIR_NORTH
+        transform: rotate(180deg);
+    }
+    &[data-type='2']{
+        //WIND_DIR_SOUTH
+        transform: rotate(0deg);
+    }
+    &[data-type='3']{
+        //WIND_DIR_EAST
+        transform: rotate(-90deg);
+    }
+    &[data-type='4']{
+        //WIND_DIR_WEST
+        transform: rotate(90deg);
+    }
+}

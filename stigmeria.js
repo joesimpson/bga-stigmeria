@@ -29,6 +29,12 @@ function (dojo, declare) {
     const TURN_MAX = 10;
     const NB_TOKENS_PREDICTION = 3;
 
+    const WIND_DIR_NORTH = 'N';
+    const WIND_DIR_SOUTH = 'S';
+    const WIND_DIR_EAST = 'E';
+    const WIND_DIR_WEST = 'W';
+    const WIND_DIRECTIONS = [WIND_DIR_NORTH,WIND_DIR_SOUTH,WIND_DIR_EAST,WIND_DIR_WEST];
+
     const ACTION_TYPE_MIXING = 10;
     const ACTION_TYPE_COMBINATION = 11;
     const ACTION_TYPE_FULGURANCE = 12;
@@ -2361,7 +2367,13 @@ function (dojo, declare) {
                 if(die_face in args) {
                     args.die_face = this.formatIcon("die_log",args.die_face,args.die_face);
                 }
-
+                let dir_type = 'dir_type';
+                let dir = 'dir';
+                if(dir_type in args && dir in args) {
+                    let dir_index = 1+ WIND_DIRECTIONS.indexOf(args.dir_type);
+                    args.dir = this.formatIcon("wind_dir_log",dir_index,dir_index);
+                    args.dir_type = "";
+                }
             }
             } catch (e) {
                 console.error(log, args, 'Exception thrown', e.stack);

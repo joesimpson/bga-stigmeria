@@ -766,9 +766,10 @@ $machinestates = array(
 
     ST_WIND_EFFECT => array(
         "name" => "windEffect",
-        "description" => clienttranslate('Wind blows'),
+        "description" => clienttranslate('Wind blows to ${dir}'),
         "type" => "game",
         "action" => "stWindEffect",
+        "args" => "argWindEffect",
         "transitions" => [ 
             "next" => ST_NEXT_TURN,
             //"playerDice" => ST_PLAYER_DICE2,

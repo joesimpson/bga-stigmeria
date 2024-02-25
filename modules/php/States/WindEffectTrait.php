@@ -38,6 +38,15 @@ trait WindEffectTrait
 
     $this->gamestate->nextState('next');
   }
+  public function argWindEffect()
+  {
+    $turn = Globals::getTurn();
+    $windDir = Globals::getWindDir($turn);
+    return [
+      'dir_type' => $windDir,
+      'dir' => Globals::getWindDirName($windDir),
+    ];
+  }
   
   /**
    * @param int $turn 

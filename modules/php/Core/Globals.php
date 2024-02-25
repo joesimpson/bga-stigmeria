@@ -79,13 +79,13 @@ class Globals extends \STIG\Helpers\DB_Manager
   {
     switch($windDir){
       case WIND_DIR_SOUTH:
-        return Game::get()->translate("South");
+        return clienttranslate("South");
       case WIND_DIR_NORTH:
-        return Game::get()->translate("North");
+        return clienttranslate("North");
       case WIND_DIR_EAST:
-        return Game::get()->translate("East");
+        return clienttranslate("East");
       case WIND_DIR_WEST:
-        return Game::get()->translate("West");
+        return clienttranslate("West");
       default: 
         return "";
     }
