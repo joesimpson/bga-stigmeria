@@ -48,7 +48,6 @@ trait AfterTurnTrait
         Players::changeActive($playerId);
         $nextPlayer->giveExtraTime();
         $nextPlayerPlay = true;
-        //$this->addCheckpoint(ST_AFTER_TURN);
       }
     }
 
@@ -124,10 +123,6 @@ trait AfterTurnTrait
    * Special Action 'Charmer' - EFFECT
    * @param int $tokenId1
    * @param int $tokenId2
-   * //TODO JSA avoir UI avec plusieurs zone en upper : une pour chaque zone de recruit-> comme ça on peut cliquer 2 tokens
-   * -> ou alors pouvoir cliquer dans la zone de recruit direct
-   *  -> un bouton clear Selection
-   * -> un multiTOkenSelection (1 par player, mais max 2)
    */
   public function actCharmer2($tokenId1,$tokenId2)
   {
@@ -171,25 +166,6 @@ trait AfterTurnTrait
     $playerAction->setNewStateAfterUse();
     Notifications::useActions($player,$playerAction);
 
-    //$this->addStep($pId,ST_AFTER_TURN_CONFIRM_CHOICES);
     $this->gamestate->nextState("next");
   }
-  ///**
-  // * @param int $tokenDestId
-  // */
-  //public function actCharmer($tokenDestId)
-  //{
-  //    self::checkAction( 'actCharmer2' ); 
-  //    self::trace("actCharmer2($typeSource)");
-//
-  //    $player = Players::getCurrent();
-  //    $pId = $player->id;
- //
-  //    //TODO JSA check token not already charmed in turn
-//
-  //    //EFFECT
-  //    Notifications::spCharmer($player,$player2,$token1,$token2);
-//
-  //    $this->gamestate->nextState("next");
-  //}
 }

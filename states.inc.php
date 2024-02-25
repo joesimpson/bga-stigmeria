@@ -708,18 +708,6 @@ $machinestates = array(
             "next" => ST_AFTER_TURN_CONFIRM_CHOICES, 
         ],
     ),
-    /*
-    ST_AFTER_TURN_CHARMER_STEP2 => array(
-        "name" => "charmer2",
-        "args" => "argCharmer2",
-        "description" => clienttranslate('Charmer : ${actplayer} must select a second token to exchange'),
-        "descriptionmyturn" => clienttranslate('Charmer : ${you} must select a second token to exchange'),
-        "type" => "activeplayer",
-        "possibleactions" => ["actCharmer" ],
-        "transitions" => [ 
-            "next" => ST_AFTER_TURN_CONFIRM_CHOICES, 
-        ],
-    ),*/
     ST_AFTER_TURN_CONFIRM_CHOICES => [
         'name' => 'confirmTurn',
         'description' => clienttranslate('${actplayer} must confirm or restart the action'),
