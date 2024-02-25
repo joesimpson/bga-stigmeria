@@ -96,6 +96,7 @@ class Player extends \STIG\Helpers\DB_Model
   }
   public function incNbPersonalActionsDone($nb)
   {
+    PGlobals::incNbActionsDone($this->getId(),+1);
     return PGlobals::incNbPersonalActionsDone($this->getId(),$nb);
   }
   
@@ -179,6 +180,7 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setLastTurn($turnIndex);
     $this->setNbCommonActionsDone(0);
     $this->setNbPersonalActionsDone(0);
+    PGlobals::setNbActionsDone($this->getId(),0);
     $this->setCommonMoveDone(false);
     $this->setSelection([]);
     $this->giveExtraTime();

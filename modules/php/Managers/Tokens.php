@@ -478,4 +478,41 @@ class Tokens extends \STIG\Helpers\Pieces
     }
     return $token;
   }
+
+  /**
+   * @param int $pid1
+   * @param int $pid2
+   */
+  public static function swapDecks($pid1, $pid2)
+  {
+    Game::get()->trace("swapDecks($pid1, $pid2)");
+    $idsDeck1 = self::DB()
+      ->select([static::$prefix .'id'])
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_DECK.$pid1)
+      ->wherePlayer($pid1)
+      ->get()
+      ->map(function ($token) {
+        return $token->id;
+      })
+      ->toArray();
+    $idsDeck2 = self::DB()
+      ->select([static::$prefix .'id'])
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_PLAYER_DECK.$pid2)
+      ->wherePlayer($pid2)
+      ->get()
+      ->map(function ($token) {
+        return $token->id;
+      })
+      ->toArray();
+
+    $data = [];
+    $data['player_id'] = $pid2;
+    $data[static::$prefix . 'location'] = TOKEN_LOCATION_PLAYER_DECK.$pid2;
+    self::DB()->whereIn(static::$prefix .'id', $idsDeck1)->update($data)->run();
+    $data = [];
+    $data['player_id'] = $pid1;
+    $data[static::$prefix . 'location'] = TOKEN_LOCATION_PLAYER_DECK.$pid1;
+    self::DB()->whereIn(static::$prefix .'id', $idsDeck2)->update($data)->run();
+ 
+  }
 }

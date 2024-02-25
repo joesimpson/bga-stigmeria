@@ -794,6 +794,24 @@ class Notifications
   /**
    * 
    * @param Player $player
+   * @param Player $player2
+   * @param int $deckSize1
+   * @param int $deckSize2
+   * @param int $actionCost
+   */
+  public static function spJealousy($player,$player2,$deckSize1,$deckSize2,$actionCost){
+    self::notifyAll('spJealousy',clienttranslate('${player_name} use the Jealousy to exchange their bag with ${player_name2} (cost: ${n} actions)'),[ 
+        'player' => $player,
+        'player2' => $player2,
+        'deck1' => $deckSize1,
+        'deck2' => $deckSize2,
+        'n' => $actionCost,
+      ],
+    );
+  }
+  /**
+   * 
+   * @param Player $player
    */
   public static function passCharmer($player){
     self::notifyAll('passCharmer',clienttranslate('${player_name} passes the Charmer action'),[ 

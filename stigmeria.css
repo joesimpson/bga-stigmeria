@@ -836,7 +836,7 @@
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="10"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="14"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="21"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="24"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="29"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="30"] {
   left: 240px;
 }
-#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="31"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="25"] {
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="15"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="20"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="31"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="32"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="25"] {
   left: 590px;
 }
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="13"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="16"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="23"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="26"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="28"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="27"] {
@@ -857,7 +857,7 @@
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="10"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="12"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="26"] {
   top: 615px;
 }
-#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="23"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="24"] {
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="23"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="24"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="32"] {
   top: 747px;
 }
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="21"] {
@@ -2690,6 +2690,13 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
 #customActions .stig_sp_action_image[data-type="31"] {
   background-position-x: 1276px;
   background-position-y: 622px;
+}
+#customActions .stig_sp_action_image[data-type="32"] {
+  background-position-x: 490px;
+  background-position-y: 263px;
+  height: 75px;
+  width: 100px;
+  background-size: 770%;
 }
 
 body {

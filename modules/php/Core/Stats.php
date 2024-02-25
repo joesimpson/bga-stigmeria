@@ -22,6 +22,13 @@ class Stats extends \STIG\Helpers\DB_Manager
     ];
   }
 
+  /** Setter wrapper  */
+  public static function set($name, $player = null, $value)
+  {
+    $pId = is_null($player) ? null : (is_int($player) ? $player : $player->getId());
+    $setter = "set".ucfirst($name);
+    self::$setter($pId,$value);
+  }
   /** Inc wrapper whith a 1 default increment */
   public static function inc($name, $player = null, $value = 1)
   {

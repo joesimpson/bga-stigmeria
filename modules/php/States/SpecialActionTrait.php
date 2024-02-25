@@ -146,6 +146,10 @@ trait SpecialActionTrait
                 $nextState = "startSower";
                 $nextStateId = ST_TURN_SPECIAL_ACT_SOWER;
                 break;
+            case ACTION_TYPE_JEALOUSY:
+                $nextState = "startJealousy";
+                $nextStateId = ST_TURN_SPECIAL_ACT_JEALOUSY;
+                break;
             default:
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }

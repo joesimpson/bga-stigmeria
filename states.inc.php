@@ -49,6 +49,7 @@
 */
 
 //    !! It is not a good idea to modify this file when a game is running !!
+
 /*
     "Visual" States Diagram :
 
@@ -70,12 +71,12 @@
  |                |                                                    |
  |                v                                                    |
  |              playerTurn                                             |
- |              |    |          |                                      |
- |              |    v          v                                      |
- |              |commonBoard personalBoard                             |
- |              |    |          |                                      |
- |              v    v          v                                      |
- |              afterTurn -----------\                                 |
+ |              |    |                                                 |
+ |              |    v                                                 |
+ |              | commonBoard -> personalBoard (+many SPECIALS)        |
+ |              |                    |                                 |
+ |              v                    v                                 |
+ |              \-----------> afterTurn                                |
  |                                   |                                 |
  |                                   v                                 |
  |                                 windEffect -------------------------/
@@ -197,6 +198,7 @@ $machinestates = array(
             "actCommonMove",
             "actCJokerS",
             "actGoToNext",
+            "actJealousy",
             "actRestart",
         ],
         "transitions" => [
@@ -205,6 +207,7 @@ $machinestates = array(
             'startLand' => ST_TURN_CENTRAL_CHOICE_TOKEN_LAND,
             'startMove' => ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE,
             'cJoker' => ST_TURN_CENTRAL_JOKER,
+            //'jealousy' => ST_TURN_SPECIAL_ACT_JEALOUSY,
         ],
     ],
     
@@ -283,7 +286,21 @@ $machinestates = array(
             'next' => ST_TURN_COMMON_BOARD,
         ],
     ],
-    
+    /*
+    ST_TURN_SPECIAL_ACT_JEALOUSY => [
+        "name" => "spJealousy",
+        "descriptionmyturn" => clienttranslate('${you} must chosen an opponent player bag'), 
+        "type" => "private",
+        "args" => "argSpJealousy",
+        "possibleactions" => [
+            "actSpJealousy",
+            'actRestart',
+        ],
+        "transitions" => [
+            'next' => ST_TURN_COMMON_BOARD,
+        ],
+    ],
+    */
     ST_TURN_PERSONAL_BOARD => [
         "name" => "personalBoardTurn",
         "descriptionmyturn" => clienttranslate('${you} may play ${n} actions on your board or pass'), 
@@ -386,6 +403,7 @@ $machinestates = array(
             'startFogDie' => ST_TURN_SPECIAL_ACT_FOGDIE,
             'startPilferer' => ST_TURN_SPECIAL_ACT_PILFERER,
             'startSower' => ST_TURN_SPECIAL_ACT_SOWER,
+            'startJealousy' => ST_TURN_SPECIAL_ACT_JEALOUSY,
             'cancel' => ST_TURN_PERSONAL_BOARD,
         ],
     ],
@@ -663,6 +681,21 @@ $machinestates = array(
         "args" => "argSpSower",
         "possibleactions" => [
             "actSower",
+            "actCancelSpecial",
+        ],
+        "transitions" => [
+            'next' => ST_TURN_PERSONAL_BOARD,
+            'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
+        ],
+    ],
+    
+    ST_TURN_SPECIAL_ACT_JEALOUSY => [
+        "name" => "spJealousy",
+        "descriptionmyturn" => clienttranslate('${you} must chosen an opponent player bag'), 
+        "type" => "private",
+        "args" => "argSpJealousy",
+        "possibleactions" => [
+            "actSpJealousy",
             "actCancelSpecial",
         ],
         "transitions" => [

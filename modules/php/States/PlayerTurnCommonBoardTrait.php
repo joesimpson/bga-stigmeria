@@ -59,7 +59,7 @@ trait PlayerTurnCommonBoardTrait
 
         $this->addCheckpoint(ST_TURN_PERSONAL_BOARD, $player->id);
         //moving current player to different state :
-        $this->gamestate->nextPrivateState($this->getCurrentPlayerId(), "next");
+        $this->gamestate->nextPrivateState($player->id, "next");
     }
 
       
@@ -181,6 +181,25 @@ trait PlayerTurnCommonBoardTrait
         PGlobals::setState($pId, ST_TURN_CENTRAL_JOKER);
         $this->gamestate->nextPrivateState($player->id, "cJoker");
     }
+
+   ///**
+   // * Selection of starting 'Jealousy' action
+   // */
+   //public function actJealousy()
+   //{
+   //    self::checkAction( 'actJealousy' ); 
+   //    self::trace( 'actJealousy' ); 
+   //    
+   //    $player = Players::getCurrent();
+   //    if($player->countRemainingCommonActions() > 0){
+   //        throw new UnexpectedException(10,"You still have actions to take");
+   //    }
+   //    //TODO JSA check action 32 (+check 5 tokens )
+
+   //    $this->addStep($player->id,ST_TURN_SPECIAL_ACT_JEALOUSY);
+   //    //moving current player to different state :
+   //    $this->gamestate->nextPrivateState($player->id, "jealousy");
+   //}
 
     /**
      * RULE : gain 1 or 2 special action

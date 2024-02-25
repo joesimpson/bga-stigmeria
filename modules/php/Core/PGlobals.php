@@ -19,6 +19,8 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     'nbCommonActionsDone' => 'int',
     //actions played by this player on their board (during this turn)
     'nbPersonalActionsDone' => 'int',
+    //Count actions played by this player on their board (during this turn), whatever their cost
+    'nbActionsDone' => 'int',
     //This player used the common action move on central board (during this turn) false/true
     'commonMoveDone' => 'bool',
     //Selected tokens according to current private state
@@ -192,6 +194,7 @@ class PGlobals extends \STIG\Helpers\DB_Manager
       self::setLastTurn($playerId,0);
       self::setNbCommonActionsDone($playerId,0);
       self::setNbPersonalActionsDone($playerId,0);
+      self::setNbActionsDone($playerId,0);
       self::setCommonMoveDone($playerId,0);
       self::setSelection($playerId,[]);
       self::setNbSpActions($playerId,0);

@@ -39,7 +39,6 @@ trait ConfirmUndoTrait
         $player = Players::getCurrent();
         $pId = $player->id;
         $data = [];
-        //TODO JSA see how to Undo Charmer
         $this->addArgsForUndo($pId, $data);
         return $data;
     }

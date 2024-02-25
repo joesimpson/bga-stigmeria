@@ -42,6 +42,9 @@ class PlayerActions extends \STIG\Helpers\Pieces
   {
     switch($type){
       
+      case ACTION_TYPE_JEALOUSY:
+        //To be confirmed
+        return 1;
       case ACTION_TYPE_PILFERER:
       case ACTION_TYPE_SOWER:
       case ACTION_TYPE_CHARMER:
@@ -72,6 +75,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
       case ACTION_TYPE_FULGURANCE:
       case ACTION_TYPE_COPY:
       case ACTION_TYPE_CHARMER:
+      case ACTION_TYPE_JEALOUSY:
         return 2;
       case ACTION_TYPE_CHOREOGRAPHY:
       case ACTION_TYPE_FOGDIE:
@@ -182,6 +186,8 @@ class PlayerActions extends \STIG\Helpers\Pieces
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
             case ACTION_TYPE_CHARMER:
                 return ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN;
+            case ACTION_TYPE_JEALOUSY:
+                return ACTION_STATE_UNLOCKED_FOR_ONCE_GAME;
             
             default:
               return ACTION_STATE_UNLOCKED_FOREVER;

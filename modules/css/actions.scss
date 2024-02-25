@@ -116,6 +116,14 @@
             background-position-x: 1276px;
             background-position-y: 622px;
         }
+        &[data-type="32"]{
+            //ACTION_TYPE_JEALOUSY
+            background-position-x: 490px;
+            background-position-y: 263px;
+            height: 75px;
+            width: 100px;
+            background-size: 770%;
+        }
     }
     
 }

@@ -48,6 +48,7 @@ function (dojo, declare) {
     const ACTION_TYPE_PILFERER = 29;
     const ACTION_TYPE_SOWER = 30;
     const ACTION_TYPE_CHARMER = 31;
+    const ACTION_TYPE_JEALOUSY = 32;
 
     const TOKEN_TYPE_NEWTURN = 21;
     /* TOKEN TYPES : stigmerians, then pollens*/
@@ -120,6 +121,7 @@ function (dojo, declare) {
                 ['spPilferer', 900],
                 ['spSower', 900],
                 ['spCharmer', 900],
+                ['spJealousy', 400],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -455,7 +457,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Sower'),ACTION_TYPE_SOWER,possibleActions,enabledActions,'actChooseSp');
             this.formatSpecialActionButton(_('Charmer'),ACTION_TYPE_CHARMER,possibleActions,enabledActions,'actChooseSp');
-           
+            this.formatSpecialActionButton(_('Jealousy'),ACTION_TYPE_JEALOUSY,possibleActions,enabledActions,'actChooseSp');
         }, 
             
         onEnteringStateGiveTokens: function(args)
@@ -685,6 +687,7 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,'actChoiceSpecial', _('Are you sure to roll a die to get a free stigmerian ? You cannot cancel after that.'));
             this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Sower'),ACTION_TYPE_SOWER,possibleActions,enabledActions);
+            this.formatSpecialActionButton(_('Jealousy'),ACTION_TYPE_JEALOUSY,possibleActions,enabledActions);
 
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
@@ -963,6 +966,22 @@ function (dojo, declare) {
             $(`btnConfirm`).classList.add('disabled');
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
+        onEnteringStateSpJealousy: function(args)
+        {
+            debug( 'onEnteringStateSpJealousy() ', args );
+            Object.values(args.p).forEach((playerId) => {
+                let player = this.gamedatas.players[playerId];
+                let buttonText = this.fsr(_('Take ${player} bag'), { player: this.formatPlayerNameButton(player) });
+                let confirmText = this.fsr(_('Are you sure to exchange your bag with ${player} bag ? Action will not be undoable. This action can be used only once in the game !'), { player: this.formatPlayerNameButton(player) });
+                this.addPrimaryActionButton('btnConfirm_'+player.id,  buttonText, () => { 
+                    this.confirmationDialog(confirmText, () => {
+                        this.takeAction('actSpJealousy', {p: player.id, }); 
+                    });
+                } );
+                $('btnConfirm_'+player.id).classList.add('stig_button_jealousy');
+            });
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+        },
         
         onEnteringStateAfterTurn: function(args)
         {
@@ -1498,6 +1517,11 @@ function (dojo, declare) {
             let div2 = $(`stig_token_${token2.id}`); 
             this.slide(div1, this.getTokenContainer(token1));
             this.slide(div2, this.getTokenContainer(token2));
+        },
+        notif_spJealousy(n) {
+            debug('notif_spJealousy: bag size changed', n);
+            this._counters[n.args.player_id]['tokens_deck'].toValue(n.args.deck1);
+            this._counters[n.args.player_id2]['tokens_deck'].toValue(n.args.deck2);
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);

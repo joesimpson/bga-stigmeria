@@ -71,6 +71,7 @@ class Stigmeria extends Table
     use STIG\States\SpecialFastMoveTrait;
     use STIG\States\SpecialFogDieTrait;
     use STIG\States\SpecialFulguranceTrait;
+    use STIG\States\SpecialJealousyTrait;
     use STIG\States\SpecialMixingTrait;
     use STIG\States\SpecialNSNKTrait;
     use STIG\States\SpecialPredictionTrait;

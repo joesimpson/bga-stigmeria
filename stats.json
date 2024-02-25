@@ -193,5 +193,10 @@
         "name": "Charmer",
         "type": "int"
       }
+      ,"actions_s32": {
+        "id": 60,
+        "name": "Jealousy",
+        "type": "int"
+      }
     }
   }

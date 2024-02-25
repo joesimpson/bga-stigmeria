@@ -251,6 +251,22 @@
       self::ajaxResponse();
     }
     
+    public function actJealousy()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actJealousy();
+      self::ajaxResponse();
+    } 
+    public function actSpJealousy()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $targetPlayerId = self::getArg( "p", AT_posint, true );
+      $this->game->actSpJealousy($targetPlayerId);
+      self::ajaxResponse();
+    } 
+
     public function actSpecial()
     {
       self::setAjaxMode();

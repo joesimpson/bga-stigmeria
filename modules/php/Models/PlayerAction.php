@@ -4,6 +4,7 @@ namespace STIG\Models;
 
 use STIG\Core\Game;
 use STIG\Core\Globals;
+use STIG\Core\PGlobals;
 use STIG\Helpers\GridUtils;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Schemas;
@@ -135,6 +136,14 @@ class PlayerAction extends \STIG\Helpers\DB_Model
       case ACTION_TYPE_CHARMER:
         //not playable through the same path-> after the turn
         return false;
+      case ACTION_TYPE_JEALOUSY:
+        //can only be played as first action !
+        if( PGlobals::getNbActionsDone($playerId)>0 ) return false;
+        if($deckSize < NB_TOKENS_MIN_JEALOUSY){
+          return false;
+        }
+        if(count(Game::get()->listJealousyTargets($playerId)) == 0) return false;
+        break;
     }
 
     return true;
@@ -193,6 +202,10 @@ class PlayerAction extends \STIG\Helpers\DB_Model
               return clienttranslate("Pilferer");
             case ACTION_TYPE_SOWER:
               return clienttranslate("Sower");
+            case ACTION_TYPE_CHARMER:
+              return clienttranslate("Charmer");
+            case ACTION_TYPE_JEALOUSY:
+              return clienttranslate("Jealousy");
             
             default:
               return "";
