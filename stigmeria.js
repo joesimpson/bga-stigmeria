@@ -1564,10 +1564,10 @@ function (dojo, declare) {
                     //}
                     if(token.pId >0 && token.location == 'player_recruit'){
                         this._counters[token.pId]['tokens_recruit'].incValue(1);
-                        if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                        if(oldParent.classList.contains('stig_token_holder') && oldParent.childElementCount==0) dojo.destroy( $(`${oldParent.id}`));
                     }
                     else if( token.location == 'central_recruit'){
-                        if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                        if(oldParent.classList.contains('stig_token_holder') && oldParent.childElementCount==0) dojo.destroy( $(`${oldParent.id}`));
                     }
                 });
             });
