@@ -71,8 +71,9 @@ trait SpecialChoreographyTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
+        $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($pId);
         $boardTokens = Tokens::getAllOnPersonalBoard($pId);
-        if(!$this->canMoveChoreographyOnPlayerBoard($pId,$token,$boardTokens,$row, $column,$movedTokensIds)){
+        if(!$this->canMoveChoreographyOnPlayerBoard($pId,$token,$boardTokens,$row, $column,$movedTokensIds,$passiveDiagonal)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
 
@@ -197,13 +198,16 @@ trait SpecialChoreographyTrait
      * @param int $row
      * @param int $col
      * @param array $movedTokensIds already moved tokens
+     * @param bool $passiveDiagonal (optional) false by default
      * @return bool TRUE if this token can be move on this player board ( Empty adjacent spot),
      *  FALSE otherwise
      */
-    public function canMoveChoreographyOnPlayerBoard($playerId,$token,$boardTokens,$row, $column,$movedTokensIds)
+    public function canMoveChoreographyOnPlayerBoard($playerId,$token,$boardTokens,$row, $column,$movedTokensIds,$passiveDiagonal =false)
     {
         if(in_array($token->getId(),$movedTokensIds)) return false;
-        if(!$this->canMoveOnPlayerBoard($playerId,$token,$boardTokens,$row, $column)) return false;
+        if(!$this->canMoveOnPlayerBoard($playerId,$token,$boardTokens,$row, $column)
+          && (!$passiveDiagonal || !$this->canMoveDiagonalOnPlayerBoard($playerId,$token,$boardTokens,$row, $column))
+        ) return false;
 
         return true;
     }
@@ -216,13 +220,14 @@ trait SpecialChoreographyTrait
      */
     public function listPossibleChoreographyMovesOnBoard($playerId,$boardTokens,$movedTokensIds){
         $spots = [];
+        $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($playerId);
         foreach($boardTokens as $tokenId => $token){
             if($this->canMoveOutOnBoard($token)){
                 $spots[$tokenId][] = [ 'out' => true ];
             }
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
-                    if(isset($playerId) && $this->canMoveChoreographyOnPlayerBoard($playerId,$token,$boardTokens,$row, $column,$movedTokensIds)){
+                    if(isset($playerId) && $this->canMoveChoreographyOnPlayerBoard($playerId,$token,$boardTokens,$row, $column,$movedTokensIds,$passiveDiagonal)){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }
                 }

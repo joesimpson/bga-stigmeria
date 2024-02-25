@@ -268,4 +268,22 @@ class PlayerActions extends \STIG\Helpers\Pieces
       ->whereIn('type', ACTION_VS_TYPES);
     return $query->run();
   }
+
+  /**
+   * 
+   * @param int $playerId
+   * @return bool
+   */
+  public static function hasUnlockedPassiveDiagonal($playerId){
+    $playerAction = PlayerActions::getPlayer($playerId,[ACTION_TYPE_DIAGONAL])->first();
+    if(!isset($playerAction)){
+      return false;
+    }
+    if($playerAction->getState() == ACTION_STATE_LOCKED ) return false;
+    if($playerAction->getState() == ACTION_STATE_LOCKED_FOR_TURN ) return false;
+    //Passive only for competitive where we unlock seperately
+    if(!Globals::isModeCompetitive()) return false;
+
+    return true;
+  }
 }
