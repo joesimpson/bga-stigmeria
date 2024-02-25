@@ -17,6 +17,13 @@ trait ConfirmUndoTrait
             PGlobals::setEngineChoices($pId, 0);
             PGlobals::setState($pId, $stateId);
         }
+        else {
+            /*
+            foreach(Players::getAll()->getIds() as $playerId){
+                PGlobals::setEngineChoices($playerId, 0);
+            }
+            */
+        }
         Log::checkpoint($stateId,$pId);
     }
 
@@ -33,7 +40,7 @@ trait ConfirmUndoTrait
         $pId = $player->id;
         $data = [];
         //TODO JSA see how to Undo Charmer
-        //$this->addArgsForUndo($pId, $data);
+        $this->addArgsForUndo($pId, $data);
         return $data;
     }
     
@@ -74,7 +81,7 @@ trait ConfirmUndoTrait
         if (PGlobals::getEngineChoices($pId) < 1) {
             throw new UnexpectedException(404,'No choice to undo. You may need to reload the page.');
         }
-        Log::undoTurn($pId);
+        Log::undoTurn($pId, !$player->isMultiactive());
         Notifications::restartTurn($player);
     }
 
@@ -86,7 +93,7 @@ trait ConfirmUndoTrait
         if(!in_array($stepId,$steps)){
             throw new UnexpectedException(404,'This step is not undoable anymore. You may need to reload the page.');
         }
-        Log::undoToStep($player->id,$stepId);
+        Log::undoToStep($player->id,$stepId, !$player->isMultiactive());
         Notifications::undoStep($player, $stepId);
     }
 }

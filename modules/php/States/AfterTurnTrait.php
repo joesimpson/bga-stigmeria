@@ -171,6 +171,7 @@ trait AfterTurnTrait
     $playerAction->setNewStateAfterUse();
     Notifications::useActions($player,$playerAction);
 
+    //$this->addStep($pId,ST_AFTER_TURN_CONFIRM_CHOICES);
     $this->gamestate->nextState("next");
   }
   ///**

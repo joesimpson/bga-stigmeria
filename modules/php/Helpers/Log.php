@@ -116,16 +116,24 @@ class Log extends \APP_DbObject
     /**
      * Revert all the way to the last checkpoint or the last start of turn
      */
-    public static function undoTurn($pId)
+    public static function undoTurn($pId,$useGlobalPreviousState = false)
     {
         $checkpoint = static::getLastCheckpoint($pId, true);
-        return self::revertTo($pId, $checkpoint);
+        $globalPreviousState = null;
+        if($useGlobalPreviousState){
+            $query = new QueryBuilder('log', null, 'id');
+            $step = $query->where('id', '=', $checkpoint)
+                ->get()
+                ->first();
+            $globalPreviousState = (int) json_decode($step['affected'], true);
+        }
+        return self::revertTo($pId, $checkpoint,$globalPreviousState);
     }
 
     /**
      * Revert to a given step (checking first that it exists)
      */
-    public static function undoToStep($pId, $stepId)
+    public static function undoToStep($pId, $stepId,$useGlobalPreviousState = false)
     {
         $query = new QueryBuilder('log', null, 'id');
         $step = $query
@@ -135,22 +143,26 @@ class Log extends \APP_DbObject
         if (is_null($step)) {
             throw new \BgaVisibleSystemException('Cant undo here');
         }
+        $globalPreviousState = null;
+        if($useGlobalPreviousState){
+            $globalPreviousState = (int) json_decode($step['affected'], true);
+        }
 
-        self::revertTo($pId, $stepId - 1);
+        self::revertTo($pId, $stepId - 1,$globalPreviousState);
     }
 
     
     /**
      * Revert all the logged changes up to an id
      */
-    public function revertTo($pId,$id)
+    public function revertTo($pId,$id,$globalPreviousState = null)
     {
         $query = new QueryBuilder('log', null, 'id');
         $log = $query
             ->where('id', $id)
             ->get()
             ->first();
-        $state = (int) json_decode($log['affected'], true);
+        //$globalPreviousState = (int) json_decode($log['affected'], true);
         $type = $log['type'];
 
         $query = new QueryBuilder('log', null, 'id');
@@ -245,9 +257,16 @@ class Log extends \APP_DbObject
         }
         
         $previousState = PGlobals::getState($pId);
-        Game::get()->gamestate->setPlayersMultiactive([$pId], '');
-        Game::get()->gamestate->setPrivateState($pId,$previousState);
-
+        if(isset($globalPreviousState)&& $globalPreviousState>1) $previousState = $globalPreviousState;
+        Game::get()->trace("revertTo($pId, $id,$globalPreviousState) : previousState=$previousState ");
+        if(in_array($previousState,MULTIACTIVE_PRIVATE_STATES)){
+            //TODO use Player.isMultiactive ?
+            Game::get()->gamestate->setPlayersMultiactive([$pId], '');
+            Game::get()->gamestate->setPrivateState($pId,$previousState);
+        }
+        else {
+            Game::get()->gamestate->jumpToState($previousState);
+        }
         return $moveIds;
     }
 
