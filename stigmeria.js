@@ -1363,8 +1363,9 @@ function (dojo, declare) {
         },
         notif_unlockSp(n) {
             debug('notif_unlockSp: new special action !', n);
-            let spAction = n.args.action;
             this._counters[n.args.player_id]['unlockedActions'].incValue(1);
+            let spAction = n.args.action;
+            this.addSpecialActionToken(spAction);
         },
         notif_updateSp(n) {
             debug('notif_updateSp: special action state changed', n);
