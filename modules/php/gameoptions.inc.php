@@ -21,7 +21,10 @@
 
 namespace STIG;
 
-require_once 'modules/php/constants.inc.php';
+//if placed at root folder
+//require_once 'modules/php/constants.inc.php';
+//Else near constants :
+require_once 'constants.inc.php';
 
 $game_options = [
 
