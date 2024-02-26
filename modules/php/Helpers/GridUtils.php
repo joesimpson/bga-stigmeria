@@ -95,7 +95,11 @@ abstract class GridUtils extends \APP_DbObject
         });
     }
         
-    public static function getNeighbours($cell)
+    /**
+     * @param array $cell
+     * @param bool $passiveDiagonal (optional) false by default
+     */
+    public static function getNeighbours($cell, $passiveDiagonal = false)
     {
         $directions = [
             ['x' => -1, 'y' => 0],
@@ -103,6 +107,12 @@ abstract class GridUtils extends \APP_DbObject
             ['x' => 0, 'y' => -1],
             ['x' => 0, 'y' => +1],
         ];
+        if($passiveDiagonal){
+          $directions[] = ['x' => -1, 'y' => -1];
+          $directions[] = ['x' => +1, 'y' => +1];
+          $directions[] = ['x' => -1, 'y' => +1];
+          $directions[] = ['x' => +1, 'y' => -1];
+        }
 
         $cells = [];
         foreach ($directions as $dir) {
@@ -118,16 +128,18 @@ abstract class GridUtils extends \APP_DbObject
     }
   /**
    * getReachableCellsAtDistance: perform a Disjktra shortest path finding :
-   *   - $cell : starting pos
-   *   - $d : max distance we are looking for
-   *   - $costCallback : function used to compute cost
+   * @param array $startingCell : starting pos
+   * @param int $d : max distance we are looking for
+   * @param function $costCallback : function used to compute cost
+   * @param bool $passiveDiagonal (optional) false by default
    * 
    * //Taken from bga-memoir project used to get units movements range
    */
   public static function getReachableCellsAtDistance(
     $startingCell,
     $d,
-    $costCallback
+    $costCallback,
+    $passiveDiagonal = false
   ) {
     $queue = new \SplPriorityQueue();
     $queue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
@@ -147,7 +159,7 @@ abstract class GridUtils extends \APP_DbObject
       $markers[$pos['x']][$pos['y']] = $cell;
 
       // Look at neighbours
-      $neighbours = self::getNeighbours($pos);
+      $neighbours = self::getNeighbours($pos,$passiveDiagonal);
       foreach ($neighbours as $nextCell) {
         $cost = $costCallback($cell, $nextCell, $d);
         $dist = $cell['d'] + $cost;

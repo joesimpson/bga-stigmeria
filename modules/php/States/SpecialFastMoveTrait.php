@@ -188,20 +188,21 @@ trait SpecialFastMoveTrait
      * @param Collection $tokens of StigmerianToken
      * @param StigmerianToken $token
      * @param int $nMoves
+     * @param bool $passiveDiagonal (optional) false by default
      * @return array List of possible spaces. Example [[ 'x' => 1, 'y' => 5 ],] where x is for col, y for row
      */
-    public function listPossibleFastMovesOnBoardFromToken($playerId,$tokens,$token, $nMoves){
-        self::trace("listPossibleFastMovesOnBoardFromToken($playerId, $nMoves)");
+    public function listPossibleFastMovesOnBoardFromToken($playerId,$tokens,$token, $nMoves,$passiveDiagonal =false){
+        self::trace("listPossibleFastMovesOnBoardFromToken($playerId, $nMoves,$passiveDiagonal)");
         if($token->isPollen()) return [];
 
         $startingCell = [ 'x' => $token->getCol(), 'y' => $token->getRow(), ];
         $costCallback = function ($source, $target, $d) use ($tokens) {
-            // If there is a unit => can't go there
+            // If there is a token => can't go there
             $existingToken = Tokens::findTokenOnBoardWithCoord($tokens,$target['y'], $target['x']);
             if(isset($existingToken)) return 10000;//not valid position
             return 1;
         };
-        $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$nMoves, $costCallback);
+        $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$nMoves, $costCallback,$passiveDiagonal);
         $cells = $cellsMarkers[0];
         //$markers = $cellsMarkers[1];
         //self::trace("listPossibleFastMovesOnBoardFromToken(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
@@ -217,8 +218,9 @@ trait SpecialFastMoveTrait
         self::trace("listPossibleFastMovesOnBoard($playerId, $nMoves)");
         $spots = [];
         
+        $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($playerId);
         foreach($tokens as $tokenId => $token){
-            $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$tokens,$token, $nMoves);
+            $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$tokens,$token, $nMoves,$passiveDiagonal);
             if(count($possibleMoves)>0) $spots[$tokenId] = $possibleMoves;
         }
         return $spots;

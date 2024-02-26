@@ -207,7 +207,6 @@ $machinestates = array(
             'startLand' => ST_TURN_CENTRAL_CHOICE_TOKEN_LAND,
             'startMove' => ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE,
             'cJoker' => ST_TURN_CENTRAL_JOKER,
-            //'jealousy' => ST_TURN_SPECIAL_ACT_JEALOUSY,
         ],
     ],
     
@@ -286,21 +285,7 @@ $machinestates = array(
             'next' => ST_TURN_COMMON_BOARD,
         ],
     ],
-    /*
-    ST_TURN_SPECIAL_ACT_JEALOUSY => [
-        "name" => "spJealousy",
-        "descriptionmyturn" => clienttranslate('${you} must chosen an opponent player bag'), 
-        "type" => "private",
-        "args" => "argSpJealousy",
-        "possibleactions" => [
-            "actSpJealousy",
-            'actRestart',
-        ],
-        "transitions" => [
-            'next' => ST_TURN_COMMON_BOARD,
-        ],
-    ],
-    */
+    
     ST_TURN_PERSONAL_BOARD => [
         "name" => "personalBoardTurn",
         "descriptionmyturn" => clienttranslate('${you} may play ${n} actions on your board or pass'), 
