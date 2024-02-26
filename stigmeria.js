@@ -91,6 +91,8 @@ function (dojo, declare) {
             this._notifications = [
                 ['newRound', 10],
                 ['newWinds', 10],
+                ['weatherDice', 100],
+                ['weatherDiceChoice', 500],
                 ['clearTurn', 200],
                 ['refreshUI', 200],
                 ['newTurn', 400],
@@ -1171,6 +1173,10 @@ function (dojo, declare) {
                 this._counters[player.id]['lockedActions'].setValue(player.la);
             });
             
+            for(let k=1; k< TURN_MAX;k++){
+                this.updateWindDir(k,null);
+            }
+            
             this.setupTokens();
         },
         notif_newTurn(n) {
@@ -1201,20 +1207,19 @@ function (dojo, declare) {
             this.gamedatas.firstPlayer = n.args.player_id;
             this.updateFirstPlayer();
         },
+        notif_weatherDice(n) {
+            debug('notif_weatherDice', n);
+            if(n.args.dir_type) this.updateWindDir(n.args.n,n.args.dir_type);
+        },
+        notif_weatherDiceChoice(n) {
+            debug('notif_weatherDiceChoice', n);
+            this.updateWindDir(n.args.n,n.args.dir_type);
+        },
         notif_newWinds(n) {
             debug('notif_newWinds: new wind dirs', n);
             this.gamedatas.winds = n.args.winds;
             for(let k=1; k< TURN_MAX;k++){
-                let dir_index = 1+ WIND_DIRECTIONS.indexOf(this.gamedatas.winds[k]);
-                this.forEachPlayer((player) => {
-                    let windDiv = $(`stig_wind_dir_${player.id}_${k}`);
-                    windDiv.dataset.type = dir_index;
-                });
-                //CENTRAL wind
-                let windDiv = $(`stig_wind_dir_central_${k}`);
-                if(windDiv){
-                    windDiv.dataset.type = dir_index;
-                }
+                this.updateWindDir(k,this.gamedatas.winds[k]);
             }
         },
         notif_useActions(n) {
@@ -1907,6 +1912,20 @@ function (dojo, declare) {
             </div>`;
         },
 
+        updateWindDir(turn, dir) {
+            debug('updateWindDir', turn, dir);
+            this.gamedatas.winds[turn] = dir;
+            let dir_index = 1+ WIND_DIRECTIONS.indexOf(dir);
+            this.forEachPlayer((player) => {
+                let windDiv = $(`stig_wind_dir_${player.id}_${turn}`);
+                windDiv.dataset.type = dir_index;
+            });
+            //CENTRAL wind
+            let windDiv = $(`stig_wind_dir_central_${turn}`);
+            if(windDiv){
+                windDiv.dataset.type = dir_index;
+            }
+        },
         ////////////////////////////////////////////////////////
         //    _______    _                  
         //   |__   __|  | |                 
@@ -2405,7 +2424,7 @@ function (dojo, declare) {
                 if(dir_type in args && dir in args) {
                     let dir_index = 1+ WIND_DIRECTIONS.indexOf(args.dir_type);
                     args.dir = this.formatIcon("wind_dir_log",dir_index,dir_index);
-                    args.dir_type = "";
+                    //args.dir_type = "";
                 }
             }
             } catch (e) {
