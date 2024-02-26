@@ -57,14 +57,8 @@
                     "value": 99,
                     "message": "No Limit not available in current version"
                 }
-            ],
-            "5": [
-                {
-                    "type": "minplayers",
-                    "value": 99,
-                    "message": "Challenge not available in current version"
-                }
             ]
+            
         },
         "level": "base"
     },

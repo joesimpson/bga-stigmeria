@@ -103,6 +103,7 @@ $game_options = [
           //'message' => totranslate('Competitive modes are not for solo play'),
         ],
       ],
+      /*
       OPTION_MODE_CHALLENGE => [
           [
             'type' => 'minplayers', 
@@ -110,6 +111,7 @@ $game_options = [
             'message' => totranslate('Challenge not available in current version'),
           ],
         ],
+      */
     ],
   ),
   OPTION_FLOWER => array(

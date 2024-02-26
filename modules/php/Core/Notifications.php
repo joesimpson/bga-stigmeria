@@ -717,7 +717,7 @@ class Notifications
     $type1 = $typesDestArray[0];
     $type2 = $typesDestArray[1];
     $type3 = $typesDestArray[2];
-    self::notifyAll('spPrediction',clienttranslate('${player_name} use the Prediction to add 3 stigmerian in their bag : ${token_color}${token_color2}${token_color3} (cost: ${n} actions)'),[ 
+    self::notifyAll('spPrediction',clienttranslate('${player_name} use the Prediction to add 3 stigmerians in their bag : ${token_color}${token_color2}${token_color3} (cost: ${n} actions)'),[ 
         'player' => $player,
         'n' => $actionCost,
         'preserve' => [ 'token_type','token_type2','token_type3' ],
