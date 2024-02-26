@@ -2484,7 +2484,7 @@ function (dojo, declare) {
             debug("setupInfoPanel");
             
             dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
-            this._counters['turn'] = this.createCounter('stig_counter_turn',1);
+            this._counters['turn'] = this.createCounter('stig_counter_turn',this.gamedatas.turn);
             
             this._settingsModal = new customgame.modal('showSettings', {
                 class: 'stig_popin',
