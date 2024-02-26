@@ -36,6 +36,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         position: 'fixed',
       });
       this._displayNotifsOnTop = true;
+      this._displayNotifsOnTopWhenGameState = true;
       this._displayRestartButtons = true;
     },
 
@@ -248,7 +249,8 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         var functionName = 'notif_' + notif[0];
 
         let wrapper = (args) => {
-          if(this._displayNotifsOnTop){
+          if(this._displayNotifsOnTop 
+            || this.gamedatas.gamestate.type == 'game' && this._displayNotifsOnTopWhenGameState){
             let msg = this.format_string_recursive(args.log, args.args);
             if (msg != '') {
               $('gameaction_status').innerHTML = msg;

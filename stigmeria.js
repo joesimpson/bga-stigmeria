@@ -91,7 +91,7 @@ function (dojo, declare) {
             this._notifications = [
                 ['newRound', 10],
                 ['newWinds', 10],
-                ['weatherDice', 100],
+                ['weatherDice', 400],
                 ['weatherDiceChoice', 500],
                 ['clearTurn', 200],
                 ['refreshUI', 200],
@@ -142,7 +142,8 @@ function (dojo, declare) {
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
             this._displayNotifsOnTop = false;
-            //TODO JSA disabled if restart is chaotic
+            this._displayNotifsOnTopWhenGameState = true;
+            //To disable if restart is chaotic
             this._displayRestartButtons = true;
         },
         
@@ -1209,7 +1210,9 @@ function (dojo, declare) {
         },
         notif_weatherDice(n) {
             debug('notif_weatherDice', n);
-            if(n.args.dir_type) this.updateWindDir(n.args.n,n.args.dir_type);
+            if(n.args.dir_type){
+                this.updateWindDir(n.args.n,n.args.dir_type);
+            }
         },
         notif_weatherDiceChoice(n) {
             debug('notif_weatherDiceChoice', n);
@@ -1924,6 +1927,11 @@ function (dojo, declare) {
             if(windDiv){
                 windDiv.dataset.type = dir_index;
             }
+            let titleWind = $('pagemaintitletext').querySelector('.stig_subicon_wind_dir_log');
+            if(titleWind && titleWind.dataset.type== 1+WIND_DIRECTIONS.indexOf(WIND_DIR_UNKNOWN)){
+                //When we have argWindEffect with unknown wind, let's update it with computed wind
+                titleWind.dataset.type = dir_index;
+            } 
         },
         ////////////////////////////////////////////////////////
         //    _______    _                  
