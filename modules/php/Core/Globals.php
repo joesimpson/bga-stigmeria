@@ -77,6 +77,19 @@ class Globals extends \STIG\Helpers\DB_Manager
     $getterName = "getWindDirection$turn";
     return self::$getterName();
   }
+  /**
+   * @param int $turn
+   * @param string $value
+   */
+  public static function setWindDir($turn, $value)
+  {
+    $maxWindDir = TURN_MAX +1;
+    if($turn> $maxWindDir){
+      $turn = $maxWindDir;
+    }
+    $setterName = "setWindDirection$turn";
+    return self::$setterName($value);
+  }
 
   public static function getWindDirName($windDir)
   {

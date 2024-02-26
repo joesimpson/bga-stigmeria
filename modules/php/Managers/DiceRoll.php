@@ -9,7 +9,7 @@ class DiceRoll
 { 
 
   /**
-   * @param DieFace $dieFace
+   * @param DiceFace $dieFace
    * @return int the stgmerian color corresponding to this die face
    */
   public static function getStigmerianFromDie($dieFace){

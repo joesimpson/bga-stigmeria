@@ -8,6 +8,7 @@ use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\Collection;
+use STIG\Managers\DiceRoll;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -30,6 +31,16 @@ trait WindEffectTrait
       return;
     }
 
+    $windDir = Globals::getWindDir($turn);
+    if(!isset($windDir) || $windDir == WIND_DIR_UNKNOWN){
+      $rollPlayer = Players::get(Globals::getFirstPlayer());
+      $windDir = $this->rollUntilWind($turn,$rollPlayer);
+      if(!isset($windDir)){
+        //next state changed to ask player
+        return;
+      }
+    }
+
     //LOOP ON EACH player BOARD + central board
     if(!Globals::isModeNoCentralBoard()) $this->doWindEffect($turn);
     foreach($players as $playerId => $player){
@@ -46,6 +57,32 @@ trait WindEffectTrait
       'dir_type' => $windDir,
       'dir' => Globals::getWindDirName($windDir),
     ];
+  }
+
+  /**
+   *  roll dice until dir is known or black and ask player choice
+   * @param int $turn
+   * @param Player $rollPlayer
+   * @return string wind direction - Null if we need to ask player
+   */
+  public function rollUntilWind($turn,$rollPlayer)
+  {
+    self::trace("rollUntilWind($turn)");
+    $newWind = null;
+    while(!isset($newWind)){
+      $diceFace = DiceRoll::rollNew();
+      Globals::setLastDie(['die' => $diceFace->type, 'turn'=> $turn, 'stateFrom'=> ST_WIND_EFFECT]);
+      $newWind = $diceFace->getWindDir();
+      Notifications::weatherDice($diceFace,$turn,$rollPlayer,$newWind);
+      if( $diceFace->askPlayerChoice()){
+        $rollPlayer->giveExtraTime();
+        $this->addCheckpoint(ST_WEATHER_PLAYER_DICE);
+        $this->gamestate->nextState('playerDice');
+        return null;
+      }
+    }
+    Globals::setWindDir($turn, $newWind);
+    return $newWind;
   }
   
   /**

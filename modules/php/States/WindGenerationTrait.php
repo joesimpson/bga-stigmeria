@@ -47,20 +47,16 @@ trait WindGenerationTrait
           $nextPlayer = Players::getNextPlayerNotElimininated($activePlayer->id);
         }
         Players::changeActive($nextPlayer->id);
-        $setterName = "setWindDirection$k";
         
         $diceFace = DiceRoll::rollNew();
-        Globals::setLastDie(['die' => $diceFace->type, 'turn'=> $k]);
+        Globals::setLastDie(['die' => $diceFace->type, 'turn'=> $k, 'stateFrom'=> ST_GENERATE_WIND]);
         $newWind = $diceFace->getWindDir();
         Notifications::weatherDice($diceFace,$k,$nextPlayer,$newWind);
         if(isset($newWind)){
-          Globals::$setterName( $newWind);
+          Globals::setWindDir($k, $newWind);
         }
         else {
-          Globals::$setterName( null);
-          //wind is undefined (in the sense of gameplay)
-          $newWind = WIND_DIR_UNKNOWN;
-
+          Globals::setWindDir($k, null);
           if( $diceFace->askPlayerNoChoice() ||$diceFace->askPlayerChoice() || $diceFace->askPlayerReroll()){
             $nextPlayer->giveExtraTime();
             $this->addCheckpoint(ST_WEATHER_PLAYER_DICE);

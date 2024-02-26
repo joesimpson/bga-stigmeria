@@ -1224,7 +1224,6 @@ function (dojo, declare) {
         },
         notif_useActions(n) {
             debug('notif_useActions: player spent actions', n);
-            this.gamedatas.winds = n.args.winds;
             this._counters[n.args.player_id]['actions'].toValue(n.args.npad);
             this._counters[n.args.player_id]['unlockedActions'].toValue(n.args.ua);
             this._counters[n.args.player_id]['lockedActions'].toValue(n.args.la);

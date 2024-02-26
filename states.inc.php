@@ -136,7 +136,8 @@ $machinestates = array(
         "transitions" => [ 
             "continue" => ST_WEATHER_PLAYER_DICE,
             "next" => ST_GENERATE_WIND, 
-            "zombiePass" => ST_GENERATE_WIND,
+            "nextEffect" => ST_WIND_EFFECT, 
+            "zombiePass" => ST_WIND_EFFECT,
         ],
     ),
 
@@ -755,7 +756,7 @@ $machinestates = array(
         "args" => "argWindEffect",
         "transitions" => [ 
             "next" => ST_NEXT_TURN,
-            //"playerDice" => ST_PLAYER_DICE2,
+            "playerDice" => ST_WEATHER_PLAYER_DICE,
         ],
     ),
     ST_END_ROUND => array(

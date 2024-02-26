@@ -75,8 +75,7 @@ trait PlayerDiceTrait
         else {
             $newWind = $diceFace->getWindDir();
             Notifications::weatherDice($diceFace,$weatherTurn,$player,$newWind);
-            $setterName = "setWindDirection$weatherTurn";
-            Globals::$setterName( $newWind);
+            Globals::setWindDir($weatherTurn, $newWind);
             $this->gamestate->nextState("next");
             return;
         }
@@ -103,15 +102,20 @@ trait PlayerDiceTrait
         if(!$previousDiceFace->askPlayerNoChoice() && WIND_DIR_UNKNOWN ==$type ){
             throw new UnexpectedException(405,"Not supported wind choice $type");
         }
+        $stateFrom = $lastDie['stateFrom'];
 
         //EFFECT
         $weatherTurn = $lastDie['turn'];
         $newWind = $type;
-        $setterName = "setWindDirection$weatherTurn";
-        Globals::$setterName( $newWind);
+        Globals::setWindDir($weatherTurn, $newWind);
         
         Notifications::weatherDiceChoice($weatherTurn,$player,$newWind);
         
+        if($stateFrom == ST_WIND_EFFECT){
+            $this->gamestate->nextState("nextEffect");
+            return;
+        }
+
         $this->gamestate->nextState("next");
 
     }
