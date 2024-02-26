@@ -130,6 +130,11 @@ class Globals extends \STIG\Helpers\DB_Manager
     $gameMode = Globals::getOptionGameMode();
     return ($gameMode == OPTION_MODE_NOLIMIT);
   }
+  public static function isModeNoTurnLimit()
+  {
+    $gameMode = Globals::getOptionGameMode();
+    return ($gameMode == OPTION_MODE_NOLIMIT || $gameMode == OPTION_MODE_DISCOVERY);
+  }
   /*
    * Setup new game
    */

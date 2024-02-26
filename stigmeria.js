@@ -1916,11 +1916,12 @@ function (dojo, declare) {
 
         updateWindDir(turn, dir) {
             debug('updateWindDir', turn, dir);
+            turn = Math.min(TURN_MAX,turn);
             this.gamedatas.winds[turn] = dir;
             let dir_index = 1+ WIND_DIRECTIONS.indexOf(dir);
             this.forEachPlayer((player) => {
                 let windDiv = $(`stig_wind_dir_${player.id}_${turn}`);
-                windDiv.dataset.type = dir_index;
+                if(windDiv) windDiv.dataset.type = dir_index;
             });
             //CENTRAL wind
             let windDiv = $(`stig_wind_dir_central_${turn}`);

@@ -34,7 +34,7 @@ trait NextTurnTrait
       return;
     }
     //-------------------------------------------
-    if (!Globals::isModeDiscovery() && $turn >= TURN_MAX) {
+    if (!Globals::isModeNoTurnLimit() && $turn >= TURN_MAX) {
       Notifications::lastTurnEnd($turn);
       $this->gamestate->nextState('end');
       return;

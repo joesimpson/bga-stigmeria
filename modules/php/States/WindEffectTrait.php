@@ -25,10 +25,15 @@ trait WindEffectTrait
     $players = Players::getAll();
 
     $turn = Globals::getTurn();
-    if($turn == TURN_MAX && Globals::isModeNormal() ){
+    if($turn == TURN_MAX && !Globals::isModeNoTurnLimit() ){
       //In this mode, this is the last played turn and no wind is blowing
       $this->gamestate->nextState('next');
       return;
+    }
+
+    if($turn > TURN_MAX){
+      //Reset to null because we use the same slot for all turns >10
+      Globals::setWindDir($turn,null);
     }
 
     $windDir = Globals::getWindDir($turn);
