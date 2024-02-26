@@ -1157,8 +1157,10 @@ function (dojo, declare) {
 
         notif_newRound(n) {
             debug('notif_newRound: new round', n);
-            this.gamedatas.schema = n.args.schema;
+            this.gamedatas.schema = n.args.schema.id;
+            this.gamedatas.schemas[n.args.schema.id] = n.args.schema;
             this.gamedatas.tokens = n.args.tokens;
+            this.gamedatas.actions = n.args.actions;
             this.gamedatas.turn = 0;
             this._counters['turn'].toValue(this.gamedatas.turn);
             this.gamedatas.players = n.args.players;
@@ -1179,6 +1181,7 @@ function (dojo, declare) {
             }
             
             this.setupTokens();
+            this.setupSpecialActions();
         },
         notif_newTurn(n) {
             debug('notif_newTurn: new turn', n);
@@ -1848,7 +1851,7 @@ function (dojo, declare) {
             let alwaysShow = this.gamedatas.nocb;
             return `<div class='stig_resizable_action_board' id='stig_sp_action_board_container_wrapper_${player.id}' data-player='${player.id}'>
             <div class='stig_sp_action_board_container'>
-                <div class="stig_sp_action_board" id='stig_sp_action_board_${player.id}' data-difficulty="${this.getFlowerDifficulty()}">
+                <div class="stig_sp_action_board" id='stig_sp_action_board_${player.id}' data-difficulty="${difficulty}">
                     <div class='player-name' style='color:#${player.color};'>${player.name}</div>
                     <div id="stig_sp_grid_${player.id}" class='stig_sp_grid'>
                         <div class="stig_sp_col ${alwaysShow || difficulty>=1 ? 'stig_hidden' :'' }" id="stig_sp_col_1_${player.id}" data-col="1"></div>

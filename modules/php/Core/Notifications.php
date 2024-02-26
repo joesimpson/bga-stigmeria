@@ -29,8 +29,8 @@ class Notifications
     self::notifyAll('newRound',$msg,[ 
         'n' => $round,
         's' => $schema->id,
-        //No need to send all the schema datas if we send it at start
-        //'schema' => $schema->getUiData(),
+        //No need to send all the schema datas if we send it at start ? but needed after waiting screen...
+        'schema' => $schema->getUiData(),
         'tokens' => $tokens,
         'players' => $players,
         'actions' => $actions,
