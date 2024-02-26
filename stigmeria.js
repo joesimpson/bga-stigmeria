@@ -33,7 +33,8 @@ function (dojo, declare) {
     const WIND_DIR_SOUTH = 'S';
     const WIND_DIR_EAST = 'E';
     const WIND_DIR_WEST = 'W';
-    const WIND_DIRECTIONS = [WIND_DIR_NORTH,WIND_DIR_SOUTH,WIND_DIR_EAST,WIND_DIR_WEST];
+    const WIND_DIR_UNKNOWN = 'U';
+    const WIND_DIRECTIONS = [WIND_DIR_NORTH,WIND_DIR_SOUTH,WIND_DIR_EAST,WIND_DIR_WEST,WIND_DIR_UNKNOWN];
 
     const ACTION_TYPE_MIXING = 10;
     const ACTION_TYPE_COMBINATION = 11;
@@ -291,10 +292,26 @@ function (dojo, declare) {
             debug( 'onEnteringStateGenerateWind() ', args );
             
         }, 
-        onEnteringStatePlayerDice: function(args)
+        onEnteringStateWPlayerDice: function(args)
         {
-            debug( 'onEnteringStatePlayerDice() ', args );
-            
+            debug( 'onEnteringStateWPlayerDice() ', args );
+            let possibleActions = args.a;
+            if(possibleActions.includes('actReroll')){
+                this.addPrimaryActionButton(`btnReroll`, _('Reroll') , () =>  { this.takeAction('actReroll'); });
+            }
+            if(possibleActions.includes('actDiceFaceU')){
+                //WIND_DIR_UNKNOWN
+                this.addPrimaryActionButton(`btnDiceFaceU`, _('Surprise') , () =>  { this.takeAction('actDiceFace',{t:WIND_DIR_UNKNOWN}); });
+            }
+            if(possibleActions.includes('actDiceFace')){
+                Object.values(WIND_DIRECTIONS).forEach((dir) => {
+                    if(dir == WIND_DIR_UNKNOWN) return;
+                    let dir_index = 1+ WIND_DIRECTIONS.indexOf(dir);
+                    this.addImageActionButton(`btnDiceFace_${dir}`, `<div><div class='stig_button_wind_dir' data-type='${dir_index}'></div> </div>`, () =>  {
+                        this.takeAction('actDiceFace', {t:dir})
+                    });
+                });
+            }
         }, 
         onEnteringStateNextTurn: function(args)
         {

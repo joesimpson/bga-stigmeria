@@ -28,6 +28,9 @@ class Globals extends \STIG\Helpers\DB_Manager
     //Keep a trace of players who played or pass Charmed
     'afterTurnPlayers' => 'obj',
 
+    //Last dice roll result
+    'lastDie' => 'obj',
+
     //We manage the wind direction for the 10 first turns, then the wind will be saved in windDirection11 (no need to display them)
     'windDirection1' => 'str',
     'windDirection2' => 'str',
@@ -123,7 +126,8 @@ class Globals extends \STIG\Helpers\DB_Manager
     self::setNbRounds(1);
     self::setRound(0);
     self::setTurn(0);
-    
+    self::setLastDie([]);
+
     foreach($players as $pId => $player){
       if($player['player_table_order'] == 1){
         self::setFirstPlayer($pId);
@@ -219,6 +223,18 @@ class Globals extends \STIG\Helpers\DB_Manager
   {
     self::setTurn(0);
     self::incRound();
+    self::setLastDie(null);
+    self::setWindDirection1( null );
+    self::setWindDirection2( null );
+    self::setWindDirection3( null );
+    self::setWindDirection4( null );
+    self::setWindDirection5( null );
+    self::setWindDirection6( null );
+    self::setWindDirection7( null );
+    self::setWindDirection8( null );
+    self::setWindDirection9( null );
+    self::setWindDirection10(null);
+    self::setWindDirection11(null);
   }
 
   /**

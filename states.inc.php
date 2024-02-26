@@ -121,26 +121,24 @@ $machinestates = array(
         "type" => "game",
         "action" => "stGenerateWind",
         "transitions" => [ 
-            "playerDice" => ST_PLAYER_DICE,
+            "playerDice" => ST_WEATHER_PLAYER_DICE,
             "next" => ST_NEXT_TURN,
         ],
     ),    
 
-    /* TBD
-    ST_PLAYER_DICE => array(
-        "name" => "playerDice",
-        "description" => clienttranslate('${actplayer} must choose a dice result'),
-        "descriptionmyturn" => clienttranslate('${you} must choose a dice result'),
+    ST_WEATHER_PLAYER_DICE => array(
+        "name" => "wPlayerDice",
+        "args" => "argWPlayerDice",
+        "description" => clienttranslate('Turn ${n} weather die ${die_face} : ${actplayer} must choose a dice result'),
+        "descriptionmyturn" => clienttranslate('Turn ${n} weather die ${die_face} : ${you} must choose a dice result'),
         "type" => "activeplayer",
-        "possibleactions" => ["actChooseDice", "actRerollDice", ],
+        "possibleactions" => ["actDiceFace", "actReroll", ],
         "transitions" => [ 
-            "nextDice" => ST_GENERATE_WIND, 
-            "windEffect" => ST_WIND_EFFECT,
-            
+            "continue" => ST_WEATHER_PLAYER_DICE,
+            "next" => ST_GENERATE_WIND, 
             "zombiePass" => ST_GENERATE_WIND,
         ],
     ),
-    */
 
     ST_NEXT_TURN => array(
         "name" => "nextTurn",

@@ -105,7 +105,7 @@ trait DebugTrait
     $turn = Globals::getTurn();
     $this->doWindEffect($turn,$player);
     $this->doWindEffect($turn);
-  }*/
+  }
   function debugNewWind()
   {
     $this->generateWind();
@@ -115,7 +115,6 @@ trait DebugTrait
     Notifications::windBlows('S',new Collection([]),null); 
     Notifications::windBlows('N',new Collection([]),null); 
   }
-  /*
   function debugSchema()
   {
     $round = Globals::getRound();

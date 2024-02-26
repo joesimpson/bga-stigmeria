@@ -5,6 +5,7 @@ namespace STIG\Core;
 use STIG\Managers\Players;
 use STIG\Helpers\Utils;
 use STIG\Core\Globals;
+use STIG\Models\DiceFace;
 use STIG\Models\Player;
 use STIG\Models\PlayerAction;
 use STIG\Models\Schema;
@@ -35,6 +36,47 @@ class Notifications
         'actions' => $actions,
       ],
     );
+  }
+  /**
+   * @param DiceFace $diceFace
+   * @param int $weatherTurn
+   * @param Player $player
+   * @param string $windDir
+   */
+  public static function weatherDice($diceFace,$weatherTurn,$player,$windDir){
+    if(isset($windDir)){
+      $message = clienttranslate('Weather after turn #${n} : ${player_name} gets die roll ${die_face} giving ${dir}');
+    } else {
+      $message = clienttranslate('Weather after turn #${n} : ${player_name} gets die roll ${die_face}');
+    }
+    $dieType = $diceFace->type;
+    self::notifyAll('weatherDice',$message,[
+      'die_face' => $dieType,
+      'n' => $weatherTurn,
+      'player' => $player,
+      'preserve'=>['dir_type'],
+      'dir_type' => $windDir,
+      'dir' => Globals::getWindDirName($windDir),
+    ],);
+  }
+   /**
+   * @param int $weatherTurn
+   * @param Player $player
+   * @param string $windDir
+   */
+  public static function weatherDiceChoice($weatherTurn,$player,$windDir){
+    if(WIND_DIR_UNKNOWN == $windDir){
+      $message = clienttranslate('Weather after turn #${n} : ${player_name} chooses mystery, wind direction will be known only when wind blows !');
+    } else {
+      $message = clienttranslate('Weather after turn #${n} : ${player_name} chooses wind direction ${dir}');
+    }
+    self::notifyAll('weatherDiceChoice',$message,[
+      'n' => $weatherTurn,
+      'player' => $player,
+      'preserve'=>['dir_type'],
+      'dir_type' => $windDir,
+      'dir' => Globals::getWindDirName($windDir),
+    ],);
   }
   /**
    * @param array $winds

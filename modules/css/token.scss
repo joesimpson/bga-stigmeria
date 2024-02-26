@@ -85,6 +85,7 @@
 }
 
 
+.stig_button_wind_dir,
 .stig_icon_container_wind_dir_log,
 .stig_subicon_wind_dir_log {
     position: relative;
@@ -96,6 +97,7 @@
 
 }
 
+.stig_button_wind_dir,
 .stig_icon_container_wind_dir_log,
 .stig_subicon_wind_dir_log,
 .stig_wind_dir{
@@ -116,4 +118,13 @@
         transform: rotate(90deg);
     }
     
+    &[data-type='0'],
+    &[data-type='5']{
+        //WIND_DIR_UNKNOWN or not rolled yet
+        visibility: hidden;
+    }
+}
+.stig_button_wind_dir{
+    width: 56px;
+    height: 56px;
 }

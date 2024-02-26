@@ -47,6 +47,21 @@
     }
   	// TODO: defines your action entry points there
 
+    public function actReroll()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actReroll();
+      self::ajaxResponse();
+    }
+    public function actDiceFace()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $type = self::getArg( "t", AT_enum, true,null,WIND_DIRECTIONS  );
+      $this->game->actDiceFace($type);
+      self::ajaxResponse();
+    }
     public function actFT()
     {
       self::setAjaxMode();
@@ -541,6 +556,7 @@
     public function actConfirmTurn()
     {
       self::setAjaxMode();
+      self::checkVersion();
       $this->game->actConfirmTurn();
       self::ajaxResponse();
     }
@@ -548,6 +564,7 @@
     public function actRestart()
     {
       self::setAjaxMode();
+      self::checkVersion();
       $this->game->actRestart();
       self::ajaxResponse();
     }
@@ -555,6 +572,7 @@
     public function actUndoToStep()
     {
       self::setAjaxMode();
+      self::checkVersion();
       $stepId = self::getArg('stepId', AT_posint, false);
       $this->game->actUndoToStep($stepId);
       self::ajaxResponse();
