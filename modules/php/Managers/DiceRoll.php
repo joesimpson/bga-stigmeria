@@ -3,6 +3,7 @@
 namespace STIG\Managers;
 
 use STIG\Helpers\Collection;
+use STIG\Models\DiceFace;
 
 class DiceRoll
 { 
@@ -46,7 +47,7 @@ class DiceRoll
    * @return DieFace
    */
   public static function rollNew(){
-    return self::getAll()->rand();
+    return new DiceFace(self::getAll()->rand());
   }
   /**
    * @return Collection of DieFace

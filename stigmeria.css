@@ -538,20 +538,25 @@
   background-position-x: 100%;
   background-position-y: 75%;
 }
+
 .stig_icon_container_wind_dir_log[data-type="1"],
-.stig_subicon_wind_dir_log[data-type="1"] {
+.stig_subicon_wind_dir_log[data-type="1"],
+.stig_wind_dir[data-type="1"] {
   transform: rotate(180deg);
 }
 .stig_icon_container_wind_dir_log[data-type="2"],
-.stig_subicon_wind_dir_log[data-type="2"] {
+.stig_subicon_wind_dir_log[data-type="2"],
+.stig_wind_dir[data-type="2"] {
   transform: rotate(0deg);
 }
 .stig_icon_container_wind_dir_log[data-type="3"],
-.stig_subicon_wind_dir_log[data-type="3"] {
+.stig_subicon_wind_dir_log[data-type="3"],
+.stig_wind_dir[data-type="3"] {
   transform: rotate(-90deg);
 }
 .stig_icon_container_wind_dir_log[data-type="4"],
-.stig_subicon_wind_dir_log[data-type="4"] {
+.stig_subicon_wind_dir_log[data-type="4"],
+.stig_wind_dir[data-type="4"] {
   transform: rotate(90deg);
 }
 

@@ -4,6 +4,7 @@ use STIG\Core\Globals;
 use STIG\Core\Game;
 use STIG\Core\Notifications;
 use STIG\Core\Stats;
+use STIG\Helpers\Collection;
 use STIG\Helpers\GridUtils;
 use STIG\Helpers\Utils;
 use STIG\Managers\PlayerActions;
@@ -104,12 +105,17 @@ trait DebugTrait
     $turn = Globals::getTurn();
     $this->doWindEffect($turn,$player);
     $this->doWindEffect($turn);
-  }
+  }*/
   function debugNewWind()
   {
+    $this->generateWind();
     Notifications::newWinds(Globals::getAllWindDir());
+    Notifications::windBlows('W',new Collection([]),null); 
+    Notifications::windBlows('E',new Collection([]),null); 
+    Notifications::windBlows('S',new Collection([]),null); 
+    Notifications::windBlows('N',new Collection([]),null); 
   }
-  
+  /*
   function debugSchema()
   {
     $round = Globals::getRound();

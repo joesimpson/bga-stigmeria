@@ -136,7 +136,7 @@ trait SpecialActionTrait
             case ACTION_TYPE_FOGDIE:
                 $nextState = "startFogDie";
                 $nextStateId = ST_TURN_SPECIAL_ACT_FOGDIE;
-                PGlobals::setLastDie($pId, DiceRoll::rollNew());
+                PGlobals::setLastDie($pId, DiceRoll::rollNew()->type);
                 break;
             case ACTION_TYPE_PILFERER:
                 $nextState = "startPilferer";

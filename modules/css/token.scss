@@ -94,6 +94,11 @@
     background-position-x: 100%;
     background-position-y: 75%;
 
+}
+
+.stig_icon_container_wind_dir_log,
+.stig_subicon_wind_dir_log,
+.stig_wind_dir{
     &[data-type='1']{
         //WIND_DIR_NORTH
         transform: rotate(180deg);
@@ -110,4 +115,5 @@
         //WIND_DIR_WEST
         transform: rotate(90deg);
     }
+    
 }

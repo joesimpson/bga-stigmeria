@@ -15,7 +15,26 @@ class DiceFace implements \JsonSerializable
 
   public function __construct($type)
   {
-    
+    $this->type = $type;
+  }
+
+  public function getWindDir()
+  {
+    switch($this->type){
+      case NORTH_RED:
+      case NORTH_BROWN:
+        return WIND_DIR_NORTH;
+      case SOUTH_BLUE:
+      case SOUTH_GREEN:
+        return WIND_DIR_SOUTH;
+      case EAST_WHITE:
+      case EAST_YELLOW:
+        return WIND_DIR_EAST;
+      case WEST_ORANGE:
+      case WEST_VIOLET:
+        return WIND_DIR_WEST;
+    }
+    return null;
   }
 
   /**

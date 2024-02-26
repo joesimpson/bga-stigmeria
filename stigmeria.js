@@ -1187,7 +1187,18 @@ function (dojo, declare) {
         notif_newWinds(n) {
             debug('notif_newWinds: new wind dirs', n);
             this.gamedatas.winds = n.args.winds;
-            //TODO JSA display winds
+            for(let k=1; k< TURN_MAX;k++){
+                let dir_index = 1+ WIND_DIRECTIONS.indexOf(this.gamedatas.winds[k]);
+                this.forEachPlayer((player) => {
+                    let windDiv = $(`stig_wind_dir_${player.id}_${k}`);
+                    windDiv.dataset.type = dir_index;
+                });
+                //CENTRAL wind
+                let windDiv = $(`stig_wind_dir_central_${k}`);
+                if(windDiv){
+                    windDiv.dataset.type = dir_index;
+                }
+            }
         },
         notif_useActions(n) {
             debug('notif_useActions: player spent actions', n);
@@ -1996,7 +2007,12 @@ function (dojo, declare) {
         tplWindDirContainer(datas) {
             let winds = '';
             for(let k=1; k< TURN_MAX;k++){
-                winds+= `<div id="stig_wind_dir_${datas.player_id}_${k}" class='stig_wind_dir' data-turn="${k}"></div>`;
+                let dir = WIND_DIR_SOUTH;
+                if(this.gamedatas.winds && k in this.gamedatas.winds){
+                    dir = this.gamedatas.winds[k];
+                }
+                let dir_index = 1+ WIND_DIRECTIONS.indexOf(dir);
+                winds+= `<div id="stig_wind_dir_${datas.player_id}_${k}" class='stig_wind_dir' data-turn="${k}" data-type="${dir_index}"></div>`;
             }
             return `<div id="stig_wind_dir_container_${datas.player_id}" class='stig_wind_dir_container'>${winds}</div>`;
         },   

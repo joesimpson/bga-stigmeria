@@ -4,6 +4,8 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Managers\DiceRoll;
+use STIG\Models\DiceFace;
 
 trait WindGenerationTrait
 {
@@ -11,6 +13,15 @@ trait WindGenerationTrait
   public function stGenerateWind()
   {
     $this->addCheckpoint(ST_GENERATE_WIND);
+    
+    $this->generateWind();
+    Notifications::newWinds(Globals::getAllWindDir());
+
+    $this->gamestate->nextState('next');
+  }
+
+  public function generateWind()
+  {
     //DEFAULT SOUTH if not NO LIMIT
     Globals::setWindDirection1(WIND_DIR_SOUTH);
     Globals::setWindDirection2(WIND_DIR_SOUTH);
@@ -24,11 +35,22 @@ trait WindGenerationTrait
     Globals::setWindDirection10(WIND_DIR_SOUTH);
     Globals::setWindDirection11(WIND_DIR_SOUTH);
     
-    //TODO JSA ROLL DICE in NO LIMIT
+    if(Globals::isModeCompetitiveNoLimit()){
+      //TODO JSA ROLL DICE in NO LIMIT
+      for($k=1;$k<=TURN_MAX +1;$k++){
+        $setterName = "setWindDirection$k";
+        
+        $diceFace = DiceRoll::rollNew();
+        $newWind = $diceFace->getWindDir();
+        if(isset($newWind)){
+          Globals::$setterName( $newWind);
+        }
+        else {
+          //TODO JSA next active player to choose
+        }
+      }
+    }
 
-    Notifications::newWinds(Globals::getAllWindDir());
-    //Notifications::emptyNotif();
-
-    $this->gamestate->nextState('next');
   }
+
 }
