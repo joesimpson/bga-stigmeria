@@ -68,20 +68,47 @@ trait WindEffectTrait
 
     $movedTokens = [];
 
+    $functionBlow = function($row,$col) use($boardTokens,$windDir,$player,&$movedTokens ){
+      $token = Tokens::findTokenOnBoardWithCoord($boardTokens,$row,$col );
+      if(isset($token) && $this->doWindBlowsTo($token,$windDir,$player,$boardTokens) ){
+        //if token moved, add it in array which will be sent to client
+        $movedTokens[] = $token;
+      }
+    };
+
     switch($windDir){
       case WIND_DIR_SOUTH:
-        //FROM North to South : read last row first
+        //FROM North to South : read bottom row first
         for($row = ROW_MAX; $row>=ROW_MIN; $row-- ){
           for($col = COLUMN_MIN; $col<=COLUMN_MAX; $col++ ){
-            $token = Tokens::findTokenOnBoardWithCoord($boardTokens,$row,$col );
-            if(isset($token) && $this->doWindBlowsTo($token,$windDir,$player,$boardTokens) ){
-              //if token moved, add it in array which will be sent to client
-              $movedTokens[] = $token;
-            }
+            $functionBlow($row,$col);
           }
         }
         break;
-      //TODO JSA ALL DIRS
+      case WIND_DIR_NORTH:
+        //FROM South to North : read upper row first
+        for($row = ROW_MIN; $row<=ROW_MAX; $row++ ){
+          for($col = COLUMN_MIN; $col<=COLUMN_MAX; $col++ ){
+            $functionBlow($row,$col);
+          }
+        }
+        break;
+      case WIND_DIR_EAST:
+        //FROM West to East : read right column first
+        for($col = COLUMN_MAX; $col>=COLUMN_MIN; $col-- ){
+          for($row = ROW_MIN; $row<=ROW_MAX; $row++ ){
+            $functionBlow($row,$col);
+          }
+        }
+        break;
+      case WIND_DIR_WEST:
+        //FROM East to West : read left column first
+        for($col = COLUMN_MIN; $col<=COLUMN_MAX; $col++ ){
+          for($row = ROW_MIN; $row<=ROW_MAX; $row++ ){
+            $functionBlow($row,$col);
+          }
+        }
+        break;
       default: 
         Notifications::message("Wind direction $windDir not supported !");
         return;
