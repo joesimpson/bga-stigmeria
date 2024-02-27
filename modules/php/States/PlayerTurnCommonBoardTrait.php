@@ -193,8 +193,13 @@ trait PlayerTurnCommonBoardTrait
         $this->gamestate->nextPrivateState($player->id, "cJoker");
     }
     
-    /**start LAst Drift  */
-    public function actLastDrift($type)
+    /**
+     * start LAst Drift
+     * @param int $type
+     * @param int $targetPid (optional)
+     * 
+      */
+    public function actLastDrift($type, $targetPid = null)
     {
         self::checkAction('actLastDrift'); 
         self::trace("actLastDrift($type)");
@@ -205,11 +210,16 @@ trait PlayerTurnCommonBoardTrait
         if(!$this->canPlayLastDrift($player,$type) ){
             throw new UnexpectedException(405,"You cannot play last drift $type");
         }
-        $targetBoard = $pId;
+        $targetBoard = $targetPid;
         $targetPlayer = null;
         if(ACTION_TYPE_LASTDRIFT_CENTRAL==$type ){
             $targetBoard = null;
+        } else if(ACTION_TYPE_LASTDRIFT_PERSONAL==$type ){
+            $targetPlayer = $player;
         } else {
+            if($targetPid == $pId){
+                throw new UnexpectedException(405,"You cannot target yourself");
+            }
             $targetPlayer = Players::get($targetBoard);
         }
         $lastDriftDatas = ['type' => $type, 'pid' =>$targetBoard ];

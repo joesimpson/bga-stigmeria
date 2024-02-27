@@ -3420,6 +3420,18 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   background-color: rgb(255, 115, 0) !important;
 }
 
+#multipleChoice_dialog ul {
+  display: flex;
+}
+#multipleChoice_dialog ul li {
+  margin: 0px 10px;
+}
+#multipleChoice_dialog ul li #choice_btn_0 {
+  background: #ffffff;
+  border-color: #000000;
+  color: #000000;
+}
+
 .customimagebutton {
   border: medium none;
   display: flex;

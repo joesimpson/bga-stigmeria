@@ -90,7 +90,8 @@
       self::setAjaxMode();
       self::checkVersion();
       $type = self::getArg( "act", AT_posint, true );
-      $this->game->actLastDrift($type);
+      $pid = self::getArg( "pid", AT_posint, false );
+      $this->game->actLastDrift($type,$pid);
       self::ajaxResponse();
     }
     public function actLastDriftMove()

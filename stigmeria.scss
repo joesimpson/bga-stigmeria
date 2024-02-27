@@ -55,6 +55,21 @@
         background-color: rgb(255, 115, 0) !important;
     }
 }
+// In this game, only one multipleChoice_dialog is used with Cancel then players name
+#multipleChoice_dialog{
+    ul{
+        display: flex;
+        li{
+            margin: 0px 10px;
+            
+            #choice_btn_0 {
+                background: #ffffff;
+                border-color: #000000;
+                color: #000000;
+            }
+        }
+    }
+}
 .customimagebutton{
     border: medium none;
     display: flex;

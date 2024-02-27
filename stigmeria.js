@@ -341,14 +341,43 @@ function (dojo, declare) {
             let possibleActions = args.a;
             let nbActions = args.n;
             if(nbActions>0){
-                this.formatSpecialActionButton(_('Last Drift'),ACTION_TYPE_LASTDRIFT_PERSONAL,possibleActions,possibleActions
-                    ,'actLastDrift', _('Are you sure to roll a die to apply on YOUR board ? This is a free action to take before others.'));
-                this.formatSpecialActionButton(_('Last Drift'),ACTION_TYPE_LASTDRIFT_CENTRAL,possibleActions,possibleActions
-                    ,'actLastDrift', _('Are you sure to roll a die to apply on CENTRAL board ? This is a free action to take before others.'));
-                this.formatSpecialActionButton(_('Last Drift'),ACTION_TYPE_LASTDRIFT_OPPONENT,possibleActions,possibleActions
-                    ,'actLastDrift', _('Are you sure to roll a die to apply on an opponent board ? This is a free action to take before others. Which opponent ?')
-                    ,{pid:'TODO PID'});
-                    //TODO JSA ON CLICk, display opponents names buttons
+                let actionName ='actLastDrift';
+                this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_PERSONAL,possibleActions,possibleActions
+                , (actionType) => {
+                        let confirmMessage = _('Are you sure to roll a die to apply on YOUR board ?')
+                        +' '+_('This is a free action to take before taking other actions.');
+                        this.confirmationDialog(confirmMessage, () => {
+                            this.takeAction(actionName, {act:actionType});
+                        });
+                    });
+                    
+                this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_CENTRAL,possibleActions,possibleActions
+                , (actionType) => {
+                        let confirmMessage = _('Are you sure to roll a die to apply on CENTRAL board ?')
+                        +' '+_('This is a free action to take before taking other actions.');
+                        this.confirmationDialog(confirmMessage, () => {
+                            this.takeAction(actionName, {act:actionType});
+                        });
+                    });
+                this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_OPPONENT,possibleActions,possibleActions
+                , (actionType) => {
+                        let confirmMessage = _('Are you sure to roll a die to apply on an opponent board ?')
+                        +' '+_('This is a free action to take before taking other actions.')
+                        +' '+_('Choose your target :');
+                        let choices = [_("Cancel")];
+                        let choicesPid = [null,];
+                        this.forEachPlayer(  (player) => {
+                            //Target everyone except yourself
+                            if(this.player_id == player.id) return;
+                            choices.push( this.formatPlayerNameButton(player));
+                            choicesPid.push(player.id);
+                        });
+                        this.multipleChoiceDialog(confirmMessage, choices, (choice) => {
+                            if (choice==0) return; // cancel operation, do not call server action
+                            
+                            this.takeAction(actionName, {act:actionType,pid:choicesPid[choice]});
+                        });
+                    });
                 
                 this.addPrimaryActionButton('btnCommonDrawAndPlace', _('Draw and Place'), () => {
                     this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
@@ -732,8 +761,8 @@ function (dojo, declare) {
             this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id,'actMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
-        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions, actionName ='actChoiceSpecial',confirmMessage = null,args={}) {
-            debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions,confirmMessage,args);
+        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions, actionName ='actChoiceSpecial',confirmMessage = null) {
+            debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions,confirmMessage);
             if(possibleActions.includes(actionType)){
                 let divText = `<div><div class='stig_sp_action_text'>`+_(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
                 this.addImageActionButton('btnStartSp'+actionType,divText , () => {
@@ -2560,6 +2589,20 @@ function (dojo, declare) {
         {
             debug( 'formatPlayerNameButton() ', player );
             return `<span class='stig_button_player_name' style='color:#${player.color};'>${player.name}</span>`;
+        },
+        formatLastDriftButton: function(actionType,possibleActions,enabledActions, callbackConfirm) {
+            debug("formatLastDriftButton",actionType,possibleActions,enabledActions,callbackConfirm);
+            let text = _('Last Drift');
+            if(possibleActions.includes(actionType)){
+                let divText = `<div><div class='stig_ld_action_text'>`+_(text)+`</div><div class='stig_ld_action_image' data-type='${actionType}'></div></div>`;
+                this.addImageActionButton('btnStartLD'+actionType,divText , () => {
+                    callbackConfirm(actionType);
+                });
+                $('btnStartLD'+actionType).dataset.type = actionType;
+                if(!enabledActions.includes(actionType)){
+                    $('btnStartLD'+actionType).classList.add('disabled');
+                }
+            }
         },
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
