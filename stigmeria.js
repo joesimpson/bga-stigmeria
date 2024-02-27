@@ -557,8 +557,28 @@ function (dojo, declare) {
             let possibleActions = args.a;
 
             if(possibleActions.includes('actLastDriftLand')){
-                let token_type = 'TODO JSA CHOOSE';
-                this.initCellSelection('actLastDriftLand', args.p, this.player_id,token_type);
+                let player_target = 'central';
+                let callbackSelectionDone = (div) => { 
+                    let typeSrc = div.dataset.type;
+                    document.querySelectorAll('.stig_button_ldcolor').forEach( (e) => dojo.destroy(e) );
+                    Object.values(STIG_PRIMARY_COLORS).forEach((tokenColor) => {
+                        if(typeSrc == tokenColor) return;
+                        let buttonId = `btnColor_${tokenColor}`;
+                        this.addImageActionButton(buttonId, `<div class='stig_button_token' data-type='${tokenColor}'></div>`, () =>  {
+                            document.querySelectorAll('.stig_button_ldcolor').forEach( (e) => e.classList.remove('stig_selected_button') );
+                            $(buttonId).classList.toggle('stig_selected_button');
+                            
+                        });
+                        $(buttonId).classList.add('stig_button_ldcolor');
+                    });
+                };
+                let callbackConfirm = (selectedTokenCell) => { 
+                    let typeDest = document.querySelector('.stig_button_ldcolor.stig_selected_button .stig_button_token');
+                    if(typeDest){
+                        this.takeAction('actLastDriftLand', { row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, dest: typeDest.dataset.type});
+                    }
+                };
+                this.initCellSelection('actLastDriftLand', args.p, player_target,null,null,callbackSelectionDone,callbackConfirm);
                 $('btnConfirm').innerText=_('Confirm Land');
             }
             else if(possibleActions.includes('actLastDriftMove')){
@@ -2230,7 +2250,7 @@ function (dojo, declare) {
         },
         //Direct selection of a cell, independent of a token
         initCellSelection(actionName, possiblePlaces, playerBoardId = 'central',newType = null,
-            confirmMessage = null    
+            confirmMessage = null, callbackSelectionDone =null, callbackConfirm =null   
         ){
             debug( 'initCellSelection() ', actionName, possiblePlaces,playerBoardId,newType );
             let playerBoard = null;
@@ -2255,10 +2275,17 @@ function (dojo, declare) {
                     let div = evt.target;
                     div.classList.add('selected');
                     $(`btnConfirm`).classList.remove('disabled');
+                    if(callbackSelectionDone !=null){
+                        callbackSelectionDone(div);
+                    }
                 });
             });
             this.addPrimaryActionButton('btnConfirm', _('Confirm'), () => {
                 let selectedTokenCell = playerBoard.querySelector(`.stig_token_cell.selected`);
+                if(callbackConfirm !=null){
+                    callbackConfirm(selectedTokenCell);
+                    return;
+                }
                 if(confirmMessage) {
                     this.confirmationDialog(confirmMessage, () => {
                         this.takeAction(actionName, { row: selectedTokenCell.dataset.row, col:selectedTokenCell.dataset.col, });

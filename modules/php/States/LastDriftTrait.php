@@ -18,6 +18,17 @@ use STIG\Models\StigmerianToken;
  */
 trait LastDriftTrait
 { 
+    public function stLastDrift($player_id)
+    {
+        $args = $this->argLastDrift($player_id);
+        $autoSkip = $args['autoSkip']; 
+        if($autoSkip){//when nothing needs to be done
+            //TODO JSA TEST autoSkip
+            $this->gamestate->nextPrivateState($player_id, 'next');
+            $player = Players::get($player_id);
+            Notifications::lastDriftAutoSkip($player);
+        }
+    }
     public function argLastDrift($player_id)
     {
         $lastDrift = PGlobals::getLastDrift($player_id);
@@ -30,6 +41,7 @@ trait LastDriftTrait
         $args = [
             'die_face' => $dieType,
         ];
+        $autoSkip = false;
         if(isset($windDir)){// N/S/E/W
             $actions[] = 'actLastDriftMove';
             if($actionType == ACTION_TYPE_LASTDRIFT_CENTRAL){
@@ -39,6 +51,9 @@ trait LastDriftTrait
                 $boardTokens = Tokens::getAllOnPersonalBoard($actionBoardPid);
             }
             $args['p'] = $this->listPossibleMovesOnBoard($actionBoardPid,$boardTokens,$windDir);
+            if(count($args['p']) == 0) {
+                $autoSkip = true;
+            }
             $args['dir'] = $windDir;
             $args['pid'] = $actionBoardPid;
         }
@@ -54,15 +69,22 @@ trait LastDriftTrait
             $args['tokensIds'] = $boardTokens->getIds();
             $args['token_type'] = $token_color;
             $args['token_color'] = StigmerianToken::getTypeName($token_color);
+            if(count($args['tokensIds']) == 0) {
+                $autoSkip = true;
+            }
         }
         else if($dieType == BLACK_NIGHT){//-
             if($actionType == ACTION_TYPE_LASTDRIFT_CENTRAL){
                 $actions[] = 'actLastDriftLand';
                 $args['p'] = $this->listPossiblePlacesOnCentralBoard();
+                if(count($args['p']) == 0) {
+                    $autoSkip = true;
+                }
             }
             //TODO JSA OTHERS BLACK_NIGHT special
         }
         $args['a'] = $actions;
+        $args['autoSkip'] = $autoSkip;
         return $args;
     }
     
@@ -251,6 +273,59 @@ trait LastDriftTrait
                 $this->addCheckpoint($targetplayer->getPrivateState(), $targetplayer->id );
             }
         }
+
+        $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
+        $this->gamestate->nextPrivateState($pId, 'next');
+    }
+
+    
+    /**
+     * @param int $typeDest  
+     * @param int $row COORD of token
+     * @param int $column COORD of token
+     */
+    public function actLastDriftLand($typeDest, $row, $column)
+    {
+        self::checkAction( 'actLastDriftLand' ); 
+        self::trace("actLastDriftLand($typeDest, $row, $column)");
+        
+        $player = Players::getCurrent();
+        $pId = $player->id;
+        $this->addStep($player->id, $player->getPrivateState());
+ 
+        $lastDrift = PGlobals::getLastDrift($pId);
+        $actionType = $lastDrift['type'];
+        
+        if(!in_array($typeDest, STIG_PRIMARY_COLORS)){
+            throw new UnexpectedException(11,"You cannot play a with dest color $typeDest");
+        }
+        $dieType = PGlobals::getLastDie($pId);
+        if(!isset($dieType)){
+            throw new UnexpectedException(404,"Die roll not found");
+        }
+        if(ACTION_TYPE_LASTDRIFT_CENTRAL!=$actionType){
+            throw new UnexpectedException(100,"You cannot land a token");
+        }
+        if(BLACK_NIGHT != $dieType){
+            throw new UnexpectedException(100,"You cannot land a token");
+        }
+        $boardTokens = Tokens::getAllOnCentralBoard();
+        if(!$this->canPlaceOnCentralBoard($boardTokens,$row, $column)){
+            throw new UnexpectedException(30,"You cannot place this token at $row, $column");
+        }
+
+        //EFFECT CREATE TOKEN
+        $token = Tokens::createToken([
+            'type' => $typeDest,
+            'location' => TOKEN_LOCATION_CENTRAL_BOARD,
+            'y'=> $row,
+            'x'=> $column,
+        ]);
+        Notifications::moveToCentralBoard($player,$token,0);
+
+        $player->giveExtraTime();
+        Stats::inc("actions_s".$actionType,$pId);
+        Stats::inc("actions",$pId);
 
         $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
         $this->gamestate->nextPrivateState($pId, 'next');

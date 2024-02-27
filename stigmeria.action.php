@@ -119,6 +119,16 @@
       $this->game->actLastDriftRemove($token_id);
       self::ajaxResponse();
     }
+    public function actLastDriftLand()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $type = self::getArg( "dest", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actLastDriftLand($type, $row, $col);
+      self::ajaxResponse();
+    }
     public function actGoToNext()
     {
       self::setAjaxMode();

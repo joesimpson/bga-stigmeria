@@ -292,6 +292,7 @@ $machinestates = array(
         "descriptionmyturn" => clienttranslate('Last drift die roll ${die_face}, ${you} must apply the effect'),
         "type" => "private",
         "args" => "argLastDrift",
+        "action" => "stLastDrift",
         "possibleactions" => [
             "actLastDriftMove", 
             "actLastDriftMoveOut", 

@@ -911,6 +911,17 @@ class Notifications
       ],
     );
   }
+  
+  /**
+   * 
+   * @param Player $player
+   */
+  public static function lastDriftAutoSkip($player){
+    self::notifyAll('lastDriftAutoSkip',clienttranslate('${player_name} cannot do anything with that Last Drift die roll'),[ 
+        'player' => $player,
+      ],
+    );
+  }
   /**
    * Will Unlock Special action 
    * @param Player $player
