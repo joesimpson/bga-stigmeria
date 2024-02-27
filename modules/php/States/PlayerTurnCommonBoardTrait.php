@@ -8,6 +8,7 @@ use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\Log;
+use STIG\Managers\DiceRoll;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -27,6 +28,7 @@ trait PlayerTurnCommonBoardTrait
     {
         $player = Players::get($player_id);
         $nbMoves = $player->countRemainingCommonActions();
+        $actions = [];
         if(Tokens::countDeck($player_id)>0){
             $actions[] = 'actCommonDrawAndLand';
         }
@@ -38,6 +40,15 @@ trait PlayerTurnCommonBoardTrait
         }
         if($this->canPlayCentralJoker($player)){
             $actions[] = 'actCJoker';
+        }
+        if($this->canPlayLastDrift($player,ACTION_TYPE_LASTDRIFT_PERSONAL)){
+            $actions[] = ACTION_TYPE_LASTDRIFT_PERSONAL;
+        }
+        if($this->canPlayLastDrift($player,ACTION_TYPE_LASTDRIFT_CENTRAL)){
+            $actions[] = ACTION_TYPE_LASTDRIFT_CENTRAL;
+        }
+        if($this->canPlayLastDrift($player,ACTION_TYPE_LASTDRIFT_OPPONENT)){
+            $actions[] = ACTION_TYPE_LASTDRIFT_OPPONENT;
         }
         return array_merge( [
             'n'=> $nbMoves,
@@ -181,6 +192,31 @@ trait PlayerTurnCommonBoardTrait
         PGlobals::setState($pId, ST_TURN_CENTRAL_JOKER);
         $this->gamestate->nextPrivateState($player->id, "cJoker");
     }
+    
+    /**start LAst Drift  */
+    public function actLastDrift($type)
+    {
+        self::checkAction('actLastDrift'); 
+        self::trace("actLastDrift($type)");
+        $player = Players::getCurrent();
+        $pId = $player->id;
+        $this->addStep( $pId, $player->getPrivateState());
+        
+        if(!$this->canPlayLastDrift($player,$type) ){
+            throw new UnexpectedException(405,"You cannot play last drift $type");
+        }
+        $targetBoard = $pId;
+        if(ACTION_TYPE_LASTDRIFT_CENTRAL==$type ){
+            $targetBoard = null;
+        }
+        $lastDriftDatas = ['type' => $type, 'pid' =>$targetBoard ];
+        PGlobals::setLastDrift($pId, $lastDriftDatas);
+        PGlobals::setLastDie($pId, DiceRoll::rollNew()->type);
+        //TODO JSA NOTIFYall
+
+        $this->addCheckpoint(ST_TURN_LAST_DRIFT,$pId);
+        $this->gamestate->nextPrivateState($player->id, "lastDrift");
+    }
  
     /**
      * RULE : gain 1 or 2 special action
@@ -212,5 +248,19 @@ trait PlayerTurnCommonBoardTrait
             $this->gamestate->nextPrivateState($pId, $nextTransition);
             return;
         }
+    }
+
+    /**
+     * @param Player $player
+     * @param int $type
+     * @return bool
+     */
+    public function canPlayLastDrift($player,$type){
+        // Once per turn, before other actions
+        $lastDriftDatas = PGlobals::getLastDrift($player->id);
+        if(! Globals::isModeCompetitiveNoLimit() ) return false;
+        if(0 != $player->getNbCommonActionsDone()) return false;
+        if(isset($lastDriftDatas)) return false;
+        return true;
     }
 }

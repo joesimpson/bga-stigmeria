@@ -198,6 +198,7 @@ $machinestates = array(
             "actCJokerS",
             "actGoToNext",
             "actJealousy",
+            "actLastDrift",
             "actRestart",
         ],
         "transitions" => [
@@ -206,6 +207,7 @@ $machinestates = array(
             'startLand' => ST_TURN_CENTRAL_CHOICE_TOKEN_LAND,
             'startMove' => ST_TURN_CENTRAL_CHOICE_TOKEN_MOVE,
             'cJoker' => ST_TURN_CENTRAL_JOKER,
+            'lastDrift' => ST_TURN_LAST_DRIFT,
         ],
     ],
     
@@ -284,6 +286,23 @@ $machinestates = array(
             'next' => ST_TURN_COMMON_BOARD,
         ],
     ],
+    
+    ST_TURN_LAST_DRIFT => array(
+        "name" => "lastDrift",
+        "descriptionmyturn" => clienttranslate('Last drift die roll ${die_face}, ${you} must apply the effect'),
+        "type" => "private",
+        "args" => "argLastDrift",
+        "possibleactions" => [
+            "actLastDriftMove", 
+            "actLastDriftMoveOut", 
+            "actLastDriftRemove", 
+            "actLastDriftLand", 
+            "actLastDriftSp", 
+        ],
+        "transitions" => [ 
+            "next" => ST_TURN_COMMON_BOARD, 
+        ],
+    ),
     
     ST_TURN_PERSONAL_BOARD => [
         "name" => "personalBoardTurn",

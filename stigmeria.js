@@ -36,6 +36,9 @@ function (dojo, declare) {
     const WIND_DIR_UNKNOWN = 'U';
     const WIND_DIRECTIONS = [WIND_DIR_NORTH,WIND_DIR_SOUTH,WIND_DIR_EAST,WIND_DIR_WEST,WIND_DIR_UNKNOWN];
 
+    const ACTION_TYPE_LASTDRIFT_PERSONAL = 1;
+    const ACTION_TYPE_LASTDRIFT_CENTRAL = 2;
+    const ACTION_TYPE_LASTDRIFT_OPPONENT = 3;
     const ACTION_TYPE_MIXING = 10;
     const ACTION_TYPE_COMBINATION = 11;
     const ACTION_TYPE_FULGURANCE = 12;
@@ -81,7 +84,7 @@ function (dojo, declare) {
 
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
-            console.log('stigmeria constructor');
+            debug('stigmeria constructor');
               
             // Fix mobile viewport (remove CSS zoom)
             this.default_viewport = 'width=800';
@@ -132,6 +135,8 @@ function (dojo, declare) {
                 ['spSower', 900],
                 ['spCharmer', 900],
                 ['spJealousy', 400],
+                ['lastDriftRemove', 900],
+                ['LDMOR', 900],
                 ['newPollen', 900],
                 ['playJoker', 500],
                 ['playCJoker', 500],
@@ -174,7 +179,7 @@ function (dojo, declare) {
             this.setupTokens();
             this.setupSpecialActions();
             
-            console.log( "Ending specific game setup" );
+            debug( "Ending specific game setup" );
 
             this.inherited(arguments);
         },
@@ -336,6 +341,15 @@ function (dojo, declare) {
             let possibleActions = args.a;
             let nbActions = args.n;
             if(nbActions>0){
+                this.formatSpecialActionButton(_('Last Drift'),ACTION_TYPE_LASTDRIFT_PERSONAL,possibleActions,possibleActions
+                    ,'actLastDrift', _('Are you sure to roll a die to apply on YOUR board ? This is a free action to take before others.'));
+                this.formatSpecialActionButton(_('Last Drift'),ACTION_TYPE_LASTDRIFT_CENTRAL,possibleActions,possibleActions
+                    ,'actLastDrift', _('Are you sure to roll a die to apply on CENTRAL board ? This is a free action to take before others.'));
+                this.formatSpecialActionButton(_('Last Drift'),ACTION_TYPE_LASTDRIFT_OPPONENT,possibleActions,possibleActions
+                    ,'actLastDrift', _('Are you sure to roll a die to apply on an opponent board ? This is a free action to take before others. Which opponent ?')
+                    ,{pid:'TODO PID'});
+                    //TODO JSA ON CLICk, display opponents names buttons
+                
                 this.addPrimaryActionButton('btnCommonDrawAndPlace', _('Draw and Place'), () => {
                     this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
                         this.takeAction('actCommonDrawAndLand', {});
@@ -536,6 +550,27 @@ function (dojo, declare) {
             });
         },
         
+        onEnteringStateLastDrift: function(args)
+        {
+            debug( 'onEnteringStateLastDrift() ', args );
+            
+            let possibleActions = args.a;
+
+            if(possibleActions.includes('actLastDriftLand')){
+                let token_type = 'TODO JSA CHOOSE';
+                this.initCellSelection('actLastDriftLand', args.p, this.player_id,token_type);
+                $('btnConfirm').innerText=_('Confirm Land');
+            }
+            else if(possibleActions.includes('actLastDriftMove')){
+                let player_target = args.pid ? args.pid : 'central';
+                this.initTokenSelectionDest('actLastDriftMove', args.p, player_target,'actLastDriftMoveOut');
+                $('btnConfirm').innerText=_('Confirm Move');
+            }
+            else if(possibleActions.includes('actLastDriftRemove')){
+                this.initTokenSimpleSelection('actLastDriftRemove', args.tokensIds);
+                $('btnConfirm').innerText=_('Confirm Remove');
+            }
+        }, 
         onEnteringStatePersonalBoardTurn: function(args)
         {
             debug( 'onEnteringStatePersonalBoardTurn() ', args );
@@ -675,15 +710,15 @@ function (dojo, declare) {
             this.initTokenSelectionDest('actChoiceTokenToMove', args.p_places_m, this.player_id,'actMoveOut');
             this.addSecondaryActionButton('btnCancel',  _('Return'), () => this.takeAction('actCancelChoiceTokenToMove', {}));
         }, 
-        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions, actionName ='actChoiceSpecial',confirmMessage = null) {
-            debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions,confirmMessage);
+        formatSpecialActionButton: function(text,actionType,possibleActions,enabledActions, actionName ='actChoiceSpecial',confirmMessage = null,args={}) {
+            debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions,confirmMessage,args);
             if(possibleActions.includes(actionType)){
                 let divText = `<div><div class='stig_sp_action_text'>`+_(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
                 this.addImageActionButton('btnStartSp'+actionType,divText , () => {
                     if(confirmMessage !=null) this.confirmationDialog(confirmMessage, () => {
-                        this.takeAction(actionName, {act:actionType});
+                        this.takeAction(actionName, {act:actionType, args});
                     });
-                    else this.takeAction(actionName, {act:actionType});
+                    else this.takeAction(actionName, {act:actionType, args});
                 });
                 if(!enabledActions.includes(actionType)){
                     $('btnStartSp'+actionType).classList.add('disabled');
@@ -1392,6 +1427,19 @@ function (dojo, declare) {
                 this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
         },
+        notif_LDMOR(n) {
+            debug('notif_LDMOR: token moved out from board', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(!div) return;
+            let oldParent = div.parentElement;//token_holder
+            div.dataset.row = null;
+            div.dataset.col = null;
+            this.slide(div, this.getTokenContainer(token)).then(() =>{
+                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
+            });
+        },
         notif_moveBackToBox(n) {
             debug('notif_moveBackToBox: token delete from board', n);
             let token = n.args.token;
@@ -1578,6 +1626,20 @@ function (dojo, declare) {
             debug('notif_spJealousy: bag size changed', n);
             this._counters[n.args.player_id]['tokens_deck'].toValue(n.args.deck1);
             this._counters[n.args.player_id2]['tokens_deck'].toValue(n.args.deck2);
+        },
+        notif_lastDriftRemove(n) {
+            debug('notif_lastDriftRemove: token is removed !', n);
+            let token = n.args.token;
+            let div = $(`stig_token_${token.id}`);
+            if(div){
+                this.slide(div, this.getVisibleTitleContainer(), {
+                    from: div.id,
+                    destroy: true,    
+                    phantom: false,
+                    duration: 1200,
+                }).then(() =>{
+                });
+            }
         },
         notif_playJoker(n) {
             debug('notif_playJoker: tokens change color !', n);

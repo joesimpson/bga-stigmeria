@@ -149,27 +149,30 @@ trait ChoiceTokenToMoveTrait
 
     /**
      * @param StigmerianToken $token
+     * @param string $windDir (optional) Force direction of move
      * @return bool TRUE if this token can be moved out on this board ( grid edges),
      *  FALSE otherwise
      */
-    public function canMoveOutOnBoard($token)
+    public function canMoveOutOnBoard($token,$windDir = null)
     {
         if($token->isPollen()) return false;
-        return GridUtils::isValidCellToMoveOut($token->getRow(),$token->getCol(),$token->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD);
+        return GridUtils::isValidCellToMoveOut($token->getRow(),$token->getCol(),$token->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD,$windDir);
     }
     /**
      * @param int $playerId
      * @param array $tokens of StigmerianToken
+     * @param string $windDir (optional) Force direction of move
      * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
      */
-    public function listPossibleMovesOnBoard($playerId,$tokens){
+    public function listPossibleMovesOnBoard($playerId,$tokens,$windDir = null){
         $spots = [];
         foreach($tokens as $tokenId => $token){
-            if($this->canMoveOutOnBoard($token)){
+            if($this->canMoveOutOnBoard($token,$windDir)){
                 $spots[$tokenId][] = [ 'out' => true ];
             }
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
+                    if(isset($windDir) && !GridUtils::isValidCellToMoveWithWind($windDir,$token->row,$token->col,$row,$column)) continue;
                     if(isset($playerId) && $this->canMoveOnPlayerBoard($playerId,$token,$tokens,$row, $column)){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }

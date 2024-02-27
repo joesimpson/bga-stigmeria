@@ -84,7 +84,19 @@ class DiceFace implements \JsonSerializable
     }
     return false;
   }
-
+  /**
+   * @return bool true when X is on the face
+   */
+  public function isX()
+  {
+    switch($this->type){ 
+      case X_RED:
+      case X_BLUE:
+      case X_YELLOW:
+        return true;
+    }
+    return false;
+  }
   /**
    */
   public function getUiData()

@@ -37,6 +37,9 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     //Last dice roll result
     'lastDie' => 'int',
 
+    //last drift info : targeted board + state (rolled/not)
+    'lastDrift' => 'obj',
+
     'eliminated' => 'bool',
   ];
 
@@ -202,6 +205,7 @@ class PGlobals extends \STIG\Helpers\DB_Manager
       self::setLastLanded($playerId,null);
       self::setMimicColorUsed($playerId,[]);
       self::setLastDie($playerId,null);
+      self::setLastDrift($playerId,null);
       self::setEliminated($playerId,false);
 
       //the first state to be activated:

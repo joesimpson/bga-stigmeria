@@ -85,6 +85,40 @@
       self::ajaxResponse();
     }
     
+    public function actLastDrift()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $type = self::getArg( "act", AT_posint, true );
+      $this->game->actLastDrift($type);
+      self::ajaxResponse();
+    }
+    public function actLastDriftMove()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $row = self::getArg( "row", AT_posint, true );
+      $col = self::getArg( "col", AT_posint, true );
+      $this->game->actLastDriftMove($token_id, $row, $col);
+      self::ajaxResponse();
+    }
+    public function actLastDriftMoveOut()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actLastDriftMoveOut($token_id);
+      self::ajaxResponse();
+    }
+    public function actLastDriftRemove()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $token_id = self::getArg( "tokenId", AT_posint, true );
+      $this->game->actLastDriftRemove($token_id);
+      self::ajaxResponse();
+    }
     public function actGoToNext()
     {
       self::setAjaxMode();

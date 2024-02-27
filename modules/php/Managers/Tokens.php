@@ -267,14 +267,16 @@ class Tokens extends \STIG\Helpers\Pieces
       ->get();
   }
   /**
+   * @param array $token_types (optional) filter on these types
    * @return Collection of StigmerianToken found at that location
    */
-  public static function getAllOnCentralBoard()
+  public static function getAllOnCentralBoard($token_types = null)
   { 
-    Game::get()->trace("getAllOnCentralBoard()");
-    return self::DB()
-      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD)
-      ->get();
+    //Game::get()->trace("getAllOnCentralBoard()");
+    $query = self::DB()
+      ->where(static::$prefix . 'location', TOKEN_LOCATION_CENTRAL_BOARD);
+    if(isset($token_types)) $query = $query->whereIn('type',$token_types);
+    return $query->get();
   }
   /**
    * @param int $row

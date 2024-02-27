@@ -205,6 +205,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
       $fromBoard = true;
       $fromCoord = $this->getCoordName();
+      $fromPid = $this->getPId();
     } else if($this->getLocation() == TOKEN_LOCATION_CENTRAL_RECRUIT ){
       $fromStigmaReine = true;
     }
@@ -215,14 +216,14 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
 
     Stats::inc("tokens_recruit",$player->getId(),1);
     if($fromBoard){
-      Stats::inc("tokens_board",$player->getId(),-1);
+      Stats::inc("tokens_board",$fromPid,-1);
       if($sendNotif) Notifications::moveBackToRecruit($player, $this,$fromCoord,$actionCost);
-      if(TOKEN_STIG_YELLOW == $this->getType()){
-        $player->addTieBreakerPoints(1);
-      }
     }
     else if($fromStigmaReine){
       if($sendNotif) Notifications::sRecruit($player, $this,$actionCost);
+    }
+    if(TOKEN_STIG_YELLOW == $this->getType()){
+      $player->addTieBreakerPoints(1);
     }
   }
   

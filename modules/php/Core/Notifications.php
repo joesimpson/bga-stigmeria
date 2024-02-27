@@ -324,12 +324,18 @@ class Notifications
    * @param string $from Coordinate name
    * @param string $to Coordinate name
    * @param int $actionCost
+   * @param Player $targetPlayer (optional)
    */
-  public static function moveOnPlayerBoard($player, $token,$from,$to, $actionCost){
-    self::notifyAll('moveOnPlayerBoard',clienttranslate('${player_name} moves a ${token_color} stigmerian from ${A} to ${B} (cost : ${n} actions)'),[ 
+  public static function moveOnPlayerBoard($player, $token,$from,$to, $actionCost, $targetPlayer = null){
+    $msg = clienttranslate('${player_name} moves a ${token_color} stigmerian from ${A} to ${B} (cost : ${n} actions)');
+    if(isset($targetPlayer)){
+      $msg = clienttranslate('${player_name} moves a ${token_color} stigmerian from ${A} to ${B} on ${player_name2} board');
+    }
+    self::notifyAll('moveOnPlayerBoard',$msg,[ 
         'i18n' => [ 'token_color'],
         'preserve' => [ 'token_type' ],
         'player' => $player,
+        'player2' => $targetPlayer,
         'token_color' => StigmerianToken::getTypeName($token->getType()),
         'token' => $token->getUiData(),
         'token_type' => $token->getType(),
@@ -389,6 +395,30 @@ class Notifications
         'player' => $player,
         'token' => $token->getUiData(),
         'n' => $actionCost,
+        'preserve' => [ 'token_type' ],
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+      ],
+    );
+  }
+  
+  /**
+   * Used in Last Drift
+   * @param Player $player
+   * @param StigmerianToken $token
+   * @param string $from Coordinate name
+   * @param Player $targetPlayer (optional)
+   */
+  public static function LDmoveOutRecruit($player, $token,$from, $targetPlayer = null){
+    $target_id = isset($targetPlayer) ? $targetPlayer->getId() : null;
+    $target_name = isset($targetPlayer) ? $targetPlayer->getName() : 'StigmaReine';
+    self::notifyAll('LDMOR',clienttranslate('${player_name} moves a ${token_color} stigmerian out of ${player_name2} board from ${L}: it is now in their recruit zone'),[ 
+        'i18n' => [ 'token_color'],
+        'player' => $player,
+        'player_id2' => $target_id,
+        'player_name2' => $target_name,
+        'token' => $token->getUiData(),
+        'L' => $from,
         'preserve' => [ 'token_type' ],
         'token_color' => StigmerianToken::getTypeName($token->getType()),
         'token_type' => $token->getType(),
@@ -858,6 +888,26 @@ class Notifications
   public static function passCharmer($player){
     self::notifyAll('passCharmer',clienttranslate('${player_name} passes the Charmer action'),[ 
         'player' => $player,
+      ],
+    );
+  }
+  
+  /**
+   * 
+   * @param Player $player
+   * @param Player $player2
+   * @param StigmerianToken $token
+   */
+  public static function lastDriftRemove($player,$token,$player2){
+    $target_name = isset($player2) ? $player2->getName() : 'StigmaReine';
+    self::notifyAll('lastDriftRemove',clienttranslate('${player_name} removes a ${token_color} ${token_type} at ${L1} on ${player_name2} board'),[ 
+        'player' => $player,
+        'player_name2' => $target_name,
+        'L1' => $token->getCoordName(),
+        'token' => $token->getUiData(),
+        'token_color' => StigmerianToken::getTypeName($token->getType()),
+        'token_type' => $token->getType(),
+
       ],
     );
   }

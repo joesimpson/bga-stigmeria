@@ -53,9 +53,28 @@ abstract class GridUtils extends \APP_DbObject
     {
         return !GridUtils::isCoordOutOfGrid($cell['y'],$cell['x']);
     }
-    public static function isValidCellToMoveOut($row, $col, $fromCentralBoard = false)
+    /**
+     * 
+     * @param int $row ORIGIN row
+     * @param int $col ORIGIN column
+     * @param bool $fromCentralBoard (optional) Is it done on central board ?
+     * @param string $windDir (optional) Force direction of move
+     */
+    public static function isValidCellToMoveOut($row, $col, $fromCentralBoard = false,$windDir = null)
     {
       if(Globals::isModeCompetitiveNoLimit()){
+        if(isset($windDir)){//when roll dice for example
+          switch($windDir){
+            case WIND_DIR_NORTH:
+              return ROW_MIN == $row;
+            case WIND_DIR_SOUTH:
+              return ROW_MAX == $row;
+            case WIND_DIR_EAST:
+              return COLUMN_MAX == $col;
+            case WIND_DIR_WEST:
+              return COLUMN_MIN == $col;
+          }
+        }
         if(ROW_MAX != $row && $fromCentralBoard){
             //CENTRAL board is like normal mode
             return false;
@@ -69,6 +88,29 @@ abstract class GridUtils extends \APP_DbObject
       //In all normal modes, we cannot exit the board from any line/col except "J"
       else if( ROW_MAX == $row) return true;
 
+      return false;
+    }
+    
+    /**
+     * @param string $windDir
+     * @param int $row
+     * @param int $col
+     * @param int $toRow
+     * @param int $toCol
+     */
+    public static function isValidCellToMoveWithWind($windDir,$row, $col, $toRow, $toCol)
+    { 
+        
+      switch($windDir){
+        case WIND_DIR_SOUTH: 
+          return $row + 1 == $toRow && $col == $toCol;
+        case WIND_DIR_NORTH:
+          return $row - 1 == $toRow && $col == $toCol;
+        case WIND_DIR_EAST:
+          return $row == $toRow && $col + 1 == $toCol;
+        case WIND_DIR_WEST:
+          return $row == $toRow && $col - 1 == $toCol;
+      }
       return false;
     }
             

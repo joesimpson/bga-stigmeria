@@ -185,6 +185,7 @@ class Player extends \STIG\Helpers\DB_Model
     $this->setSelection([]);
     $this->giveExtraTime();
     $this->setMimicColorUsed([]);
+    PGlobals::setLastDrift($this->getId(),null);
 
     if(Globals::isModeCompetitive()) Notifications::startTurn($this,$turnIndex);
   }

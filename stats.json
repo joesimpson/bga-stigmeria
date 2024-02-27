@@ -198,5 +198,20 @@
         "name": "Jealousy",
         "type": "int"
       }
+      ,"actions_s1": {
+        "id": 70,
+        "name": "Last Drift on personal board",
+        "type": "int"
+      }
+      ,"actions_s2": {
+        "id": 71,
+        "name": "Last Drift on central board",
+        "type": "int"
+      }
+      ,"actions_s3": {
+        "id": 72,
+        "name": "Last Drift on opponent board",
+        "type": "int"
+      }
     }
   }

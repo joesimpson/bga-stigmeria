@@ -56,6 +56,7 @@ class Stigmeria extends Table
     use STIG\States\EndRoundTrait;
     use STIG\States\FirstTokenTrait;
     use STIG\States\GiveTokensTrait;
+    use STIG\States\LastDriftTrait;
     use STIG\States\NextTurnTrait;
     use STIG\States\NextRoundTrait;
     use STIG\States\PlayerDiceTrait;
