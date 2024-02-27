@@ -61,7 +61,7 @@
         display: flex;
         li{
             margin: 0px 10px;
-            
+
             #choice_btn_0 {
                 background: #ffffff;
                 border-color: #000000;
@@ -75,6 +75,11 @@
     display: flex;
     flex-flow: row;
     width: fit-content;
+    &#btnStartLD1,
+    &#btnStartLD2,
+    &#btnStartLD3{//last drift
+        background-color: green;
+    }
     
     div{
         display: flex;
@@ -100,6 +105,26 @@
             &.stig_icon_flipped{
                 transform: scaleX(-1);
                 margin-left: 3px;
+            }
+        }
+        &.stig_ld_action_image{
+            //last drift
+            width: 40px;
+            height: 34px;
+            background-image: url("img/tokens.png");
+            background-size: 6000%;
+            background-position-x: 434px;
+            background-position-y: 69px;
+            margin-left: 3px;
+
+            &[data-type='1']{//ACTION_TYPE_LASTDRIFT_PERSONAL
+                background-position-y: 102px;
+            }
+            &[data-type='2']{//ACTION_TYPE_LASTDRIFT_CENTRAL
+                background-position-y: 69px;
+            }
+            &[data-type='3']{//ACTION_TYPE_LASTDRIFT_OPPONENT
+                background-position-y: 35px;
             }
         }
     }

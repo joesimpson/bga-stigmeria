@@ -3438,6 +3438,9 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   flex-flow: row;
   width: fit-content;
 }
+.customimagebutton#btnStartLD1, .customimagebutton#btnStartLD2, .customimagebutton#btnStartLD3 {
+  background-color: green;
+}
 .customimagebutton div {
   display: flex;
   align-content: center;
@@ -3464,6 +3467,24 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 .customimagebutton div.stig_icon_flower_violet.stig_icon_flipped {
   transform: scaleX(-1);
   margin-left: 3px;
+}
+.customimagebutton div.stig_ld_action_image {
+  width: 40px;
+  height: 34px;
+  background-image: url("img/tokens.png");
+  background-size: 6000%;
+  background-position-x: 434px;
+  background-position-y: 69px;
+  margin-left: 3px;
+}
+.customimagebutton div.stig_ld_action_image[data-type="1"] {
+  background-position-y: 102px;
+}
+.customimagebutton div.stig_ld_action_image[data-type="2"] {
+  background-position-y: 69px;
+}
+.customimagebutton div.stig_ld_action_image[data-type="3"] {
+  background-position-y: 35px;
 }
 
 .stig_button_player_name {

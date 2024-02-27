@@ -67,6 +67,7 @@ trait LastDriftTrait
             }
             else {
                 $boardTokens = Tokens::getAllOnPersonalBoard($actionBoardPid, [$token_color]);
+                $args['pid'] = $actionBoardPid;
             }
             $args['tokensIds'] = $boardTokens->getIds();
             $args['token_type'] = $token_color;
@@ -83,8 +84,13 @@ trait LastDriftTrait
                     $autoSkip = true;
                 }
             }
-            //TODO JSA OTHERS BLACK_NIGHT special
+            else {
+                $args['pid'] = $actionBoardPid;
+                //TODO JSA OTHERS BLACK_NIGHT special
+                $autoSkip = true;
+            }
         }
+        $args['player_name2'] = isset($actionBoardPid) ? Players::get($actionBoardPid)->getName() : 'StigmaReine';
         $args['a'] = $actions;
         $args['autoSkip'] = $autoSkip;
         return $args;

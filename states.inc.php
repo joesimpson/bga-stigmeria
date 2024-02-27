@@ -289,7 +289,7 @@ $machinestates = array(
     
     ST_TURN_LAST_DRIFT => array(
         "name" => "lastDrift",
-        "descriptionmyturn" => clienttranslate('Last drift die roll ${die_face}, ${you} must apply the effect'),
+        "descriptionmyturn" => clienttranslate('Last drift die roll ${die_face}, ${you} must apply the effect on ${player_name2} board'),
         "type" => "private",
         "args" => "argLastDrift",
         //"action" => "stLastDrift",
