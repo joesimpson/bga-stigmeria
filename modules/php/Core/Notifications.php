@@ -915,6 +915,21 @@ class Notifications
   /**
    * 
    * @param Player $player
+   * @param DieFace $dieFace
+   * @param Player $targetPlayer
+   */
+  public static function lastDriftDie($player,$dieFace,$targetPlayer){
+    $target_name = isset($targetPlayer) ? $targetPlayer->getName() : 'StigmaReine';
+    self::notifyAll('lastDriftDie',clienttranslate('${player_name} uses Last Drift on ${player_name2} board and gets a ${die_face}'),[ 
+        'player' => $player,
+        'player_name2' => $target_name,
+        'die_face' => $dieFace->type,
+      ],
+    );
+  }
+  /**
+   * 
+   * @param Player $player
    */
   public static function lastDriftAutoSkip($player){
     self::notifyAll('lastDriftAutoSkip',clienttranslate('${player_name} cannot do anything with that Last Drift die roll'),[ 

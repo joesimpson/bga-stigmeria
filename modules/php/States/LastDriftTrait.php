@@ -18,17 +18,19 @@ use STIG\Models\StigmerianToken;
  */
 trait LastDriftTrait
 { 
+    /*
+    Too late to autoskip ?
     public function stLastDrift($player_id)
     {
         $args = $this->argLastDrift($player_id);
         $autoSkip = $args['autoSkip']; 
         if($autoSkip){//when nothing needs to be done
-            //TODO JSA TEST autoSkip
-            $this->gamestate->nextPrivateState($player_id, 'next');
             $player = Players::get($player_id);
             Notifications::lastDriftAutoSkip($player);
+            $this->gamestate->nextPrivateState($player_id, 'next');
         }
     }
+    */
     public function argLastDrift($player_id)
     {
         $lastDrift = PGlobals::getLastDrift($player_id);

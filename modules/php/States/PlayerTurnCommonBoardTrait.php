@@ -206,16 +206,29 @@ trait PlayerTurnCommonBoardTrait
             throw new UnexpectedException(405,"You cannot play last drift $type");
         }
         $targetBoard = $pId;
+        $targetPlayer = null;
         if(ACTION_TYPE_LASTDRIFT_CENTRAL==$type ){
             $targetBoard = null;
+        } else {
+            $targetPlayer = Players::get($targetBoard);
         }
         $lastDriftDatas = ['type' => $type, 'pid' =>$targetBoard ];
         PGlobals::setLastDrift($pId, $lastDriftDatas);
-        PGlobals::setLastDie($pId, DiceRoll::rollNew()->type);
-        //TODO JSA NOTIFYall
+        $dieFace = DiceRoll::rollNew();
+        PGlobals::setLastDie($pId, $dieFace->type);
+        Notifications::lastDriftDie($player,$dieFace,$targetPlayer);
 
         $this->addCheckpoint(ST_TURN_LAST_DRIFT,$pId);
-        $this->gamestate->nextPrivateState($player->id, "lastDrift");
+        
+        $args = $this->argLastDrift($pId);
+        $autoSkip = $args['autoSkip']; 
+        if($autoSkip){//when nothing needs to be done
+            Notifications::lastDriftAutoSkip($player);
+            $this->gamestate->nextPrivateState($player->id, "continue");
+        }
+        else {
+            $this->gamestate->nextPrivateState($player->id, "lastDrift");
+        }
     }
  
     /**

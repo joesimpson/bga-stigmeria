@@ -555,7 +555,9 @@ function (dojo, declare) {
             debug( 'onEnteringStateLastDrift() ', args );
             
             let possibleActions = args.a;
-
+            if(args.pid == null){
+                $('stig_central_board_container_wrapper').classList.add('stig_current_play');
+            }
             if(possibleActions.includes('actLastDriftLand')){
                 let player_target = 'central';
                 let callbackSelectionDone = (div) => { 
