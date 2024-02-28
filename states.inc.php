@@ -303,6 +303,7 @@ $machinestates = array(
         ],
         "transitions" => [ 
             "next" => ST_TURN_COMMON_BOARD, 
+            'gainSp' => ST_TURN_CENTRAL_CHOICE_SP,
         ],
     ),
     
@@ -471,7 +472,6 @@ $machinestates = array(
         "transitions" => [
             'continue' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,
             'next' => ST_TURN_PERSONAL_BOARD,
-            //TODO JSA block cancel if moves in progress ? or whatever, we decrease the counter of actions
             'cancel' => ST_TURN_CHOICE_SPECIAL_ACTION,
         ],
     ],

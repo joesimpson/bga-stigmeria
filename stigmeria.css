@@ -3422,6 +3422,7 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 
 #multipleChoice_dialog ul {
   display: flex;
+  flex-direction: row-reverse;
 }
 #multipleChoice_dialog ul li {
   margin: 0px 10px;

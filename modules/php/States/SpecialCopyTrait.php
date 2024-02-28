@@ -72,7 +72,6 @@ trait SpecialCopyTrait
         Stats::inc("actions",$pId);
         $player->giveExtraTime();
         
-        //TODO JSA Call if for each action
         if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($pId,ST_TURN_PERSONAL_BOARD);

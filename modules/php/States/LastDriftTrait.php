@@ -151,7 +151,12 @@ trait LastDriftTrait
         else if($token->location != TOKEN_LOCATION_CENTRAL_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
-        $boardTokens = Tokens::getAllOnPersonalBoard($actionBoardPid);
+        if($actionType == ACTION_TYPE_LASTDRIFT_CENTRAL){
+            $boardTokens = Tokens::getAllOnCentralBoard();
+        }
+        else {
+            $boardTokens = Tokens::getAllOnPersonalBoard($actionBoardPid);
+        }
         if(!$this->canMoveOnPlayerBoard($pId,$token,$boardTokens,$row, $column)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
@@ -176,11 +181,15 @@ trait LastDriftTrait
             if($differentPlayer && $targetplayer->isMultiactive()){
                 //CHECKPOINT Opponent when targeted
                 $this->addCheckpoint($targetplayer->getPrivateState(), $targetplayer->id );
+                
+                $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
             }
+            $this->gamestate->nextPrivateState($pId, 'next');
         }
-
-        $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
-        $this->gamestate->nextPrivateState($pId, 'next');
+        else {
+            //central board action may gain special action
+            $this->checkGainSpecialAction($player,$token, "next", ST_TURN_COMMON_BOARD);
+        }
     }
     
     /**
@@ -244,10 +253,10 @@ trait LastDriftTrait
             if($differentPlayer && $targetplayer->isMultiactive()){
                 //CHECKPOINT Opponent when targeted
                 $this->addCheckpoint($targetplayer->getPrivateState(), $targetplayer->id );
+                $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
             }
         }
 
-        $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
 
@@ -355,8 +364,7 @@ trait LastDriftTrait
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
 
-        $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
-        $this->gamestate->nextPrivateState($pId, 'next');
+        $this->checkGainSpecialAction($player,$token, "next", ST_TURN_COMMON_BOARD);
     }
     
     /**

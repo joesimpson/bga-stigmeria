@@ -59,6 +59,7 @@
 #multipleChoice_dialog{
     ul{
         display: flex;
+        flex-direction: row-reverse;
         li{
             margin: 0px 10px;
 
