@@ -401,7 +401,7 @@ trait LastDriftTrait
             PlayerActions::delete($playerAction->getId());
         }
         $fromState = PGlobals::getLastDriftPreviousState($playerId);
-        if(isset($fromState) && $fromState!='null' && $fromState >0 ){
+        if(isset($fromState) && is_int($fromState) && $fromState >0 ){
             //If coming from last drift result
             PGlobals::setState($playerId, $fromState);
             PGlobals::setLastDriftPreviousState($playerId,null);
@@ -421,7 +421,7 @@ trait LastDriftTrait
      */
     public function checkCancelFromLastDrift(&$args,$player_id){
         $fromState = PGlobals::getLastDriftPreviousState($player_id);
-        if(isset($fromState) && $fromState!='null' && $fromState >0 ){
+        if(isset($fromState) && is_int($fromState) && $fromState >0 ){
             $args['cancel'] = false;
             return false;
         }

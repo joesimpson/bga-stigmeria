@@ -68,7 +68,7 @@ trait CentralGainSpecialTrait
                 $this->gamestate->setPlayerNonMultiactive( $pId, 'end' );
                 return;
             }
-            else if($fromState >0) {
+            else if(is_int($fromState) && $fromState >0) {
                 PGlobals::setState($pId, $fromState);
                 $this->gamestate->setPrivateState($pId, $fromState);
                 return;
