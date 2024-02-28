@@ -44,6 +44,8 @@ trait LastDriftTrait
             'die_face' => $dieType,
         ];
         $autoSkip = false;
+        $opponentPlay = false;
+        $playSp = false;
         if(isset($windDir)){// N/S/E/W
             $actions[] = 'actLastDriftMove';
             if($actionType == ACTION_TYPE_LASTDRIFT_CENTRAL){
@@ -84,15 +86,31 @@ trait LastDriftTrait
                     $autoSkip = true;
                 }
             }
-            else {
+            else if($actionType == ACTION_TYPE_LASTDRIFT_OPPONENT){
                 $args['pid'] = $actionBoardPid;
-                //TODO JSA OTHERS BLACK_NIGHT special
-                $autoSkip = true;
+                if(count($this->listPossibleNewSpAction($actionBoardPid))==0){
+                    $autoSkip = true;
+                }
+                else {
+                    $opponentPlay = true;
+                }
+            } else {//personal board
+                $args['pid'] = $actionBoardPid;
+                $actions = $this->listPossibleNewSpAction($player_id);
+                if(count($actions)==0){
+                    $autoSkip = true;
+                }
+                else {
+                    //-> actChooseSp
+                    $playSp = true;
+                }
             }
         }
         $args['player_name2'] = isset($actionBoardPid) ? Players::get($actionBoardPid)->getName() : 'StigmaReine';
         $args['a'] = $actions;
         $args['autoSkip'] = $autoSkip;
+        $args['opponent'] = $opponentPlay;
+        $args['playSp'] = $playSp;
         return $args;
     }
     
@@ -131,12 +149,12 @@ trait LastDriftTrait
         else if($token->location != TOKEN_LOCATION_CENTRAL_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
-        $boardTokens = Tokens::getAllOnPersonalBoard($pId);
+        $boardTokens = Tokens::getAllOnPersonalBoard($actionBoardPid);
         if(!$this->canMoveOnPlayerBoard($pId,$token,$boardTokens,$row, $column)){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
         if(!GridUtils::isValidCellToMoveWithWind($windDir,$token->row,$token->col,$row,$column)){
-            throw new UnexpectedException(101,"You cannot move this token at $row, $column");
+            throw new UnexpectedException(101,"You cannot move this token at $row, $column with wind $windDir");
         }
 
         //EFFECT

@@ -767,9 +767,9 @@ function (dojo, declare) {
                 let divText = `<div><div class='stig_sp_action_text'>`+_(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
                 this.addImageActionButton('btnStartSp'+actionType,divText , () => {
                     if(confirmMessage !=null) this.confirmationDialog(confirmMessage, () => {
-                        this.takeAction(actionName, {act:actionType, args});
+                        this.takeAction(actionName, {act:actionType});
                     });
-                    else this.takeAction(actionName, {act:actionType, args});
+                    else this.takeAction(actionName, {act:actionType});
                 });
                 if(!enabledActions.includes(actionType)){
                     $('btnStartSp'+actionType).classList.add('disabled');

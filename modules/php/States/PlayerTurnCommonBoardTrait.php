@@ -215,6 +215,7 @@ trait PlayerTurnCommonBoardTrait
         if(ACTION_TYPE_LASTDRIFT_CENTRAL==$type ){
             $targetBoard = null;
         } else if(ACTION_TYPE_LASTDRIFT_PERSONAL==$type ){
+            $targetBoard = $pId;
             $targetPlayer = $player;
         } else {
             if($targetPid == $pId){
@@ -227,16 +228,40 @@ trait PlayerTurnCommonBoardTrait
         $dieFace = DiceRoll::rollNew();
         PGlobals::setLastDie($pId, $dieFace->type);
         Notifications::lastDriftDie($player,$dieFace,$targetPlayer);
-
-        $this->addCheckpoint(ST_TURN_LAST_DRIFT,$pId);
         
         $args = $this->argLastDrift($pId);
         $autoSkip = $args['autoSkip']; 
-        if($autoSkip){//when nothing needs to be done
+        if($args['opponent']){//Opponent needs to choose a special action
+            Notifications::lastDriftOpponentChoice($player,$targetPlayer);
+            if($targetPlayer->isMultiactive()){
+                //Player is already playing, we need to save their previous state to jump back after
+                $opponentState = $targetPlayer->getPrivateState();
+                PGlobals::setLastDriftPreviousState($targetPlayer->id, $opponentState);
+            }
+            else {
+                //Player has already played (previous turn or current turn)
+                // how to activate without using startTurn...?
+                PGlobals::setLastDriftPreviousState($targetPlayer->id, 'INACTIVE');
+                $this->gamestate->setPlayersMultiactive( [$targetPlayer->id], 'end' );
+                $this->gamestate->initializePrivateState($targetPlayer->id); 
+            }
+            PGlobals::setNbSpActions($targetPlayer->id,1);
+            PGlobals::setNbSpActionsMax($targetPlayer->id,1);
+            $this->addCheckpoint(ST_TURN_CENTRAL_CHOICE_SP,$targetPlayer->id);
+            $this->gamestate->setPrivateState($targetPlayer->id, ST_TURN_CENTRAL_CHOICE_SP);
+            $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
+            $this->gamestate->nextPrivateState($pId, "continue");
+        } else if($autoSkip){//when nothing needs to be done
             Notifications::lastDriftAutoSkip($player);
-            $this->gamestate->nextPrivateState($player->id, "continue");
+            $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
+            $this->gamestate->nextPrivateState($pId, "continue");
         }
         else {
+            if($args['playSp']){
+                PGlobals::setNbSpActions($player->id,1);
+                PGlobals::setNbSpActionsMax($player->id,1);
+            }
+            $this->addCheckpoint(ST_TURN_LAST_DRIFT,$pId);
             $this->gamestate->nextPrivateState($player->id, "lastDrift");
         }
     }

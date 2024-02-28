@@ -60,6 +60,21 @@ trait CentralGainSpecialTrait
         Notifications::unlockSp($player,$action);
         Stats::inc("unlocked_sp",$pId);
 
+        $fromState = PGlobals::getLastDriftPreviousState($pId);
+        if(isset($fromState)){
+            PGlobals::setLastDriftPreviousState($pId, null);
+            //If going from last drift result -> end this step
+            if('INACTIVE' == $fromState){
+                $this->gamestate->setPlayerNonMultiactive( $pId, 'end' );
+                return;
+            }
+            else if($fromState >0) {
+                PGlobals::setState($pId, $fromState);
+                $this->gamestate->setPrivateState($pId, $fromState);
+                return;
+            }
+        }
+        
         if($nbRemaining >=1){
             $this->gamestate->nextPrivateState($pId, "continue");
             return;

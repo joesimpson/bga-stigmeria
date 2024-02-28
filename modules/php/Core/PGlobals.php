@@ -39,6 +39,8 @@ class PGlobals extends \STIG\Helpers\DB_Manager
 
     //last drift info : targeted board + state (rolled/not)
     'lastDrift' => 'obj',
+    //last drift used by P1 on P2, save P2 state here
+    'lastDriftPreviousState' => 'obj',
 
     'eliminated' => 'bool',
   ];
@@ -169,8 +171,13 @@ class PGlobals extends \STIG\Helpers\DB_Manager
         }
 
         self::$datas[$pId][$name] = $value;
+
+        $saveValue = $value;
+        if (self::$variables[$name] == 'obj' && $value != null) {
+          $saveValue = \addslashes(\json_encode($value));
+        }
         //if (in_array($name, ['state', 'engine', 'engineChoices'])) {
-          self::DB()->update(['value' => \addslashes(\json_encode($value))], $name . '-' . $pId);
+          self::DB()->update(['value' => $saveValue], $name . '-' . $pId);
         //}
 
         return $value;
@@ -206,6 +213,7 @@ class PGlobals extends \STIG\Helpers\DB_Manager
       self::setMimicColorUsed($playerId,[]);
       self::setLastDie($playerId,null);
       self::setLastDrift($playerId,null);
+      self::setLastDriftPreviousState($playerId,null);
       self::setEliminated($playerId,false);
 
       //the first state to be activated:

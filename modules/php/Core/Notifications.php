@@ -938,6 +938,18 @@ class Notifications
     );
   }
   /**
+   * 
+   * @param Player $player
+   * @param Player $player2
+   */
+  public static function lastDriftOpponentChoice($player,$player2){
+    self::notifyAll('lastDriftOpponentChoice',clienttranslate('${player_name} lets ${player_name2} make the choice'),[ 
+        'player' => $player,
+        'player2' => $player2,
+      ],
+    );
+  }
+  /**
    * Will Unlock Special action 
    * @param Player $player
    * @param int $nbActions
