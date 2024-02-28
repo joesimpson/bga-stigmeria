@@ -18,7 +18,10 @@ trait DebugTrait
    * Function to call to regenerate JSON from PHP (when json file is removed)
    */
   function debugJSON(){
+    include dirname(__FILE__) . '/gameoptions.inc.php';
+
     $customOptions = $this->getTableOptions();
+    $customOptions = $game_options;//READ from module file
     //AUTO REMOVE BGA OPTIONS:
     foreach($customOptions as $key => $option){
       if($key <100 || $key>=200){
@@ -35,6 +38,7 @@ trait DebugTrait
     Notifications::message("$json",['json' => $json]);
     
     $customOptions = $this->getTablePreferences();
+    $customOptions = $game_preferences;
     //AUTO REMOVE BGA OPTIONS:
     foreach($customOptions as $key => $option){
       if($key <100 || $key>=200){

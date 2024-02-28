@@ -97,10 +97,8 @@ $game_options = [
       OPTION_MODE_NOLIMIT => [
         [
           'type' => 'minplayers', 
-          'value' => 99, 
-          'message' => totranslate('No Limit not available in current version'),
-          //'value' => 2, 
-          //'message' => totranslate('Competitive modes are not for solo play'),
+          'value' => 2, 
+          'message' => totranslate('Competitive modes are not for solo play'),
         ],
       ],
       /*
