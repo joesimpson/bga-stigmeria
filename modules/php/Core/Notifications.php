@@ -557,7 +557,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spCombination($player,$token,$previousColor,$actionCost){
-    self::notifyAll('spCombination',clienttranslate('${player_name} use the Combination action to transform a ${token_color} stigmerian at ${L1} into a ${token_color2} stigmerian (cost: ${n} actions)'),[ 
+    self::notifyAll('spCombination',clienttranslate('${player_name} uses the Combination action to transform a ${token_color} stigmerian at ${L1} into a ${token_color2} stigmerian (cost: ${n} actions)'),[ 
         'i18n' => ['color','color2'],
         'player' => $player,
         'L1' => $token->getCoordName(),
@@ -634,7 +634,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spWhite($player,$token1,$token2,$actionCost){
-    self::notifyAll('spWhite',clienttranslate('${player_name} use the Half Note action to merge 2 ${token_color}${token_color} stigmerians at ${L1} and ${L2} into a ${token_color2} at ${L1} (cost: ${n} actions)'),[ 
+    self::notifyAll('spWhite',clienttranslate('${player_name} uses the Half Note action to merge 2 ${token_color}${token_color} stigmerians at ${L1} and ${L2} into a ${token_color2} at ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -659,7 +659,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spBlack($player,$token1,$token2,$actionCost){
-    self::notifyAll('spBlack',clienttranslate('${player_name} use the Quarter Note action to split the ${token_color} stigmerian at ${L1} into 2 ${token_color2}${token_color2} stigmerians at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+    self::notifyAll('spBlack',clienttranslate('${player_name} uses the Quarter Note action to split the ${token_color} stigmerian at ${L1} into 2 ${token_color2}${token_color2} stigmerians at ${L1} and ${L2} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -683,7 +683,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spTwoBeats($player,$token,$actionCost){
-    self::notifyAll('spTwoBeats',clienttranslate('${player_name} use the Two Beats action to get a new ${token_color} stigmerian at ${L1} (cost: ${n} actions)'),[ 
+    self::notifyAll('spTwoBeats',clienttranslate('${player_name} uses the Two Beats action to get a new ${token_color} stigmerian at ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -702,7 +702,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spRest($player,$token,$actionCost){
-    self::notifyAll('spRest',clienttranslate('${player_name} use the Rest action to remove a ${token_color} ${token_type} at ${L1} (cost: ${n} actions)'),[ 
+    self::notifyAll('spRest',clienttranslate('${player_name} uses the Rest action to remove a ${token_color} ${token_type} at ${L1} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L1' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -722,7 +722,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spCopy($player,$token,$typeSrc,$actionCost){
-    self::notifyAll('spCopy',clienttranslate('${player_name} use the Copy action to replace a ${token_color} at ${L} into a ${token_color2} (cost: ${n} actions)'),[ 
+    self::notifyAll('spCopy',clienttranslate('${player_name} uses the Copy action to replace a ${token_color} at ${L} into a ${token_color2} (cost: ${n} actions)'),[ 
         'player' => $player,
         'L' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -747,7 +747,7 @@ class Notifications
     $type1 = $typesDestArray[0];
     $type2 = $typesDestArray[1];
     $type3 = $typesDestArray[2];
-    self::notifyAll('spPrediction',clienttranslate('${player_name} use the Prediction to add 3 stigmerians in their bag : ${token_color}${token_color2}${token_color3} (cost: ${n} actions)'),[ 
+    self::notifyAll('spPrediction',clienttranslate('${player_name} uses the Prediction to add 3 stigmerians in their bag : ${token_color}${token_color2}${token_color3} (cost: ${n} actions)'),[ 
         'player' => $player,
         'n' => $actionCost,
         'preserve' => [ 'token_type','token_type2','token_type3' ],
@@ -769,7 +769,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spMimicry($player,$token,$previousColor,$actionCost){
-    self::notifyAll('spMimicry',clienttranslate('${player_name} use the Mimicry to change a ${token_color} stigmerian to ${token_color2} at ${L} (cost: ${n} actions)'),[ 
+    self::notifyAll('spMimicry',clienttranslate('${player_name} uses the Mimicry to change a ${token_color} stigmerian to ${token_color2} at ${L} (cost: ${n} actions)'),[ 
         'player' => $player,
         'n' => $actionCost,
         'L' => $token->getCoordName(),
@@ -789,7 +789,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spFogDie($player,$token,$actionCost){
-    self::notifyAll('spFogDie',clienttranslate('${player_name} use the Fog Die to place a ${token_color} stigmerian at ${L} (cost: ${n} actions)'),[ 
+    self::notifyAll('spFogDie',clienttranslate('${player_name} uses the Fog Die to place a ${token_color} stigmerian at ${L} (cost: ${n} actions)'),[ 
         'player' => $player,
         'n' => $actionCost,
         'L' => $token->getCoordName(),
@@ -808,7 +808,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spPilferer($player,$player2,$token,$actionCost){
-    self::notifyAll('spPilferer',clienttranslate('${player_name} use the Pilferer to recruit a ${token_color} stigmerian from ${player_name2} bag (cost: ${n} actions)'),[ 
+    self::notifyAll('spPilferer',clienttranslate('${player_name} uses the Pilferer to recruit a ${token_color} stigmerian from ${player_name2} bag (cost: ${n} actions)'),[ 
         'player' => $player,
         'player2' => $player2,
         'n' => $actionCost,
@@ -828,7 +828,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spSower($player,$targetPlayer,$token,$actionCost){
-    self::notifyAll('spSower',clienttranslate('${player_name} use the Sower to put 1 ${token_color} stigmerian in ${player_name2} bag (cost: ${n} actions)'),[ 
+    self::notifyAll('spSower',clienttranslate('${player_name} uses the Sower to put 1 ${token_color} stigmerian in ${player_name2} bag (cost: ${n} actions)'),[ 
         'player' => $player,
         'player2' => $targetPlayer,
         'n' => $actionCost,
@@ -849,7 +849,7 @@ class Notifications
    * @param StigmerianToken $token2
    */
   public static function spCharmer($player,$player1,$player2,$token1,$token2){
-    self::notifyAll('spCharmer',clienttranslate('${player_name} use the Charmer to exchange ${token_color} in ${player_name2} recruit zone with ${token_color2} in ${player_name3} recruit zone'),[ 
+    self::notifyAll('spCharmer',clienttranslate('${player_name} uses the Charmer to exchange ${token_color} in ${player_name2} recruit zone with ${token_color2} in ${player_name3} recruit zone'),[ 
         'player' => $player,
         'player2' => $player1,
         'player3' => $player2,
@@ -872,7 +872,7 @@ class Notifications
    * @param int $actionCost
    */
   public static function spJealousy($player,$player2,$deckSize1,$deckSize2,$actionCost){
-    self::notifyAll('spJealousy',clienttranslate('${player_name} use the Jealousy to exchange their bag with ${player_name2} (cost: ${n} actions)'),[ 
+    self::notifyAll('spJealousy',clienttranslate('${player_name} uses the Jealousy to exchange their bag with ${player_name2} (cost: ${n} actions)'),[ 
         'player' => $player,
         'player2' => $player2,
         'deck1' => $deckSize1,
