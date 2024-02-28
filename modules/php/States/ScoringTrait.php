@@ -75,8 +75,12 @@ trait ScoringTrait
           }
           
         }
+        //TiE BREAKER:
+        $yellowTokens = Tokens::countRecruits($pId,[TOKEN_STIG_YELLOW]);
+        $player->setTieBreakerPoints($yellowTokens);
       }
       else {
+        $player->setTieBreakerPoints(0);
         $score += SCORE_FAIL;
         Notifications::addPoints($player,SCORE_FAIL,clienttranslate('${player_name} scores ${n} points for not fulfilling the schema'));
       }
@@ -85,9 +89,6 @@ trait ScoringTrait
         Notifications::addPoints($player,SCORE_JOKER_USED,clienttranslate('${player_name} scores ${n} points for using the joker'));
       }
       $player->addPoints($score);
-      //TiE BREAKER:
-      $yellowTokens = Tokens::countRecruits($pId,[TOKEN_STIG_YELLOW]);
-      $player->setTieBreakerPoints($yellowTokens);
     }
   }
   
