@@ -78,18 +78,6 @@ $gameinfos = array(
 // NB: the default will be the first language in this list spoken by the player, so you should list them by popularity/preference.
 'language_dependency' => false,
 
-// Complexity of the game, from 0 (extremely simple) to 5 (extremely complex)
-'complexity' => 4,    
-
-// Luck of the game, from 0 (absolutely no luck in this game) to 5 (totally luck driven)
-'luck' => 2,    
-
-// Strategy of the game, from 0 (no strategy can be setup) to 5 (totally based on strategy)
-'strategy' => 5,    
-
-// Diplomacy of the game, from 0 (no interaction in this game) to 5 (totally based on interaction and discussion between players)
-'diplomacy' => 3,    
-
 // Colors attributed to players
 'player_colors' => array( "ff0000", "008000", "0000ff", "ffa500","000000","ffffff", "e94190","982fff","72c3b1","f07f16","bdd002","7b7b7b", "773300" ),
 
@@ -118,10 +106,10 @@ $gameinfos = array(
     'max' => null
 ),
 
-'custom_buy_button' => array(
-    'url' => 'https://www.garajeux.fr/product-page/stigm%C3%A9ria-une-bo%C3%AEte-de-jeu',
-    'label' => 'Garajeux'
- ),
+//custom_buy_button' => array(
+//   'url' => 'https://www.garajeux.fr/product-page/stigm%C3%A9ria-une-bo%C3%AEte-de-jeu',
+//   'label' => 'Garajeux'
+//),
 
 //////// BGA SANDBOX ONLY PARAMETERS (DO NOT MODIFY)
 
