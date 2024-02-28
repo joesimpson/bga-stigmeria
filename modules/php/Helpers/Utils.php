@@ -54,6 +54,8 @@ abstract class Utils extends \APP_DbObject
 
     /**
      * @param array $array
+     * @param int $key in array
+     * @param int $value to change from array datas
      */
     static function updateDataFromArray ($array, $key, &$value) {
         if(array_key_exists($key,$array)) $value = $array[$key];

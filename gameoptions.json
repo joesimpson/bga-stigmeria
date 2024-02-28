@@ -137,7 +137,7 @@
         }
     },
     "102": {
-        "name": "Difficulty",
+        "name": "Difficulty (Flower not No Limit)",
         "values": {
             "1": {
                 "name": "1 Star",
@@ -175,7 +175,7 @@
         ]
     },
     "103": {
-        "name": "Difficulty",
+        "name": "Difficulty (Flower No Limit)",
         "values": {
             "4": {
                 "name": "4 Stars",
@@ -193,7 +193,7 @@
         ]
     },
     "104": {
-        "name": "Difficulty",
+        "name": "Difficulty (Random flower)",
         "values": {
             "1": {
                 "name": "1 Star",
@@ -231,7 +231,7 @@
         ]
     },
     "110": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (VertigHaineuse 1*)",
         "values": [
             {
                 "name": "Random",
@@ -259,7 +259,7 @@
         ]
     },
     "111": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (VertigHaineuse 2*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -287,7 +287,7 @@
         ]
     },
     "112": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (VertigHaineuse 3*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -315,7 +315,7 @@
         ]
     },
     "113": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (MarOnne 1*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -343,7 +343,7 @@
         ]
     },
     "114": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (MarOnne 2*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -371,7 +371,7 @@
         ]
     },
     "115": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (MarOnne 3*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -399,7 +399,7 @@
         ]
     },
     "116": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (SiffloChamp 1*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -427,7 +427,7 @@
         ]
     },
     "117": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (SiffloChamp 2*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -455,7 +455,7 @@
         ]
     },
     "118": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (SiffloChamp 3*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -483,7 +483,7 @@
         ]
     },
     "119": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (DentD\u00eene 1*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -511,7 +511,7 @@
         ]
     },
     "120": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (DentD\u00eene 2*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -539,7 +539,7 @@
         ]
     },
     "121": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (DentD\u00eene 3*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -567,7 +567,7 @@
         ]
     },
     "122": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (InspirActrice 1*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -595,7 +595,7 @@
         ]
     },
     "123": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (InspirActrice 2*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -623,7 +623,7 @@
         ]
     },
     "124": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (InspirActrice 3*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -651,7 +651,7 @@
         ]
     },
     "125": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (Competitive 1*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -679,7 +679,7 @@
         ]
     },
     "126": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (Competitive 2*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -707,7 +707,7 @@
         ]
     },
     "127": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (Competitive 3*)",
         "values": {
             "0": {
                 "name": "Random",
@@ -735,7 +735,7 @@
         ]
     },
     "128": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (Flower No Limit)",
         "values": {
             "0": {
                 "name": "Random",
@@ -758,7 +758,7 @@
         ]
     },
     "130": {
-        "name": "Targeted schema",
+        "name": "Targeted schema (Random flower or difficulty)",
         "values": [
             {
                 "name": "Random",

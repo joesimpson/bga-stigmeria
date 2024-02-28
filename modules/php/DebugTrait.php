@@ -3,6 +3,7 @@ namespace STIG;
 use STIG\Core\Globals;
 use STIG\Core\Game;
 use STIG\Core\Notifications;
+use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Helpers\Collection;
 use STIG\Helpers\GridUtils;
@@ -148,6 +149,10 @@ trait DebugTrait
     $isWin = $this->isSchemaFulfilled($player);
     if($isWin) Notifications::message('Schema fulfilled !',[]);
     else Notifications::message('Schema in progress...',[]);
+    Notifications::refreshUI($player->id, $this->getAllDatas());
+    $this->gamestate->jumpToState( ST_NEXT_TURN );
+    //$this->gamestate->setPlayersMultiactive( [$player->id], 'end' );
+    //Game::get()->gamestate->setPrivateState($player->id, ST_TURN_PERSONAL_BOARD);
   }
 
   function debugScoring(){

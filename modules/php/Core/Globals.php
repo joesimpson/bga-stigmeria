@@ -166,32 +166,33 @@ class Globals extends \STIG\Helpers\DB_Manager
     $flowerType = $options[OPTION_FLOWER];
     self::setOptionFlowerType($flowerType);
 
+    //!!! We need to code the displayCondition from the json file because tournament UI doesn't use displayCondition
     $difficulty = OPTION_DIFFICULTY_RANDOM;
-    Utils::updateDataFromArray($options,OPTION_DIFFICULTY,$difficulty);
-    Utils::updateDataFromArray($options,OPTION_DIFFICULTY_NL,$difficulty);
-    Utils::updateDataFromArray($options,OPTION_DIFFICULTY_ALL,$difficulty);
+    if($flowerType !=OPTION_FLOWER_NO_LIMIT && $flowerType !=OPTION_FLOWER_RANDOM) Utils::updateDataFromArray($options,OPTION_DIFFICULTY,$difficulty);
+    if($flowerType ==OPTION_FLOWER_NO_LIMIT) Utils::updateDataFromArray($options,OPTION_DIFFICULTY_NL,$difficulty);
+    if($flowerType ==OPTION_FLOWER_RANDOM) Utils::updateDataFromArray($options,OPTION_DIFFICULTY_ALL,$difficulty);
     self::setOptionDifficulty($difficulty);
 
     $optionSchema = OPTION_SCHEMA_RANDOM;//DEFAULT RANDOM
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_V1,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_V2,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_V3,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_M1,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_M2,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_M3,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_S1,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_S2,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_S3,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_D1,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_D2,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_D3,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_I1,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_I2,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_I3,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_C1,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_C2,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_C3,$optionSchema);
-    Utils::updateDataFromArray($options,OPTION_SCHEMA_NL,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_1 && $flowerType ==OPTION_FLOWER_VERTIGHAINEUSE) Utils::updateDataFromArray($options,OPTION_SCHEMA_V1,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_2 && $flowerType ==OPTION_FLOWER_VERTIGHAINEUSE) Utils::updateDataFromArray($options,OPTION_SCHEMA_V2,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_3 && $flowerType ==OPTION_FLOWER_VERTIGHAINEUSE) Utils::updateDataFromArray($options,OPTION_SCHEMA_V3,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_1 && $flowerType ==OPTION_FLOWER_MARONNE) Utils::updateDataFromArray($options,OPTION_SCHEMA_M1,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_2 && $flowerType ==OPTION_FLOWER_MARONNE) Utils::updateDataFromArray($options,OPTION_SCHEMA_M2,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_3 && $flowerType ==OPTION_FLOWER_MARONNE) Utils::updateDataFromArray($options,OPTION_SCHEMA_M3,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_1 && $flowerType ==OPTION_FLOWER_SIFFLOCHAMP) Utils::updateDataFromArray($options,OPTION_SCHEMA_S1,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_2 && $flowerType ==OPTION_FLOWER_SIFFLOCHAMP) Utils::updateDataFromArray($options,OPTION_SCHEMA_S2,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_3 && $flowerType ==OPTION_FLOWER_SIFFLOCHAMP) Utils::updateDataFromArray($options,OPTION_SCHEMA_S3,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_1 && $flowerType ==OPTION_FLOWER_DENTDINE) Utils::updateDataFromArray($options,OPTION_SCHEMA_D1,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_2 && $flowerType ==OPTION_FLOWER_DENTDINE) Utils::updateDataFromArray($options,OPTION_SCHEMA_D2,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_3 && $flowerType ==OPTION_FLOWER_DENTDINE) Utils::updateDataFromArray($options,OPTION_SCHEMA_D3,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_1 && $flowerType ==OPTION_FLOWER_INSPIRACTRICE) Utils::updateDataFromArray($options,OPTION_SCHEMA_I1,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_2 && $flowerType ==OPTION_FLOWER_INSPIRACTRICE) Utils::updateDataFromArray($options,OPTION_SCHEMA_I2,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_3 && $flowerType ==OPTION_FLOWER_INSPIRACTRICE) Utils::updateDataFromArray($options,OPTION_SCHEMA_I3,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_1 && $flowerType ==OPTION_FLOWER_COMPETITIVE) Utils::updateDataFromArray($options,OPTION_SCHEMA_C1,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_2 && $flowerType ==OPTION_FLOWER_COMPETITIVE) Utils::updateDataFromArray($options,OPTION_SCHEMA_C2,$optionSchema);
+    if($difficulty ==OPTION_DIFFICULTY_3 && $flowerType ==OPTION_FLOWER_COMPETITIVE) Utils::updateDataFromArray($options,OPTION_SCHEMA_C3,$optionSchema);
+    if($flowerType ==OPTION_FLOWER_NO_LIMIT) Utils::updateDataFromArray($options,OPTION_SCHEMA_NL,$optionSchema);
     
     $schemaTypes = Schemas::getTypes();
     $schemas = new Collection($schemaTypes);
