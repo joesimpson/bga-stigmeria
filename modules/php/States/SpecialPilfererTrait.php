@@ -21,9 +21,12 @@ trait SpecialPilfererTrait
     public function argSpPilferer($player_id)
     {
         $targets = $this->listPilfererTargets($player_id);
-        return [
+        $args = [
             'p' => $targets,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }  
 
     /**
@@ -77,13 +80,15 @@ trait SpecialPilfererTrait
         $player->giveExtraTime();
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
-        
-        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
+
         // checkpoint for BOTH PLAYERS in case the other is active !
-        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD,$pId);
         if($targetPlayer->isMultiactive()){
             $this->addCheckpoint($targetPlayer->getPrivateState(), $targetPlayer->id );
         }
+        if($this->returnToLastDriftState($pId,$playerAction, true)) return;
+
+        PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
+        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD,$pId);
         $this->gamestate->nextPrivateState($player->id, "next");
     } 
 

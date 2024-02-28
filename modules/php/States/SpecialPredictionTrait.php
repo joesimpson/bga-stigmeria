@@ -16,10 +16,13 @@ trait SpecialPredictionTrait
     public function argSpPrediction($playerId)
     {
         $colors = STIG_COLORS;
-        return [
+        $args = [
             'colors' => $colors,
             'n' => NB_TOKENS_PREDICTION,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$playerId);
+        return $args;
     } 
     /**
      * Special action of Taking Stigmerians from the game box
@@ -69,6 +72,8 @@ trait SpecialPredictionTrait
         Stats::inc("actions",$pId);
         Stats::inc("tokens_deck",$player->getId(),+ NB_TOKENS_PREDICTION);
         $player->giveExtraTime();
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($pId,ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

@@ -24,10 +24,13 @@ trait SpecialFastMoveTrait
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
         $nMoves = Globals::getTurn();
         $possibleMoves = $this->listPossibleFastMovesOnBoard($player_id,$boardTokens,$nMoves);
-        return [
+        $args = [
             'n' => $nMoves,
             'p_places_m' => $possibleMoves,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     } 
     /**
      * Special action of moving 1 token with 1->N moves to somewhere
@@ -73,6 +76,8 @@ trait SpecialFastMoveTrait
         $token->moveToPlayerBoard($player,$row,$column,0);
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
@@ -131,6 +136,8 @@ trait SpecialFastMoveTrait
         $player->giveExtraTime();
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
+        
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
         
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "next");

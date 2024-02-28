@@ -17,17 +17,23 @@ trait SpecialWhiteTrait
     public function argSpWhite($player_id)
     {
         $tokens = $this->listWhiteableTokens($player_id);
-        return [
+        $args = [
             'tokens' => $tokens,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     } 
     public function argSpWhiteChoice($player_id)
     {
         $player = Players::get($player_id);
         $selectedTokens = $player->getSelection();
-        return [
+        $args = [
             'tokensIds' => $selectedTokens,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     } 
     /**
      * Special action of merging 2 adjacent black tokens into a white one
@@ -127,6 +133,8 @@ trait SpecialWhiteTrait
         Stats::inc("actions",$player->getId());
         Stats::inc("tokens_board",$pId,-1);
         $player->setSelection([]);
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

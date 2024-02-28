@@ -16,9 +16,12 @@ trait SpecialFulguranceTrait
     public function argSpFulgurance($player_id)
     {
         $spots = $this->listSpotsForFulgurance($player_id);
-        return [
+        $args = [
             'p_places_p' => $spots,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }
     
     /**
@@ -68,6 +71,8 @@ trait SpecialFulguranceTrait
         Stats::inc("actions_s".ACTION_TYPE_FULGURANCE,$pId);
         Stats::inc("actions",$pId);
 
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
+        
         $this->addCheckpoint(ST_TURN_PERSONAL_BOARD,$pId);
 
         $this->gamestate->nextPrivateState($pId, 'next');

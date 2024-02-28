@@ -1145,10 +1145,10 @@ class Notifications
       unset($data['player3']);
     }
     
-    if (array_key_exists('n2',$data) && $data['n2'] == null) {
+    if (array_key_exists('n2',$data) && $data['n2'] === null) {
       unset($data['n2']);
     }
-    if (array_key_exists('n3',$data) && $data['n3'] == null) {
+    if (array_key_exists('n3',$data) && $data['n3'] === null) {
       unset($data['n3']);
     }
   }

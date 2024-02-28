@@ -814,19 +814,19 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpMixing() ', args );
 
             this.initMultiTokenSelection('actMixing',args.tokens);
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
         onEnteringStateSpCombination: function(args)
         {
             debug( 'onEnteringStateSpCombination() ', args );
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actCombination', args.tokensIds);
         }, 
         onEnteringStateSpFulgurance: function(args)
         {
             debug( 'onEnteringStateSpFulgurance() ', args );
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             let confirmMessage = _("Are you sure to draw 5 tokens from your bag and randomly place them from that place to the right ?")
             this.initCellSelection('actFulgurance', args.p_places_p, this.player_id,null,confirmMessage);
         }, 
@@ -834,13 +834,13 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpDiagonal() ', args );
             this.initTokenSelectionDest('actDiagonal', args.p_places_m, this.player_id);
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateSpChoreography: function(args)
         {
             debug( 'onEnteringStateSpChoreography() ', args );
             this.initTokenSelectionDest('actChoreography', args.p_places_m, this.player_id,'actChoreMoveOut');
-            if(args.n == args.max) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.n == args.max && args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.addDangerActionButton('btnStop', _('Stop'), () => this.takeAction('actChoreographyStop', {}));
         }, 
         
@@ -848,7 +848,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpSwap() ', args );
             
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initMultiTokenSelection('actSwap',args.tokens);
         }, 
         
@@ -857,14 +857,14 @@ function (dojo, declare) {
             debug( 'onEnteringStateSpFastMove() ', args );
 
             this.initTokenSelectionDest('actFastMove', args.p_places_m, this.player_id,'actMoveOutFast');
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
         onEnteringStateSpWhite: function(args)
         {
             debug( 'onEnteringStateSpWhite() ', args );
 
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.addSecondaryActionButton('btnClearSelection', _('Clear selection'), () =>  {
                 this.reinitTokensSelection(args.tokens);
             });
@@ -875,7 +875,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpWhiteChoice() ', args );
 
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actWhiteChoice', args.tokensIds);
         }, 
         
@@ -883,7 +883,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpBlack1() ', args );
 
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSelectionDest('actBlack1',args.tokens, this.player_id,null, TOKEN_STIG_BLACK);
             
         }, 
@@ -892,7 +892,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpTwoBeats() ', args );
 
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initCellSelection('actTwoBeats', args.p_places_p, this.player_id,TOKEN_STIG_WHITE);
         }, 
         
@@ -900,7 +900,7 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateSpRest() ', args );
 
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
             this.initTokenSimpleSelection('actRest', args.tokensIds);
         }, 
 
@@ -915,7 +915,7 @@ function (dojo, declare) {
                     this.takeAction('actNSNK', {src:src,dest:dest})
                 });
             });
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         },
         onEnteringStateSpCopy: function(args)
         {
@@ -943,9 +943,7 @@ function (dojo, declare) {
             };
             this.initTokenSimpleSelection('actCopy', args.tokensIds,callbackSelectionDone,callbackConfirm);
             
-            if(args.cancel){
-                this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
-            }
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateSpPrediction: function(args)
         {
@@ -984,7 +982,7 @@ function (dojo, declare) {
                 this.takeAction('actPrediction', { dest: this.selectedTokenTypes.join(';'),});
             }); 
             $(`btnConfirm`).classList.add('disabled');
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateSpMimicry: function(args)
         {
@@ -1013,7 +1011,7 @@ function (dojo, declare) {
                 this.takeAction('actMimicry', { dest: this.selectedTokenType,});
             }); 
             $(`btnConfirm`).classList.add('disabled');
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateSpFogDie: function(args)
         {
@@ -1034,7 +1032,7 @@ function (dojo, declare) {
                 } );
                 $('btnConfirm_'+player.id).classList.add('stig_button_pilferer');
             });
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         },
         onEnteringStateSpSower: function(args)
         {
@@ -1083,7 +1081,7 @@ function (dojo, declare) {
                 });
             }); 
             $(`btnConfirm`).classList.add('disabled');
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         onEnteringStateSpJealousy: function(args)
         {
@@ -1099,7 +1097,7 @@ function (dojo, declare) {
                 } );
                 $('btnConfirm_'+player.id).classList.add('stig_button_jealousy');
             });
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel) this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         },
         
         onEnteringStateAfterTurn: function(args)

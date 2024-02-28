@@ -18,9 +18,12 @@ trait SpecialBlackTrait
     public function argSpBlack1($player_id)
     {
         $tokens = $this->listBlackableTokens($player_id);
-        return [
+        $args = [
             'tokens' => $tokens,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }
     
     /**
@@ -75,6 +78,8 @@ trait SpecialBlackTrait
         Stats::inc("actions_s".ACTION_TYPE_BLACK,$pId);
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,+1);
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

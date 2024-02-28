@@ -41,9 +41,10 @@ class PlayerAction extends \STIG\Helpers\DB_Model
     }
     $type = $this->type;
     $this->difficulty = PlayerActions::getDifficulty($type);
-    $this->cost = PlayerActions::getCost($type);
     if(ACTION_STATE_UNLOCKED_ONE_SHOT == $this->getState()) {
-      $this->cost =0;
+      $this->cost = 0;
+    } else {
+      $this->cost = PlayerActions::getCost($type);
     }
   }
 

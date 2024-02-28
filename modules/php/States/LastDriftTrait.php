@@ -385,9 +385,10 @@ trait LastDriftTrait
      * 
      * @param int $playerId
      * @param PlayerAction $playerAction
+     * @param bool $addCheckpoint (optional) default false
      * @return bool true when we return to a previous state
      */
-    public function returnToLastDriftState($playerId,$playerAction){
+    public function returnToLastDriftState($playerId,$playerAction, $addCheckpoint = false){
         if(ACTION_STATE_UNLOCKED_ONE_SHOT == $playerAction->getState()) {
             PlayerActions::delete($playerAction->getId());
         }
@@ -396,6 +397,10 @@ trait LastDriftTrait
             //If coming from last drift result
             PGlobals::setState($playerId, $fromState);
             PGlobals::setLastDriftPreviousState($playerId,null);
+            if($addCheckpoint){
+                $this->addCheckpoint($fromState,$playerId);
+            }
+
             $this->gamestate->setPrivateState($playerId, $fromState);
             return true;
         }

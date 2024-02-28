@@ -16,9 +16,12 @@ trait SpecialDiagonalTrait
     public function argSpDiagonal($player_id)
     {
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
-        return [
+        $args = [
             'p_places_m' => $this->listPossibleDiagonalMovesOnBoard($player_id,$boardTokens),
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }
       
     /**
@@ -62,6 +65,8 @@ trait SpecialDiagonalTrait
         $token->moveToPlayerBoard($player,$row,$column,0);
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
+        
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
         
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "next");

@@ -26,12 +26,15 @@ trait SpecialFogDieTrait
         $dieType = PGlobals::getLastDie($player_id);
         $token_color = DiceRoll::getStigmerianFromDie($dieType);
         $spots = $this->listPossiblePlacesOnPersonalBoard($player_id);
-        return [
+        $args = [
             'p' => $spots,
             'die_face' => $dieType,
             'token_type' => $token_color,
             'token_color' => StigmerianToken::getTypeName($token_color),
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }
     
     /**
@@ -84,6 +87,8 @@ trait SpecialFogDieTrait
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,+1);
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

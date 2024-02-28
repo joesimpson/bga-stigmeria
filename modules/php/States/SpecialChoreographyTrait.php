@@ -29,12 +29,15 @@ trait SpecialChoreographyTrait
             $p_places_m = $this->listPossibleChoreographyMovesOnBoard($player_id,$boardTokens,$movedTokensIds);
         }
 
-        return [
+        $args = [
             'n' => $nbMovesRemaining,
             'max' => $nbMovesMax,
             'movedTokensIds' => $movedTokensIds,
             'p_places_m' => $p_places_m,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }
       
     /**
@@ -99,6 +102,8 @@ trait SpecialChoreographyTrait
             $this->gamestate->nextPrivateState($player->id, "continue");
         }
         else {
+            if($this->returnToLastDriftState($pId,$playerAction)) return;
+
             PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
             $this->gamestate->nextPrivateState($player->id, "next");
         }
@@ -172,6 +177,8 @@ trait SpecialChoreographyTrait
             $this->gamestate->nextPrivateState($player->id, "continue");
         }
         else {
+            if($this->returnToLastDriftState($pId,$playerAction)) return;
+
             PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
             $this->gamestate->nextPrivateState($player->id, "next");
         }
@@ -186,6 +193,10 @@ trait SpecialChoreographyTrait
         $player = Players::getCurrent();
         $player->setSelection([]);
         $this->addStep($player->id, $player->getPrivateState());
+        
+        $playerAction = PlayerActions::getPlayer($player->id,[ACTION_TYPE_CHOREOGRAPHY])->first();
+        if($this->returnToLastDriftState($player->id,$playerAction)) return;
+
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($player->id, "next");
     }

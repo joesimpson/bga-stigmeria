@@ -16,9 +16,12 @@ trait SpecialCombinationTrait
     public function argSpCombination($player_id)
     {
         $tokens = $this->listTokensIdsForCombination($player_id);
-        return [
+        $args = [
             'tokensIds' => $tokens,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }
     
     /**
@@ -64,6 +67,8 @@ trait SpecialCombinationTrait
         $player->giveExtraTime();
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

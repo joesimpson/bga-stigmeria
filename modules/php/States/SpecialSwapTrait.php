@@ -16,11 +16,13 @@ trait SpecialSwapTrait
 {
     public function argSpSwap($player_id)
     {
-        $player = Players::get($player_id);
         $tokens = $this->listSwapableTokens($player_id);
-        return [
+        $args = [
             'tokens' => $tokens,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     } 
     /**
      * Special action of swaping 2 adjacent tokens 
@@ -69,6 +71,8 @@ trait SpecialSwapTrait
         $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_SWAP,$pId);
         Stats::inc("actions",$player->getId());
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

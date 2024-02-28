@@ -16,9 +16,12 @@ trait SpecialTwoBeatsTrait
     public function argSpTwoBeats($player_id)
     {
         $spots = $this->listSpotsForTwoBeats($player_id);
-        return [
+        $args = [
             'p_places_p' => $spots,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     }
     
     /**
@@ -67,6 +70,8 @@ trait SpecialTwoBeatsTrait
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,+1);
 
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
+        
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
     }

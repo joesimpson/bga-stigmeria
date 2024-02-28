@@ -20,9 +20,12 @@ trait SpecialMixingTrait
     public function argSpMixing($player_id)
     {
         $mixableTokens = $this->listMixableTokens($player_id);
-        return [
+        $args = [
             'tokens' => $mixableTokens,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     } 
     /**
      * Special action of Mixing 2 tokens of 1 primary color and get 2 of another color
@@ -65,6 +68,8 @@ trait SpecialMixingTrait
         $player->giveExtraTime();
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$player->getId());
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

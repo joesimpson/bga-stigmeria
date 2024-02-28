@@ -16,9 +16,12 @@ trait SpecialRestTrait
     public function argSpRest($player_id)
     {
         $tokens = Tokens::getAllOnPersonalBoard($player_id);
-        return [
+        $args = [
             'tokensIds' => $tokens->getIds(),
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     } 
     /**
      * Special action of REMOVING 1 token from the board
@@ -61,6 +64,8 @@ trait SpecialRestTrait
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
         Stats::inc("tokens_board",$pId,-1);
+
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

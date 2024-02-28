@@ -14,9 +14,12 @@ trait SpecialNSNKTrait
 {
     public function argSpNSNK($playerId)
     { 
-        return [
+        $args = [
             'p' => $this->listPossibleNSNK($playerId),
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$playerId);
+        return $args;
     } 
     /**
      * Special action like normal mode joker
@@ -63,6 +66,8 @@ trait SpecialNSNKTrait
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
 
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
+        
         PGlobals::setState($player->id, ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
     }

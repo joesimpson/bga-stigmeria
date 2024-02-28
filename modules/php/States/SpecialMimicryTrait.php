@@ -20,11 +20,14 @@ trait SpecialMimicryTrait
         $colors = $possibles['colors'];
         $tokenId = $possibles['tokenId'];
         $tokenLocation = $possibles['tokenLocation'];
-        return [
+        $args = [
             'colors' => $colors,
             'tokenId' => $tokenId,
             'L' => $tokenLocation,
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$playerId);
+        return $args;
     } 
     /**
      * @param array $typeDest
@@ -85,6 +88,8 @@ trait SpecialMimicryTrait
         Stats::inc("actions",$pId);
         $player->giveExtraTime();
 
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
+        
         PGlobals::setState($pId,ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');
     }
