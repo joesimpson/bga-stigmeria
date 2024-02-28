@@ -299,6 +299,7 @@ $machinestates = array(
             "actLastDriftRemove", 
             "actLastDriftLand", 
             "actChooseSp",
+            "actChoiceSpecial",
         ],
         "transitions" => [ 
             "next" => ST_TURN_COMMON_BOARD, 

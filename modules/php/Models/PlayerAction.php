@@ -42,6 +42,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
     $type = $this->type;
     $this->difficulty = PlayerActions::getDifficulty($type);
     $this->cost = PlayerActions::getCost($type);
+    if(ACTION_STATE_UNLOCKED_ONE_SHOT == $this->getState()) {
+      $this->cost =0;
+    }
   }
 
   public function getUiData()
@@ -61,6 +64,9 @@ class PlayerAction extends \STIG\Helpers\DB_Model
   public function canBePlayed($remainingActions){
     if($this->getState() == ACTION_STATE_LOCKED ) return false;
     if($this->getState() == ACTION_STATE_LOCKED_FOR_TURN ) return false;
+    if(ACTION_STATE_UNLOCKED_ONE_SHOT == $this->getState()) {
+      return true;
+    }
     if($remainingActions < $this->getCost()){
       return false;
     }

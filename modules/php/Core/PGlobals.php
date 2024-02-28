@@ -173,9 +173,9 @@ class PGlobals extends \STIG\Helpers\DB_Manager
         self::$datas[$pId][$name] = $value;
 
         $saveValue = $value;
-        if (self::$variables[$name] == 'obj' && $value != null) {
+        //if (self::$variables[$name] == 'obj' && $value != null) {
           $saveValue = \addslashes(\json_encode($value));
-        }
+        //}
         //if (in_array($name, ['state', 'engine', 'engineChoices'])) {
           self::DB()->update(['value' => $saveValue], $name . '-' . $pId);
         //}

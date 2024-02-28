@@ -34,10 +34,11 @@ trait SpecialActionTrait
             })->map(function($action) {
                 return $action->type;
             })->toArray();
-        return [
+        $args = [
             'a' => $possibleActions,
             'e' => $unlockedActions,
         ];
+        return $args;
     }
     /**
      * @return int
@@ -53,6 +54,13 @@ trait SpecialActionTrait
         self::trace("actCancelSpecial()");
         
         $player = Players::getCurrent();
+        $playerId = $player->id;
+
+        $args = [];
+        if(!$this->checkCancelFromLastDrift($args,$playerId) ){
+            //cannot cancel here
+            throw new UnexpectedException(405,"You cannot go back now");
+        }
 
         $player->setSelection([]);
         PGlobals::setState($player->id, ST_TURN_CHOICE_SPECIAL_ACTION);
@@ -154,13 +162,30 @@ trait SpecialActionTrait
                 throw new UnexpectedException(14,"Not supported action type : $actionType");
         }
         $playerAction = PlayerActions::getPlayer($pId,[$actionType])->first();
+        $jumpToState = false;
         if(!isset($playerAction)){
-            throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+            $fromState = PGlobals::getLastDriftPreviousState($pId);
+            if(isset($fromState) && $fromState!='null' && $fromState >0 ){
+                //If coming from last drift result -> don't block, but create a one shot action
+                $playerAction = PlayerActions::createTemporaryAction($pId,$actionType);
+                $jumpToState = true;
+            }
+            else {
+                throw new UnexpectedException(404,"Not found player action $actionType for $pId");
+            }
         }
         if(!$playerAction->canBePlayed($player->countRemainingPersonalActions())){
             throw new UnexpectedException(10,"Not enough actions to do that");
         }
+        $deckSize = Tokens::countDeck($pId);
+        if(!$playerAction->canBePlayedWithCurrentBoard($deckSize )){
+            throw new UnexpectedException(405,"Not playable now");
+        }
         PGlobals::setState($player->id, $nextStateId);
+        if($jumpToState){
+            $this->gamestate->setPrivateState($pId, $nextStateId);
+            return;
+        }
         $this->gamestate->nextPrivateState($pId, $nextState);
     }
  

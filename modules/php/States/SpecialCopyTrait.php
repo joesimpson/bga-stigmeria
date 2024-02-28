@@ -16,9 +16,12 @@ trait SpecialCopyTrait
     public function argSpCopy($player_id)
     {
         $tokensPrimary = Tokens::getAllOnPersonalBoard($player_id, STIG_PRIMARY_COLORS);
-        return [
+        $args = [
             'tokensIds' => $tokensPrimary->getIds(),
+            'cancel' => true,
         ];
+        $this->checkCancelFromLastDrift($args,$player_id);
+        return $args;
     } 
     /**
      * Special action of Changing 1 Primary Color token from the board
@@ -68,6 +71,9 @@ trait SpecialCopyTrait
         Stats::inc("actions_s".$actionType,$pId);
         Stats::inc("actions",$pId);
         $player->giveExtraTime();
+        
+        //TODO JSA Call if for each action
+        if($this->returnToLastDriftState($pId,$playerAction)) return;
 
         PGlobals::setState($pId,ST_TURN_PERSONAL_BOARD);
         $this->gamestate->nextPrivateState($pId, 'next');

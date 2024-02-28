@@ -620,6 +620,8 @@ function (dojo, declare) {
             else if(possibleActions.includes('actLastDriftRemove')){
                 this.initTokenSimpleSelection('actLastDriftRemove', args.tokensIds);
                 $('btnConfirm').innerText=_('Confirm Remove');
+            } else if(args.playSp){
+                this.formatSpecialActionButtonAll(possibleActions,possibleActions);
             }
         }, 
         onEnteringStatePersonalBoardTurn: function(args)
@@ -776,12 +778,7 @@ function (dojo, declare) {
                 }
             }
         },
-        onEnteringStateSpecialAction: function(args)
-        {
-            debug( 'onEnteringStateSpecialAction() ', args );
-            
-            let possibleActions = args.a;
-            let enabledActions = args.e;
+        formatSpecialActionButtonAll: function(possibleActions,enabledActions){
             this.formatSpecialActionButton(_('Mixing'),ACTION_TYPE_MIXING,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Combination'),ACTION_TYPE_COMBINATION,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Fulgurance'),ACTION_TYPE_FULGURANCE,possibleActions,enabledActions);
@@ -801,7 +798,14 @@ function (dojo, declare) {
             this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Sower'),ACTION_TYPE_SOWER,possibleActions,enabledActions);
             this.formatSpecialActionButton(_('Jealousy'),ACTION_TYPE_JEALOUSY,possibleActions,enabledActions);
-
+        },
+        onEnteringStateSpecialAction: function(args)
+        {
+            debug( 'onEnteringStateSpecialAction() ', args );
+            
+            let possibleActions = args.a;
+            let enabledActions = args.e;
+            this.formatSpecialActionButtonAll(possibleActions,enabledActions);
             this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
         }, 
         
@@ -939,7 +943,9 @@ function (dojo, declare) {
             };
             this.initTokenSimpleSelection('actCopy', args.tokensIds,callbackSelectionDone,callbackConfirm);
             
-            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            if(args.cancel){
+                this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelSpecial', {}));
+            }
         }, 
         onEnteringStateSpPrediction: function(args)
         {

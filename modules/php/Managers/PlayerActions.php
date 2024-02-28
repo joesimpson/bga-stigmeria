@@ -208,10 +208,26 @@ class PlayerActions extends \STIG\Helpers\Pieces
   }
   /**
    * @param array $action datas
+   * @return PlayerAction
   */
   public static function createAction($action)
   { 
     return self::singleCreate($action);
+  }
+  /**
+   * @param int $pId
+   * @param int $actionType
+   * @return PlayerAction 
+  */
+  public static function createTemporaryAction($pId,$actionType)
+  { 
+    $action = PlayerActions::createAction([
+        'type'=>$actionType,
+        'location'=>ACTION_LOCATION_PLAYER_BOARD,
+        'player_id'=>$pId,
+        'state' => ACTION_STATE_UNLOCKED_ONE_SHOT,
+    ]);
+    return $action;
   }
   /**
    * @param int $playerId
@@ -285,5 +301,10 @@ class PlayerActions extends \STIG\Helpers\Pieces
     if(!Globals::isModeCompetitive()) return false;
 
     return true;
+  }
+  public static function delete($id)
+  { 
+    Game::get()->trace("delete($id)");
+    return self::DB()->delete($id);
   }
 }

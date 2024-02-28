@@ -8,9 +8,11 @@ use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
 use STIG\Managers\DiceRoll;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\DiceFace;
+use STIG\Models\PlayerAction;
 use STIG\Models\StigmerianToken;
 
 /**
@@ -96,7 +98,7 @@ trait LastDriftTrait
                 }
             } else {//personal board
                 $args['pid'] = $actionBoardPid;
-                $actions = $this->listPossibleNewSpAction($player_id);
+                $actions = $this->listPossiblePlaySpAction($player_id);
                 if(count($actions)==0){
                     $autoSkip = true;
                 }
@@ -355,5 +357,61 @@ trait LastDriftTrait
 
         $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
         $this->gamestate->nextPrivateState($pId, 'next');
+    }
+    
+    /**
+     * @param int $playerId
+     */
+    public function listPossiblePlaySpAction($playerId){
+        $lockedActions = [];
+        $deckSize = Tokens::countDeck($playerId);
+        foreach(ACTION_TYPES as $type){
+            if($this->canGainSpecialAction($type, $playerId)){
+                $virtualAction = new PlayerAction([
+                    'type'=>$type,
+                    'location'=>ACTION_LOCATION_PLAYER_BOARD,
+                    'player_id'=>$playerId,
+                    'state' => ACTION_STATE_UNLOCKED_ONE_SHOT,
+                ],[]);
+                if($virtualAction->canBePlayedWithCurrentBoard($deckSize )){
+                    $lockedActions[] = $type;
+                }
+            }
+        }
+        return $lockedActions;
+    }
+
+    /**
+     * 
+     * @param int $playerId
+     * @param PlayerAction $playerAction
+     * @return bool true when we return to a previous state
+     */
+    public function returnToLastDriftState($playerId,$playerAction){
+        if(ACTION_STATE_UNLOCKED_ONE_SHOT == $playerAction->getState()) {
+            PlayerActions::delete($playerAction->getId());
+        }
+        $fromState = PGlobals::getLastDriftPreviousState($playerId);
+        if(isset($fromState) && $fromState!='null' && $fromState >0 ){
+            //If coming from last drift result
+            PGlobals::setState($playerId, $fromState);
+            PGlobals::setLastDriftPreviousState($playerId,null);
+            $this->gamestate->setPrivateState($playerId, $fromState);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param array $args modified by this function
+     * @param int $playerId
+     */
+    public function checkCancelFromLastDrift(&$args,$player_id){
+        $fromState = PGlobals::getLastDriftPreviousState($player_id);
+        if(isset($fromState) && $fromState!='null' && $fromState >0 ){
+            $args['cancel'] = false;
+            return false;
+        }
+        return true;
     }
 }

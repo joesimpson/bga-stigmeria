@@ -227,6 +227,7 @@ trait PlayerTurnCommonBoardTrait
         PGlobals::setLastDrift($pId, $lastDriftDatas);
         $dieFace = DiceRoll::rollNew();
         PGlobals::setLastDie($pId, $dieFace->type);
+        PGlobals::setLastDriftPreviousState($pId, null);
         Notifications::lastDriftDie($player,$dieFace,$targetPlayer);
         
         $args = $this->argLastDrift($pId);
@@ -258,8 +259,7 @@ trait PlayerTurnCommonBoardTrait
         }
         else {
             if($args['playSp']){
-                PGlobals::setNbSpActions($player->id,1);
-                PGlobals::setNbSpActionsMax($player->id,1);
+                PGlobals::setLastDriftPreviousState($player->id, ST_TURN_COMMON_BOARD);
             }
             $this->addCheckpoint(ST_TURN_LAST_DRIFT,$pId);
             $this->gamestate->nextPrivateState($player->id, "lastDrift");

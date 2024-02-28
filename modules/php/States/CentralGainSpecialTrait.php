@@ -61,9 +61,9 @@ trait CentralGainSpecialTrait
         Stats::inc("unlocked_sp",$pId);
 
         $fromState = PGlobals::getLastDriftPreviousState($pId);
-        if(isset($fromState)){
+        if(isset($fromState) && $fromState!='null'){
             PGlobals::setLastDriftPreviousState($pId, null);
-            //If going from last drift result -> end this step
+            //If coming from last drift result -> end this step
             if('INACTIVE' == $fromState){
                 $this->gamestate->setPlayerNonMultiactive( $pId, 'end' );
                 return;
