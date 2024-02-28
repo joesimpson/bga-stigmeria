@@ -87,6 +87,6 @@ trait CentralLandTrait
      */
     public function canPlaceOnCentralBoard($boardTokens,$row, $column)
     {
-        return $this->canPlaceOnPlayerBoard($boardTokens,$row, $column);
+        return $this->canPlaceOnPlayerBoard($boardTokens,$row, $column, true);
     }
 }

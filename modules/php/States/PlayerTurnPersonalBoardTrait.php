@@ -248,10 +248,11 @@ trait PlayerTurnPersonalBoardTrait
      * @param Collection $boardTokens 
      * @param int $row COORD of new token 
      * @param int $column COORD of new token
+     * @param bool $isOnCentralBoard (optional) default false
      * @return bool + TRUE if a token can be placed on this player board ( Empty spot + Either Line A or adjacent to another token),
      *  + FALSE otherwise
      */
-    public function canPlaceOnPlayerBoard($boardTokens,$row, $column)
+    public function canPlaceOnPlayerBoard($boardTokens,$row, $column, $isOnCentralBoard = false)
     {
         if(StigmerianToken::isCoordOutOfGrid($row, $column)) return false;
 
@@ -260,7 +261,13 @@ trait PlayerTurnPersonalBoardTrait
 
         // We can place on LINE A if no tokens are already placed
         //ELSE we must place on adjacent coord
-        if( !(  $row == ROW_START && $boardTokens->count() == 0 
+        if( !(  $boardTokens->count() == 0 && (
+                $row == ROW_START
+                || !$isOnCentralBoard && Globals::isModeCompetitiveNoLimit() && (
+                    //Free placement on either edge of the board
+                    $row == ROW_MAX || $row == ROW_MIN || $column == COLUMN_MAX || $column == COLUMN_MIN
+                )
+            )
             ||( $boardTokens->count() > 0 
                 && Tokens::listAdjacentTokensOnReadBoard($boardTokens,$row, $column)->count() > 0 
              )
