@@ -154,6 +154,10 @@ trait PlayerTurnCommonBoardTrait
                 break;
             }
         }
+        if($counter < NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS) {
+            $alignedTokens = [];
+            //don't merge only 1 with the next array!
+        }
         $counter = 0;
         $alignedTokensCol = [];
         for($column = max(COLUMN_MIN, $tokenColumn- $delta ); $column <= min(COLUMN_MAX,$tokenColumn+$delta); $column++ ){
@@ -170,6 +174,10 @@ trait PlayerTurnCommonBoardTrait
             if($counter == NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS) {
                 break;
             }
+        }
+        if($counter < NB_ALIGNED_TOKENS_TO_GAIN_ACTIONS) {
+            $alignedTokensCol = [];
+            //don't merge only 1 with the previous array!
         }
         $alignedTokens = array_merge($alignedTokens, $alignedTokensCol);
         //self::trace("checkBoardForGainingAction($tokenRow,$tokenColumn) aligned tokens : ".json_encode($alignedTokens));
