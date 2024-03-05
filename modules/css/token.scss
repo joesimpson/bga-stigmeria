@@ -46,7 +46,7 @@
     box-shadow: 1px 1px 5px black;
     border-radius: 50%;
     position: relative;
-    background-image: url("img/tokens.png");
+    background-image: url("img/token.Png");
     background-size: 500% 500%;
     
     &[data-type="null"] {
@@ -89,7 +89,7 @@
 .stig_icon_container_wind_dir_log,
 .stig_subicon_wind_dir_log {
     position: relative;
-    background-image: url("img/tokens.png");
+    background-image: url("img/token.Png");
     background-size: 500% 500%;
     //type 20 in sprite
     background-position-x: 100%;

@@ -159,7 +159,7 @@
   box-shadow: 1px 1px 5px black;
   border-radius: 50%;
   position: relative;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 500% 500%;
 }
 .stig_token_cell.selectable:hover[data-type=null],
@@ -534,7 +534,7 @@
 .stig_icon_container_wind_dir_log,
 .stig_subicon_wind_dir_log {
   position: relative;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 500% 500%;
   background-position-x: 100%;
   background-position-y: 75%;
@@ -591,7 +591,7 @@
   position: relative;
   width: 30px;
   height: 30px;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 500% 500%;
   /** see type 22 */
   background-position-x: 25%;
@@ -697,14 +697,14 @@
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_tokens_deck {
   width: 2.5em;
   height: 3em;
-  background-image: url("img/bag.png");
+  background-image: url("img/bagg.Png");
   background-size: 100% auto;
   background-repeat: no-repeat;
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_jokers {
   width: 40px;
   height: 40px;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 6000%;
   background-position-x: 480px;
   background-position-y: 35px;
@@ -712,7 +712,7 @@
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_lockedActions, .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_unlockedActions {
   width: 2em;
   height: 2em;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 500% 500%;
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_unlockedActions {
@@ -732,7 +732,7 @@
   width: 2em;
   height: 2em;
   margin-right: -1.8em;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 500% 500%;
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_pollens .stig_subicon_pollens[data-type="1"] {
@@ -1122,7 +1122,7 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
 .stig_player_board .stig_schema_difficulty .stig_difficulty_star {
   width: 50px;
   height: 50px;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 6000%;
   background-position-x: 599px;
   background-position-y: 257px;
@@ -2332,7 +2332,7 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 370px;
   background-position-x: 2293px;
   background-position-y: 2293px;
@@ -2637,7 +2637,7 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
   width: 57px;
   height: 57px;
   position: absolute;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 500% 500%;
   background-position-x: 100%;
   background-position-y: 75%;
@@ -2786,7 +2786,7 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 .stig_subicon_die_log {
   width: 40px;
   height: 40px;
-  background-image: url("img/dice.png");
+  background-image: url("img/die.Png");
   background-size: 300% 400%;
   display: inline-block;
   line-height: 40px;
@@ -3459,7 +3459,7 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 .customimagebutton div.stig_icon_flower_violet {
   width: 40px;
   height: 34px;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 6000%;
   background-position-x: 480px;
   background-position-y: 69px;
@@ -3472,7 +3472,7 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 .customimagebutton div.stig_ld_action_image {
   width: 40px;
   height: 34px;
-  background-image: url("img/tokens.png");
+  background-image: url("img/token.Png");
   background-size: 6000%;
   background-position-x: 434px;
   background-position-y: 69px;

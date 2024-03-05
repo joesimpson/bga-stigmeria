@@ -10,7 +10,7 @@
     position: relative;
     width: 30px;
     height: 30px;
-    background-image: url("img/tokens.png");
+    background-image: url("img/token.Png");
     background-size: 500% 500%;
     /** see type 22 */
     background-position-x: 25%;
@@ -125,14 +125,14 @@
                 &.stig_tokens_deck {
                     width: 2.5em;
                     height: 3em;
-                    background-image: url("img/bag.png");
+                    background-image: url("img/bagg.Png");
                     background-size: 100% auto;
                     background-repeat: no-repeat;
                 }
                 &.stig_jokers {
                     width: 40px;
                     height: 40px;
-                    background-image: url("img/tokens.png");
+                    background-image: url("img/token.Png");
                     background-size: 6000%;
                     background-position-x: 480px;
                     background-position-y: 35px;
@@ -141,7 +141,7 @@
                 &.stig_unlockedActions{
                     width: 2em;
                     height: 2em;
-                    background-image: url("img/tokens.png");
+                    background-image: url("img/token.Png");
                     background-size: 500% 500%;
                 }
                 &.stig_unlockedActions{
@@ -161,7 +161,7 @@
                         width: 2em;
                         height: 2em;
                         margin-right: -1.8em;
-                        background-image: url("img/tokens.png");
+                        background-image: url("img/token.Png");
                         background-size: 500% 500%;
 
                         @for $i from 10 through 19 {
