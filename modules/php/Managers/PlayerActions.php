@@ -297,8 +297,10 @@ class PlayerActions extends \STIG\Helpers\Pieces
     }
     if($playerAction->getState() == ACTION_STATE_LOCKED ) return false;
     if($playerAction->getState() == ACTION_STATE_LOCKED_FOR_TURN ) return false;
+    
     //Passive only for competitive where we unlock seperately
-    if(!Globals::isModeCompetitive()) return false;
+    //Check rule : diagonal is passive for all modes !
+    //if(!Globals::isModeCompetitive()) return false;
 
     return true;
   }

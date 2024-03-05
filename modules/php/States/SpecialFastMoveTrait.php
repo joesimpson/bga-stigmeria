@@ -161,7 +161,8 @@ trait SpecialFastMoveTrait
         $existingToken = Tokens::findTokenOnBoardWithCoord($boardTokens,$row, $column);
         if(isset($existingToken)) return false;//not empty
         */
-        $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$boardTokens,$token, $nMoves);
+        $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($playerId);
+        $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$boardTokens,$token, $nMoves,$passiveDiagonal);
         $possibleMoveIndex = GridUtils::searchCell($possibleMoves, $column, $row);
         if ($possibleMoveIndex === false) {
             return false;
