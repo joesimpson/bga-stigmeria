@@ -696,13 +696,11 @@ $game_options = [
                   'description' => '#23', 
                   'tmdisplay' => '#23',
                 ),
-                /*
                 OPTION_SCHEMA_24 => array( 
                   'name' => '#24', 
                   'description' => '#24', 
                   'tmdisplay' => '#24',
                 ),
-                */
             ),
     'default' => OPTION_SCHEMA_RANDOM,
     'displaycondition'=> [

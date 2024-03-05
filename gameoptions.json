@@ -550,6 +550,11 @@
                 "name": "#23",
                 "description": "#23",
                 "tmdisplay": "#23"
+            },
+            "24": {
+                "name": "#24",
+                "description": "#24",
+                "tmdisplay": "#24"
             }
         },
         "default": 0,
