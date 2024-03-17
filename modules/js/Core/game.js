@@ -465,7 +465,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
           $('preference_fontrol_' + pref).value = newValue;
         }
         data = { pref: pref, lock: false, value: newValue, player: this.player_id };
-        this.takeAction('actChangePref', data, false, false);
+        if (!this.isReadOnly()) this.takeAction('actChangePref', data, false, false);
         this.onPreferenceChange(pref, newValue);
       });
     },
