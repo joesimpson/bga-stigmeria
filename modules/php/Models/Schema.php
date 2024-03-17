@@ -76,6 +76,20 @@ class Schema implements \JsonSerializable
   }
 
   /**
+   * @param int $optionMode
+   * @return bool
+   */
+  public function isPlayableWithMode($optionMode)
+  {
+    if (($this->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_NORMAL)
+      ||($this->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_DISCOVERY) 
+      ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_NORMAL)
+      ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_DISCOVERY)
+    ) return false;
+    return true;
+  }
+
+  /**
    * @return array the list of special action types when playing in normal mode
    */
   public function getNormalPlayerActions()

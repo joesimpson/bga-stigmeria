@@ -60,491 +60,88 @@
             ]
         }
     },
-    "101": {
-        "name": "Flower type",
-        "values": {
-            "1": {
-                "name": "VertigHaineuse",
-                "description": "Choose it for your first game ! Green, violet, and orange petals.",
-                "tmdisplay": "VertigHaineuse"
-            },
-            "2": {
-                "name": "MarOnne",
-                "description": "Brown petals.",
-                "tmdisplay": "MarOnne"
-            },
-            "3": {
-                "name": "SiffloChamp",
-                "description": "Black and white petals.",
-                "tmdisplay": "SiffloChamp"
-            },
-            "4": {
-                "name": "DentD\u00eene",
-                "description": "Pink petals and permanent moves.",
-                "tmdisplay": "DentD\u00eene"
-            },
-            "5": {
-                "name": "InspirActrice",
-                "description": "Each variety of petals.",
-                "tmdisplay": "InspirActrice"
-            },
-            "6": {
-                "name": "Competitive",
-                "description": "Competitive card : designed to be played with competitive game mode.",
-                "tmdisplay": "Competitive"
-            },
-            "7": {
-                "name": "Competitive No Limit",
-                "description": "Competitive No Limit card : designed to be played with No Limit game mode.",
-                "tmdisplay": "Competitive No Limit"
-            },
-            "10": {
-                "name": "Random",
-                "description": "Random flower",
-                "tmdisplay": "Random flower"
-            }
-        },
-        "default": 1,
-        "startcondition": {
-            "6": [
-                {
-                    "type": "otheroptionisnot",
-                    "id": 100,
-                    "value": 2,
-                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
-                },
-                {
-                    "type": "otheroptionisnot",
-                    "id": 100,
-                    "value": 1,
-                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
-                }
-            ],
-            "7": [
-                {
-                    "type": "otheroptionisnot",
-                    "id": 100,
-                    "value": 2,
-                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
-                },
-                {
-                    "type": "otheroptionisnot",
-                    "id": 100,
-                    "value": 1,
-                    "message": "Competitive flowers cannot be played in normal\/discovery mode"
-                }
-            ]
-        }
-    },
-    "102": {
-        "name": "Difficulty (Flower not No Limit)",
-        "values": {
-            "1": {
-                "name": "1 Star",
-                "description": "Normal",
-                "tmdisplay": "1 Star"
-            },
-            "2": {
-                "name": "2 Stars",
-                "description": "Difficult",
-                "tmdisplay": "2 Stars"
-            },
-            "3": {
-                "name": "3 Stars",
-                "description": "Very difficult",
-                "tmdisplay": "3 Stars"
-            },
-            "10": {
-                "name": "Random",
-                "description": "Random difficulty",
-                "tmdisplay": "Random difficulty"
-            }
-        },
-        "default": 1,
-        "displaycondition": [
-            {
-                "type": "otheroptionisnot",
-                "id": 101,
-                "value": 7
-            },
-            {
-                "type": "otheroptionisnot",
-                "id": 101,
-                "value": 10
-            }
-        ]
-    },
-    "103": {
-        "name": "Difficulty (Flower No Limit)",
-        "values": {
-            "4": {
-                "name": "4 Stars",
-                "description": "No Limit",
-                "tmdisplay": "4 Stars"
-            }
-        },
-        "default": 4,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 7
-            }
-        ]
-    },
-    "104": {
-        "name": "Difficulty (Random flower)",
-        "values": {
-            "1": {
-                "name": "1 Star",
-                "description": "Normal",
-                "tmdisplay": "1 Star"
-            },
-            "2": {
-                "name": "2 Stars",
-                "description": "Difficult",
-                "tmdisplay": "2 Stars"
-            },
-            "3": {
-                "name": "3 Stars",
-                "description": "Very difficult",
-                "tmdisplay": "3 Stars"
-            },
-            "4": {
-                "name": "4 Stars",
-                "description": "No Limit",
-                "tmdisplay": "4 Stars"
-            },
-            "10": {
-                "name": "Random",
-                "description": "Random difficulty",
-                "tmdisplay": "Random difficulty"
-            }
-        },
-        "default": 10,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 10
-            }
-        ]
-    },
     "110": {
-        "name": "Targeted schema (VertigHaineuse 1*)",
-        "values": [
-            {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
-            },
-            {
-                "name": "#1",
-                "description": "#1",
-                "tmdisplay": "#1"
-            }
-        ],
-        "default": 1,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 1
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 1
-            }
-        ]
-    },
-    "111": {
-        "name": "Targeted schema (VertigHaineuse 2*)",
+        "name": "Targeted schema",
         "values": {
             "0": {
                 "name": "Random",
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
+            },
+            "501": {
+                "name": "Random VertigHaineuse",
+                "description": "Random VertigHaineuse (#1->#6) : Green, violet, and orange petals.",
+                "tmdisplay": "Random VertigHaineuse"
+            },
+            "1": {
+                "name": "#1",
+                "description": "#1",
+                "tmdisplay": "#1"
             },
             "3": {
                 "name": "#3",
                 "description": "#3",
                 "tmdisplay": "#3"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 1
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 2
-            }
-        ]
-    },
-    "112": {
-        "name": "Targeted schema (VertigHaineuse 3*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "6": {
                 "name": "#6",
                 "description": "#6",
                 "tmdisplay": "#6"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 1
             },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 3
-            }
-        ]
-    },
-    "113": {
-        "name": "Targeted schema (MarOnne 1*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
+            "502": {
+                "name": "Random MarOnne",
+                "description": "Random MarOnne (#7->#12) : Brown petals.",
+                "tmdisplay": "Random MarOnne"
             },
             "8": {
                 "name": "#8",
                 "description": "#8",
                 "tmdisplay": "#8"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 2
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 1
-            }
-        ]
-    },
-    "114": {
-        "name": "Targeted schema (MarOnne 2*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "10": {
                 "name": "#10",
                 "description": "#10",
                 "tmdisplay": "#10"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 2
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 2
-            }
-        ]
-    },
-    "115": {
-        "name": "Targeted schema (MarOnne 3*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "11": {
                 "name": "#11",
                 "description": "#11",
                 "tmdisplay": "#11"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 2
             },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 3
-            }
-        ]
-    },
-    "116": {
-        "name": "Targeted schema (SiffloChamp 1*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
+            "503": {
+                "name": "Random SiffloChamp",
+                "description": "Random SiffloChamp (#13->#18) : Black and white petals.",
+                "tmdisplay": "Random SiffloChamp"
             },
             "13": {
                 "name": "#13",
                 "description": "#13",
                 "tmdisplay": "#13"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 3
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 1
-            }
-        ]
-    },
-    "117": {
-        "name": "Targeted schema (SiffloChamp 2*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "14": {
                 "name": "#14",
                 "description": "#14",
                 "tmdisplay": "#14"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 3
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 2
-            }
-        ]
-    },
-    "118": {
-        "name": "Targeted schema (SiffloChamp 3*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "18": {
                 "name": "#18",
                 "description": "#18",
                 "tmdisplay": "#18"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 3
             },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 3
-            }
-        ]
-    },
-    "119": {
-        "name": "Targeted schema (DentD\u00eene 1*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
+            "504": {
+                "name": "Random DentD\u00eene",
+                "description": "Random DentD\u00eene (#19->#24) : Pink petals and permanent moves.",
+                "tmdisplay": "Random DentD\u00eene"
             },
             "20": {
                 "name": "#20",
                 "description": "#20",
                 "tmdisplay": "#20"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 4
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 1
-            }
-        ]
-    },
-    "120": {
-        "name": "Targeted schema (DentD\u00eene 2*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "21": {
                 "name": "#21",
                 "description": "#21",
                 "tmdisplay": "#21"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 4
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 2
-            }
-        ]
-    },
-    "121": {
-        "name": "Targeted schema (DentD\u00eene 3*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "23": {
                 "name": "#23",
@@ -555,236 +152,60 @@
                 "name": "#24",
                 "description": "#24",
                 "tmdisplay": "#24"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 4
             },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 3
-            }
-        ]
-    },
-    "122": {
-        "name": "Targeted schema (InspirActrice 1*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
+            "505": {
+                "name": "Random InspirActrice",
+                "description": "Random InspirActrice (#24->#30): Each variety of petals.",
+                "tmdisplay": "Random InspirActrice"
             },
             "25": {
                 "name": "#25",
                 "description": "#25",
                 "tmdisplay": "#25"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 5
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 1
-            }
-        ]
-    },
-    "123": {
-        "name": "Targeted schema (InspirActrice 2*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "26": {
                 "name": "#26",
                 "description": "#26",
                 "tmdisplay": "#26"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 5
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 2
-            }
-        ]
-    },
-    "124": {
-        "name": "Targeted schema (InspirActrice 3*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "28": {
                 "name": "#28",
                 "description": "#28",
                 "tmdisplay": "#28"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 5
             },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 3
-            }
-        ]
-    },
-    "125": {
-        "name": "Targeted schema (Competitive 1*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
+            "506": {
+                "name": "Random Competitive",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "Random Competitive"
             },
             "33": {
                 "name": "#33",
-                "description": "#33",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#33"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 6
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 1
-            }
-        ]
-    },
-    "126": {
-        "name": "Targeted schema (Competitive 2*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "36": {
                 "name": "#36",
-                "description": "#36",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#36"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 6
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 2
-            }
-        ]
-    },
-    "127": {
-        "name": "Targeted schema (Competitive 3*)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
             },
             "39": {
                 "name": "#39",
-                "description": "#39",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#39"
-            }
-        },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 6
             },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 3
-            }
-        ]
-    },
-    "128": {
-        "name": "Targeted schema (Flower No Limit)",
-        "values": {
-            "0": {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
+            "507": {
+                "name": "Random Competitive No Limit",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "Random Competitive No Limit"
             },
             "45": {
                 "name": "#45",
-                "description": "#45",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#45"
             }
         },
-        "default": 0,
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 7
-            }
-        ]
-    },
-    "130": {
-        "name": "Targeted schema (Random flower or difficulty)",
-        "values": [
-            {
-                "name": "Random",
-                "description": "Random schema",
-                "tmdisplay": "Random schema"
-            }
-        ],
-        "default": 0,
-        "displayconditionoperand": "or",
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 101,
-                "value": 10
-            },
-            {
-                "type": "otheroption",
-                "id": 102,
-                "value": 10
-            }
-        ]
+        "default": 1,
+        "displaycondition": []
     },
     "190": {
         "name": "Joker",
