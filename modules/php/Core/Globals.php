@@ -175,6 +175,7 @@ class Globals extends \STIG\Helpers\DB_Manager
     //GAME OPTIONS  --------------------------------------------
     //              --------------------------------------------
     $optionMode = $options[OPTION_MODE];
+    if(OPTION_MODE_SOLO_NOLIMIT == $optionMode && count($players)>1) $optionMode = OPTION_MODE_NOLIMIT;
     self::setOptionGameMode($optionMode);
 
     $optionJoker = OPTION_JOKER_0;
