@@ -319,6 +319,7 @@ trait LastDriftTrait
             if($targetplayer->id != $pId && $targetplayer->isMultiactive()){
                 //CHECKPOINT Opponent when targeted
                 $this->addCheckpoint($targetplayer->getPrivateState(), $targetplayer->id );
+                $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
             }
         }
         else {

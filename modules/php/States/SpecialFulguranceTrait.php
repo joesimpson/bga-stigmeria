@@ -71,7 +71,7 @@ trait SpecialFulguranceTrait
         Stats::inc("actions_s".ACTION_TYPE_FULGURANCE,$pId);
         Stats::inc("actions",$pId);
 
-        if($this->returnToLastDriftState($pId,$playerAction)) return;
+        if($this->returnToLastDriftState($pId,$playerAction, true)) return;
         
         $this->addCheckpoint(ST_TURN_PERSONAL_BOARD,$pId);
 

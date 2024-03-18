@@ -17,7 +17,6 @@ trait SoloGainSpecialTrait
     $playerId = Globals::getFirstPlayer();
     
     $lockedActions = $this->listPossibleNewSpAction($playerId);
-    //TODO JSA CHECK not VS ACTION in list
     $nbRemaining = PGlobals::getNbSpActions($playerId);
     $nbGains = PGlobals::getNbSpActionsMax($playerId);
 
