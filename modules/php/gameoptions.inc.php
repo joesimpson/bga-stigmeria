@@ -57,6 +57,12 @@ $game_options = [
                   'tmdisplay' => totranslate('No Limit'),
                   'nobeginner' => true, 
                   ),
+                OPTION_MODE_SOLO_NOLIMIT => [
+                  'name' => totranslate('Solo No Limit'), 
+                  'description' => totranslate('Solo No Limit : Play with No Limit rules without central board, but you automatically gain 9 actions in the first 9 turns.'), 
+                  'tmdisplay' => totranslate('Solo No Limit'),
+                  'nobeginner' => true, 
+                ],
                 /*  
                 OPTION_MODE_CHALLENGE => [
                   'name' => totranslate('Challenge'), 
@@ -99,6 +105,21 @@ $game_options = [
           'type' => 'minplayers', 
           'value' => 2, 
           'message' => totranslate('Competitive modes are not for solo play'),
+        ],
+      ],
+      OPTION_MODE_SOLO_NOLIMIT => [
+        [
+          "type" => "otheroption",
+          "id" => OPTION_GAMESTATE_RATING_MODE,
+          "value"=> OPTION_GAMESTATE_RATING_MODE_TRAINING,
+          //No need to translate it for now because there is a BGA message over it for SOLO/training
+          //"message"=> totranslate("Solo No Limit is available in training only"),
+          "message"=>'',
+        ],
+        [
+          'type' => 'maxplayers', 
+          'value' => 1, 
+          'message' => totranslate('Solo modes are for solo play'),
         ],
       ],
       /*
@@ -640,6 +661,11 @@ $game_options = [
         "type" => "otheroptionisnot",
         "id" => OPTION_MODE,
         "value"=> OPTION_MODE_NOLIMIT,
+      ],
+      [
+        "type" => "otheroptionisnot",
+        "id" => OPTION_MODE,
+        "value"=> OPTION_MODE_SOLO_NOLIMIT,
       ],
     ],
   ),

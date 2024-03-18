@@ -263,7 +263,7 @@ trait PlayerTurnPersonalBoardTrait
         //ELSE we must place on adjacent coord
         if( !(  $boardTokens->count() == 0 && (
                 $row == ROW_START
-                || !$isOnCentralBoard && Globals::isModeCompetitiveNoLimit() && (
+                || !$isOnCentralBoard && Globals::isModeNoLimitRules() && (
                     //Free placement on either edge of the board
                     $row == ROW_MAX || $row == ROW_MIN || $column == COLUMN_MAX || $column == COLUMN_MIN
                 )

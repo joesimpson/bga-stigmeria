@@ -62,7 +62,7 @@ abstract class GridUtils extends \APP_DbObject
      */
     public static function isValidCellToMoveOut($row, $col, $fromCentralBoard = false,$windDir = null)
     {
-      if(Globals::isModeCompetitiveNoLimit()){
+      if(Globals::isModeNoLimitRules()){
         if(isset($windDir)){//when roll dice for example
           switch($windDir){
             case WIND_DIR_NORTH:

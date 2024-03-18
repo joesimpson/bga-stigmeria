@@ -120,7 +120,7 @@ trait SpecialFastMoveTrait
         //This action is now USED IN player turn
         $playerAction->setNewStateAfterUse();
         Notifications::spFastMove($player,$actionCost);
-        if(Globals::isModeCompetitiveNoLimit()){
+        if(Globals::isModeNoLimitRules()){
             //EFFECT : MOVE the TOKEN oUT
             $token->moveToRecruitZone($player,0);
         }

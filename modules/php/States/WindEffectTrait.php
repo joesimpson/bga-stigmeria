@@ -201,7 +201,7 @@ trait WindEffectTrait
       self::trace("doWindBlowsTo($windDir) token is out of grid :".json_encode($token));
       if(isset($player)){
         Stats::inc("tokens_board",$player, -1);
-        if(!Globals::isModeCompetitive()){
+        if(!Globals::isModeCompetitive() && !Globals::isModeNoLimitRules()){
           //ELIMINATE player WHEN NORMAL MODE
           $token->setLocation(TOKEN_LOCATION_OUT);
           Notifications::windElimination($player,$token,$fromCoord);

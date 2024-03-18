@@ -97,7 +97,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
   {
     $multiplier = 1;
     $flowerType = Schemas::getCurrentSchema()->type;
-    if(!Globals::isModeCompetitive() && $flowerType == OPTION_FLOWER_INSPIRACTRICE){
+    if(Globals::isModeWithFixedActions() && $flowerType == OPTION_FLOWER_INSPIRACTRICE){
         $multiplier = ACTION_COST_MODIFIER_INSPIRACTRICE;
     }
     //For competitive modes it is more complex
@@ -119,7 +119,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
     self::DB()->delete()->run();
 
     $actions = [];
-    $modeWithFixedActions = Globals::isModeNoCentralBoard();
+    $modeWithFixedActions = Globals::isModeWithFixedActions();
     if($modeWithFixedActions){
       $fixedActions = $schema->getNormalPlayerActions();
       //Init schema actions
@@ -300,7 +300,7 @@ class PlayerActions extends \STIG\Helpers\Pieces
     
     //Passive only for competitive where we unlock seperately
     //Check rule : diagonal is passive for all modes !
-    //if(!Globals::isModeCompetitive()) return false;
+    //if(Globals::isModeWithFixedActions()) return false;
 
     return true;
   }

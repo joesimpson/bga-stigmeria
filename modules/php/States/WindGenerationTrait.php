@@ -28,7 +28,7 @@ trait WindGenerationTrait
   {
     $this->trace("generateWind()");
 
-    if(Globals::isModeCompetitiveNoLimit()){
+    if(Globals::isModeNoLimitRules()){
       //ROLL DICE in NO LIMIT
       $lastDie = Globals::getLastDie();
       $weatherTurn = 0;

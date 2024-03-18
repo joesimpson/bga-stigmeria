@@ -314,7 +314,9 @@ trait PlayerTurnCommonBoardTrait
     public function canPlayLastDrift($player,$type){
         // Once per turn, before other actions
         $lastDriftDatas = PGlobals::getLastDrift($player->id);
-        if(! Globals::isModeCompetitiveNoLimit() ) return false;
+        if(! Globals::isModeNoLimitRules() ) return false;
+        if(ACTION_TYPE_LASTDRIFT_CENTRAL == $type && Globals::isModeNoCentralBoard()) return false;
+        if(ACTION_TYPE_LASTDRIFT_OPPONENT == $type && Players::count()<2) return false;
         if(0 != $player->getNbCommonActionsDone()) return false;
         if(isset($lastDriftDatas)) return false;
         return true;

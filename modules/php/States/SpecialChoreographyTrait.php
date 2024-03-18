@@ -157,7 +157,7 @@ trait SpecialChoreographyTrait
             Notifications::useActions($player,$playerAction);
             $player->giveExtraTime();
         }
-        if(Globals::isModeCompetitiveNoLimit()){
+        if(Globals::isModeNoLimitRules()){
             //EFFECT : MOVE the TOKEN oUT
             $token->moveToRecruitZone($player,0);
         }

@@ -103,7 +103,7 @@ trait ChoiceTokenToMoveTrait
         }
 
         //EFFECT : 
-        if(Globals::isModeCompetitiveNoLimit()){
+        if(Globals::isModeNoLimitRules()){
             //EFFECT : MOVE the TOKEN oUT
             $token->moveToRecruitZone($player,$actionCost);
         }

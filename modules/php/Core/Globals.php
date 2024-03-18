@@ -109,6 +109,12 @@ class Globals extends \STIG\Helpers\DB_Manager
   public static function isModeNoCentralBoard()
   {
     $gameMode = Globals::getOptionGameMode();
+    return ($gameMode == OPTION_MODE_NORMAL || $gameMode == OPTION_MODE_DISCOVERY || $gameMode == OPTION_MODE_SOLO_NOLIMIT);
+  }
+  /** @return bool true when actions are fixed for a specific flower */
+  public static function isModeWithFixedActions()
+  {
+    $gameMode = Globals::getOptionGameMode();
     return ($gameMode == OPTION_MODE_NORMAL || $gameMode == OPTION_MODE_DISCOVERY);
   }
   public static function isModeDiscovery()
@@ -130,10 +136,22 @@ class Globals extends \STIG\Helpers\DB_Manager
     $gameMode = Globals::getOptionGameMode();
     return ($gameMode == OPTION_MODE_NOLIMIT);
   }
+  public static function isModeSoloNoLimit()
+  {
+    return (Globals::getOptionGameMode() == OPTION_MODE_SOLO_NOLIMIT);
+  }
+  /**
+   * @return bool true when No Limit rules apply
+   */
+  public static function isModeNoLimitRules()
+  {
+    $gameMode = Globals::getOptionGameMode();
+    return ($gameMode == OPTION_MODE_NOLIMIT || $gameMode == OPTION_MODE_SOLO_NOLIMIT);
+  }
   public static function isModeNoTurnLimit()
   {
     $gameMode = Globals::getOptionGameMode();
-    return ($gameMode == OPTION_MODE_NOLIMIT || $gameMode == OPTION_MODE_DISCOVERY);
+    return ($gameMode == OPTION_MODE_NOLIMIT || $gameMode == OPTION_MODE_DISCOVERY || $gameMode == OPTION_MODE_SOLO_NOLIMIT);
   }
   /*
    * Setup new game
