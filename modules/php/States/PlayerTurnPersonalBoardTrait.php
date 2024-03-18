@@ -49,7 +49,7 @@ trait PlayerTurnPersonalBoardTrait
         }
         $actions[] = 'actSpecial';
         $possibleJokers = [];
-        if(Globals::getOptionJokers() > 0 && !$player->isJokerUsed()){
+        if(Globals::getOptionJokers() > 0 && !$player->isJokerUsed() && Globals::isModeNoCentralBoard()){
             foreach (STIG_PRIMARY_COLORS as $colorSrc) {
                 if(!$this->canPlayJoker($player_id,$colorSrc)->isEmpty()){
                     foreach (STIG_PRIMARY_COLORS as $colorDest) {
@@ -197,7 +197,7 @@ trait PlayerTurnPersonalBoardTrait
             throw new UnexpectedException(13,"You cannot replay a joker in the game round");
         }
         //NORMAL mode joker : 4 same tokens from  recruit zone -> 4 same tokens
-        if(array_search($typeDest, STIG_PRIMARY_COLORS) === FALSE){
+        if(array_search($typeDest, STIG_PRIMARY_COLORS) === FALSE || !Globals::isModeNoCentralBoard()){
             throw new UnexpectedException(11,"You cannot play a joker with color $typeDest");
         }
         $tokens = $this->canPlayJoker($pId,$typeSource);
