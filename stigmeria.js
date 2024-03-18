@@ -660,6 +660,16 @@ function (dojo, declare) {
             let nbActions = args.n;
             let possibleActions = args.a;
             if(nbActions>0){
+                
+                this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_PERSONAL,possibleActions,possibleActions
+                , (actionType) => {
+                        let confirmMessage = _('Are you sure to roll a die to apply on YOUR board ?')
+                        +' '+_('This is a free action to take before taking other actions.');
+                        this.confirmationDialog(confirmMessage, () => {
+                            this.takeAction('actLastDrift', {act:actionType});
+                        });
+                    });
+
                 this.addPrimaryActionButton('btnDraw', _('Recruit'), () => { 
                     this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
                         this.takeAction('actDraw', {});

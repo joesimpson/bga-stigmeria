@@ -59,6 +59,9 @@ trait PlayerTurnPersonalBoardTrait
                 }
             }
         }
+        if($this->canPlayLastDrift($player,ACTION_TYPE_LASTDRIFT_PERSONAL)){
+            $actions[] = ACTION_TYPE_LASTDRIFT_PERSONAL;
+        }
         $args = [
             'n'=> $player->countRemainingPersonalActions(),
             'done'=> $player->getNbPersonalActionsDone(),

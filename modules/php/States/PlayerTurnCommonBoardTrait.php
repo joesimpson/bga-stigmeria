@@ -238,6 +238,13 @@ trait PlayerTurnCommonBoardTrait
         PGlobals::setLastDriftPreviousState($pId, null);
         Notifications::lastDriftDie($player,$dieFace,$targetPlayer);
         
+        $nextState = ST_TURN_COMMON_BOARD;
+        $continueTransition = 'continue';
+        if(Globals::isModeSoloNoLimit()){
+            $nextState = ST_TURN_PERSONAL_BOARD;
+            $continueTransition = 'continue';
+        }
+
         $args = $this->argLastDrift($pId);
         $autoSkip = $args['autoSkip']; 
         if($args['opponent']){//Opponent needs to choose a special action
@@ -258,16 +265,16 @@ trait PlayerTurnCommonBoardTrait
             PGlobals::setNbSpActionsMax($targetPlayer->id,1);
             $this->addCheckpoint(ST_TURN_CENTRAL_CHOICE_SP,$targetPlayer->id);
             $this->gamestate->setPrivateState($targetPlayer->id, ST_TURN_CENTRAL_CHOICE_SP);
-            $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
-            $this->gamestate->nextPrivateState($pId, "continue");
+            $this->addCheckpoint($nextState,$pId);
+            $this->gamestate->nextPrivateState($pId, $continueTransition);
         } else if($autoSkip){//when nothing needs to be done
             Notifications::lastDriftAutoSkip($player);
-            $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
-            $this->gamestate->nextPrivateState($pId, "continue");
+            $this->addCheckpoint($nextState,$pId);
+            $this->gamestate->nextPrivateState($pId, $continueTransition);
         }
         else {
             if($args['playSp']){
-                PGlobals::setLastDriftPreviousState($player->id, ST_TURN_COMMON_BOARD);
+                PGlobals::setLastDriftPreviousState($player->id, $nextState);
             }
             $this->addCheckpoint(ST_TURN_LAST_DRIFT,$pId);
             $this->gamestate->nextPrivateState($player->id, "lastDrift");
@@ -318,6 +325,7 @@ trait PlayerTurnCommonBoardTrait
         if(ACTION_TYPE_LASTDRIFT_CENTRAL == $type && Globals::isModeNoCentralBoard()) return false;
         if(ACTION_TYPE_LASTDRIFT_OPPONENT == $type && Players::count()<2) return false;
         if(0 != $player->getNbCommonActionsDone()) return false;
+        if(0 != $player->getNbPersonalActionsDone()) return false;
         if(isset($lastDriftDatas)) return false;
         return true;
     }

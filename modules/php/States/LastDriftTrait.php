@@ -2,6 +2,7 @@
 
 namespace STIG\States;
 
+use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\PGlobals;
 use STIG\Core\Stats;
@@ -184,7 +185,12 @@ trait LastDriftTrait
                 
                 $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
             }
-            $this->gamestate->nextPrivateState($pId, 'next');
+            if(Globals::isModeSoloNoLimit()){
+                $this->gamestate->nextPrivateState($pId, 'backToTurn');
+            }
+            else {
+                $this->gamestate->nextPrivateState($pId, 'next');
+            }
         }
         else {
             //central board action may gain special action
@@ -257,7 +263,12 @@ trait LastDriftTrait
             }
         }
 
-        $this->gamestate->nextPrivateState($pId, 'next');
+        if(Globals::isModeSoloNoLimit()){
+            $this->gamestate->nextPrivateState($pId, 'backToTurn');
+        }
+        else {
+            $this->gamestate->nextPrivateState($pId, 'next');
+        }
     }
 
      /**
@@ -310,9 +321,16 @@ trait LastDriftTrait
                 $this->addCheckpoint($targetplayer->getPrivateState(), $targetplayer->id );
             }
         }
+        else {
+            $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
+        }
 
-        $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
-        $this->gamestate->nextPrivateState($pId, 'next');
+        if(Globals::isModeSoloNoLimit()){
+            $this->gamestate->nextPrivateState($pId, 'backToTurn');
+        }
+        else {
+            $this->gamestate->nextPrivateState($pId, 'next');
+        }
     }
 
     

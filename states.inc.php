@@ -321,6 +321,7 @@ $machinestates = array(
         "transitions" => [ 
             "next" => ST_TURN_COMMON_BOARD, 
             'gainSp' => ST_TURN_CENTRAL_CHOICE_SP,
+            "backToTurn" => ST_TURN_PERSONAL_BOARD, 
         ],
     ),
     
@@ -341,6 +342,7 @@ $machinestates = array(
             "actLetNextPlay",
             "actEndTurn",
             //"actBackToCommon",
+            "actLastDrift",
             "actRestart",
         ],
         "transitions" => [
@@ -350,6 +352,7 @@ $machinestates = array(
             'startMove' => ST_TURN_CHOICE_TOKEN_MOVE,
             'startSpecial' => ST_TURN_CHOICE_SPECIAL_ACTION,
             'sRecruit' => ST_TURN_CHOICE_RECRUIT_CENTRAL,
+            'lastDrift' => ST_TURN_LAST_DRIFT,
         ],
     ],
     
