@@ -93,10 +93,15 @@ trait CentralGainSpecialTrait
         //Check action not already set
         if(PlayerActions::getPlayer($playerId, [$actionType])->count() > 0) return false;
         
+        $isSoloNoLimit = Globals::isModeSoloNoLimit();
+
         //Difficulty filter
         $minDiff = PlayerActions::getDifficulty($actionType);
         $currentDiff = Schemas::getCurrentSchema()->difficulty;
-        if($minDiff > $currentDiff) return false;
+        if($minDiff > $currentDiff && !$isSoloNoLimit) return false;
+
+        //Solo mode filter
+        if($isSoloNoLimit && in_array($actionType,ACTION_TYPES_NOT_FOR_SOLO)) return false;
 
         return true;
     }

@@ -150,6 +150,7 @@ $machinestates = array(
         "transitions" => [ 
             "next" => ST_PLAYER_TURN,
             "FT" => ST_FIRST_TOKEN,
+            "soloGainSP" => ST_SOLO_CHOICE_SP,
             "end" => ST_END_ROUND,
         ],
     ),
@@ -167,6 +168,22 @@ $machinestates = array(
             "zombiePass" => ST_PLAYER_TURN,
         ],
     ),
+    
+    ST_SOLO_CHOICE_SP => [
+        "name" => "soloGainSP",
+        "args" => "argSoloGainSP",
+        "description" => '',
+        "descriptionmyturn" => clienttranslate('${you} must choose ${n}/${n2} special actions to unlock'), 
+        "type" => "activeplayer",
+        "possibleactions" => [
+            "actSoloChooseSp",
+            'actRestart',
+        ],
+        "transitions" => [
+            'next' => ST_PLAYER_TURN,
+            "zombiePass" => ST_PLAYER_TURN,
+        ],
+    ],
     ST_PLAYER_TURN => array(
         "name" => "playerTurn",
         "description" => clienttranslate('Players may play actions or pass'),

@@ -65,6 +65,7 @@ class Stigmeria extends Table
     use STIG\States\PlayerTurnPersonalBoardTrait;
     use STIG\States\ScoringTrait;
     use STIG\States\SetupTrait;
+    use STIG\States\SoloGainSpecialTrait;
     use STIG\States\SpecialActionTrait;
     use STIG\States\SpecialChoreographyTrait;
     use STIG\States\SpecialCombinationTrait;

@@ -80,6 +80,21 @@ trait NextTurnTrait
       $this->gamestate->nextState('FT');
       return;
     }
+    if($turn > 1 && Globals::isModeSoloNoLimit())
+    {
+      //SOLO NO LIMIT GAIN 1 SPECIAL ACTION per turn
+      $pId = Globals::getFirstPlayer();
+      $canGainSp = (PlayerActions::countActions($pId) < MAX_SPECIAL_ACTIONS ) && count($this->listPossibleNewSpAction($pId))>0;
+      if($canGainSp){
+        Players::changeActive($pId);
+        PGlobals::setNbSpActions($pId,1);
+        PGlobals::setNbSpActionsMax($pId,1);
+        $this->addCheckpoint(ST_SOLO_CHOICE_SP);
+        $this->giveExtraTime($pId);
+        $this->gamestate->nextState('soloGainSP');
+        return;
+      }
+    }
     
     $this->gamestate->nextState('next');
   }

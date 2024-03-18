@@ -265,6 +265,14 @@
       $this->game->actChooseSp($actionType);
       self::ajaxResponse();
     }
+    public function actSoloChooseSp()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $actionType = self::getArg( "act", AT_posint, true );
+      $this->game->actSoloChooseSp($actionType);
+      self::ajaxResponse();
+    }
     public function actGiveTokens()
     {
       self::setAjaxMode();

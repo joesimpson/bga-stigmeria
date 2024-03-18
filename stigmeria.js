@@ -624,6 +624,35 @@ function (dojo, declare) {
                 this.formatSpecialActionButtonAll(possibleActions,possibleActions);
             }
         }, 
+
+        onEnteringStateSoloGainSP: function(args)
+        {
+            debug( 'onEnteringStateSoloGainSP() ', args );
+            let possibleActions = args.a;
+            let enabledActions = possibleActions;
+            let selectAction = 'actSoloChooseSp';
+            this.formatSpecialActionButton(_('Mixing'),ACTION_TYPE_MIXING,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Combination'),ACTION_TYPE_COMBINATION,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Fulgurance'),ACTION_TYPE_FULGURANCE,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Choreography'),ACTION_TYPE_CHOREOGRAPHY,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Diagonal'),ACTION_TYPE_DIAGONAL,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Exchange'),ACTION_TYPE_SWAP,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Fast Step'),ACTION_TYPE_MOVE_FAST,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Half Note'),ACTION_TYPE_WHITE,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Quarter Note'),ACTION_TYPE_BLACK,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Two Beats'),ACTION_TYPE_TWOBEATS,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Rest'),ACTION_TYPE_REST,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('No harm No foul'),ACTION_TYPE_NSNK,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Copy'),ACTION_TYPE_COPY,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Prediction'),ACTION_TYPE_PREDICTION,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Mimicry'),ACTION_TYPE_MIMICRY,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Fog Die'),ACTION_TYPE_FOGDIE,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Pilferer'),ACTION_TYPE_PILFERER,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Sower'),ACTION_TYPE_SOWER,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Charmer'),ACTION_TYPE_CHARMER,possibleActions,enabledActions,selectAction);
+            this.formatSpecialActionButton(_('Jealousy'),ACTION_TYPE_JEALOUSY,possibleActions,enabledActions,selectAction);
+        },
+
         onEnteringStatePersonalBoardTurn: function(args)
         {
             debug( 'onEnteringStatePersonalBoardTurn() ', args );
