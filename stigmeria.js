@@ -172,6 +172,8 @@ function (dojo, declare) {
             this.dontPreloadImage( 'flower5.jpg' );
             this.dontPreloadImage( 'actions.jpg' );
 
+            $('ebd-body').setAttribute('data-modenocb', this.gamedatas.nocb);
+
             this.setupCentralBoard();
             this.setupSchemaBoard();
             this.setupPlayers();

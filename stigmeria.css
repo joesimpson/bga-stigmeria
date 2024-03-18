@@ -3058,6 +3058,13 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   left: 30px;
 }
 
+body[data-modenocb=true] #settings-controls-container div[data-prefid="101"] {
+  display: none;
+}
+body[data-modenocb=true] #settings-controls-container div[data-prefid="103"] {
+  display: none;
+}
+
 /*! nouislider - 14.6.0 - 6/27/2020 */
 .noUi-target,
 .noUi-target * {
@@ -3407,6 +3414,10 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
 
 .stig_hidden {
   visibility: hidden;
+}
+
+.stig_no_display {
+  display: none;
 }
 
 #btnLetNextPlay {

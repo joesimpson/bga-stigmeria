@@ -581,7 +581,10 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
             return;
           }
           // Pref type => just move the user pref around
-          dojo.place($('preference_control_' + config.prefId).parentNode.parentNode, localContainer);
+          let divPref = $('preference_control_' + config.prefId).parentNode.parentNode;
+          dojo.place(divPref, localContainer);
+          //Add an info if we want css on it :
+          divPref.dataset.prefid = config.prefId;
           return;
         }
 

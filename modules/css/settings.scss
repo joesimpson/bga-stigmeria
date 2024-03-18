@@ -228,3 +228,19 @@
         }
     }
 }
+
+//--------------------------------------------------------------------
+//GAME SPECIFIC STYLE
+body[data-modenocb='true']{
+    //Hide preferences about central board
+    #settings-controls-container{
+            
+        div[data-prefid='101']{//PREF_STIGMAREINE_BOARD_ORDER
+            display: none;
+        }
+        div[data-prefid='103']{//PREF_STIGMAREINE_BOARD_AUTO_ORDER
+            display: none;
+        }
+    }
+}
+//--------------------------------------------------------------------
