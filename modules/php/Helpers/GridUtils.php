@@ -49,7 +49,7 @@ abstract class GridUtils extends \APP_DbObject
       return $rowLetter.$column;
     }
 
-    protected function isValidCell($cell)
+    protected static function isValidCell($cell)
     {
         return !GridUtils::isCoordOutOfGrid($cell['y'],$cell['x']);
     }

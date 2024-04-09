@@ -21,12 +21,12 @@ use STIG\Managers\Players;
 
 class Log extends \APP_DbObject
 {
-    public function enable()
+    public static function enable()
     {
         Game::get()->setGameStateValue('logging', 1);
     }
 
-    public function disable()
+    public static function disable()
     {
         Game::get()->setGameStateValue('logging', 0);
     }
@@ -35,7 +35,7 @@ class Log extends \APP_DbObject
      * Add an entry
      */
     static $moveId = null;
-    public function addEntry($entry)
+    public static function addEntry($entry)
     {
         if (isset($entry['affected'])) {
             $entry['affected'] = \json_encode($entry['affected']);
@@ -72,7 +72,7 @@ class Log extends \APP_DbObject
     }
 
     // Find the last checkpoint
-    public function getLastCheckpoint($pId, $includeEngineStarts = false)
+    public static function getLastCheckpoint($pId, $includeEngineStarts = false)
     {
         $query = new QueryBuilder('log', null, 'id');
         $query = $query->select(['id']);
@@ -155,7 +155,7 @@ class Log extends \APP_DbObject
     /**
      * Revert all the logged changes up to an id
      */
-    public function revertTo($pId,$id,$globalPreviousState = null)
+    public static function revertTo($pId,$id,$globalPreviousState = null)
     {
         $query = new QueryBuilder('log', null, 'id');
         $log = $query
@@ -273,7 +273,7 @@ class Log extends \APP_DbObject
     /**
      * getCancelMoveIds : get all cancelled notifs IDs from BGA gamelog, used for styling the notifications on page reload
      */
-    protected function extractNotifIds($notifications)
+    protected static function extractNotifIds($notifications)
     {
         $notificationUIds = [];
         foreach ($notifications as $packet) {
@@ -285,7 +285,7 @@ class Log extends \APP_DbObject
         return $notificationUIds;
     }
         
-    public function getCanceledNotifIds()
+    public static function getCanceledNotifIds()
     {
         $query = new QueryBuilder('gamelog', null, 'gamelog_packet_id');
         return self::extractNotifIds($query->where('cancel', 1)->get());
@@ -294,7 +294,7 @@ class Log extends \APP_DbObject
     /**
      * clearUndoableStepNotifications : extract and remove all notifications of type 'newUndoableStep' in the gamelog
      */
-    public function clearUndoableStepNotifications($clearAll = false)
+    public static function clearUndoableStepNotifications($clearAll = false)
     {
         // Get move ids corresponding to last step
         if ($clearAll) {

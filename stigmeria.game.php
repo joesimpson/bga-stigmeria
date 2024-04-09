@@ -131,7 +131,7 @@ class Stigmeria extends Table
     public function getAllDatas()
     {
         // !! We must only return informations visible by this player !!
-        $current_player_id = self::getCurrentPId();
+        $current_player_id = $this->getCurrentPId();
         // Gather all information about current game situation (visible by player $current_player_id).
         $firstPlayer = (Globals::isModeCompetitive() ? Globals::getFirstPlayer() : null);
         return [
@@ -314,14 +314,14 @@ class Stigmeria extends Table
     /////////////////////////////////////////////////////////////
 
     // Exposing protected method getCurrentPlayerId
-    public static function getCurrentPId($bReturnNullIfNotLogged = false)
+    public function getCurrentPId($bReturnNullIfNotLogged = false)
     {
-        return self::getCurrentPlayerId($bReturnNullIfNotLogged);
+        return $this->getCurrentPlayerId($bReturnNullIfNotLogged);
     }
 
     // Exposing protected method translation
-    public static function translate($text)
+    public function translate($text)
     {
-        return self::_($text);
+        return $this->_($text);
     }
 }
