@@ -85,6 +85,7 @@ function (dojo, declare) {
     const PREF_ANIMATIONS_STYLE = 104;
     const PREF_ANIMATIONS_STYLE_ALL = 1;
     const PREF_ANIMATIONS_STYLE_WIND_ONLY = 2;
+    const PREF_ANIMATIONS_STYLE_WIND_ONLY_3P = 3;
 
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
@@ -261,13 +262,14 @@ function (dojo, declare) {
                 spButtonsStyle: {section: "layout", type: 'pref', prefId: PREF_SP_BUTTONS },
 
                 animationStyle: {
-                    default: 1,
-                    name: _("Animations"),
+                    default: 3,
+                    name: _("Animations during turn"),
                     type: "select",
                     attribute: "animations-style",
                     values: {
                         1: _("Enabled"),
-                        2: _("Wind only")
+                        2: _("Disabled"),
+                        3: _("Disabled with more than 2 players")
                     },
                     section: "gameFlow"
                 },
@@ -300,7 +302,10 @@ function (dojo, declare) {
         },
        
         onChangeAnimationStyleSetting(val) {
-            if(val == PREF_ANIMATIONS_STYLE_WIND_ONLY){
+            let nbPlayers = Object.keys(this.gamedatas.players).length;
+            if(val == PREF_ANIMATIONS_STYLE_WIND_ONLY
+            || val == PREF_ANIMATIONS_STYLE_WIND_ONLY_3P && nbPlayers >= 3
+            ){
                 this._settingAnimationDuration = 0;
             }
             else {
