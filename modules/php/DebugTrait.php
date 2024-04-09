@@ -102,7 +102,31 @@ trait DebugTrait
     $player = Players::getCurrent();
     $player->setNbPersonalActionsDone(-150);
     $player->setNbCommonActionsDone(-150);
+
+    //For fast step...
+    Globals::setTurn(10);
+
+    //Test UNLIMITED ALL ACTIONS
+    foreach(ACTION_TYPES as $actionType){
+      $existing = PlayerActions::getPlayer($player->id,[$actionType])->first();
+      if(!$existing) PlayerActions::createAction([
+        'type'=>$actionType,
+        'location'=>ACTION_LOCATION_PLAYER_BOARD,
+        'player_id'=>$player->id,
+        'state' => ACTION_STATE_UNLOCKED_FOREVER,
+      ]);
+      else $existing->setState(ACTION_STATE_UNLOCKED_FOREVER);
+    }
     $this->gamestate->nextPrivateState($player->id, "continue");
+  }
+
+  function debugNotifs(){
+    $player = Players::getCurrent();
+    $targetplayer = Players::getCurrent();
+    $token = Tokens::get(34);
+    //Notifications::lastDriftRemove($player,$token,$targetplayer); 
+    Notifications::moveBackToBox($player,$token,'D9',1); 
+    Notifications::spRest($player,$token,1); 
   }
   function debugWind()
   {

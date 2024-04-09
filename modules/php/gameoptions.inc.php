@@ -717,4 +717,18 @@ $game_preferences = [
     "default"=> PREF_SP_BUTTONS_IMAGES_AND_TEXT,
     'attribute' => 'stig_sp_buttons',
   ],
+  
+  /*
+  -> replaced by a client settings
+  PREF_ANIMATIONS_STYLE => [
+    'name' => totranslate('Animations'),
+    'needReload' => false,
+    'values' => [
+      PREF_ANIMATIONS_STYLE_ALL => [ 'name' => totranslate('Enabled')],
+      PREF_ANIMATIONS_STYLE_WIND_ONLY => ['name' => totranslate('Wind only')],
+    ],
+    "default"=> PREF_ANIMATIONS_STYLE_ALL,
+    'attribute' => 'stig_animations_style',
+  ],
+  */
 ];

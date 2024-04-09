@@ -38,6 +38,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       this._displayNotifsOnTop = true;
       this._displayNotifsOnTopWhenGameState = true;
       this._displayRestartButtons = true;
+      this._settingAnimationDuration = 800;
     },
 
     showMessage(msg, type) {
@@ -721,7 +722,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     slide(mobileElt, targetElt, options = {}) {
       let config = Object.assign(
         {
-          duration: 800,
+          duration: this._settingAnimationDuration,
           delay: 0,
           destroy: false,
           attach: true,
@@ -1261,11 +1262,12 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
 
     /** Make the token blink 2 times */
     animationBlink2Times(divId){
+      let customDuration = this._settingAnimationDuration/4;
       let anim = dojo.fx.chain( [
-          dojo.fadeOut( { node: divId } ),
-          dojo.fadeIn( { node: divId } ),
-          dojo.fadeOut( { node: divId } ),
-          dojo.fadeIn( { node: divId  } )
+          dojo.fadeOut( { node: divId, duration: customDuration } ),
+          dojo.fadeIn( { node: divId, duration: customDuration } ),
+          dojo.fadeOut( { node: divId, duration: customDuration } ),
+          dojo.fadeIn( { node: divId, duration: customDuration  } )
       ] );
       anim.play();
     },

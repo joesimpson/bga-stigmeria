@@ -82,6 +82,10 @@ function (dojo, declare) {
     const PREF_STIGMAREINE_BOARD_AUTO_ORDER = 103;
     const PREF_SP_BUTTONS = 102;
 
+    const PREF_ANIMATIONS_STYLE = 104;
+    const PREF_ANIMATIONS_STYLE_ALL = 1;
+    const PREF_ANIMATIONS_STYLE_WIND_ONLY = 2;
+
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
             debug('stigmeria constructor');
@@ -92,54 +96,55 @@ function (dojo, declare) {
             this._counters = {};
 
             this._notifications = [
+                //I use null and call setNotifDuration(time) in notif handler for animations
                 ['newRound', 10],
                 ['newWinds', 10],
-                ['weatherDice', 400],
-                ['weatherDiceChoice', 500],
-                ['clearTurn', 200],
-                ['refreshUI', 200],
-                ['newTurn', 400],
-                ['startTurn', 800],
-                ['endTurn', 500],
+                ['weatherDice', null],
+                ['weatherDiceChoice', null],
+                ['clearTurn', null],
+                ['refreshUI', null],
+                ['newTurn', null],
+                ['startTurn', null],
+                ['endTurn', null],
                 ['updateFirstPlayer', 500],
-                ['useActions', 500],
+                ['useActions', null],
                 ['firstToken', 700],
-                ['drawToken', 900],
-                ['drawTokenForCentral', 700],
-                ['moveToCentralBoard', 900],
-                ['moveOnCentralBoard', 900],
-                ['moveToCentralRecruit', 900],
-                ['putTokenInBag', 800],
+                ['drawToken', null],
+                ['drawTokenForCentral', null],
+                ['moveToCentralBoard', null],
+                ['moveOnCentralBoard', null],
+                ['moveToCentralRecruit', null],
+                ['putTokenInBag', null],
                 ['letNextPlay', 10],
-                ['moveToPlayerBoard', 900],
-                ['moveOnPlayerBoard', 900],
-                ['moveFromDeckToPlayerBoard', 900],
-                ['moveBackToRecruit', 900],
-                ['sRecruit', 900],
-                ['moveBackToBox', 900],
+                ['moveToPlayerBoard', null],
+                ['moveOnPlayerBoard', null],
+                ['moveFromDeckToPlayerBoard', null],
+                ['moveBackToRecruit', null],
+                ['sRecruit', null],
+                ['moveBackToBox', null],
                 ['unlockSp',100],
                 ['updateSp',100],
-                ['spMixing', 900],
-                ['spCombination', 900],
-                ['spSwap', 900],
-                ['spWhite', 900],
-                ['spBlack', 900],
-                ['spTwoBeats', 900],
-                ['spRest', 900],
-                ['spNSNK', 900],
-                ['spCopy', 900],
-                ['spPrediction', 500],
-                ['spMimicry', 900],
-                ['spFogDie', 900],
-                ['spPilferer', 900],
-                ['spSower', 900],
-                ['spCharmer', 900],
-                ['spJealousy', 400],
-                ['lastDriftRemove', 900],
-                ['LDMOR', 900],
-                ['newPollen', 900],
-                ['playJoker', 500],
-                ['playCJoker', 500],
+                ['spMixing', null],
+                ['spCombination', null],
+                ['spSwap', null],
+                ['spWhite', null],
+                ['spBlack', null],
+                ['spTwoBeats', null],
+                ['spRest', null],
+                ['spNSNK', null],
+                ['spCopy', null],
+                ['spPrediction', null],
+                ['spMimicry', null],
+                ['spFogDie', null],
+                ['spPilferer', null],
+                ['spSower', null],
+                ['spCharmer', null],
+                ['spJealousy', null],
+                ['lastDriftRemove', null],
+                ['LDMOR', null],
+                ['newPollen', null],
+                ['playJoker', null],
+                ['playCJoker', null],
                 ['windBlows', 1000],
                 ['windElimination', 10],
                 ['decklimination', 10],
@@ -150,6 +155,7 @@ function (dojo, declare) {
             this._displayNotifsOnTopWhenGameState = true;
             //To disable if restart is chaotic
             this._displayRestartButtons = true;
+
         },
         
         ///////////////////////////////////////////////////
@@ -186,12 +192,18 @@ function (dojo, declare) {
             this.inherited(arguments);
         },
         
+        getSettingsSections: ()=>({
+            layout: _("Layout"),
+            gameFlow: _("Game Flow"),
+        }),
         getSettingsConfig() {
             return {
-                schemaBoardOrder: { type: 'pref', prefId: PREF_SCHEMA_BOARD_ORDER },
-                centralBoardOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_ORDER },
-                centralBoardAutoOrder: { type: 'pref', prefId: PREF_STIGMAREINE_BOARD_AUTO_ORDER },
+                //animationStyle: {section: "layout", type: 'pref', prefId: PREF_ANIMATIONS_STYLE },
+                schemaBoardOrder: {section: "layout", type: 'pref', prefId: PREF_SCHEMA_BOARD_ORDER },
+                centralBoardOrder: {section: "layout", type: 'pref', prefId: PREF_STIGMAREINE_BOARD_ORDER },
+                centralBoardAutoOrder: {section: "layout", type: 'pref', prefId: PREF_STIGMAREINE_BOARD_AUTO_ORDER },
                 boardWidth: {
+                    section: "layout",
                   default: 30,
                   name: _('Flower Board width'),
                   type: 'slider',
@@ -205,6 +217,7 @@ function (dojo, declare) {
                   },
                 },
                 spActionBoardWidth: {
+                    section: "layout",
                     default: 30,
                     name: _('Special Action Board width'),
                     type: 'slider',
@@ -218,6 +231,7 @@ function (dojo, declare) {
                     },
                   },
                 takePieceWidth: {
+                    section: "layout",
                   default: 40,
                   name: _('Token width in upper selection'),
                   type: 'slider',
@@ -231,6 +245,7 @@ function (dojo, declare) {
                   },
                 },
                 tokenLogWidth: {
+                    section: "layout",
                   default: 100,
                   name: _('Token width in logs'),
                   type: 'slider',
@@ -243,7 +258,19 @@ function (dojo, declare) {
                     },
                   },
                 },
-                spButtonsStyle: { type: 'pref', prefId: PREF_SP_BUTTONS },
+                spButtonsStyle: {section: "layout", type: 'pref', prefId: PREF_SP_BUTTONS },
+
+                animationStyle: {
+                    default: 1,
+                    name: _("Animations"),
+                    type: "select",
+                    attribute: "animations-style",
+                    values: {
+                        1: _("Enabled"),
+                        2: _("Wind only")
+                    },
+                    section: "gameFlow"
+                },
             };
         },
         
@@ -272,6 +299,18 @@ function (dojo, declare) {
             ROOT.style.setProperty('--stig_tokenLogWidth', `${newWidth}px`);
         },
        
+        onChangeAnimationStyleSetting(val) {
+            if(val == PREF_ANIMATIONS_STYLE_WIND_ONLY){
+                this._settingAnimationDuration = 0;
+            }
+            else {
+                this._settingAnimationDuration = 800;
+            }
+        },
+        isAnimationsStyleAll() {
+            //return gameui.prefs[PREF_ANIMATIONS_STYLE].value == PREF_ANIMATIONS_STYLE_ALL;
+            return this.settings.animationStyle == PREF_ANIMATIONS_STYLE_ALL;
+        },
 
         ///////////////////////////////////////////////////
         //     _____ _______    _______ ______  _____ 
@@ -1260,11 +1299,13 @@ function (dojo, declare) {
         //////////////////////////////////////////////////////////////
  
         notif_clearTurn(n) {
+            this.setNotifDuration(200);
             debug('Notif: restarting turn', n);
             this.cancelLogs(n.args.notifIds);
         },
     
         notif_refreshUI(n) {
+            this.setNotifDuration(200);
             debug('Notif: refreshing UI', n);
             if(this.player_id == n.args.player_id) this.clearPossible();
             [ 'players', 'tokens', 'actions'].forEach((value) => {
@@ -1315,6 +1356,7 @@ function (dojo, declare) {
             this.setupSpecialActions();
         },
         notif_newTurn(n) {
+            this.setNotifDuration(400);
             debug('notif_newTurn: new turn', n);
             this.gamedatas.turn = n.args.n;
             this._counters['turn'].toValue(n.args.n);
@@ -1327,6 +1369,7 @@ function (dojo, declare) {
             });
         },
         notif_startTurn(n) {
+            this.setNotifDuration(800);
             debug('notif_startTurn: new turn for a player', n);
             let player_id = n.args.player_id;
             this._counters[player_id]['actions'].setValue(0);
@@ -1334,6 +1377,7 @@ function (dojo, declare) {
             this.updateTurnMarker(player_id,n.args.n,1);
         },
         notif_endTurn(n) {
+            this.setNotifDuration(500);
             debug('notif_endTurn: end turn for one player', n);
             this.updateTurnMarker(n.args.player_id,this.gamedatas.turn,99);
         },
@@ -1343,12 +1387,14 @@ function (dojo, declare) {
             this.updateFirstPlayer();
         },
         notif_weatherDice(n) {
+            this.setNotifDuration(400);
             debug('notif_weatherDice', n);
             if(n.args.dir_type){
                 this.updateWindDir(n.args.n,n.args.dir_type);
             }
         },
         notif_weatherDiceChoice(n) {
+            this.setNotifDuration(500);
             debug('notif_weatherDiceChoice', n);
             this.updateWindDir(n.args.n,n.args.dir_type);
         },
@@ -1360,6 +1406,7 @@ function (dojo, declare) {
             }
         },
         notif_useActions(n) {
+            this.setNotifDuration(500);
             debug('notif_useActions: player spent actions', n);
             this._counters[n.args.player_id]['actions'].toValue(n.args.npad);
             this._counters[n.args.player_id]['unlockedActions'].toValue(n.args.ua);
@@ -1371,6 +1418,7 @@ function (dojo, declare) {
             }
         },
         notif_drawToken(n) {
+            this.setNotifDuration(900);
             debug('notif_drawToken: new token on player board', n);
             let token = n.args.token;
             let player_id = n.args.player_id;
@@ -1381,6 +1429,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
         },
         notif_drawTokenForCentral(n) {
+            this.setNotifDuration(700);
             debug('notif_drawTokenForCentral: new token on central board', n);
             let token = n.args.token;
             let player_id = n.args.player_id;
@@ -1391,6 +1440,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token), {destroy:true, changeParent: false});
         },
         notif_moveToCentralBoard(n) {
+            this.setNotifDuration(900);
             debug('notif_moveToCentralBoard: new token on central board', n);
             let token = n.args.token;
             this.addToken(token, this.getVisibleTitleContainer());
@@ -1406,6 +1456,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
         },
         notif_moveOnCentralBoard(n) {
+            this.setNotifDuration(900);
             debug('notif_moveOnCentralBoard: token moved on on central board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1419,6 +1470,7 @@ function (dojo, declare) {
             });
         },
         notif_moveToCentralRecruit(n) {
+            this.setNotifDuration(900);
             debug('notif_moveToCentralRecruit: token moved out from central board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1439,6 +1491,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
         },
         notif_putTokenInBag(n) {
+            this.setNotifDuration(800);
             debug('notif_putTokenInBag: token moved to player bag', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1465,6 +1518,7 @@ function (dojo, declare) {
             this._counters[player_id]['lockedActions'].setValue(n.args.la);
         },
         notif_moveFromDeckToPlayerBoard(n) {
+            this.setNotifDuration(900);
             debug('notif_moveFromDeckToPlayerBoard: new token on player board from deck', n);
             let token = n.args.token;
             this.addToken(token, this.getVisibleTitleContainer());
@@ -1475,6 +1529,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
         },
         notif_moveToPlayerBoard(n) {
+            this.setNotifDuration(900);
             debug('notif_moveToPlayerBoard: new token on player board', n);
             let token = n.args.token;
             //Move from player RECRUIT ZONE to player board :
@@ -1487,6 +1542,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
         },
         notif_moveOnPlayerBoard(n) {
+            this.setNotifDuration(900);
             debug('notif_moveOnPlayerBoard: token moved on player board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1500,6 +1556,7 @@ function (dojo, declare) {
             });
         },
         notif_moveBackToRecruit(n) {
+            this.setNotifDuration(900);
             debug('notif_moveBackToRecruit: token moved out from board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1513,6 +1570,7 @@ function (dojo, declare) {
             });
         },
         notif_sRecruit(n) {
+            this.setNotifDuration(900);
             debug('notif_sRecruit: token taken from StigmaReine to recruit zone', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1524,6 +1582,7 @@ function (dojo, declare) {
             });
         },
         notif_LDMOR(n) {
+            this.setNotifDuration(900);
             debug('notif_LDMOR: token moved out from board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1537,6 +1596,7 @@ function (dojo, declare) {
             });
         },
         notif_moveBackToBox(n) {
+            this.setNotifDuration(900);
             debug('notif_moveBackToBox: token delete from board', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1545,11 +1605,12 @@ function (dojo, declare) {
                     from: div.id,
                     destroy: true,    
                     phantom: false,
-                    duration: 1200,
+                    //duration: 1200,
                 }).then(() =>{});
             }
         },
         notif_newPollen(n) {
+            this.setNotifDuration(900);
             debug('notif_newPollen: token is flipped !', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1582,6 +1643,7 @@ function (dojo, declare) {
             });
         },
         notif_spMixing(n) {
+            this.setNotifDuration(900);
             debug('notif_spMixing: tokens are mixed !', n);
             let token1 = n.args.token1;
             let token2 = n.args.token2;
@@ -1593,6 +1655,7 @@ function (dojo, declare) {
             this.animationBlink2Times(div2);
         },
         notif_spCombination(n) {
+            this.setNotifDuration(900);
             debug('notif_spCombination: token becomes brown !', n);
             let token1 = n.args.token;
             let div1 = $(`stig_token_${token1.id}`);
@@ -1602,6 +1665,7 @@ function (dojo, declare) {
             }
         },
         notif_spSwap(n) {
+            this.setNotifDuration(900);
             debug('notif_spSwap: tokens are swapped', n);
             let token1 = n.args.t1;
             let token2 = n.args.t2;
@@ -1611,6 +1675,7 @@ function (dojo, declare) {
             this.slide(div2, this.getTokenContainer(token2));
         },
         notif_spWhite(n) {
+            this.setNotifDuration(900);
             debug('notif_spWhite: tokens are merged !', n);
             let token1 = n.args.token1;
             let token2 = n.args.token2;
@@ -1624,6 +1689,7 @@ function (dojo, declare) {
             this.animationBlink2Times(div1);
         },
         notif_spBlack(n) {
+            this.setNotifDuration(900);
             debug('notif_spBlack: tokens are black !', n);
             let token1 = n.args.token1;
             let token2 = n.args.token2;
@@ -1635,12 +1701,14 @@ function (dojo, declare) {
         },
         
         notif_spTwoBeats(n) {
+            this.setNotifDuration(900);
             debug('notif_spTwoBeats: new white !', n);
             let token = n.args.token;
             let div = this.addToken(token, this.getVisibleTitleContainer());
             this.slide(div, this.getTokenContainer(token));
         },
         notif_spRest(n) {
+            this.setNotifDuration(900);
             debug('notif_spRest: token is removed !', n);
             let token = n.args.token;
             let isPollen = token.pollen == true;
@@ -1650,7 +1718,7 @@ function (dojo, declare) {
                     from: div.id,
                     destroy: true,    
                     phantom: false,
-                    duration: 1200,
+                    //duration: 1200,
                 }).then(() =>{
                     if(isPollen){
                         this._counters[n.args.player_id]['pollens'].incValue(-1);
@@ -1659,6 +1727,7 @@ function (dojo, declare) {
             }
         },
         notif_spNSNK(n) {
+            this.setNotifDuration(900);
             debug('notif_spNSNK: tokens change color !', n);
             let tokens = n.args.tokens;
             Object.values(tokens).forEach((token) => {
@@ -1668,6 +1737,7 @@ function (dojo, declare) {
             });
         },
         notif_spCopy(n) {
+            this.setNotifDuration(900);
             debug('notif_spCopy: token change color !', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1675,10 +1745,12 @@ function (dojo, declare) {
             this.animationBlink2Times(div);
         },
         notif_spPrediction(n) {
+            this.setNotifDuration(500);
             debug('notif_spPrediction: new tokens in bags', n);
             this._counters[n.args.player_id]['tokens_deck'].incValue(+3);
         },
         notif_spMimicry(n) {
+            this.setNotifDuration(900);
             debug('notif_spMimicry: token change color !', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1686,12 +1758,14 @@ function (dojo, declare) {
             this.animationBlink2Times(div);
         },
         notif_spFogDie(n) {
+            this.setNotifDuration(900);
             debug('notif_spFogDie: token added', n);
             let token = n.args.token;
             let div = this.addToken(token,this.getVisibleTitleContainer());
             this.slide(div, this.getTokenContainer(token));
         },
         notif_spPilferer(n) {
+            this.setNotifDuration(900);
             debug('notif_spPilferer: token from other bag', n);
             let token = n.args.token;
             let toPid = n.args.player_id;
@@ -1702,6 +1776,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
         },
         notif_spSower(n) {
+            this.setNotifDuration(900);
             debug('notif_spSower: token to other bag', n);
             let token = n.args.token;
             let toPid = n.args.player_id2;
@@ -1710,6 +1785,7 @@ function (dojo, declare) {
             this.slide(div, `stig_reserve_${toPid}_tokens_deck`, { destroy:true});
         },
         notif_spCharmer(n) {
+            this.setNotifDuration(900);
             debug('notif_spCharmer: tokens exchanged', n);
             let token1 = n.args.t1;
             let token2 = n.args.t2;
@@ -1719,11 +1795,13 @@ function (dojo, declare) {
             this.slide(div2, this.getTokenContainer(token2));
         },
         notif_spJealousy(n) {
+            this.setNotifDuration(400);
             debug('notif_spJealousy: bag size changed', n);
             this._counters[n.args.player_id]['tokens_deck'].toValue(n.args.deck1);
             this._counters[n.args.player_id2]['tokens_deck'].toValue(n.args.deck2);
         },
         notif_lastDriftRemove(n) {
+            this.setNotifDuration(900);
             debug('notif_lastDriftRemove: token is removed !', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
@@ -1732,12 +1810,13 @@ function (dojo, declare) {
                     from: div.id,
                     destroy: true,    
                     phantom: false,
-                    duration: 1200,
+                    //duration: 1200,
                 }).then(() =>{
                 });
             }
         },
         notif_playJoker(n) {
+            this.setNotifDuration(500);
             debug('notif_playJoker: tokens change color !', n);
             let tokens = n.args.tokens;
             Object.values(tokens).forEach((token) => {
@@ -1749,6 +1828,7 @@ function (dojo, declare) {
             this._counters[n.args.player_id]['jokers'].incValue(-1);
         },
         notif_playCJoker(n) {
+            this.setNotifDuration(500);
             debug('notif_playCJoker: token moved !', n);
             /*
             let token = n.args.token;
@@ -1771,7 +1851,7 @@ function (dojo, declare) {
                 div.dataset.col = token.col;
                 div.dataset.state = token.state;
                 let newParent = this.getTokenContainer(token);
-                this.slide(div, newParent).then(() =>{
+                this.slide(div, newParent, {duration: 800}).then(() =>{
                     //if(newParent.id && newParent.id.startsWith('stig_grid')){
                     //    return;
                     //}
@@ -1860,6 +1940,15 @@ function (dojo, declare) {
                 }
             }
             return 0;
+        },
+
+        /**
+        Wrapper for setting a notification duration which depends on player prefs/settings
+        */
+        setNotifDuration(time = 0){
+            if(!this.isAnimationsStyleAll()) time = 0;
+            if(this.isFastMode()) time = 0;
+            this.notifqueue.setSynchronousDuration(time);
         },
                 
         ////////////////////////////////////////
