@@ -43,7 +43,7 @@
                 "name": "Disabled"
             }
         },
-        "default": 1,
+        "default": 2,
         "attribute": "stig_stigmareine_auto_order"
     },
     "102": {

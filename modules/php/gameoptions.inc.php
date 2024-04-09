@@ -702,7 +702,7 @@ $game_preferences = [
       PREF_STIGMAREINE_BOARD_AUTO_ORDER_ENABLED => [ 'name' => totranslate('Enabled')],
       PREF_STIGMAREINE_BOARD_AUTO_ORDER_DISABLED => ['name' => totranslate('Disabled')],
     ],
-    "default"=> PREF_STIGMAREINE_BOARD_AUTO_ORDER_ENABLED,
+    "default"=> PREF_STIGMAREINE_BOARD_AUTO_ORDER_DISABLED,
     'attribute' => 'stig_stigmareine_auto_order',
   ],
   
