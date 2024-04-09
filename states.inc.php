@@ -488,6 +488,7 @@ $machinestates = array(
             "actChoreMoveOut",
             "actChoreographyStop",
             "actCancelSpecial",
+            "actRestart",
         ],
         "transitions" => [
             'continue' => ST_TURN_SPECIAL_ACT_CHOREOGRAPHY,

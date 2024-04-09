@@ -36,6 +36,7 @@ trait SpecialChoreographyTrait
             'p_places_m' => $p_places_m,
             'cancel' => true,
         ];
+        $this->addArgsForUndo($player_id, $args);
         $this->checkCancelFromLastDrift($args,$player_id);
         return $args;
     }
@@ -191,8 +192,8 @@ trait SpecialChoreographyTrait
         self::trace("actChoreographyStop()");
         
         $player = Players::getCurrent();
-        $player->setSelection([]);
         $this->addStep($player->id, $player->getPrivateState());
+        $player->setSelection([]);
         
         $playerAction = PlayerActions::getPlayer($player->id,[ACTION_TYPE_CHOREOGRAPHY])->first();
         if($this->returnToLastDriftState($player->id,$playerAction)) return;
