@@ -765,6 +765,7 @@ $machinestates = array(
         "possibleactions" => ["actCharmer2" ],
         "transitions" => [ 
             "next" => ST_AFTER_TURN_CONFIRM_CHOICES, 
+            "zombiePass" => ST_AFTER_TURN_CONFIRM_CHOICES,
         ],
     ),
     ST_AFTER_TURN_CONFIRM_CHOICES => [
@@ -776,6 +777,7 @@ $machinestates = array(
         'possibleactions' => ['actConfirmTurn', 'actRestart'],
         'transitions' => [ 
             'confirm' => ST_AFTER_TURN_NEXT_PLAYER,
+            "zombiePass" => ST_AFTER_TURN_NEXT_PLAYER,
         ],
     ],
     /*
