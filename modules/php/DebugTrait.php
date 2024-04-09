@@ -125,8 +125,17 @@ trait DebugTrait
     $targetplayer = Players::getCurrent();
     $token = Tokens::get(34);
     //Notifications::lastDriftRemove($player,$token,$targetplayer); 
-    Notifications::moveBackToBox($player,$token,'D9',1); 
-    Notifications::spRest($player,$token,1); 
+    //Notifications::moveBackToBox($player,$token,'D9',1); 
+    //Notifications::spRest($player,$token,1); 
+
+    //test notif on unknown token :
+    Notifications::newPollen($player,Tokens::createToken([
+        'type'=>TOKEN_STIG_WHITE,
+        'location'=>TOKEN_LOCATION_PLAYER_BOARD,
+        'player_id'=>$player->id,
+        'y'=>1,
+        'x'=>1,
+    ]));
   }
   function debugWind()
   {

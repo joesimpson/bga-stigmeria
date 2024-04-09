@@ -1614,11 +1614,13 @@ function (dojo, declare) {
             debug('notif_newPollen: token is flipped !', n);
             let token = n.args.token;
             let div = $(`stig_token_${token.id}`);
-            div.dataset.row = token.row;
-            div.dataset.col = token.col;
-            div.dataset.type = token.type;
-            //this.slide(div, this.getTokenContainer(token));
-            this.animationBlink2Times(div);
+            if(div){
+                div.dataset.row = token.row;
+                div.dataset.col = token.col;
+                div.dataset.type = token.type;
+                //this.slide(div, this.getTokenContainer(token));
+                this.animationBlink2Times(div);
+            }
             this._counters[n.args.player_id]['pollens'].incValue(1);
         },
         notif_unlockSp(n) {
