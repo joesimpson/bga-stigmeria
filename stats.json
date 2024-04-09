@@ -18,10 +18,22 @@
       ,"flower_type": {
         "id": 13,
         "name": "Flower type",
-        "type": "int",
-        "display": "limited"
+        "type": "int"
       }
     },
+      
+    "value_labels": {
+      "13": {
+        "1": "VertigHaineuse",
+        "2": "MarOnne",
+        "3": "SiffloChamp",
+        "4": "DentDîne",
+        "5": "InspirActrice",
+        "6": "Competitive",
+        "7": "Competitive No Limit"
+      }
+    },
+
     "player": {
       "score": {
         "id": 10,
