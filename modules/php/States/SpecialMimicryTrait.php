@@ -104,7 +104,7 @@ trait SpecialMimicryTrait
         $tokenLocation = '';
         $player = Players::get($playerId);
         $token = Tokens::getLastLanded($playerId);
-        if(isset($token)){
+        if(isset($token) && !$token->isPollen() ){
             $colors = new Collection(STIG_COLORS);
             $used = $player->getMimicColorUsed();
             $tokenId = $token->getId();

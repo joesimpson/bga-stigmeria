@@ -470,6 +470,10 @@ class Tokens extends \STIG\Helpers\Pieces
     return $winTiePlayerId;
   }
 
+  /**
+   * @param int $pId
+   * @return StigmerianToken
+   */
   public static function getLastLanded($pId){
     $lastLandedId = PGlobals::getLastLanded($pId);
     if(!isset($lastLandedId) || $lastLandedId ==0) return null;
