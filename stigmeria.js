@@ -1375,6 +1375,9 @@ function (dojo, declare) {
                     this._counters[player.id]['actionsMax'].setValue(n.args.n);
                     this.updateTurnMarker(player.id,n.args.n,1,false);
                 }
+                else {
+                    $(`stig_end_warning_${player.id}`).classList.remove('stig_no_display');
+                }
             });
         },
         notif_startTurn(n) {
@@ -1891,7 +1894,8 @@ function (dojo, declare) {
         notif_schemaFulfilled(n) {
             debug('notif_schemaFulfilled', n);
             let player = this.gamedatas.players[n.args.player_id];
-            player.end =true;
+            player.end = true;
+            $(`stig_end_warning_${player.id}`).classList.remove('stig_no_display');
         },
        
         notif_addPoints(n) {
@@ -2074,6 +2078,8 @@ function (dojo, declare) {
                 ${this.tplResourceCounter(player, 'unlockedActions')}
                 ${this.tplResourceCounter(player, 'lockedActions')}
                 ${this.gamedatas.jokerMode>0 ? this.tplResourceCounter(player, 'jokers') :''}
+
+                <span id='stig_end_warning_${player.id}' class='stig_end_warning ${ player.end ? "":"stig_no_display"}'><hr>${_('Schema fulfilled !')}</span>
             </div>
             </div>`;
         },

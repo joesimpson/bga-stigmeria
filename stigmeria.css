@@ -779,6 +779,11 @@
   position: relative;
   box-shadow: none;
 }
+.stig_panel .stig_player_infos .stig_end_warning {
+  flex-grow: 1;
+  position: relative;
+  text-align: center;
+}
 
 #stig_main_zone .stig_resizable_board {
   width: calc(var(--stig_board_display_scale) * 1127px);
