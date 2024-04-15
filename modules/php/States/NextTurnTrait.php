@@ -17,19 +17,24 @@ trait NextTurnTrait
   {
     $turn = Globals::getTurn();
     //-------------------------------------------
-    $end = false;
+    // CHECK WIN conditions
+    //-------------------------------------------
     $players = Players::getAll();
-    $winners = [];
+    $winners = Globals::getWinnersIds();
+    if(!isset($winners)) $winners = [];
     foreach($players as $pid => $player){
+      if(in_array($pid,$winners)) continue;
+
       $isWin = $this->isSchemaFulfilled($player);
       if($isWin){
         Notifications::schemaFulfilled($player);
-        $end = true;
         $winners[] = $pid;
       }
     }
-    if($end){
-      Globals::setWinnersIds($winners);
+    Globals::setWinnersIds($winners);
+    if( count($winners)==count($players) 
+      || count($winners)>0 && !Globals::isModeContinueToLastTurn()
+    ){
       $this->gamestate->nextState('end');
       return;
     }

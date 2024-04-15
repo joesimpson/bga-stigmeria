@@ -60,5 +60,31 @@ abstract class Utils extends \APP_DbObject
     static function updateDataFromArray ($array, $key, &$value) {
         if(array_key_exists($key,$array)) $value = $array[$key];
     }
+    
+    /**
+     * @param int $refTurn
+     * @return array of int
+     */
+    static function calcFutureTurnsActions ($refTurn) {
+        $nextTurns = 0;
+        $nextActions = 0;
+        $k = $refTurn + 1;
+        while($k<=TURN_MAX){
+            //Each turn provides K actions -> max actions = 55
+            $nextActions += $k;
+            $nextTurns++;
+            $k++;
+        }
+        return ['nextTurns' => $nextTurns, 'nextActions' => $nextActions,];
+    }
  
+    /**
+     * @param int $refTurn Turn to refer
+     * @param int $done Number of actions done
+     * @return int number of actions unused in turn
+     */
+    static function countRemainingActionsInTurn($refTurn,$done) {
+        $max = min(MAX_PERSONAL_ACTIONS_BY_TURN, $refTurn); //10 actions for turns 11,12,...
+        return $max - $done;
+    }
 }

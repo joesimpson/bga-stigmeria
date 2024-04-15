@@ -55,7 +55,7 @@ trait DebugTrait
   function debugStats()
   {
     Stats::checkExistence();
-  }
+  } 
   function debugElim()
   {
     $player = Players::getCurrent();
@@ -73,7 +73,6 @@ trait DebugTrait
     $nextP2 = Players::getNextInactivePlayerInTurn(2373993,Globals::getTurn());
     Notifications::message("debugElim nextP is $nextP2 ");
   }
-  /*
   function debugForceState()
   {
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
@@ -180,10 +179,12 @@ trait DebugTrait
     Tokens::create($tokens);
     //-------------------------------------------
     $isWin = $this->isSchemaFulfilled($player);
-    if($isWin) Notifications::message('Schema fulfilled !',[]);
-    else Notifications::message('Schema in progress...',[]);
+    //if($isWin) Notifications::message('Schema fulfilled !',[]);
+    //else Notifications::message('Schema in progress...',[]);
     Notifications::refreshUI($player->id, $this->getAllDatas());
-    $this->gamestate->jumpToState( ST_NEXT_TURN );
+    //$this->gamestate->jumpToState( ST_NEXT_TURN );
+    $this->actEndTurn();
+    
     //$this->gamestate->setPlayersMultiactive( [$player->id], 'end' );
     //Game::get()->gamestate->setPrivateState($player->id, ST_TURN_PERSONAL_BOARD);
   }
@@ -287,5 +288,5 @@ trait DebugTrait
     $markers = $cellsMarkers[1];
     $this->trace("debugPathFinding(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
   }
-  */
+  //*/
 }

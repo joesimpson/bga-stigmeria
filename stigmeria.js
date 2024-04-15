@@ -148,7 +148,8 @@ function (dojo, declare) {
                 ['playCJoker', null],
                 ['windBlows', 1000],
                 ['windElimination', 10],
-                ['decklimination', 10],
+                ['deckElimination', 10],
+                ['schemaFulfilled', 10],
                 ['addPoints', 800],
             ];
             //For now I don't want to spoil my bar when other player plays, and multiactive state change is more complex
@@ -1328,7 +1329,7 @@ function (dojo, declare) {
                 this._counters[pId].actions.toValue(player.npad);
                 this._counters[pId].unlockedActions.toValue(player.ua);
                 this._counters[pId].lockedActions.toValue(player.la);
-                this.updateTurnMarker(pId,this.gamedatas.turn,player.npad+1);
+                this.updateTurnMarker(pId,player.end ? player.turn : this.gamedatas.turn,player.npad+1,false);
             });
         },
 
@@ -1368,9 +1369,11 @@ function (dojo, declare) {
             // Good, but for now (in Competitive) the backend doesn't increment numbers about players that don't start
             if(!this.gamedatas.nocb) return;
             this.forEachPlayer((player) => {
-                this._counters[player.id]['actions'].setValue(0);
-                this._counters[player.id]['actionsMax'].setValue(n.args.n);
-                this.updateTurnMarker(player.id,n.args.n,1);
+                if(!player.end){
+                    this._counters[player.id]['actions'].setValue(0);
+                    this._counters[player.id]['actionsMax'].setValue(n.args.n);
+                    this.updateTurnMarker(player.id,n.args.n,1,false);
+                }
             });
         },
         notif_startTurn(n) {
@@ -1884,6 +1887,11 @@ function (dojo, declare) {
             let divPanel = `overall_player_board_${player_id}`;
             $(divPanel).classList.add('stig_eliminated');
         },
+        notif_schemaFulfilled(n) {
+            debug('notif_schemaFulfilled', n);
+            let player = this.gamedatas.players[n.args.player_id];
+            player.end =true;
+        },
        
         notif_addPoints(n) {
             debug('notif_addPoints: scoring !', n);
@@ -1997,11 +2005,12 @@ function (dojo, declare) {
                     pollensMax: this.createCounter(`stig_counter_${pId}_pollens_total`, this.getFlowerTotalPollens()),
                     jokers: this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1),
                     actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
-                    actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, this.gamedatas.turn),
+                    //replace turn with player last turn when finished round
+                    actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, player.end ? player.turn : this.gamedatas.turn),
                     unlockedActions: this.createCounter(`stig_counter_${pId}_unlockedActions`, player.ua),
                     lockedActions: this.createCounter(`stig_counter_${pId}_lockedActions`, player.la),
                 };
-                this.updateTurnMarker(pId,this.gamedatas.turn,player.npad+1);
+                this.updateTurnMarker(pId, player.end ? player.turn : this.gamedatas.turn,player.npad+1,false);
                 // Useful to order boards
                 nPlayers++;
                 if (isCurrent) currentPlayerNo = player.no;
@@ -2200,11 +2209,11 @@ function (dojo, declare) {
         //      |_|\___/|_|\_\___|_| |_|___/
         //                           
         ////////////////////////////////////////////////////////   
-        updateTurnMarker(player_id, turn, action) {
-            debug('updateTurnMarker', player_id, turn, action);
-            this.gamedatas.turn = turn;
+        updateTurnMarker(player_id, turn, action, saveTurn = true) {
+            debug('updateTurnMarker', player_id, turn, action, saveTurn);
+            if(saveTurn) this.gamedatas.turn = turn;
             //FORCE positive value (in case of unexpected behavior Or testing in god mode)
-            let newturn = Math.min(TURN_MAX,this.gamedatas.turn);
+            let newturn = Math.min(TURN_MAX,turn);
             newturn = Math.max(1,newturn);
             let newcount_actions = Math.min(newturn + 1,action);
             newcount_actions = Math.max(1,newcount_actions);

@@ -153,6 +153,14 @@ class Globals extends \STIG\Helpers\DB_Manager
     $gameMode = Globals::getOptionGameMode();
     return ($gameMode == OPTION_MODE_NOLIMIT || $gameMode == OPTION_MODE_DISCOVERY || $gameMode == OPTION_MODE_SOLO_NOLIMIT);
   }
+  /**
+   * @return bool true when we want ALL players to continue to play until TURN_MAX even if 1+ players fulfill the schema
+   */
+  public static function isModeContinueToLastTurn()
+  {
+    $gameMode = Globals::getOptionGameMode();
+    return ($gameMode == OPTION_MODE_NORMAL);
+  }
   /*
    * Setup new game
    */

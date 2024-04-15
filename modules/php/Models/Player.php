@@ -8,6 +8,7 @@ use STIG\Core\Stats;
 use STIG\Core\Notifications;
 use STIG\Core\PGlobals;
 use STIG\Core\Preferences;
+use STIG\Helpers\Utils;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
@@ -69,6 +70,9 @@ class Player extends \STIG\Helpers\DB_Model
     $data['ua'] = $this->countUnLockedActions();
     //locked
     $data['la'] = $this->countLockedActions();
+    
+    $data['end'] = $this->finishedRound();
+    $data['turn'] = $this->getLastTurn();
 
     return $data;
   }
@@ -142,6 +146,16 @@ class Player extends \STIG\Helpers\DB_Model
     return $colorsUsed;
   }
 
+  /**
+   * @return bool true if player already finished the current round schema
+   */
+  public function finishedRound()
+  {
+    $winners = Globals::getWinnersIds();
+    if(in_array($this->getId(),$winners)) return true;
+    return false;
+  }
+
 
   public function getPref($prefId)
   {
@@ -201,10 +215,7 @@ class Player extends \STIG\Helpers\DB_Model
   }
 
   public function countRemainingPersonalActions(){
-    $turn = Globals::getTurn();
-    $max = min(MAX_PERSONAL_ACTIONS_BY_TURN, $turn); //10 actions for turns 11,12,...
-    $done = $this->getNbPersonalActionsDone();
-    return $max - $done;
+    return Utils::countRemainingActionsInTurn(Globals::getTurn(),$this->getNbPersonalActionsDone());
   }
   
   public function countUnLockedActions(){

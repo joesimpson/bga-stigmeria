@@ -153,6 +153,7 @@ class Players extends \STIG\Helpers\DB_Manager
     $nextPlayer = Players::get($nextPlayer_id);
     if(isset($nextPlayer) && !$nextPlayer->isMultiactive() && $nextPlayer->getLastTurn()< $turn
       && $nextPlayer->getZombie() != 1 && $nextPlayer->getEliminated() == 0
+      && !$nextPlayer->finishedRound()
     ){
       //CHECK nextPlayer not active / not already played this turn/ not zombie
       return $nextPlayer;
@@ -164,7 +165,7 @@ class Players extends \STIG\Helpers\DB_Manager
    * @param int $player_id
    * @return Player
    */
-  public static function getNextPlayerNotElimininated($player_id)
+  public static function getNextPlayerNotEliminated($player_id)
   {
     $nextPlayer_id = Players::getNextId($player_id);
     $nextPlayer = Players::get($nextPlayer_id);
@@ -173,7 +174,7 @@ class Players extends \STIG\Helpers\DB_Manager
     ){
       return $nextPlayer;
     }
-    return self::getNextPlayerNotElimininated($nextPlayer_id);
+    return self::getNextPlayerNotEliminated($nextPlayer_id);
   }
 
 

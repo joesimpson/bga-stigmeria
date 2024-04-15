@@ -4,6 +4,7 @@ namespace STIG\States;
 
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
+use STIG\Helpers\Utils;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -44,28 +45,30 @@ trait ScoringTrait
         break;
     }
 
-    $nextTurns = 0;
-    $nextActions = 0;
-    $k = $turn + 1;
-    while($k<=TURN_MAX){
-      //Each turn provides K actions -> max actions = 55
-      $nextActions += $k;
-      $nextTurns++;
-      $k++;
-    }
+    $nextTurnActions = Utils::calcFutureTurnsActions($turn);
+    $nextTurns = $nextTurnActions['nextTurns'];
+    $nextActions = $nextTurnActions['nextActions'];
 
     foreach($players as $pId =>$player){
       $score = 0;
+      $remainingActions = $player->countRemainingPersonalActions();
+      if(Globals::isModeContinueToLastTurn()){
+        $nextTurnActions = Utils::calcFutureTurnsActions($player->getLastTurn());
+        $nextTurns = $nextTurnActions['nextTurns'];
+        $nextActions = $nextTurnActions['nextActions'];
+        $remainingActions = Utils::countRemainingActionsInTurn($player->getLastTurn(),$player->getNbPersonalActionsDone());
+      }
       if(in_array($pId,$winnersIds)){
         $score += $scoreLevel;
         Notifications::addPoints($player,$scoreLevel,clienttranslate('${player_name} scores ${n} points for the difficulty'));
             
-        if(!Globals::isModeDiscovery()){
-          $nbActions = $nextActions + $player->countRemainingPersonalActions();
+        if(! (Globals::isModeDiscovery() && $turn > TURN_MAX)){
+          //IN DISCOVERY, if we go far, we don't score actions after turn 10
+          $nbActions = $nextActions + $remainingActions;
           $scoreActions = SCORE_PER_ACTION * $nbActions;
           if($scoreActions>0){
             $score += $scoreActions;
-            Notifications::addPoints($player,$scoreActions,clienttranslate('${player_name} scores ${n} points for remaining actions : ${n2} remaining turns and ${n3} actions unused in this turn'),$nextTurns,$player->countRemainingPersonalActions());
+            Notifications::addPoints($player,$scoreActions,clienttranslate('${player_name} scores ${n} points for remaining actions : ${n2} remaining turns and ${n3} actions unused in their turn'),$nextTurns,$remainingActions);
           }
 
           $scoreRecruits = SCORE_PER_RECRUIT*Tokens::countRecruits($pId);

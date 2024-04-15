@@ -44,7 +44,7 @@ trait WindGenerationTrait
         }
         else {
           $activePlayer = Players::getActive();
-          $nextPlayer = Players::getNextPlayerNotElimininated($activePlayer->id);
+          $nextPlayer = Players::getNextPlayerNotEliminated($activePlayer->id);
         }
         Players::changeActive($nextPlayer->id);
         

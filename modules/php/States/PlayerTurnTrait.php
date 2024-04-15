@@ -25,7 +25,12 @@ trait PlayerTurnTrait
         //IN NORMAL MODE, we can activate every one
         $noCentralBoard = Globals::isModeNoCentralBoard();
         if($noCentralBoard){
-            $playersToActive = $players->map( function ($player) { return $player->getId(); } )->toArray();
+            $playersToActive = $players->filter( function ($player) { 
+                //In normal mode, the first players to full the schema must be skipped while others continue
+                if($player->finishedRound()) return false;
+                return true; 
+            } )->map( function ($player) { return $player->getId(); } )
+            ->toArray();
         }
         self::trace("stPlayerTurn() playersToActive =".json_encode($playersToActive));
 
