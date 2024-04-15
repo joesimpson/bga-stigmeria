@@ -51,8 +51,9 @@ trait DebugTrait
     Notifications::message("$json",['json' => $json]);
   }
   
+  ////////////////////////////////////////////////////
   /*
-  function debugStats()
+  function debugStatsEx()
   {
     Stats::checkExistence();
   } 
@@ -181,7 +182,7 @@ trait DebugTrait
     $isWin = $this->isSchemaFulfilled($player);
     //if($isWin) Notifications::message('Schema fulfilled !',[]);
     //else Notifications::message('Schema in progress...',[]);
-    Notifications::refreshUI($player->id, $this->getAllDatas());
+    $this->debugUI();
     //$this->gamestate->jumpToState( ST_NEXT_TURN );
     $this->actEndTurn();
     
@@ -289,4 +290,11 @@ trait DebugTrait
     $this->trace("debugPathFinding(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
   }
   //*/
+  //----------------------------------------------------------------
+  function debugUI(){
+    //players colors are not reloaded after using LOAD/SAVE buttons
+    self::reloadPlayersBasicInfos();
+    $player = Players::getCurrent();
+    Notifications::refreshUI($player->getId(),$this->getAllDatas());
+  }
 }

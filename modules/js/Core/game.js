@@ -909,7 +909,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       if (player == undefined) return '<!--PNS--><span class="playername">' + name + '</span><!--PNE-->';
 
       const color = player.color;
-      const color_bg = player.color_back ? 'background-color:#' + this.gamedatas.players[this.player_id].color_back + ';' : '';
+      const color_bg = player.color_back ? 'background-color:#' + player.color_back + ';' : '';
       return '<!--PNS--><span class="playername" style="color:#' + color + ';' + color_bg + '">' + name + '</span><!--PNE-->';
     },
 
