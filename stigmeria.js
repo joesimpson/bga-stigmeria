@@ -1314,7 +1314,8 @@ function (dojo, declare) {
             this.setNotifDuration(200);
             debug('Notif: refreshing UI', n);
             if(this.player_id == n.args.player_id) this.clearPossible();
-            [ 'players', 'tokens', 'actions'].forEach((value) => {
+            this.refreshPlayersDatas(n.args.datas['players']);
+            [ 'tokens', 'actions'].forEach((value) => {
               this.gamedatas[value] = n.args.datas[value];
             });
             this.setupTokens();
@@ -1341,7 +1342,7 @@ function (dojo, declare) {
             this.gamedatas.actions = n.args.actions;
             this.gamedatas.turn = 0;
             this._counters['turn'].toValue(this.gamedatas.turn);
-            this.gamedatas.players = n.args.players;
+            this.refreshPlayersDatas(n.args.players);
             this.forEachPlayer((player) => {
                 this._counters[player.id]['tokens_recruit'].setValue(player.tokens_recruit);
                 this._counters[player.id]['tokens_deck'].setValue(player.tokens_deck);
@@ -2041,6 +2042,21 @@ function (dojo, declare) {
                 phantom: false,
             }).then(() => this.adaptPlayersPanels() );
             
+        },
+
+        refreshPlayersDatas(players){
+            debug("refreshPlayersDatas()",players);
+            //Erasing this array would erase some BGA datas (ex color_back)-> we should erase only datas in parameter array
+            //this.gamedatas.players = players;
+            Object.values(players).forEach((player) => {
+                let pid = player.id;
+                //Object.keys(player).forEach((data) => {
+                //    this.gamedatas.players[pid][data] = player[data];
+                //});
+                for (const property in player) {
+                    this.gamedatas.players[pid][property] = player[property];
+                }
+            });
         },
             
         /**
