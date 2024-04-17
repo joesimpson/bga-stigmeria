@@ -175,3 +175,11 @@
 .log.cancel.roundedbox {
     background-color: #ef9a9a;
 }
+
+
+#customActions,
+#restartAction{
+    &.lockedInterface{
+        pointer-events: none;
+    }
+}

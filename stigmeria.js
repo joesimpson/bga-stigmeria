@@ -161,6 +161,60 @@ function (dojo, declare) {
         },
         
         ///////////////////////////////////////////////////
+        // !!!!!!!!!!! HACKING BEGINS
+        // OVERRIDE BGA FRAMEWORK to avoid flashing "'Updating game situation ...'" on each private multiactive with public notifs,
+        // (BECAUSE in this game there is a lot of private states where actions are public, just because I reuse the parallel states)
+        // Based on code from ly_studio.js https://studio.boardgamearena.com:8084/data/themereleases/240417-1000/js/modules/layer/ly_studio.js
+        /////////////////////////////////////////////////// 
+        lockInterface: function (t) {
+            this.isInterfaceLocked() && console.error('Try to lock interface while it is already locked !');
+            this.interface_locked_by_id = t;
+            //HIDE Buttons only for current player sending requests
+            if ('outgoing' == t.status) dojo.addClass('ebd-body', 'lockedInterface');
+            $("customActions").classList.add('lockedInterface');
+            $("restartAction").classList.add('lockedInterface');
+        },
+        unlockInterface: function (t) {
+            if (this.isInterfaceLocked() && this.interface_locked_by_id == t) {
+                this.interface_locked_by_id = null;
+                dojo.removeClass('ebd-body', 'lockedInterface');
+                $("customActions").classList.remove('lockedInterface');
+                $("restartAction").classList.remove('lockedInterface');
+            }
+        },
+        //LOCK & UNLOCK without modifying top message
+        onLockInterface: function (t) {
+            t.status,
+            t.uuid,
+            this.interface_locked_by_id;
+            if ('outgoing' == t.status) {
+                this.inherited(arguments);
+            } else if (t.uuid == this.interface_locked_by_id) {
+              if ('recorded' == t.status && 'outgoing' == this.interface_status) {
+                //NO $('gameaction_status').innerHTML
+                this.interface_status = 'recorded';
+              }
+              if (null === this.interface_locking_type || 'table' == this.interface_locking_type && t.bIsTableMsg || 'player' == this.interface_locking_type && !t.bIsTableMsg) if ('queued' == t.status) {
+                if ('outgoing' == this.interface_status || 'recorded' == this.interface_status) {
+                  //NO $('gameaction_status').innerHTML
+                  this.interface_status = 'queued';
+                }
+              } else {
+                this.inherited(arguments);
+              }
+            } else if ('queued' == t.status && this.isInterfaceUnlocked()) {
+                this.lockInterface(t.uuid);
+                this.interface_locking_type = null;
+                t.type && (this.interface_locking_type = t.type);
+                //NO $('gameaction_status').innerHTML
+                this.interface_status = 'queued';
+            }
+        },
+        ///////////////////////////////////////////////////
+        // !!!!!!!!!!! HACKING STOP
+        /////////////////////////////////////////////////// 
+
+        ///////////////////////////////////////////////////
         //     _____ ______ _______ _    _ _____  
         //    / ____|  ____|__   __| |  | |  __ \ 
         //   | (___ | |__     | |  | |  | | |__) |

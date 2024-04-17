@@ -3541,3 +3541,8 @@ body[data-modenocb=true] #settings-controls-container div[data-prefid="103"] {
 .log.cancel.roundedbox {
   background-color: #ef9a9a;
 }
+
+#customActions.lockedInterface,
+#restartAction.lockedInterface {
+  pointer-events: none;
+}
