@@ -40,13 +40,12 @@ trait AfterTurnTrait
     $nextPlayer = Players::get($playerId);
     if(isset($nextPlayer) 
       && $nextPlayer->getZombie() != 1 && $nextPlayer->getEliminated() == 0
+      && !$nextPlayer->finishedRound()
     ){
       //For now, this step is only used for playing 'Charmer' special action
       $actionType = ACTION_TYPE_CHARMER;
       $playerAction = PlayerActions::getPlayer($nextPlayer->id,[$actionType])->first();
       if(isset($playerAction) && $playerAction->canBePlayed(0) ){
-        Players::changeActive($playerId);
-        $nextPlayer->giveExtraTime();
         $nextPlayerPlay = true;
       }
     }
@@ -57,6 +56,8 @@ trait AfterTurnTrait
       $this->gamestate->nextState("loopback");
     }
     else {
+      Players::changeActive($playerId);
+      $nextPlayer->giveExtraTime();
       $this->gamestate->nextState("next");
     }
   }

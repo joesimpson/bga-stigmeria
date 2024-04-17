@@ -76,7 +76,10 @@
  |              | commonBoard -> personalBoard (+many SPECIALS)        |
  |              |                    |                                 |
  |              v                    v                                 |
- |              \-----------> afterTurn                                |
+ |              \-----------> afterTurnNext                            |
+ |                                   |    ^                            |
+ |                                   v    |                            |
+ |                            afterTurn --/                            |
  |                                   |                                 |
  |                                   v                                 |
  |                                 windEffect -------------------------/
@@ -736,7 +739,7 @@ $machinestates = array(
         "type" => "game",
         "action" => "stAfterTurnNext",
         "transitions" => [ 
-            "loopback" => ST_AFTER_TURN,
+            "loopback" => ST_AFTER_TURN_NEXT_PLAYER,
             "next" => ST_AFTER_TURN,
             "end" => ST_WIND_EFFECT,
         ],
