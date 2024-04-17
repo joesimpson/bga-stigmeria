@@ -746,7 +746,7 @@ $machinestates = array(
     ),
     ST_AFTER_TURN => array(
         "name" => "afterTurn",
-        //"args" => "argAfterTurn",
+        "args" => "argAfterTurn",
         "action" => "stAfterTurn",
         "description" => clienttranslate('Turn end: ${actplayer} may play a final action or pass'),
         "descriptionmyturn" => clienttranslate('Turn end: ${you} may play a final action or pass'),
@@ -765,8 +765,9 @@ $machinestates = array(
         "description" => clienttranslate('Charmer : ${actplayer} must select 2 tokens to exchange between players'),
         "descriptionmyturn" => clienttranslate('Charmer : ${you} must select 2 tokens to exchange between players'),
         "type" => "activeplayer",
-        "possibleactions" => ["actCharmer2" ],
+        "possibleactions" => ["actCharmer2","actCancelCharmer" ],
         "transitions" => [ 
+            "cancelCharmer" => ST_AFTER_TURN, 
             "next" => ST_AFTER_TURN_CONFIRM_CHOICES, 
             "zombiePass" => ST_AFTER_TURN_CONFIRM_CHOICES,
         ],

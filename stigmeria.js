@@ -1190,11 +1190,13 @@ function (dojo, declare) {
         {
             debug( 'onEnteringStateAfterTurn() ', args );
             this.addPrimaryActionButton('btnCharmer', _('Charmer'), () => { this.takeAction('actCharmer1', {  });  }); 
+            if(!args.charmer) $(btnCharmer).classList.add('disabled');
             this.addPrimaryActionButton('btnPass', _('Pass'), () => { this.takeAction('actPass', {  });  }); 
         },
         onEnteringStateCharmer1: function(args)
         {
             debug( 'onEnteringStateCharmer1() ', args );
+            this.addSecondaryActionButton('btnCancel', _('Return'), () => this.takeAction('actCancelCharmer', {}));
             let actionName = 'actCharmer2';
             this.currentSelection = [];
             this.currentPlayersSelection = [];

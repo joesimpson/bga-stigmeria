@@ -602,6 +602,13 @@
       $this->game->actCharmer2($tokenId1,$tokenId2);
       self::ajaxResponse();
     } 
+    public function actCancelCharmer()
+    {
+      self::setAjaxMode();
+      self::checkVersion();
+      $this->game->actCancelCharmer();
+      self::ajaxResponse();
+    }
     ///////////////////
     /////  UNDO   /////
     ///////////////////

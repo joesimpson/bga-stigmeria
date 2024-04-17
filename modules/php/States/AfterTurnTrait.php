@@ -68,6 +68,22 @@ trait AfterTurnTrait
 
     $this->addCheckpoint(ST_AFTER_TURN);
   }
+  
+  public function argAfterTurn()
+  { 
+    $player = Players::getActive();
+
+    $charmer = false;
+    $actionType = ACTION_TYPE_CHARMER;
+    $playerAction = PlayerActions::getPlayer($player->id,[$actionType])->first();
+    if(isset($playerAction) && $playerAction->canBePlayed(0) ){
+      $charmer = true;
+    }
+    $args  = [
+      'charmer' => $charmer,
+    ];
+    return $args;
+  }
 
   public function argCharmer1()
   { 
@@ -106,6 +122,17 @@ trait AfterTurnTrait
     $this->addCheckpoint(ST_AFTER_TURN);
     $this->gamestate->nextState("nextPlayer");
   }
+  
+  public function actCancelCharmer()
+  {
+    self::checkAction( 'actCancelCharmer' ); 
+    self::trace("actCancelCharmer()");
+    
+    $player = Players::getCurrent();
+    $pId = $player->id;
+    $this->addStep($pId,ST_AFTER_TURN_CHARMER_STEP1);
+    $this->gamestate->nextState("cancelCharmer");
+  }
   /**
    * Special Action 'Charmer' - BEGIN
    */
@@ -118,8 +145,16 @@ trait AfterTurnTrait
     $pId = $player->id;
 
     $this->addStep($pId,ST_AFTER_TURN_CHARMER_STEP1);
+    
+    $actionType = ACTION_TYPE_CHARMER;
+    $playerAction = PlayerActions::getPlayer($player->id,[$actionType])->first();
+    if(!isset($playerAction) || !$playerAction->canBePlayed(0) ){
+      throw new UnexpectedException(404,"Not found action $actionType");
+    }
+
     $this->gamestate->nextState("startCharmer");
   }
+  
   /**
    * Special Action 'Charmer' - EFFECT
    * @param int $tokenId1
