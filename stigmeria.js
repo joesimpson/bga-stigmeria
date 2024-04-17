@@ -317,6 +317,10 @@ function (dojo, declare) {
             //return gameui.prefs[PREF_ANIMATIONS_STYLE].value == PREF_ANIMATIONS_STYLE_ALL;
             return this.settings.animationStyle == PREF_ANIMATIONS_STYLE_ALL;
         },
+        isAnimationsStyle2Players() {
+            let nbPlayers = Object.keys(this.gamedatas.players).length;
+            return this.settings.animationStyle == PREF_ANIMATIONS_STYLE_WIND_ONLY_3P && nbPlayers < 3;
+        },
 
         ///////////////////////////////////////////////////
         //     _____ _______    _______ ______  _____ 
@@ -1968,7 +1972,7 @@ function (dojo, declare) {
         Wrapper for setting a notification duration which depends on player prefs/settings
         */
         setNotifDuration(time = 0){
-            if(!this.isAnimationsStyleAll()) time = 0;
+            if(!this.isAnimationsStyleAll() && !this.isAnimationsStyle2Players()) time = 0;
             if(this.isFastMode()) time = 0;
             this.notifqueue.setSynchronousDuration(time);
         },
