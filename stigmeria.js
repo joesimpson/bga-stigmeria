@@ -2409,7 +2409,7 @@ function (dojo, declare) {
             let tooltipDesc = `<div class='stig_tooltip_token'>
                 <div>${ token.coord ? this.fsr(_('Coordinates : ${n}'), { n: token.coord }) :''}</div>
                 <div>${this.fsr(_('Face : ${face}'), { face: "<span class='stig_token_face'>"+face+"</span>" })}</div>
-                <div>${this.fsr(_('Color : ${color}'), { color: _(token.color.toUpperCase()) })}</div>
+                <div>${this.fsr(_('Color : ${color}'), { color: "<span class='stig_token_color_name'>"+_(token.color)+"</span>" })}</div>
                ${this.tplToken(token)}
             </div>`;
             //this.addCustomTooltip(divToken.id, tooltipDesc,150);

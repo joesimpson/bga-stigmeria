@@ -421,7 +421,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
         return clienttranslate("brown");
       case TOKEN_STIG_WHITE:
       case TOKEN_POLLEN_WHITE:
-        return Clienttranslate("white");
+        return clienttranslate("white");
       case TOKEN_STIG_BLACK:
       case TOKEN_POLLEN_BLACK:
         return clienttranslate("black");

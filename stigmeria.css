@@ -591,6 +591,9 @@ body[data-tooltips_on_token="1"] .stig_token.tooltipable:hover {
 .stig_tooltip_token .stig_token_face {
   font-weight: bold;
 }
+.stig_tooltip_token .stig_token_color_name {
+  text-transform: uppercase;
+}
 
 .stig_first_player_holder {
   position: absolute;
