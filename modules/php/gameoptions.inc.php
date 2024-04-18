@@ -731,4 +731,14 @@ $game_preferences = [
     'attribute' => 'stig_animations_style',
   ],
   */
+  PREF_START_NEXT_PLAYER => [
+    'name' => totranslate('Button start next player turn when I start my turn'),
+    'needReload' => false,
+    'values' => [
+      PREF_START_NEXT_PLAYER_AUTO_WHEN_NO_VS => [ 'name' => totranslate('Automatic with no playable VS action')],
+      PREF_START_NEXT_PLAYER_MANUAL => ['name' => totranslate('Manual')],
+    ],
+    "default"=> PREF_START_NEXT_PLAYER_AUTO_WHEN_NO_VS,
+    'attribute' => 'stig_startnextplayer',
+  ],
 ];

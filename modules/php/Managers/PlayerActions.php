@@ -284,6 +284,21 @@ class PlayerActions extends \STIG\Helpers\Pieces
       ->whereIn('type', ACTION_VS_TYPES);
     return $query->run();
   }
+  
+  /**
+   * Lock all versus actions of a player
+   * @param int $pId
+   * @return int count
+   */
+  public static function countUnlockedVSActionsForTurn($pId)
+  {
+    Game::get()->trace("countUnlockedVSActionsForTurn($pId)");
+    $query = self::DB()
+      ->where(static::$prefix . 'state', ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN)
+      ->wherePlayer($pId)
+      ->whereIn('type', ACTION_VS_TYPES);
+    return $query->count();
+  }
 
   /**
    * 

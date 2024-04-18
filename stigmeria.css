@@ -3094,6 +3094,9 @@ body[data-modenocb=true] #settings-controls-container div[data-prefid="101"] {
 body[data-modenocb=true] #settings-controls-container div[data-prefid="103"] {
   display: none;
 }
+body[data-modenocb=true] #settings-controls-container div[data-prefid="105"] {
+  display: none;
+}
 
 /*! nouislider - 14.6.0 - 6/27/2020 */
 .noUi-target,

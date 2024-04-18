@@ -86,6 +86,10 @@ function (dojo, declare) {
     const PREF_ANIMATIONS_STYLE_ALL = 1;
     const PREF_ANIMATIONS_STYLE_WIND_ONLY = 2;
     const PREF_ANIMATIONS_STYLE_WIND_ONLY_3P = 3;
+            
+    const PREF_START_NEXT_PLAYER = 105;
+    const PREF_START_NEXT_PLAYER_AUTO_WHEN_NO_VS = 1;
+    const PREF_START_NEXT_PLAYER_MANUAL = 2;
 
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
@@ -303,6 +307,7 @@ function (dojo, declare) {
                     },
                     section: "gameFlow"
                 },
+                startNextPlay: {section: "gameFlow", type: 'pref', prefId: PREF_START_NEXT_PLAYER },
                 
                 tooltipsOnToken: {
                     default: 1,

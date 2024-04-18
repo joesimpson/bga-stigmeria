@@ -62,5 +62,19 @@
         },
         "default": 1,
         "attribute": "stig_sp_buttons"
+    },
+    "105": {
+        "name": "Button start next player turn when I start my turn",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Automatic with no playable VS action"
+            },
+            "2": {
+                "name": "Manual"
+            }
+        },
+        "default": 1,
+        "attribute": "stig_startnextplayer"
     }
 }

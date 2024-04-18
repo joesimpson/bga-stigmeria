@@ -84,7 +84,7 @@ trait PlayerTurnTrait
         else {*/
             Notifications::emptyNotif();
         //}
-        $this->addCheckpoint(ST_TURN_PERSONAL_BOARD, $player->id);
+        $this->gamestate->nextPrivateState($player->id, "continue");
     }
     
     public function actEndTurn()
@@ -134,6 +134,7 @@ trait PlayerTurnTrait
             //No ! next Player currently does not have a privateState to save !, don't save null PLEASE
             //$this->addStep( $nextPlayer->id, $nextPlayer->getPrivateState());
             $this->addCheckpoint(ST_TURN_COMMON_BOARD, $nextPlayer->id);
+            $this->addCheckpoint(ST_TURN_PERSONAL_BOARD, $player->id);
             
             $this->gamestate->setPlayersMultiactive( [$nextPlayer->id], 'end' );
             $this->gamestate->initializePrivateState($nextPlayer->id); 

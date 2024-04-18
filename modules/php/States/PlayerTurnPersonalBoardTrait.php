@@ -10,6 +10,7 @@ use STIG\Exceptions\UnexpectedException;
 use STIG\Exceptions\UserException;
 use STIG\Helpers\Collection;
 use STIG\Helpers\Utils;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -18,11 +19,40 @@ use STIG\Models\StigmerianToken;
 trait PlayerTurnPersonalBoardTrait
 {
   
-    public function stPersonalBoardTurn()
+    public function stPersonalBoardTurn($player_id)
     {
-        self::trace("stCommonBoardTurn()");
+        self::trace("stPersonalBoardTurn($player_id)");
         
         Notifications::emptyNotif();
+
+        $player = Players::get($player_id);
+        $nbActionsInProgress = PGlobals::getNbActionsDone($player_id);
+        $prefAutoNextWhenNoVs = (PREF_START_NEXT_PLAYER_AUTO_WHEN_NO_VS == $player->getPref(PREF_START_NEXT_PLAYER));
+        if($prefAutoNextWhenNoVs && $nbActionsInProgress ==0){
+            //Auto let next player play if the button + confirm is useless at start of a player turn, don't  do it later in case player wants to examine
+            $turn = Globals::getTurn();
+            $nextPlayer = Players::getNextInactivePlayerInTurn($player_id, $turn);
+            //$noVSActions = PlayerActions::countUnlockedVSActionsForTurn($player_id) == 0;
+            if(isset($nextPlayer)){
+                $deckSize = Tokens::countDeck($player_id);
+                $remaining = $player->countRemainingPersonalActions();
+                $playerActions = PlayerActions::getPlayer($player_id);
+                
+                $unlockedVSActions = $playerActions
+                    ->filter(function($action) use ($remaining,$deckSize) {
+                        if(!$action->isVS()) return false;
+                        if(!$action->canBePlayed($remaining )) return false;
+                        if(!$action->canBePlayedWithCurrentBoard($deckSize )) return false;
+                        return true;
+                    });
+                $noVSActions = $unlockedVSActions->count() == 0;
+                if($noVSActions ){
+                    $nextPlayer = $this->startNextPlayerTurn($player, $turn, false);
+                    $this->gamestate->nextPrivateState($player->id, "continue");
+                }
+            }
+        }
+
     }
 
     public function argPersonalBoardTurn($player_id)
