@@ -644,6 +644,10 @@ body[data-tooltips_on_token="1"] .stig_token.tooltipable:hover {
   width: 100%;
   height: 100%;
 }
+.stig_panel .stig_player_infos .stig_player_resource .stig_reserve:hover {
+  outline: 2px solid rgb(0, 0, 0);
+  cursor: help;
+}
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_unlockedActions,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_lockedActions,
 .stig_panel .stig_player_infos .stig_player_resource .stig_resource_jokers,
