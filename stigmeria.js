@@ -822,9 +822,10 @@ function (dojo, declare) {
                 let src = tokenColor.src;
                 let dest = tokenColor.dest;
                 this.addImageActionButton(`btnJoker_${src}_${dest}`, `<div><div class='stig_qty'>4</div><div class='stig_button_token' data-type='${src}'></div> <i class="fa6 fa6-arrow-right"></i> <div class='stig_qty'>4</div> <div class='stig_button_token' data-type='${dest}'></div></div>`, () =>  {
-                    this.confirmationDialog(_("This will update tokens in your recruitment zone. You won't be able to replay a Joker in the game !"), () => {
+                    //Disable confirm for this undoable action
+                    //this.confirmationDialog(_("This will update tokens in your recruitment zone. You won't be able to replay a Joker in the game !"), () => {
                         this.takeAction('actJoker', {src:src,dest:dest})
-                    });
+                    //});
                 });
             });
             if(possibleActions.includes('actLetNextPlay')){
@@ -835,13 +836,13 @@ function (dojo, declare) {
                 });
             }
             this.addDangerActionButton('btnEndTurn', _('End turn'), () => {
-                if(nbActions>0){
+                //if(nbActions>0){
                     this.confirmationDialog(_("Are you sure to end your turn ?"), () => {
                         this.takeAction('actEndTurn', {});
                     });
-                }else{//auto confirm
-                    this.takeAction('actEndTurn', {});
-                }
+                //}else{//auto confirm
+                //    this.takeAction('actEndTurn', {});
+                //}
             });
             //this.addSecondaryActionButton('btnReturn', 'Return', () => this.takeAction('actBackToCommon', {}));
         }, 
@@ -2705,10 +2706,11 @@ function (dojo, declare) {
             $(`btnConfirm`).classList.add('disabled');
             if(actionOutName){
                 this.addPrimaryActionButton('btnMoveOut',  _('Move out'), () => {
-                    this.confirmationDialog(_("Are you sure to move this token out of the board ?"), () => {
+                    //Disabled confirmation which makes a lot of click and is undoable
+                    //this.confirmationDialog(_("Are you sure to move this token out of the board ?"), () => {
                         let selectedToken = playerBoard.querySelector(`.stig_token.selected`);
                         this.takeAction(actionOutName, { tokenId: selectedToken.dataset.id, });
-                    });
+                    //});
                 });
                 $(`btnMoveOut`).classList.add('disabled');
             }
