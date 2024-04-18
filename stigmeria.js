@@ -161,36 +161,23 @@ function (dojo, declare) {
         },
         
         ///////////////////////////////////////////////////
-        // !!!!!!!!!!! HACKING BEGINS
+        // !!!!!!!!!!! HACKING STARTS
         // OVERRIDE BGA FRAMEWORK to avoid flashing "'Updating game situation ...'" on each private multiactive with public notifs,
         // (BECAUSE in this game there is a lot of private states where actions are public, just because I reuse the parallel states)
         // Based on code from ly_studio.js https://studio.boardgamearena.com:8084/data/themereleases/240417-1000/js/modules/layer/ly_studio.js
         /////////////////////////////////////////////////// 
-        lockInterface: function (t) {
-            this.inherited(arguments);
-            $("customActions").classList.add('lockedInterface');
-            $("restartAction").classList.add('lockedInterface');
-            //HIDE Buttons only for current player sending requests
-            if ('recorded' == this.interface_status
-               ||'queued' == this.interface_status
-            ){
-                this.unlockInterface();
-            }
-        },
-        unlockInterface: function (t) {
-            this.inherited(arguments);
-            $("customActions").classList.remove('lockedInterface');
-            $("restartAction").classList.remove('lockedInterface');
-        },
         //LOCK & UNLOCK without modifying top message
         onLockInterface: function (t) {
             this.inherited(arguments);
+            //if(this.isAnimationsEnabled()) return;
+            //HIDE Buttons only for current player sending requests
             if ('recorded' == this.interface_status
                ||'queued' == this.interface_status
             ){
                 dojo.style('pagemaintitle_wrap', 'display', 'block');
                 dojo.style('gameaction_status_wrap', 'display', 'none');
                 dojo.style('synchronous_notif_icon', 'display', 'none');
+                this.unlockInterface();
             }
         },
         ///////////////////////////////////////////////////
@@ -340,10 +327,7 @@ function (dojo, declare) {
         },
        
         onChangeAnimationStyleSetting(val) {
-            let nbPlayers = Object.keys(this.gamedatas.players).length;
-            if(val == PREF_ANIMATIONS_STYLE_WIND_ONLY
-            || val == PREF_ANIMATIONS_STYLE_WIND_ONLY_3P && nbPlayers >= 3
-            ){
+            if(!this.isAnimationsEnabled()){
                 this._settingAnimationDuration = 0;
             }
             else {
@@ -357,6 +341,9 @@ function (dojo, declare) {
         isAnimationsStyle2Players() {
             let nbPlayers = Object.keys(this.gamedatas.players).length;
             return this.settings.animationStyle == PREF_ANIMATIONS_STYLE_WIND_ONLY_3P && nbPlayers < 3;
+        },
+        isAnimationsEnabled() {
+            return this.isAnimationsStyleAll() || this.isAnimationsStyle2Players();
         },
 
         ///////////////////////////////////////////////////
@@ -2009,7 +1996,7 @@ function (dojo, declare) {
         Wrapper for setting a notification duration which depends on player prefs/settings
         */
         setNotifDuration(time = 0){
-            if(!this.isAnimationsStyleAll() && !this.isAnimationsStyle2Players()) time = 0;
+            if(!this.isAnimationsEnabled()) time = 0;
             if(this.isFastMode()) time = 0;
             this.notifqueue.setSynchronousDuration(time);
         },
