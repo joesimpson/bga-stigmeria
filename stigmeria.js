@@ -1996,6 +1996,7 @@ function (dojo, declare) {
         ///////////////////////////////////////////////////
         onScreenWidthChange() {
             if (this.settings) this.updateLayout();
+            this.adaptPlayersPanels();
         },
     
         updateLayout() {
