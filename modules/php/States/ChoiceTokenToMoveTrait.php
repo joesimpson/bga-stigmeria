@@ -8,6 +8,7 @@ use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Exceptions\UnexpectedException;
 use STIG\Helpers\GridUtils;
+use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
 use STIG\Models\StigmerianToken;
@@ -18,9 +19,10 @@ trait ChoiceTokenToMoveTrait
     {
         $player = Players::get($player_id);
         $boardTokens = Tokens::getAllOnPersonalBoard($player_id);
+        $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($player_id);
         return [
             'n' => ACTION_COST_MOVE,
-            'p_places_m' => $this->listPossibleMovesOnBoard($player_id,$boardTokens),
+            'p_places_m' => $this->listPossibleMovesOnBoard($player_id,$boardTokens,null, $passiveDiagonal),
         ];
     }
       
@@ -59,8 +61,11 @@ trait ChoiceTokenToMoveTrait
         if($token->pId != $pId || $token->location != TOKEN_LOCATION_PLAYER_BOARD ){
             throw new UnexpectedException(100,"You cannot move this token");
         }
+        $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($pId);
         $boardTokens = Tokens::getAllOnPersonalBoard($pId);
-        if(!$this->canMoveOnPlayerBoard($pId,$token,$boardTokens,$row, $column)){
+        if(!$this->canMoveOnPlayerBoard($pId,$token,$boardTokens,$row, $column)
+            && !($passiveDiagonal && $this->canMoveDiagonalOnPlayerBoard($pId,$token,$boardTokens,$row, $column))
+        ){
             throw new UnexpectedException(101,"You cannot move this token at $row, $column");
         }
 
@@ -162,9 +167,10 @@ trait ChoiceTokenToMoveTrait
      * @param int $playerId
      * @param array $tokens of StigmerianToken
      * @param string $windDir (optional) Force direction of move
+     * @param bool $passiveDiagonal (optional) false by default
      * @return array List of possible spaces. Example [[ 'row' => 1, 'col' => 5 ],]
      */
-    public function listPossibleMovesOnBoard($playerId,$tokens,$windDir = null){
+    public function listPossibleMovesOnBoard($playerId,$tokens,$windDir = null,$passiveDiagonal =false){
         $spots = [];
         foreach($tokens as $tokenId => $token){
             if($this->canMoveOutOnBoard($token,$windDir)){
@@ -173,7 +179,10 @@ trait ChoiceTokenToMoveTrait
             for($row = ROW_MIN; $row <=ROW_MAX; $row++ ){
                 for($column = COLUMN_MIN; $column <=COLUMN_MAX; $column++ ){
                     if(isset($windDir) && !GridUtils::isValidCellToMoveWithWind($windDir,$token->row,$token->col,$row,$column)) continue;
-                    if(isset($playerId) && $this->canMoveOnPlayerBoard($playerId,$token,$tokens,$row, $column)){
+                    if(isset($playerId) && ( $this->canMoveOnPlayerBoard($playerId,$token,$tokens,$row, $column)
+                        || $passiveDiagonal && $this->canMoveDiagonalOnPlayerBoard($playerId,$token,$tokens,$row, $column)
+                        )
+                    ){
                         $spots[$tokenId][] = [ 'row' => $row, 'col' => $column ];
                     }
                     else if(!isset($playerId) && $this->canMoveOnCentralBoard($token,$tokens,$row, $column)){
