@@ -519,12 +519,12 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => totranslate('Random Competitive'),
                 ),
-                /*
                 OPTION_SCHEMA_31 => array( 
                   'name' => '#31', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#31',
                 ),
+                /*
                 OPTION_SCHEMA_32 => array( 
                   'name' => '#32', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 

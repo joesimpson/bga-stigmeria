@@ -420,6 +420,21 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_BLUE,    10,7 ),
         ] ),
         
+      OPTION_SCHEMA_31 => new Schema(31, OPTION_FLOWER_COMPETITIVE, OPTION_DIFFICULTY_1, [],[
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  4,4 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  4,7 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    5,5 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     5,6 ),
+          new TokenCoord( TOKEN_POLLEN_RED,     6,5 ),
+          new TokenCoord( TOKEN_POLLEN_BLUE,    6,6 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  7,4 ),
+          new TokenCoord( TOKEN_POLLEN_YELLOW,  7,7 ),
+          new TokenCoord( TOKEN_POLLEN_GREEN,   10,1 ),
+          new TokenCoord( TOKEN_POLLEN_VIOLET,  10,5 ),
+          new TokenCoord( TOKEN_POLLEN_ORANGE,  10,6 ),
+          new TokenCoord( TOKEN_POLLEN_GREEN,   10,10 ),
+        ] ),
+
       OPTION_SCHEMA_33 => new Schema(33, OPTION_FLOWER_COMPETITIVE, OPTION_DIFFICULTY_1, [],[
           // Reversi LOOKALIKE
           new TokenCoord( TOKEN_POLLEN_WHITE, 5,5 ),
