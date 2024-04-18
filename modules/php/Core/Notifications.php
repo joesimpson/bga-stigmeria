@@ -152,6 +152,7 @@ class Notifications
    */
   public static function firstToken($player,$token){
     self::notifyAll('firstToken',clienttranslate('${player_name} places a ${token_color} stigmerian on StigmaReine at ${L}'),[ 
+        'i18n' => ['token_color'],
         'player' => $player,
         'L' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -207,6 +208,7 @@ class Notifications
    */
   public static function drawTokenForCentral($player, $token){
     self::notifyAll('drawTokenForCentral',clienttranslate('${player_name} draws a new ${token_color} stigmerian to be placed on StigmaReine'),[ 
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'preserve' => [ 'token_type' ],
@@ -222,6 +224,7 @@ class Notifications
    */
   public static function drawToken($player, $token, $actionCost){
     self::notifyAll('drawToken',clienttranslate('${player_name} draws a new ${token_color} stigmerian and place it in the recruitment zone (cost : ${n} actions)'),[ 
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'n' => $actionCost,
@@ -237,6 +240,7 @@ class Notifications
    */
   public static function newPollen($player, $token){
     self::notifyAll('newPollen',clienttranslate('${player_name} gets a new ${token_color} pollen at ${L}'),[ 
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'L' => $token->getCoordName(),
@@ -253,6 +257,7 @@ class Notifications
    */
   public static function moveToCentralBoard($player, $token, $actionCost){
     self::notifyAll('moveToCentralBoard',clienttranslate('${player_name} places a new ${token_color} stigmerian on StigmaReine at ${L} (cost : ${n} actions)'),[ 
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'L' => $token->getCoordName(),
@@ -272,6 +277,7 @@ class Notifications
    */
   public static function moveOnCentralBoard($player, $token,$from,$to, $actionCost){
     self::notifyAll('moveOnCentralBoard',clienttranslate('${player_name} moves a ${token_color} stigmerian on StigmaReine from ${A} to ${B} (cost : ${n} actions)'),[ 
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'A' => $from,
@@ -290,6 +296,7 @@ class Notifications
    */
   public static function moveToPlayerBoard($player, $token, $actionCost){
     self::notifyAll('moveToPlayerBoard',clienttranslate('${player_name} places a new ${token_color} stigmerian at ${L} (cost : ${n} actions)'),[ 
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'L' => $token->getCoordName(),
@@ -308,6 +315,7 @@ class Notifications
    */
   public static function moveFromDeckToPlayerBoard($player, $token, $actionCost){
     self::notifyAll('moveFromDeckToPlayerBoard',clienttranslate('${player_name} places a new ${token_color} stigmerian at ${L} (cost : ${n} actions)'),[ 
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'L' => $token->getCoordName(),
@@ -354,7 +362,7 @@ class Notifications
    */
   public static function moveBackToBox($player, $token,$from, $actionCost){
     self::notifyAll('moveBackToBox',clienttranslate('${player_name} moves a ${token_color} stigmerian out of their board from ${L}: it is now in the game box (cost : ${n} actions)'),[ 
-        'i18n' => [ 'color'],
+        'i18n' => ['token_color'],  
         'player' => $player,
         'token' => $token->getUiData(),
         'L' => $from,
@@ -452,6 +460,7 @@ class Notifications
    */
   public static function spSwap($player,$token1,$token2, $actionCost){
     self::notifyAll('spSwap',clienttranslate('${player_name} swaps 2 ${token_color}${token_color2}stigmerians at ${A} and ${B} (cost : ${n} actions)'),[ 
+        'i18n' => ['token_color','token_color2'],  
         'player' => $player,
         'A' => $token1->getCoordName(),
         'B' => $token2->getCoordName(),
@@ -535,6 +544,7 @@ class Notifications
    */
   public static function spMixing($player,$token1,$token2,$actionCost){
     self::notifyAll('spMixing',clienttranslate('${player_name} mixes 2 tokens ${token_color}${token_color2} at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+        'i18n' => [ 'token_color','token_color2'],
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -558,7 +568,7 @@ class Notifications
    */
   public static function spCombination($player,$token,$previousColor,$actionCost){
     self::notifyAll('spCombination',clienttranslate('${player_name} uses the Combination action to transform a ${token_color} stigmerian at ${L1} into a ${token_color2} stigmerian (cost: ${n} actions)'),[ 
-        'i18n' => ['color','color2'],
+        'i18n' => ['token_color','token_color2'],
         'player' => $player,
         'L1' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -635,6 +645,7 @@ class Notifications
    */
   public static function spWhite($player,$token1,$token2,$actionCost){
     self::notifyAll('spWhite',clienttranslate('${player_name} uses the Half Note action to merge 2 ${token_color}${token_color} stigmerians at ${L1} and ${L2} into a ${token_color2} at ${L1} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color','token_color2'],
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -660,6 +671,7 @@ class Notifications
    */
   public static function spBlack($player,$token1,$token2,$actionCost){
     self::notifyAll('spBlack',clienttranslate('${player_name} uses the Quarter Note action to split the ${token_color} stigmerian at ${L1} into 2 ${token_color2}${token_color2} stigmerians at ${L1} and ${L2} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color','token_color2'],
         'player' => $player,
         'L1' => $token1->getCoordName(),
         'L2' => $token2->getCoordName(),
@@ -684,6 +696,7 @@ class Notifications
    */
   public static function spTwoBeats($player,$token,$actionCost){
     self::notifyAll('spTwoBeats',clienttranslate('${player_name} uses the Two Beats action to get a new ${token_color} stigmerian at ${L1} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color'],
         'player' => $player,
         'L1' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -703,6 +716,7 @@ class Notifications
    */
   public static function spRest($player,$token,$actionCost){
     self::notifyAll('spRest',clienttranslate('${player_name} uses the Rest action to remove a ${token_color} ${token_type} at ${L1} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color'],
         'player' => $player,
         'L1' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -723,6 +737,7 @@ class Notifications
    */
   public static function spCopy($player,$token,$typeSrc,$actionCost){
     self::notifyAll('spCopy',clienttranslate('${player_name} uses the Copy action to replace a ${token_color} at ${L} into a ${token_color2} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color','token_color2'],
         'player' => $player,
         'L' => $token->getCoordName(),
         'token' => $token->getUiData(),
@@ -748,6 +763,7 @@ class Notifications
     $type2 = $typesDestArray[1];
     $type3 = $typesDestArray[2];
     self::notifyAll('spPrediction',clienttranslate('${player_name} uses the Prediction to add 3 stigmerians in their bag : ${token_color}${token_color2}${token_color3} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color','token_color2','token_color3',],
         'player' => $player,
         'n' => $actionCost,
         'preserve' => [ 'token_type','token_type2','token_type3' ],
@@ -770,6 +786,7 @@ class Notifications
    */
   public static function spMimicry($player,$token,$previousColor,$actionCost){
     self::notifyAll('spMimicry',clienttranslate('${player_name} uses the Mimicry to change a ${token_color} stigmerian to ${token_color2} at ${L} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color','token_color2',],
         'player' => $player,
         'n' => $actionCost,
         'L' => $token->getCoordName(),
@@ -790,6 +807,7 @@ class Notifications
    */
   public static function spFogDie($player,$token,$actionCost){
     self::notifyAll('spFogDie',clienttranslate('${player_name} uses the Fog Die to place a ${token_color} stigmerian at ${L} (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color',],
         'player' => $player,
         'n' => $actionCost,
         'L' => $token->getCoordName(),
@@ -809,6 +827,7 @@ class Notifications
    */
   public static function spPilferer($player,$player2,$token,$actionCost){
     self::notifyAll('spPilferer',clienttranslate('${player_name} uses the Pilferer to recruit a ${token_color} stigmerian from ${player_name2} bag (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color'],
         'player' => $player,
         'player2' => $player2,
         'n' => $actionCost,
@@ -829,6 +848,7 @@ class Notifications
    */
   public static function spSower($player,$targetPlayer,$token,$actionCost){
     self::notifyAll('spSower',clienttranslate('${player_name} uses the Sower to put 1 ${token_color} stigmerian in ${player_name2} bag (cost: ${n} actions)'),[ 
+        'i18n' => ['token_color'],
         'player' => $player,
         'player2' => $targetPlayer,
         'n' => $actionCost,
@@ -850,6 +870,7 @@ class Notifications
    */
   public static function spCharmer($player,$player1,$player2,$token1,$token2){
     self::notifyAll('spCharmer',clienttranslate('${player_name} uses the Charmer to exchange ${token_color} in ${player_name2} recruit zone with ${token_color2} in ${player_name3} recruit zone'),[ 
+        'i18n' => ['token_color','token_color2'],
         'player' => $player,
         'player2' => $player1,
         'player3' => $player2,
@@ -901,6 +922,7 @@ class Notifications
   public static function lastDriftRemove($player,$token,$player2){
     $target_name = isset($player2) ? $player2->getName() : 'StigmaReine';
     self::notifyAll('lastDriftRemove',clienttranslate('${player_name} removes a ${token_color} ${token_type} at ${L1} on ${player_name2} board'),[ 
+        'i18n' => ['token_color'],
         'player' => $player,
         'player_name2' => $target_name,
         'L1' => $token->getCoordName(),
@@ -996,6 +1018,7 @@ class Notifications
    */
   public static function putTokenInBag($player,$token,$playerDestination){
     self::notifyAll('putTokenInBag',clienttranslate('${player_name} puts a ${token_color} stigmerian in ${player_name2} bag'),[ 
+        'i18n' => ['token_color'],
         'player' => $player,
         'player2' => $playerDestination,
         'token' => $token->getUiData(),
