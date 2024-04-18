@@ -2,6 +2,8 @@
 
 namespace STIG\Models;
 
+use STIG\Helpers\GridUtils;
+
 /*
  * TokenCoord: all utility functions concerning a token coordinate on the grid
  */
@@ -44,6 +46,9 @@ class TokenCoord implements \JsonSerializable
     $data['type'] = $this->type;
     $data['row'] = $this->row;
     $data['col'] = $this->col;
+    $data['coord'] = GridUtils::getCoordName($this->row,$this->col);
+    $data['pollen'] = $this->isPollen();
+    $data['color'] = StigmerianToken::getTypeName($this->type);
 
     return $data;
   }
@@ -62,4 +67,14 @@ class TokenCoord implements \JsonSerializable
     return $neighbours;
   }
   
+  /**
+   * @return bool true if this token is on pollen side
+   */
+  public function isPollen()
+  {
+    if( array_search($this->type,TOKEN_POLLENS) === FALSE){
+      return false;
+    }
+    return true;
+  }
 }

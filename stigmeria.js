@@ -157,6 +157,8 @@ function (dojo, declare) {
             this._displayNotifsOnTopWhenGameState = true;
             //To disable if restart is chaotic
             this._displayRestartButtons = true;
+            
+            this.tooltipsOnTokens = [];
 
         },
         
@@ -207,20 +209,23 @@ function (dojo, declare) {
             $('ebd-body').setAttribute('data-modenocb', this.gamedatas.nocb);
 
             this.setupCentralBoard();
-            this.setupSchemaBoard();
             this.setupPlayers();
             this.setupInfoPanel();
-            this.setupTokens();
             this.setupSpecialActions();
-            
-            debug( "Ending specific game setup" );
 
             this.inherited(arguments);
+
+            //AFTER SETTINGS are ready :
+            this.setupSchemaBoard();
+            this.setupTokens();
+
+            debug( "Ending specific game setup" );
         },
         
         getSettingsSections: ()=>({
             layout: _("Layout"),
             gameFlow: _("Game Flow"),
+            tooltips: _("Tooltips"),
         }),
         getSettingsConfig() {
             return {
@@ -298,6 +303,18 @@ function (dojo, declare) {
                     },
                     section: "gameFlow"
                 },
+                
+                tooltipsOnToken: {
+                    default: 1,
+                    name: _("On flower tokens"),
+                    type: "select",
+                    attribute: "tooltips_on_token",
+                    values: {
+                        1: _("Enabled"),
+                        2: _("Disabled"),
+                    },
+                    section: "tooltips"
+                },
             };
         },
         
@@ -344,6 +361,31 @@ function (dojo, declare) {
         },
         isAnimationsEnabled() {
             return this.isAnimationsStyleAll() || this.isAnimationsStyle2Players();
+        },
+        
+        onChangeTooltipsOnTokenSetting(val) {
+            if (!this.isTooltipsOnTokenEnabled()) {
+                for (let i in this.tooltipsOnTokens){
+                    let tokenId = this.tooltipsOnTokens[i];
+                    if(this.tooltips[tokenId]){
+                        this.tooltips[tokenId].onShow = dojo.hitch(this.tooltips[tokenId], (function() {
+                            this.close();
+                        }
+                        ));
+                    }
+                }
+            }
+            else {
+                for (let i in this.tooltipsOnTokens){
+                    let tokenId = this.tooltipsOnTokens[i];
+                    if(this.tooltips[tokenId]){
+                        this.tooltips[tokenId].onShow = function() {};
+                    }
+                }
+            }
+        },
+        isTooltipsOnTokenEnabled() {
+            return this.settings.tooltipsOnToken == 1;
         },
 
         ///////////////////////////////////////////////////
@@ -501,7 +543,7 @@ function (dojo, declare) {
             let centralBoard = $(`stig_central_board`);
             //Clean obsolete tokens:
             centralBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)').forEach((oToken) => {
-                    dojo.destroy(oToken);
+                    this.destroy(oToken);
                 });
             //possible places to play :
             Object.values(args.p_places_p).forEach((coord) => {
@@ -666,7 +708,7 @@ function (dojo, declare) {
                 let player_target = 'central';
                 let callbackSelectionDone = (div) => { 
                     let typeSrc = div.dataset.type;
-                    document.querySelectorAll('.stig_button_ldcolor').forEach( (e) => dojo.destroy(e) );
+                    document.querySelectorAll('.stig_button_ldcolor').forEach( (e) => this.destroy(e) );
                     Object.values(STIG_PRIMARY_COLORS).forEach((tokenColor) => {
                         if(typeSrc == tokenColor) return;
                         let buttonId = `btnColor_${tokenColor}`;
@@ -1037,7 +1079,7 @@ function (dojo, declare) {
 
             let callbackSelectionDone = (div) => { 
                 let typeSrc = div.dataset.type;
-                document.querySelectorAll('.stig_button_copy').forEach( (e) => dojo.destroy(e) );
+                document.querySelectorAll('.stig_button_copy').forEach( (e) => this.destroy(e) );
                 Object.values(STIG_PRIMARY_COLORS).forEach((tokenColor) => {
                     if(typeSrc == tokenColor) return;
                     let buttonId = `btnCopy_${tokenColor}`;
@@ -1507,7 +1549,7 @@ function (dojo, declare) {
             div.dataset.col = token.col;
             div.dataset.state = token.state;
             this.slide(div, this.getTokenContainer(token)).then(() =>{
-                dojo.destroy( $(`${oldParent.id}`));
+                this.destroy( $(`${oldParent.id}`));
                 //TODO JSA destroy also previous selectable cell ?
             });
         },
@@ -1521,7 +1563,7 @@ function (dojo, declare) {
             div.dataset.row = null;
             div.dataset.col = null;
             this.slide(div, this.getTokenContainer(token)).then(() =>{
-                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                if(oldParent.classList.contains('stig_token_holder')) this.destroy( $(`${oldParent.id}`));
                 this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
         },
@@ -1543,13 +1585,13 @@ function (dojo, declare) {
             div.dataset.col = null;
             let destinationPlayer = n.args.player_id2;
             this.slide(div, `stig_reserve_${destinationPlayer}_tokens_deck`, {destroy: true,}).then(() =>{
-                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                if(oldParent.classList.contains('stig_token_holder')) this.destroy( $(`${oldParent.id}`));
                 this._counters[destinationPlayer]['tokens_deck'].incValue(1);
             });
         },
         notif_letNextPlay(n) {
             debug('notif_letNextPlay: ', n);
-            if($(`btnLetNextPlay`) ) dojo.destroy($(`btnLetNextPlay`));
+            if($(`btnLetNextPlay`) ) this.destroy($(`btnLetNextPlay`));
             Object.values(n.args.actions).forEach((playerAction) => {
                 if ($(`stig_sp_action_${playerAction.id}`)) {
                     $(`stig_sp_action_${playerAction.id}`).dataset.state = playerAction.state;
@@ -1593,7 +1635,7 @@ function (dojo, declare) {
             div.dataset.col = token.col;
             div.dataset.state = token.state;
             this.slide(div, this.getTokenContainer(token)).then(() =>{
-                dojo.destroy( $(`${oldParent.id}`));
+                this.destroy( $(`${oldParent.id}`));
                 //TODO JSA destroy also previous selectable cell ?
             });
         },
@@ -1607,7 +1649,7 @@ function (dojo, declare) {
             div.dataset.row = null;
             div.dataset.col = null;
             this.slide(div, this.getTokenContainer(token)).then(() =>{
-                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                if(oldParent.classList.contains('stig_token_holder')) this.destroy( $(`${oldParent.id}`));
                 this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
         },
@@ -1619,7 +1661,7 @@ function (dojo, declare) {
             if(!div) return;
             let oldParent = div.parentElement;//token_holder
             this.slide(div, this.getTokenContainer(token)).then(() =>{
-                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                if(oldParent.classList.contains('stig_token_holder')) this.destroy( $(`${oldParent.id}`));
                 this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
         },
@@ -1633,7 +1675,7 @@ function (dojo, declare) {
             div.dataset.row = null;
             div.dataset.col = null;
             this.slide(div, this.getTokenContainer(token)).then(() =>{
-                if(oldParent.classList.contains('stig_token_holder')) dojo.destroy( $(`${oldParent.id}`));
+                if(oldParent.classList.contains('stig_token_holder')) this.destroy( $(`${oldParent.id}`));
                 this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
         },
@@ -1662,6 +1704,7 @@ function (dojo, declare) {
                 div.dataset.type = token.type;
                 //this.slide(div, this.getTokenContainer(token));
                 this.animationBlink2Times(div);
+                this.addTooltipOnToken(token,div);
             }
             this._counters[n.args.player_id]['pollens'].incValue(1);
         },
@@ -1697,6 +1740,8 @@ function (dojo, declare) {
             div2.dataset.type = token2.type;
             this.animationBlink2Times(div1);
             this.animationBlink2Times(div2);
+            this.addTooltipOnToken(token1,div1);
+            this.addTooltipOnToken(token2,div2);
         },
         notif_spCombination(n) {
             this.setNotifDuration(900);
@@ -1706,6 +1751,7 @@ function (dojo, declare) {
             if(div1){
                 div1.dataset.type = token1.type;
                 this.animationBlink2Times(div1);
+                this.addTooltipOnToken(token1,div1);
             }
         },
         notif_spSwap(n) {
@@ -1727,10 +1773,11 @@ function (dojo, declare) {
             let div2 = $(`stig_token_${token2.id}`);
             div1.dataset.type = token1.type;
             if(div2){
-                if(div2.parentElement.classList.contains('stig_token_holder')) dojo.destroy(div2.parentElement);
-                else dojo.destroy(div2);
+                if(div2.parentElement.classList.contains('stig_token_holder')) this.destroy(div2.parentElement);
+                else this.destroy(div2);
             }
             this.animationBlink2Times(div1);
+            this.addTooltipOnToken(token1,div1);
         },
         notif_spBlack(n) {
             this.setNotifDuration(900);
@@ -1740,6 +1787,7 @@ function (dojo, declare) {
             let div1 = $(`stig_token_${token1.id}`);
             div1.dataset.type = token1.type;
             this.animationBlink2Times(div1);
+            this.addTooltipOnToken(token1,div1);
             let div2 = this.addToken(token2, this.getVisibleTitleContainer());
             this.slide(div2, this.getTokenContainer(token2));
         },
@@ -1787,6 +1835,7 @@ function (dojo, declare) {
             let div = $(`stig_token_${token.id}`);
             div.dataset.type = token.type;
             this.animationBlink2Times(div);
+            this.addTooltipOnToken(token,div);
         },
         notif_spPrediction(n) {
             this.setNotifDuration(500);
@@ -1800,6 +1849,7 @@ function (dojo, declare) {
             let div = $(`stig_token_${token.id}`);
             div.dataset.type = token.type;
             this.animationBlink2Times(div);
+            this.addTooltipOnToken(token,div);
         },
         notif_spFogDie(n) {
             this.setNotifDuration(900);
@@ -1901,10 +1951,10 @@ function (dojo, declare) {
                     //}
                     if(token.pId >0 && token.location == 'player_recruit'){
                         this._counters[token.pId]['tokens_recruit'].incValue(1);
-                        if(oldParent.classList.contains('stig_token_holder') && oldParent.childElementCount==0) dojo.destroy( $(`${oldParent.id}`));
+                        if(oldParent.classList.contains('stig_token_holder') && oldParent.childElementCount==0) this.destroy( $(`${oldParent.id}`));
                     }
                     else if( token.location == 'central_recruit'){
-                        if(oldParent.classList.contains('stig_token_holder') && oldParent.childElementCount==0) dojo.destroy( $(`${oldParent.id}`));
+                        if(oldParent.classList.contains('stig_token_holder') && oldParent.childElementCount==0) this.destroy( $(`${oldParent.id}`));
                     }
                 });
             });
@@ -2194,6 +2244,7 @@ function (dojo, declare) {
                 token.id = k;
                 let elt = this.addToken(token,grid,'_virtual');
                 elt.classList.add('stig_schema_token');
+                this.addTooltipOnToken(token,elt);
             });
         },
         tplSchemaBoard(schema) {
@@ -2276,7 +2327,7 @@ function (dojo, declare) {
             else previousContainer = existingMarker.parentElement;
             if(previousContainer != newTurnContainer) {
                 this.slide(existingMarker, newTurnContainer, {} ).then( () => {
-                    dojo.destroy(previousContainer);
+                    this.destroy(previousContainer);
                 });
             }
                 
@@ -2343,6 +2394,38 @@ function (dojo, declare) {
         tplToken(token) {
             return `<div class="stig_token" id="stig_token_${token.id}${token.divIdSuffix}" data-id="${token.id}" data-player_id="${token.pId}" data-type="${token.type}" data-state="${token.state}" data-row="${token.row}" data-col="${token.col}"></div>`;
         },   
+        addTooltipOnToken(token,divToken){
+            debug("addTooltipOnToken",token,divToken);
+            if(divToken === undefined) divToken = $(`stig_token_${token.id}`);
+            if(!divToken){
+                console.error('Trying to add tooltip on unknown div', token);
+                return;
+            }
+
+            let face = token.pollen ? _('Pollen') : _('Stigmerian');
+            token.divIdSuffix = '_tooltip';
+            let tooltipDesc = `<div class='stig_tooltip_token'>
+                <div>${ token.coord ? this.fsr(_('Coordinates : ${n}'), { n: token.coord }) :''}</div>
+                <div>${this.fsr(_('Face : ${face}'), { face: "<span class='stig_token_face'>"+face+"</span>" })}</div>
+                <div>${this.fsr(_('Color : ${color}'), { color: _(token.color.toUpperCase()) })}</div>
+               ${this.tplToken(token)}
+            </div>`;
+            //this.addCustomTooltip(divToken.id, tooltipDesc,150);
+            divToken.classList.add('tooltipable');
+            if (this.tooltips[divToken.id]) {
+                //REPLACE PREVIOUS TOOLTIP content if exist
+                this.tooltips[divToken.id].label = tooltipDesc;
+                return;
+            }
+            this.tooltipsOnTokens.push(divToken.id);
+            this.addTooltipHtml(divToken.id, tooltipDesc,150);
+            if (!this.isTooltipsOnTokenEnabled()) {
+                this.tooltips[divToken.id].onShow = dojo.hitch(this.tooltips[divToken.id], (function() {
+                    this.close();
+                }
+                ));
+            }
+        },
         addSpecialActionCell(action) {
             debug("addSpecialActionCell",action);
             let playerGrid = $(`stig_sp_grid_${action.pId}`);
@@ -2404,7 +2487,7 @@ function (dojo, declare) {
                 if (!tokenIds.includes(parseInt(oToken.getAttribute('data-id')))
                     && !oToken.classList.contains('stig_schema_token')
                 ) {
-                    dojo.destroy(oToken);
+                    this.destroy(oToken);
                 }
             });
         },
@@ -2415,6 +2498,7 @@ function (dojo, declare) {
                 let tokenHolder = this.addSelectableTokenCell(playerboard_id,token.row, token.col);
                 if( tokenHolder){
                     tokenHolder.classList.add('stig_token_holder');
+                    this.addTooltipOnToken(token);
                     return tokenHolder.id;
                 }
                 return $(`stig_grid_central`);
@@ -2423,6 +2507,7 @@ function (dojo, declare) {
                 let tokenHolder = this.addSelectableTokenCell(playerboard_id,token.row, token.col);
                 if( tokenHolder){
                     tokenHolder.classList.add('stig_token_holder');
+                    this.addTooltipOnToken(token);
                     return tokenHolder.id;
                 }
                 return $(`stig_grid_${token.pId}`);
@@ -2436,6 +2521,7 @@ function (dojo, declare) {
                 if(! $(`${recruitTypeZone}`)){
                     dojo.place(`<div id=${recruitTypeZone} data-type=${token.type} class='stig_recruits_type'></div>`, `stig_recruits_${token.pId}`);
                 }
+                this.addTooltipOnToken(token);
                 return $(`${recruitTypeZone}`);
             }
             else if (token.location == 'central_recruit') {
@@ -2443,6 +2529,7 @@ function (dojo, declare) {
                 if(! $(`${recruitTypeZone}`)){
                     dojo.place(`<div id=${recruitTypeZone} data-type=${token.type} class='stig_recruits_type'></div>`, `stig_recruits_central`);
                 }
+                this.addTooltipOnToken(token);
                 return $(`${recruitTypeZone}`);
             }
             else if(token.location == 'central_toplace'){
@@ -2477,7 +2564,7 @@ function (dojo, declare) {
             //Clean obsolete action tokens:
             document.querySelectorAll('.stig_sp_action_token').forEach((oAction) => {
                 if (!actionIds.includes(parseInt(oAction.getAttribute('data-id')))) {
-                    dojo.destroy(oAction);
+                    this.destroy(oAction);
                 }
             });
         },
@@ -2582,7 +2669,7 @@ function (dojo, declare) {
                     let div = evt.target;
                     div.classList.toggle('selected');
                     [...playerBoard.querySelectorAll('.stig_token_cell:not(.stig_token_holder)')].forEach((o) => {
-                        dojo.destroy(o);
+                        this.destroy(o);
                         });
                     //disable confirm while we don't know destination
                     $(`btnConfirm`).classList.add('disabled');
@@ -2710,7 +2797,7 @@ function (dojo, declare) {
         removeEmptyCellHolders: function()
         {
             //Remove parasites : token holders with no tokens (maybe after wind or moves that didn't clean it)
-            $(`stig_player_boards`).querySelectorAll(`.stig_token_cell.stig_token_holder:empty`).forEach((a) => { dojo.destroy(a); }); 
+            $(`stig_player_boards`).querySelectorAll(`.stig_token_cell.stig_token_holder:empty`).forEach((a) => { this.destroy(a); }); 
         },
         ////////////////////////////////////////////////////////////
         // _____                          _   _   _

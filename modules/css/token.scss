@@ -128,3 +128,24 @@
     width: 56px;
     height: 56px;
 }
+
+//////////////////////////////
+// TOOLTIPS on tokens
+//////////////////////////////
+body[data-tooltips_on_token="1"]{//PREF ENABLED
+    .stig_token.tooltipable{
+        &:hover{//:not(.selectable)
+            cursor: help;
+            outline: 10px solid black;
+        }
+    }
+}
+.stig_tooltip_token{
+    .stig_token{
+        width: calc(56px *2);
+        height: calc(56px *2);
+    }
+    .stig_token_face{
+        font-weight: bold;
+    }
+}

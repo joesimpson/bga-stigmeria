@@ -41,6 +41,35 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       this._settingAnimationDuration = 800;
     },
 
+    destroyExistingTooltip(elem) {
+      debug(`destroyExistingTooltip`,elem);
+      if (this.tooltips[elem.id]) {
+        clearTimeout(this.tooltips[elem.id].showTimeout);
+        this.tooltips[elem.id].close();
+        this.tooltips[elem.id].destroy();
+        delete this.tooltips[elem.id];
+      }
+    },
+    destroy(elem, delayRemove = false) {
+      debug(`destroy ${elem.id}`,elem);
+      this.destroyExistingTooltip(elem);
+      this.empty(elem);
+      if(!delayRemove) elem.remove();
+    },
+    
+    empty(container) {
+      debug("empty",container);
+      container = $(container);
+      container.childNodes.forEach((node) => {
+        //!! destroy node makes gap in LOOP because of removing them
+        this.destroy(node,true);
+      });
+      container.childNodes.forEach((node) => {
+        node.remove();
+      });
+      container.innerHTML = '';
+    },
+
     showMessage(msg, type) {
       if (type == 'error') {
         console.error(msg);
@@ -751,7 +780,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
 
       // Handle fast mode
       if (this.isFastMode() && (config.destroy || config.clearPos)) {
-        if (config.destroy) dojo.destroy(mobile);
+        if (config.destroy) this.destroy(mobile);
         else dojo.place(mobile, targetElt);
 
         return new Promise((resolve, reject) => {
@@ -799,7 +828,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
             dojo.removeClass(mobileElt, 'phantom');
             mobile = mobileElt;
           }
-          if (config.destroy) dojo.destroy(mobile);
+          if (config.destroy) this.destroy(mobile);
           else if (config.changeParent) {
             if (config.phantomEnd) dojo.place(mobile, targetId, 'replace');
             else this.changeParent(mobile, newParent);
@@ -1026,7 +1055,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     attachRegisteredTooltips() {
       Object.keys(this._registeredCustomTooltips).forEach((id) => {
         if (!$(id)) {
-          console.error('Trying to attack tooltip on a null element', id);
+          console.error('Trying to attach tooltip on a null element', id);
         } else {
           this.addCustomTooltip(id, this._registeredCustomTooltips[id]);
         }
