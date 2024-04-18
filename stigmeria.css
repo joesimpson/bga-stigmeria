@@ -1310,6 +1310,11 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
 .stig_player_board .stig_recruits .stig_recruits_type .stig_token {
   margin-bottom: -40px;
 }
+.stig_schema_board .stig_recruits .stig_recruits_type:empty,
+.stig_central_board .stig_recruits .stig_recruits_type:empty,
+.stig_player_board .stig_recruits .stig_recruits_type:empty {
+  display: none;
+}
 .stig_schema_board .stig_grid_out,
 .stig_central_board .stig_grid_out,
 .stig_player_board .stig_grid_out {

@@ -426,6 +426,9 @@ body[data-stig_stigmareine_auto_order="1"] {
             .stig_token{
                 margin-bottom: -40px;
             }
+            &:empty{
+                display: none;
+            }
         }
     }
     
