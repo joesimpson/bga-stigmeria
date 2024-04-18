@@ -2077,7 +2077,7 @@ function (dojo, declare) {
                 this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bag'),'');
                 this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
                 this.addTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'),'');
-                this.addTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'),'');
+                if(this.gamedatas.jokerMode>0) this.addTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'),'');
                 this.addTooltip(`stig_reserve_${player.id}_actions`, _('Actions on player board'),'');
                 this.addTooltip(`stig_reserve_${player.id}_unlockedActions`, _('Unlocked special actions'),'');
                 this.addTooltip(`stig_reserve_${player.id}_lockedActions`, _('Locked special actions'),'');
@@ -2089,13 +2089,13 @@ function (dojo, declare) {
                     tokens_deck: this.createCounter(`stig_counter_${pId}_tokens_deck`, player.tokens_deck),
                     pollens: this.createCounter(`stig_counter_${pId}_pollens`, player.pollens),
                     pollensMax: this.createCounter(`stig_counter_${pId}_pollens_total`, this.getFlowerTotalPollens()),
-                    jokers: this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1),
                     actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
                     //replace turn with player last turn when finished round
                     actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, player.end ? player.turn : this.gamedatas.turn),
                     unlockedActions: this.createCounter(`stig_counter_${pId}_unlockedActions`, player.ua),
                     lockedActions: this.createCounter(`stig_counter_${pId}_lockedActions`, player.la),
                 };
+                if(this.gamedatas.jokerMode>0) this._counters[pId].jokers = this.createCounter(`stig_counter_${pId}_jokers`, player.jokerUsed ? 0:1);
                 this.updateTurnMarker(pId, player.end ? player.turn : this.gamedatas.turn,player.npad+1,false);
                 // Useful to order boards
                 nPlayers++;
