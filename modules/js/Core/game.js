@@ -1348,4 +1348,4 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
   });
 });
 
-//# sourceURL=game.js
+// FOR STUDIO ONLY //# sourceURL=game.js
