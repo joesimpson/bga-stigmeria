@@ -28,7 +28,7 @@ trait PlayerTurnPersonalBoardTrait
         $player = Players::get($player_id);
         $nbActionsInProgress = PGlobals::getNbActionsDone($player_id);
         $prefAutoNextWhenNoVs = (PREF_START_NEXT_PLAYER_AUTO_WHEN_NO_VS == $player->getPref(PREF_START_NEXT_PLAYER));
-        if($prefAutoNextWhenNoVs && $nbActionsInProgress ==0){
+        if($prefAutoNextWhenNoVs && $nbActionsInProgress ==0 && Players::count()>1){
             //Auto let next player play if the button + confirm is useless at start of a player turn, don't  do it later in case player wants to examine
             $turn = Globals::getTurn();
             $nextPlayer = Players::getNextInactivePlayerInTurn($player_id, $turn);
