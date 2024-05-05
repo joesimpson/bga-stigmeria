@@ -171,7 +171,7 @@ class Player extends \STIG\Helpers\DB_Model
   public function addPoints($points)
   {
     if($points == 0) return;
-    $this->setScore( $this->getScore() + $points);
+    Players::incPlayerScore($this->getId(), $points);
     Stats::inc( "score", $this->id, $points );
   }
   
@@ -182,7 +182,7 @@ class Player extends \STIG\Helpers\DB_Model
   public function addTieBreakerPoints($points)
   {
     if($points == 0) return;
-    $this->incScoreAux($points);
+    Players::incPlayerTieBreakerScore($this->getId(), $points);
   }
 
   /**

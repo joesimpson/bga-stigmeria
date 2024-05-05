@@ -48,6 +48,11 @@ const SCORE_PER_RECRUIT = 1;
 //Not specified by the rules : but I add this to separate '0' score when fullfil easy game with joker VS loosing
 const SCORE_FAIL = -1;
 
+//see tie_breaker_split
+const TIEBREAKER_FOR_UNUSED_JOKER = 10000;
+const TIEBREAKER_FOR_RECRUIT = 100;
+const TIEBREAKER_FOR_YELLOW_RECRUIT = 1;
+
 /* TOKEN TYPES : stigmerians, then pollens*/
 const TOKEN_STIG_BLUE =     1;
 const TOKEN_STIG_YELLOW =   2;

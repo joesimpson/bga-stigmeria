@@ -72,26 +72,56 @@ trait ScoringTrait
           }
 
           $scoreRecruits = SCORE_PER_RECRUIT*Tokens::countRecruits($pId);
-          if($scoreRecruits>0){
+          if($scoreRecruits>0 && !Globals::isModeCompetitive()){
+            //In competitive mode this is a tieBreaker only ! (we don't want a player to win thanks to this, but if they are tied OK)
             $score += $scoreRecruits;
             Notifications::addPoints($player,$scoreRecruits,clienttranslate('${player_name} scores ${n} points for remaining tokens in recruit zone'));
           }
           
         }
-        //TiE BREAKER:
-        $yellowTokens = Tokens::countRecruits($pId,[TOKEN_STIG_YELLOW]);
-        $player->setTieBreakerPoints($yellowTokens);
+        $this->computeWinnerTieBreaker($player);
       }
       else {
         $player->setTieBreakerPoints(0);
         $score += SCORE_FAIL;
         Notifications::addPoints($player,SCORE_FAIL,clienttranslate('${player_name} scores ${n} points for not fulfilling the schema'));
       }
-      if($player->isJokerUsed()){
+      if($player->isJokerUsed() && !Globals::isModeCompetitive()){
         $score += SCORE_JOKER_USED;
         Notifications::addPoints($player,SCORE_JOKER_USED,clienttranslate('${player_name} scores ${n} points for using the joker'));
       }
       $player->addPoints($score);
+    }
+  }
+  
+
+  /**
+   * In order :
+   * - Joker used
+   * - stigmerians in recruit zone
+   * - yellow recruits
+   * @param Player $player
+   */
+  public function computeWinnerTieBreaker($player)
+  {
+    self::trace("computeWinnerTieBreaker()");
+    //Init to 0
+    $player->setTieBreakerPoints(0);
+
+    $unusedJokers = Globals::getOptionJokers();
+    if($player->isJokerUsed()){
+      $unusedJokers = 0;
+    }
+    $player->addTieBreakerPoints( $unusedJokers * TIEBREAKER_FOR_UNUSED_JOKER );
+    
+    $nbRecruits = Tokens::countRecruits($player->getId());
+    if($nbRecruits > 0){
+      $player->addTieBreakerPoints( $nbRecruits * TIEBREAKER_FOR_RECRUIT );
+    }
+
+    $yellowTokens = Tokens::countRecruits($player->getId(),[TOKEN_STIG_YELLOW]);
+    if($yellowTokens > 0){
+      $player->addTieBreakerPoints($yellowTokens * TIEBREAKER_FOR_YELLOW_RECRUIT );
     }
   }
   

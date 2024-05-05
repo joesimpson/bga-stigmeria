@@ -191,6 +191,13 @@ trait DebugTrait
   }
 
   function debugScoring(){
+    $players = Players::getAll();
+    foreach($players as $pId =>$player){
+      $player->setScore(0);
+      $player->setScoreAux(0);
+    }
+    $this->debugUI();
+
     $this->computeSchemaScoring();
   }
 

@@ -96,6 +96,33 @@ class Players extends \STIG\Helpers\DB_Manager
       self::updateFirstPlayer($turn,$firstPlayer,1);
     }
     
+  
+  }
+  /**
+   * @param int $pId
+   * @param int $score score to add to current score
+   */
+  public static function incPlayerScore($pId, $score)
+  {
+    Game::get()->trace("incPlayerScore($pId)");
+
+    return self::DB()
+      ->inc(['player_score' => $score])
+      ->wherePlayer($pId)
+      ->run();
+  }
+  /**
+   * @param int $pId
+   * @param int $score score to add to current tie breaker
+   */
+  public static function incPlayerTieBreakerScore($pId, $score)
+  {
+    Game::get()->trace("incPlayerTieBreakerScore($pId)");
+
+    return self::DB()
+      ->inc(['player_score_aux' => $score])
+      ->wherePlayer($pId)
+      ->run();
   }
 
   public static function getActiveId()
