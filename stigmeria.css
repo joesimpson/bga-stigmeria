@@ -3457,6 +3457,10 @@ body[data-modenocb=true] #settings-controls-container div[data-prefid="105"] {
   background-color: lightgreen;
 }
 
+#btnEndTurn {
+  background-color: green;
+}
+
 .stig_selected_button {
   background-color: rgb(255, 115, 0);
 }
