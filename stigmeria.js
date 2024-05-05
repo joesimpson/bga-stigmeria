@@ -90,6 +90,8 @@ function (dojo, declare) {
     const PREF_START_NEXT_PLAYER = 105;
     const PREF_START_NEXT_PLAYER_AUTO_WHEN_NO_VS = 1;
     const PREF_START_NEXT_PLAYER_MANUAL = 2;
+    
+    const PREF_UNDO_STYLE = 106;
 
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
@@ -230,6 +232,7 @@ function (dojo, declare) {
             layout: _("Layout"),
             gameFlow: _("Game Flow"),
             tooltips: _("Tooltips"),
+            buttons: _("Buttons"),
         }),
         getSettingsConfig() {
             return {
@@ -293,7 +296,7 @@ function (dojo, declare) {
                     },
                   },
                 },
-                spButtonsStyle: {section: "layout", type: 'pref', prefId: PREF_SP_BUTTONS },
+                spButtonsStyle: {section: "buttons", type: 'pref', prefId: PREF_SP_BUTTONS },
 
                 animationStyle: {
                     default: 3,
@@ -320,6 +323,7 @@ function (dojo, declare) {
                     },
                     section: "tooltips"
                 },
+                undoStyle: { section: "buttons", type: 'pref', prefId: PREF_UNDO_STYLE },
             };
         },
         

@@ -741,4 +741,15 @@ $game_preferences = [
     "default"=> PREF_START_NEXT_PLAYER_AUTO_WHEN_NO_VS,
     'attribute' => 'stig_startnextplayer',
   ],
+
+  PREF_UNDO_STYLE => [
+    'name' => totranslate('Undo buttons style'),
+    'needReload' => false,
+    'values' => [
+      PREF_UNDO_STYLE_TEXT => [ 'name' => totranslate('Text only') ],
+      PREF_UNDO_STYLE_ICON => [ 'name' => totranslate('Icon only')],
+    ],
+    "default"=> PREF_UNDO_STYLE_ICON,
+    'attribute' => 'stig_undo_style',
+  ],
 ];

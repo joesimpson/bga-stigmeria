@@ -3468,6 +3468,16 @@ body[data-modenocb=true] #settings-controls-container div[data-prefid="105"] {
   background-color: rgb(255, 115, 0) !important;
 }
 
+body[data-stig_undo_style="1"] #btnIconUndoLastStep,
+body[data-stig_undo_style="1"] #btnIconRestartTurn {
+  display: none !important;
+}
+
+body[data-stig_undo_style="2"] #btnTextUndoLastStep,
+body[data-stig_undo_style="2"] #btnTextRestartTurn {
+  display: none !important;
+}
+
 #multipleChoice_dialog ul {
   display: flex;
   flex-direction: row-reverse;

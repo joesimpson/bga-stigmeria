@@ -76,5 +76,19 @@
         },
         "default": 1,
         "attribute": "stig_startnextplayer"
+    },
+    "106": {
+        "name": "Undo buttons style",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Text only"
+            },
+            "2": {
+                "name": "Icon only"
+            }
+        },
+        "default": 2,
+        "attribute": "stig_undo_style"
     }
 }

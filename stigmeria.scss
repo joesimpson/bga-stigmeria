@@ -61,6 +61,21 @@
         background-color: rgb(255, 115, 0) !important;
     }
 }
+
+body[data-stig_undo_style='1']{//PREF_UNDO_STYLE_TEXT
+    #btnIconUndoLastStep, 
+    #btnIconRestartTurn
+    {
+        display: none !important;
+    }
+}
+body[data-stig_undo_style='2']{//PREF_UNDO_STYLE_ICON
+    #btnTextUndoLastStep,
+    #btnTextRestartTurn
+    {
+        display: none !important;
+    }
+}
 // In this game, only one multipleChoice_dialog is used with Cancel then players name
 #multipleChoice_dialog{
     ul{

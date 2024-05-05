@@ -194,13 +194,18 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       if (this._displayRestartButtons && args.args && args.args.previousChoices && args.args.previousChoices >= 1 && !args.args.automaticAction) {
         if (args.args && args.args.previousSteps) {
           let lastStep = Math.max(...args.args.previousSteps);
-          if (lastStep > 0)
-            this.addDangerActionButton('btnUndoLastStep', _('Undo last step'), () => this.undoToStep(lastStep), 'restartAction');
+          if (lastStep > 0){
+            //use css to display text or icon
+            this.addDangerActionButton('btnTextUndoLastStep', _('Undo last step'), () => this.undoToStep(lastStep), 'restartAction');
+            this.addDangerActionButton('btnIconUndoLastStep', '<i class="fa fa-undo"></i>', () => this.undoToStep(lastStep), 'restartAction');
+            this.addTooltip('btnIconUndoLastStep', '', _('Undo last step'));
+          }
         }
 
         // Restart whole turn
+        //use css to display text or icon
         this.addDangerActionButton(
-          'btnRestartTurn',
+          'btnTextRestartTurn',
           _('Restart turn'),
           () => {
             //this.stopActionTimer();
@@ -208,6 +213,16 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
           },
           'restartAction'
         );
+        this.addDangerActionButton(
+          'btnIconRestartTurn',
+          '<i class="fa fa-undo"></i><i class="fa fa-undo"></i>',
+          () => {
+            this.takeAction('actRestart');
+          },
+          'restartAction'
+        );
+        this.addTooltip('btnIconRestartTurn', '', _('Restart turn'));
+
       }
 
       // Call appropriate method
