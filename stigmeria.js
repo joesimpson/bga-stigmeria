@@ -1574,7 +1574,8 @@ function (dojo, declare) {
             div.dataset.col = null;
             this.slide(div, this.getTokenContainer(token)).then(() =>{
                 if(oldParent.classList.contains('stig_token_holder')) this.destroy( $(`${oldParent.id}`));
-                this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
+                //WRONG : token is not moved to player
+                //this._counters[n.args.player_id]['tokens_recruit'].incValue(1);
             });
         },
         notif_firstToken(n) {
