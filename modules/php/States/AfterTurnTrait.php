@@ -41,6 +41,7 @@ trait AfterTurnTrait
     if(isset($nextPlayer) 
       && $nextPlayer->getZombie() != 1 && $nextPlayer->getEliminated() == 0
       && !$nextPlayer->finishedRound()
+      && !in_array($playerId,$alreadyPlayed)
     ){
       //For now, this step is only used for playing 'Charmer' special action
       $actionType = ACTION_TYPE_CHARMER;
@@ -51,7 +52,14 @@ trait AfterTurnTrait
     }
 
     if(!$nextPlayerPlay) {
+      if(in_array($playerId,$alreadyPlayed)){
+        //SHOULD NOT HAPPEN
+        $activeId = $activePlayer->getId();
+        $nextNext = Players::getNextId($playerId);
+        $this->trace("Algorithm problem ! <li>Active player $activeId</li><li>$playerId already in array ".json_encode($alreadyPlayed)."</li><li> maybe look at next : $nextNext ?</li> " );
+      }
       $alreadyPlayed[] = $playerId;
+      Players::changeActive($playerId);
       Globals::setAfterTurnPlayers($alreadyPlayed);
       $this->gamestate->nextState("loopback");
     }

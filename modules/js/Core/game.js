@@ -342,11 +342,15 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
      * Load production bug report handler
      */
     notif_loadBug(n) {
+      debug("notif_loadBug",n);
       function fetchNextUrl() {
         var url = n.args.urls.shift();
         console.log('Fetching URL', url);
         dojo.xhrGet({
           url: url,
+          headers: {
+            "X-Request-Token": bgaConfig.requestToken
+          },
           load: function (success) {
             console.log('Success for URL', url, success);
             if (n.args.urls.length > 0) {

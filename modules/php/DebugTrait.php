@@ -7,6 +7,7 @@ use STIG\Core\PGlobals;
 use STIG\Core\Stats;
 use STIG\Helpers\Collection;
 use STIG\Helpers\GridUtils;
+use STIG\Helpers\QueryBuilder;
 use STIG\Helpers\Utils;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
@@ -50,7 +51,107 @@ trait DebugTrait
     //Formatting prefs as json -> copy the DOM of this log : \n
     Notifications::message("$json",['json' => $json]);
   }
-  
+
+  ///*
+  // * loadBug: in studio, type loadBug(20762) into the table chat to load a bug report from production
+  // * client side JavaScript will fetch each URL below in sequence, then refresh the page
+  // */
+  //public function loadBug($reportId)
+  //{
+  //  $db = explode('_', $this->getUniqueValueFromDB("SELECT SUBSTRING_INDEX(DATABASE(), '_', -2)"));
+  //  $game = $db[0];
+  //  $tableId = $db[1];
+  //  $this->notifyAllPlayers('loadBug', "Trying to load <a href='https://boardgamearena.com/bug?id=$reportId' target='_blank'>bug report $reportId</a>", [
+  //    'urls' => [
+  //      // Emulates "load bug report" in control panel
+  //      "https://studio.boardgamearena.com/admin/studio/getSavedGameStateFromProduction.html?game=$game&report_id=$reportId&table_id=$tableId",
+  //      
+  //      // Emulates "load 1" at this table
+  //      "https://studio.boardgamearena.com/table/table/loadSaveState.html?table=$tableId&state=1",
+  //      
+  //      // Calls the function below to update SQL
+  //      "https://studio.boardgamearena.com/2/$game/$game/loadBugSQL.html?table=$tableId&report_id=$reportId",
+  //      
+  //      // Emulates "clear PHP cache" in control panel
+  //      // Needed at the end because BGA is caching player info
+  //      "https://studio.boardgamearena.com/admin/studio/clearGameserverPhpCache.html?game=$game",
+  //    ]
+  //  ]);
+  //}
+  ///*
+  // * loadBugSQL: in studio, this is one of the URLs triggered by loadBug() above
+  // */
+  //public function loadBugSQL($reportId)
+  //{
+  //  $studioPlayer = $this->getCurrentPlayerId();
+  //  $players = $this->getObjectListFromDb("SELECT player_id FROM player", true);
+  //
+  //  // Change for your game
+  //  // We are setting the current state to match the start of a player's turn if it's already game over
+  //  $sql = [
+  //    "UPDATE global SET global_value=2 WHERE global_id=1 AND global_value=99"
+  //  ];
+  //  foreach ($players as $pId) {
+  //
+  //    // All games can keep this SQL
+  //    $sql[] = "UPDATE player SET player_id=$studioPlayer WHERE player_id=$pId";
+  //    $sql[] = "UPDATE global SET global_value=$studioPlayer WHERE global_value=$pId";
+  //    $sql[] = "UPDATE stats SET stats_player_id=$studioPlayer WHERE stats_player_id=$pId";
+  //
+  //    // Add game-specific SQL update the tables for your game
+  //    $sql[] = "UPDATE token SET player_id=$studioPlayer WHERE player_id = $pId";
+  //    $sql[] = "UPDATE player_action SET player_id=$studioPlayer WHERE player_id = $pId";
+  //    $sql[] = "UPDATE global_variables SET `value` = REPLACE(`value`,'$pId','$studioPlayer')";
+  //    $sql[] = "UPDATE user_preferences SET player_id=$studioPlayer WHERE player_id = $pId";
+  //    $sql[] = "UPDATE `log` SET player_id=$studioPlayer WHERE player_id = $pId";
+  //
+  //    // This could be improved, it assumes you had sequential studio accounts before loading
+  //    // e.g., quietmint0, quietmint1, quietmint2, etc. are at the table
+  //    $studioPlayer++;
+  //  }
+  //  $msg = "<b>Loaded <a href='https://boardgamearena.com/bug?id=$reportId' target='_blank'>bug report $reportId</a></b><hr><ul><li>" . implode(';</li><li>', $sql) . ';</li></ul>';
+  //  $this->warn($msg);
+  //  $this->notifyAllPlayers('message', $msg, []);
+  //
+  //  foreach ($sql as $q) {
+  //    $this->DbQuery($q);
+  //  }
+  //  $this->reloadPlayersBasicInfos();
+  //  $this->gamestate->reloadState();
+  //}
+  ///**
+  // * STUDIO : Get the database matching a bug report
+  // */
+  //public function loadBugReportSQL(int $reportId, array $studioPlayersIds): void {
+  //  $this->trace("loadBugReportSQL($reportId, ".json_encode($studioPlayersIds));
+  //  $players = $this->getObjectListFromDb('SELECT player_id FROM player', true);
+  //
+  //  // Change for your game
+  //  // We are setting the current state to match the start of a player's turn if it's already game over
+  //  $sql = ['UPDATE global SET global_value=4 WHERE global_id=1 AND global_value=99'];
+  //  foreach ($players as $index => $pId) {
+  //    $studioPlayer = $studioPlayersIds[$index];
+  //
+  //    // All games can keep this SQL
+  //    $sql[] = "UPDATE player SET player_id=$studioPlayer WHERE player_id=$pId";
+  //    $sql[] = "UPDATE global SET global_value=$studioPlayer WHERE global_value=$pId";
+  //    $sql[] = "UPDATE stats SET stats_player_id=$studioPlayer WHERE stats_player_id=$pId";
+  //
+  //    // Add game-specific SQL update the tables for your game
+  //    $sql[] = "UPDATE token SET player_id=$studioPlayer WHERE player_id = $pId";
+  //    $sql[] = "UPDATE player_action SET player_id=$studioPlayer WHERE player_id = $pId";
+  //    $sql[] = "UPDATE global_variables SET `value` = REPLACE(`value`,'$pId','$studioPlayer')";
+  //    $sql[] = "UPDATE user_preferences SET player_id=$studioPlayer WHERE player_id = $pId";
+  //    $sql[] = "UPDATE `log` SET player_id=$studioPlayer WHERE player_id = $pId";
+  //  }
+  //
+  //  foreach ($sql as $q) {
+  //    $this->DbQuery($q);
+  //  }
+  //
+  //  $this->reloadPlayersBasicInfos();
+  //}
+
   ////////////////////////////////////////////////////
   /*
   function debugStatsEx()
@@ -118,6 +219,45 @@ trait DebugTrait
       else $existing->setState(ACTION_STATE_UNLOCKED_FOREVER);
     }
     $this->gamestate->nextPrivateState($player->id, "continue");
+  }
+
+  //Add Charmer action to current player and end a turn to see if we have a step AfterTurn
+  function debugActionCharmer()
+  {
+
+    $turn = Globals::getTurn();
+    $player = Players::getCurrent();
+    $players = Players::getAll();
+    $p1 = $players->first();
+    Globals::setFirstPlayer($p1->getId());
+    foreach($players as $pid => $player){
+      $player->setLastTurn($turn -1);
+    }
+    Globals::setAfterTurnPlayers([]);
+
+    $this->gamestate->jumpToState( ST_PLAYER_TURN );
+
+    $actionType = ACTION_TYPE_CHARMER;
+    $existing = PlayerActions::getPlayer($player->id,[$actionType])->first();
+    if(!$existing) PlayerActions::createAction([
+      'type'=>$actionType,
+      'location'=>ACTION_LOCATION_PLAYER_BOARD,
+      'player_id'=>$player->id,
+      'state' => PlayerActions::getInitialState($actionType),
+    ]);
+    else $existing->setState(PlayerActions::getInitialState($actionType));
+    $this->debugUI();
+
+    foreach($players as $pid => $player){
+      $this->gamestate->setPrivateState($pid,ST_TURN_COMMON_BOARD);
+      //actGoToNext
+      $this->gamestate->nextPrivateState($pid, "next");
+      //actEndTurn
+      $nextPlayer = $this->startNextPlayerTurn($player, $turn);
+      Notifications::endTurn($player);
+      $this->gamestate->setPlayerNonMultiactive( $pid, 'end');
+    }
+    
   }
 
   function debugNotifs(){
@@ -296,8 +436,22 @@ trait DebugTrait
     $markers = $cellsMarkers[1];
     $this->trace("debugPathFinding(".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($markers));
   }
-  //*/
   //----------------------------------------------------------------
+  //Clear logs
+  function debugCLS(){
+    $query = new QueryBuilder('gamelog', null, 'gamelog_packet_id');
+    $query->delete()->run();
+  }
+  
+  //Clear all logs
+  public static function debugClearLogs()
+  {
+      $query = new QueryBuilder('log', null, 'id');
+      $query->delete()->run();
+      $query = new QueryBuilder('gamelog', null, 'gamelog_packet_id');
+      $query->delete()->run();
+  }
+  //*/
   function debugUI(){
     //players colors are not reloaded after using LOAD/SAVE buttons
     self::reloadPlayersBasicInfos();

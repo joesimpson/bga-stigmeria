@@ -650,6 +650,13 @@
       $this->game->actChangePreference($pref, $value);
       self::ajaxResponse();
     }
+
+    public function loadBugSQL() {
+      $this->setAjaxMode(false);
+      $reportId = (int) $this->getArg('report_id', AT_int, true);
+      $this->game->loadBugSQL($reportId);
+      $this->ajaxResponse();
+    }
   }
   
 
