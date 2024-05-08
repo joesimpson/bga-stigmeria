@@ -1870,7 +1870,7 @@ function (dojo, declare) {
             this.slide(div, this.getTokenContainer(token));
         },
         notif_spPilferer(n) {
-            this.setNotifDuration(900);
+            this.setNotifDuration(1700);
             debug('notif_spPilferer: token from other bag', n);
             let token = n.args.token;
             let toPid = n.args.player_id;
@@ -1878,7 +1878,7 @@ function (dojo, declare) {
             let div = this.addToken(token, `stig_reserve_${fromPid}_tokens_deck`);
             this._counters[fromPid]['tokens_deck'].incValue(-1);
             this._counters[toPid]['tokens_recruit'].incValue(+1);
-            this.slide(div, this.getTokenContainer(token));
+            this.slide(div, this.getTokenContainer(token),{duration:this._settingAnimationDuration*2});
         },
         notif_spSower(n) {
             this.setNotifDuration(900);
