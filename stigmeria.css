@@ -842,7 +842,7 @@ body[data-tooltips_on_token="1"] .stig_token.tooltipable:hover {
   background-repeat: no-repeat;
   width: 1167px;
   height: 1176px;
-  background-image: url("img/actions.jpg");
+  background-image: url("img/actions/actions_en.jpg");
 }
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name {
   position: absolute;
@@ -2676,7 +2676,7 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
 #customActions .stig_sp_action_image {
   width: 98px;
   height: 58px;
-  background-image: url("img/actions.jpg");
+  background-image: url("img/actions/actions_en.jpg");
   background-size: 800%;
   margin-left: 5px;
   border-radius: 12px;

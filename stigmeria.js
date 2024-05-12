@@ -210,7 +210,6 @@ function (dojo, declare) {
             this.dontPreloadImage( 'flower3.jpg' );
             this.dontPreloadImage( 'flower4.jpg' );
             this.dontPreloadImage( 'flower5.jpg' );
-            this.dontPreloadImage( 'actions.jpg' );
 
             $('ebd-body').setAttribute('data-modenocb', this.gamedatas.nocb);
 
