@@ -369,6 +369,10 @@ const PREF_UNDO_STYLE = 106;
 const PREF_UNDO_STYLE_TEXT = 1;
 const PREF_UNDO_STYLE_ICON = 2;
 
+const PREF_ACTIONS_LANG = 107;
+const PREF_ACTIONS_LANG_EN = 1;
+const PREF_ACTIONS_LANG_FR = 2;
+
 /*
  * State constants
  */

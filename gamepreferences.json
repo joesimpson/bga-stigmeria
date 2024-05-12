@@ -90,5 +90,19 @@
         },
         "default": 2,
         "attribute": "stig_undo_style"
+    },
+    "107": {
+        "name": "Special actions board",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "English"
+            },
+            "2": {
+                "name": "French"
+            }
+        },
+        "default": 1,
+        "attribute": "stig_sp_action_lang"
     }
 }

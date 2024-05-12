@@ -752,4 +752,15 @@ $game_preferences = [
     "default"=> PREF_UNDO_STYLE_ICON,
     'attribute' => 'stig_undo_style',
   ],
+
+  PREF_ACTIONS_LANG => [
+    'name' => totranslate('Special actions board'),
+    'needReload' => false,
+    'values' => [
+      PREF_ACTIONS_LANG_EN => [ 'name' => totranslate('English') ],
+      PREF_ACTIONS_LANG_FR => [ 'name' => totranslate('French')],
+    ],
+    "default"=> PREF_ACTIONS_LANG_EN,
+    'attribute' => 'stig_sp_action_lang',
+  ],
 ];

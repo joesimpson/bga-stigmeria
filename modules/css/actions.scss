@@ -147,6 +147,29 @@ body{
     }
 }
 
+//html[lang='fr']{
+//    .stig_sp_action_board,
+//    .stig_sp_action_image{
+//        background-image: url("img/actions/actions_fr.jpg") !important;
+//    }
+//}
+body {
+    //PREF_ACTIONS_LANG_EN
+    &[data-stig_sp_action_lang="1"]{
+        .stig_sp_action_board,
+        .stig_sp_action_image{
+            background-image: url("img/actions/actions_en.jpg") !important;
+        }
+    }
+    //PREF_ACTIONS_LANG_FR
+    &[data-stig_sp_action_lang="2"]{
+        .stig_sp_action_board,
+        .stig_sp_action_image{
+            background-image: url("img/actions/actions_fr.jpg") !important;
+        }
+    }
+}
+
 .stig_sp_grid{
     .stig_sp_col{
         //Mask to mark a column as not playable : not visible by default

@@ -2792,6 +2792,15 @@ body[data-stig_sp_buttons="3"] .stig_sp_action_image {
   display: none;
 }
 
+body[data-stig_sp_action_lang="1"] .stig_sp_action_board,
+body[data-stig_sp_action_lang="1"] .stig_sp_action_image {
+  background-image: url("img/actions/actions_en.jpg") !important;
+}
+body[data-stig_sp_action_lang="2"] .stig_sp_action_board,
+body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
+  background-image: url("img/actions/actions_fr.jpg") !important;
+}
+
 .stig_sp_grid .stig_sp_col {
   z-index: 1;
   position: absolute;

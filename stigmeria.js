@@ -93,6 +93,10 @@ function (dojo, declare) {
     
     const PREF_UNDO_STYLE = 106;
 
+    const PREF_ACTIONS_LANG = 107;
+    const PREF_ACTIONS_LANG_EN = 1;
+    const PREF_ACTIONS_LANG_FR = 2;
+
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
             debug('stigmeria constructor');
@@ -219,12 +223,36 @@ function (dojo, declare) {
             this.setupSpecialActions();
 
             this.inherited(arguments);
+            this.setupLanguageSettings();
 
             //AFTER SETTINGS are ready :
             this.setupSchemaBoard();
             this.setupTokens();
 
             debug( "Ending specific game setup" );
+        },
+
+        /**
+         * Init preferences the first time we load the game with a specific locale
+         */
+        setupLanguageSettings(){
+            let lang = _('$locale'); // en, fr, etc.
+            debug("setupLanguageSettings", lang);
+            let settingName = "LanguageInit";
+            let isLanguageAlreadyInit = this.getConfig(settingName);
+            if(isLanguageAlreadyInit) return;
+
+            //Wait for when page is ready to simulate preference selection
+            document.addEventListener("readystatechange", () => {
+            //document.addEventListener("DOMContentLoaded", () => {
+                debug("setupLanguageSettings ... page is ready");
+                
+                if(lang == 'fr' && this.prefs[PREF_ACTIONS_LANG] != PREF_ACTIONS_LANG_FR){
+                    debug("init of french language settings");
+                    this.setPreferenceValue(PREF_ACTIONS_LANG, PREF_ACTIONS_LANG_FR);
+                }
+            });
+            localStorage.setItem(this.game_name + settingName, true);
         },
         
         getSettingsSections: ()=>({
@@ -323,6 +351,8 @@ function (dojo, declare) {
                     section: "tooltips"
                 },
                 undoStyle: { section: "buttons", type: 'pref', prefId: PREF_UNDO_STYLE },
+
+                actionsLang: { section: "layout", type: 'pref', prefId: PREF_ACTIONS_LANG },
             };
         },
         
