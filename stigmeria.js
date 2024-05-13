@@ -2132,13 +2132,13 @@ function (dojo, declare) {
                 
                 document.querySelectorAll('.stig_icon_container_tokens_recruit').forEach((e) => e.dataset.flower_type = this.getFlowerType());
 
-                this.addTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bag'),'');
-                this.addTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'),'');
-                this.addTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'),'');
-                if(this.gamedatas.jokerMode>0) this.addTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'),'');
-                this.addTooltip(`stig_reserve_${player.id}_actions`, _('Actions on player board'),'');
-                this.addTooltip(`stig_reserve_${player.id}_unlockedActions`, _('Unlocked special actions'),'');
-                this.addTooltip(`stig_reserve_${player.id}_lockedActions`, _('Locked special actions'),'');
+                this.addCustomTooltip(`stig_reserve_${player.id}_tokens_deck`, _('Tokens in bag'));
+                this.addCustomTooltip(`stig_reserve_${player.id}_tokens_recruit`, _('Tokens in recruit zone'));
+                this.addCustomTooltip(`stig_reserve_${player.id}_pollens`, _('Pollens on flower'));
+                if(this.gamedatas.jokerMode>0) this.addCustomTooltip(`stig_reserve_${player.id}_jokers`, _('Jokers'));
+                this.addCustomTooltip(`stig_reserve_${player.id}_actions`, _('Actions on player board'));
+                this.addCustomTooltip(`stig_reserve_${player.id}_unlockedActions`, _('Unlocked special actions'));
+                this.addCustomTooltip(`stig_reserve_${player.id}_lockedActions`, _('Locked special actions'));
 
                 let pId = player.id;
                 //let nbUnlockedActions = (this.gamedatas.actions[pId]!=undefined) ? this.gamedatas.actions[pId].length : 0;
@@ -2179,7 +2179,7 @@ function (dojo, declare) {
             let divHolder = $(`overall_player_board_${pId}`).querySelector('.stig_first_player_holder');
             if(!$(`stig_first_player`) ){
                 dojo.place('<div id="stig_first_player"></div>', divHolder);
-                this.addTooltip('stig_first_player', _('Starting player'),'');
+                this.addCustomTooltip('stig_first_player', _('Starting player'));
             }
             this.slide('stig_first_player',divHolder, {
                 phantom: false,
@@ -2477,7 +2477,7 @@ function (dojo, declare) {
                 return;
             }
             this.tooltipsOnTokens.push(divToken.id);
-            this.addTooltipHtml(divToken.id, tooltipDesc,150);
+            this.addCustomTooltip(divToken.id, tooltipDesc,150);
             if (!this.isTooltipsOnTokenEnabled()) {
                 this.tooltips[divToken.id].onShow = dojo.hitch(this.tooltips[divToken.id], (function() {
                     this.close();
@@ -2972,6 +2972,10 @@ function (dojo, declare) {
             dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
             this._counters['turn'] = this.createCounter('stig_counter_turn',this.gamedatas.turn);
             
+            let chk = $('help-mode-chk');
+            dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
+            this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode.'));
+
             this._settingsModal = new customgame.modal('showSettings', {
                 class: 'stig_popin',
                 closeIcon: 'fa-times',
@@ -2995,6 +2999,13 @@ function (dojo, declare) {
                   ${_('Turn')} <span id='stig_counter_turn'>${turn}</span> / <span id='stig_counter_turn_max'>${turnMax}</span>
                 </div>
                 <div class="player_config_row">
+                    <div id="help-mode-switch">
+                        <input type="checkbox" class="checkbox" id="help-mode-chk" />
+                        <label class="label" for="help-mode-chk">
+                            <div class="ball"></div>
+                        </label>
+                        <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="question-circle" class="svg-inline--fa fa-question-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 422a46 46 0 1 1 46-46 46.05 46.05 0 0 1-46 46zm40-131.33V300a12 12 0 0 1-12 12h-56a12 12 0 0 1-12-12v-4c0-41.06 31.13-57.47 54.65-70.66 20.17-11.31 32.54-19 32.54-34 0-19.82-25.27-33-45.7-33-27.19 0-39.44 13.14-57.3 35.79a12 12 0 0 1-16.67 2.13L148.82 170a12 12 0 0 1-2.71-16.26C173.4 113 208.16 90 262.66 90c56.34 0 116.53 44 116.53 102 0 77-83.19 78.21-83.19 106.67z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 338a46 46 0 1 0 46 46 46 46 0 0 0-46-46zm6.66-248c-54.5 0-89.26 23-116.55 63.76a12 12 0 0 0 2.71 16.24l34.7 26.31a12 12 0 0 0 16.67-2.13c17.86-22.65 30.11-35.79 57.3-35.79 20.43 0 45.7 13.14 45.7 33 0 15-12.37 22.66-32.54 34C247.13 238.53 216 254.94 216 296v4a12 12 0 0 0 12 12h56a12 12 0 0 0 12-12v-1.33c0-28.46 83.19-29.67 83.19-106.67 0-58-60.19-102-116.53-102z"></path></g></svg>
+                    </div>
                     <div id="show-settings">
                     <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                         <g>

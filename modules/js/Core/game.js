@@ -1111,7 +1111,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       );
 
       dojo.connect($(id), 'click', (evt) => {
-        if (!this._helpMode) {
+        if (!this._helpMode || this.bHideTooltips) {
           tooltip.close();
         } else {
           evt.stopPropagation();
@@ -1128,6 +1128,9 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
 
       tooltip.showTimeout = null;
       dojo.connect($(id), 'mouseenter', () => {
+        //BGA preference Disabled
+        if(this.bHideTooltips) return;
+        
         if (!this._helpMode && !this._dragndropMode) {
           if (tooltip.showTimeout != null) clearTimeout(tooltip.showTimeout);
 
