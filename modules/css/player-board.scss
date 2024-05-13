@@ -93,16 +93,40 @@
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     grid-template-rows: repeat(8, 1fr);
+                    position: absolute;
+                    top: 78px;
+                    left: 54px;
 
                     .stig_sp_action_cell{
                         display: flex;
-                        justify-content: center;
                         align-items: center;
                         position: absolute;
+                        z-index: 2;
+
+                        position: relative;
+                        width: 313px;
+                        height: 133px;
+                        margin-right: 40px;
+
+                        &.tooltipable{
+                            cursor: help;
+                            &:hover{
+                                outline: 5px solid black;
+                                z-index: 3;
+                            }
+                        }
+
+                        .stig_sp_action_detail{
+                            width: 188px;
+                            height: 100%;
+                        }
             
                         .stig_sp_action_token{
                             width: 125px;
                             height: 125px;
+                            position: absolute;
+                            right: 0;
+
                             &[data-state='0'],
                             &[data-state='3'],
                             &[data-state='4']{
@@ -127,7 +151,7 @@
                         &[data-type='24'],
                         &[data-type='29'],
                         &[data-type='30'] {
-                            left: 240px;
+                            grid-column-start: 1;
                         }
                         // COLUMN 2
                         &[data-type='12'],
@@ -136,7 +160,7 @@
                         &[data-type='31'],
                         &[data-type='32'],
                         &[data-type='25'] {
-                            left: 590px;
+                            grid-column-start: 2;
                         }
                         // COLUMN 3
                         &[data-type='13'],
@@ -145,52 +169,52 @@
                         &[data-type='26'],  
                         &[data-type='28'],
                         &[data-type='27']  {
-                            left: 950px;
+                            grid-column-start: 3;
                         }
 
                         // ROW 1
                         &[data-type='13'],
                         &[data-type='20'],
                         &[data-type='29'] {
-                            top: 83px;
+                            grid-row-start: 1;
                         }
                         // ROW 2
                         &[data-type='11'], 
                         &[data-type='31'], 
                         &[data-type='28'] {
-                            top: 214px;
+                            grid-row-start: 2;
                         }
                         // ROW 3
                         &[data-type='22'],
                         &[data-type='25'],
                         &[data-type='27'] {
-                            top: 350px;
+                            grid-row-start: 3;
                         }
                         // ROW 4
                         &[data-type='14'],
                         &[data-type='15'],
                         &[data-type='16'] {
-                            top: 480px;
+                            grid-row-start: 4;
                         }
                         // ROW 5
                         &[data-type='10'],
                         &[data-type='12'],
                         &[data-type='26']  {
-                            top: 615px;
+                            grid-row-start: 5;
                         }
                         // ROW 6
                         &[data-type='23'],
                         &[data-type='24'],
                         &[data-type='32'] {
-                            top: 747px;
+                            grid-row-start: 6;
                         }
                         // ROW 7
                         &[data-type='21'] {
-                            top: 878px;
+                            grid-row-start: 7;
                         }
                         // ROW 8
                         &[data-type='30'] {
-                            top: 1010px;
+                            grid-row-start: 8;
                         }
                     }
                 }

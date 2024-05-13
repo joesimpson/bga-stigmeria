@@ -52,6 +52,7 @@ class PlayerAction extends \STIG\Helpers\DB_Model
   {
     $data = parent::getUiData();
     $data['d'] = $this->difficulty;
+    $data['name'] = $this->getName();
     unset($data['difficulty']);
     unset($data['cost']);
     unset($data['location']);
@@ -166,13 +167,20 @@ class PlayerAction extends \STIG\Helpers\DB_Model
     }
   }
 
-    /**
-     * @param int $actionType
-     * @return int $state
-     */
-    public function getName()
-    {
-        switch($this->getType()){
+  /**
+   * @return string name
+   */
+  public function getName()
+  {
+    return self::getTypeName($this->getType());
+  }
+  /**
+   * @param int $type
+   * @return string name
+   */       
+  static public function getTypeName($type)
+  {
+        switch($type){
             case ACTION_TYPE_MIXING:
               return clienttranslate("Mixing");
             case ACTION_TYPE_COMBINATION:

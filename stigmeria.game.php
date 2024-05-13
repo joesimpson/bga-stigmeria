@@ -140,6 +140,7 @@ class Stigmeria extends Table
           'players' => Players::getUiData($current_player_id),
           'tokens' => Tokens::getUiData($current_player_id),
           'actions' => PlayerActions::getUiData(),
+          'actions_names' => PlayerActions::getNames(),
           'turn' => Globals::getTurn(),
           'firstPlayer' => $firstPlayer,
           'winds' => Globals::getAllWindDir(),

@@ -116,19 +116,6 @@ body[data-stig_undo_style='2']{//PREF_UNDO_STYLE_ICON
             width: 45px;
             height: 45px;
         }
-        &.stig_icon_flower_violet {
-            width: 40px;
-            height: 34px;
-            background-image: url("img/token.Png");
-            background-size: 6000%;
-            background-position-x: 480px;
-            background-position-y: 69px;
-            margin-right: 3px;
-            &.stig_icon_flipped{
-                transform: scaleX(-1);
-                margin-left: 3px;
-            }
-        }
         &.stig_ld_action_image{
             //last drift
             width: 40px;

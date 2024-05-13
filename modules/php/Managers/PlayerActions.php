@@ -33,6 +33,18 @@ class PlayerActions extends \STIG\Helpers\Pieces
     }
     return $allGroupBy;
   }
+  
+  /**
+   * @return array of string with "player action" name
+   */
+  public static function getNames()
+  {
+    $all = [];
+    foreach(ACTION_TYPES as $type){
+      $all[$type] = PlayerAction::getTypeName($type);
+    }
+    return $all;
+  }
 
   /**
    * @param int $type

@@ -262,20 +262,24 @@ trait DebugTrait
 
   function debugNotifs(){
     $player = Players::getCurrent();
-    $targetplayer = Players::getCurrent();
+    $next = Players::getNextId($player);
+    $targetplayer = Players::get($next);
+
     $token = Tokens::get(34);
     //Notifications::lastDriftRemove($player,$token,$targetplayer); 
     //Notifications::moveBackToBox($player,$token,'D9',1); 
     //Notifications::spRest($player,$token,1); 
 
     //test notif on unknown token :
-    Notifications::newPollen($player,Tokens::createToken([
-        'type'=>TOKEN_STIG_WHITE,
-        'location'=>TOKEN_LOCATION_PLAYER_BOARD,
-        'player_id'=>$player->id,
-        'y'=>1,
-        'x'=>1,
-    ]));
+    //Notifications::newPollen($player,Tokens::createToken([
+    //    'type'=>TOKEN_STIG_WHITE,
+    //    'location'=>TOKEN_LOCATION_PLAYER_BOARD,
+    //    'player_id'=>$player->id,
+    //    'y'=>1,
+    //    'x'=>1,
+    //]));
+
+    Notifications::spPilferer($player,$targetplayer,$token,0);
   }
   function debugWind()
   {

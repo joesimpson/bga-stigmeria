@@ -2492,6 +2492,8 @@ function (dojo, declare) {
             if ( $(tokenDivId) ) return $(tokenDivId);
             
             let token = this.place('tplSpecialActionCell', action, playerGrid);
+            this.addCustomTooltip(token.id,this.getSpecialActionTooltip(action));
+
             return token;
         },
         addSpecialActionToken(action) {
@@ -2503,10 +2505,73 @@ function (dojo, declare) {
             return elt;
         },
         tplSpecialActionCell(action) {
-            return `<div class="stig_sp_action_cell" id="stig_sp_action_cell_${action.pId}_${action.type}" data-type="${action.type}"></div>`;
+            return `<div class="stig_sp_action_cell" id="stig_sp_action_cell_${action.pId}_${action.type}" data-type="${action.type}">
+                <div class="stig_sp_action_detail" id="stig_sp_action_detail_${action.pId}_${action.type}" data-type="${action.type}">
+            </div>`;
         },
         tplSpecialActionToken(action) {
             return `<div class="stig_sp_action_token" id="stig_sp_action_${action.id}" data-id="${action.id}" data-pid="${action.pId}" data-type="${action.type}" data-state="${action.state}"></div>`;
+        },
+        getSpecialActionTooltip(action) {
+            
+            let VSactionDesc = _('VS: This is a Versus action.');
+            let descriptionMap = new Map([
+
+                //FROM Help board A10 :
+                [ACTION_TYPE_PILFERER, this.fsr(_('Free action, once during your turn, you can recruit by drawing a stigmerian from another player bag and putting it in your recruitment area.'),{})
+                    + "<br><br>"+ VSactionDesc
+                ],
+                [ACTION_TYPE_COMBINATION, this.fsr(_('Change to a brown color a stigmerian token that is surrounded by 8 tokens (diagonals included) of which at least 2 yellow, 2 red and 2 blue tokens. The surrounding tokens can be stigmerians or pollens. The original central token is replaced by a brown stigmerian token and put back in the box.'),{})],
+                [ACTION_TYPE_TWOBEATS, this.fsr(_('Make a white stigmerian token appear in an empty spot which is surrounded by 8 tokens (diagonals included), it can be a mix of stigmerian and/or pollen tokens'),{})],
+                [ACTION_TYPE_DIAGONAL, this.fsr(_('Move a stigmerian token diagonally.'),{})],
+                [ACTION_TYPE_MIXING, this.fsr(_('Change the color of two primary stigmerian tokens which are horizontally or vertically adjacent into the secondary color resulting of their mixing. Be careful this action cannot be performed on pollen tokens.'),{})
+                    + "<br>"+ this.fsr(_('Put back in the box both primary color tokens and replace them at the same place on the flower by secondary color tokens from the box.'),{})
+                ],
+                [ACTION_TYPE_NSNK, this.fsr(_('Exchange 4 tokens of the same primary color in your recruitment area by 4 tokens of the same primary color of your choice taken from the box (example: 4 blue tokens exchanged for 4 yellow tokens or 4 red tokens).'),{})],
+                [ACTION_TYPE_BLACK, this.fsr(_('Transform a white stigmerian token in 2 black stigmerian tokens. Put the white token back to the box and replace it by one black token. The second black token is placed adjacent to the first one.'),{})],
+                [ACTION_TYPE_SOWER, this.fsr(_('Free action, once during your turn, you can choose a token of a color that is not used by the schema and put it in another player bag.'),{})
+                    + "<br><br>"+ VSactionDesc
+                ],
+
+                //FROM Help board A11 :
+                [ACTION_TYPE_WHITE, this.fsr(_('Fusion 2 black adjacent tokens in one white stigmerian token on one of the two places previously occupied by the black tokens. Put back in the box the 2 black tokens.'),{})],
+                [ACTION_TYPE_CHARMER, this.fsr(_('Free action, once per turn, at the end of a turn after all players played on their individual board (in turn order).'),{})
+                    + "&nbsp;"+ _('Exchange one stigmerian from a recruitment area with one stigmerian from an other recruitment area. If more than two players play, you can exchange tokens from 2 other players.')
+                    + "&nbsp;"+ _('The exchanged tokens cannot be exchanged again in the current turn.')
+                    + "&nbsp;"+ _('The first player do this action first if they can and wish to do so, then other players do the same in turn order.')
+                    + "<br><br>"+ VSactionDesc
+                ],
+                [ACTION_TYPE_COPY, this.fsr(_('Once per turn, switch a stigmerian token of a primary color on the board with another stigmerian token of a primary color from the box. The switched token is put back in the box.'),{})],
+                [ACTION_TYPE_SWAP, this.fsr(_('You can switch the position of 2 adjacent stigmerian tokens (diagonals excluded). They permute.'),{})],
+                [ACTION_TYPE_FULGURANCE, this.fsr(_('Draw 5 stigmerian tokens from your bag and put them randomly from left to right on the same line, with the first token adjacent to a stigmerian or pollen token already in game : no diagonals but the first token can be above or under a token as long as it is adjacent.'),{})
+                    + "<br>"+ _('If there is no token already in game, put the first token on a free space on the first line (A) as long as you can place the other 4 tokens next to this one on the same line.')
+                ],
+                [ACTION_TYPE_JEALOUSY, this.fsr(_('Once per game, during your turn, after playing on the common board (and before playing on your individual board), you can exchange your bag for the rest of the game with an other player.'),{})
+                    + "<br>"+ _('You must have a minimum of 5 tokens in your bag to exchange it.')
+                ],
+
+                //FROM Help board A12 :
+                [ACTION_TYPE_CHOREOGRAPHY, this.fsr(_('Once per turn you can move maximum X stigmerian tokens by one movement. (X is equal to the ongoing turn number minus 2).'),{})],
+                [ACTION_TYPE_FOGDIE, this.fsr(_('Once per turn, roll the die and take a stigmerian of the color indicated by the die face. Without using the recruit action, you have to land this token on your board, following the landing rules.'),{})],
+                [ACTION_TYPE_MIMICRY, this.fsr(_('Spend 3 action points to exchange the last stigmerian token that landed on the board by the same color of one of the adjacent colors. You cannot copy the same color many times on the same turn.'),{})],
+                [ACTION_TYPE_MOVE_FAST, this.fsr(_('Once per turn, you can move one stigmerian token by X movements maximum. (X is equal to the ongoing turn number minus 2).'),{})],
+                [ACTION_TYPE_PREDICTION, this.fsr(_('Once per turn, take 3 tokens of different colors from the box and add them to your bag. That allows you to be able to draw tokens of non primary colors to top put on the common board : in this case, these colors work exactly with the same rules than primary colors to unlock the special actions on the common board.'),{})],
+                [ACTION_TYPE_REST, this.fsr(_('Once per turn you can make a stigmerian or a pollen disappear from a flower spot. The token is put back in the box.'),{})],
+            ]);
+            let desc = descriptionMap.get(action.type);
+            return `<div class="stig_sp_action_tooltip" data-type="${action.type}">
+                <div class="stig_sp_action_title">
+                    <div class="stig_icon_flower_violet"></div>
+                    <div class="stig_sp_action_name">${_(action.name)}</div>
+                    <div class="stig_icon_flower_violet stig_icon_flipped"></div>
+                </div>
+                <div class="stig_sp_action_desc">${desc}</div>
+                <div class="stig_sp_action_image_resized">
+                    <div class="stig_sp_action_image_wrapper">
+                        <div class="stig_sp_action_image" data-type='${action.type}'></div>
+                    </div>
+                </div>
+            </div>`;
         },
         tplWindDirContainer(datas) {
             let winds = '';
@@ -2600,6 +2665,15 @@ function (dojo, declare) {
         setupSpecialActions() {
             debug("setupSpecialActions");
             let actionIds = [];
+            
+            //prepare every action cell on actions board to display tooltips
+            Object.entries(this.gamedatas.actions_names).forEach(([action_type, action_name]) => {
+                this.forEachPlayer(  (player) => {
+                    let actionCell = {pId: player.id, type: parseInt(action_type), name: action_name};
+                    this.addSpecialActionCell(actionCell);
+                });
+            });
+
             Object.values(this.gamedatas.actions).forEach((actions) => {
             //this.gamedatas.actions[playerId].map((action) => {
                 return actions.map((action) => {
