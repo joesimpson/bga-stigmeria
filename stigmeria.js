@@ -339,6 +339,18 @@ function (dojo, declare) {
                 },
                 startNextPlay: {section: "gameFlow", type: 'pref', prefId: PREF_START_NEXT_PLAYER },
                 
+                pilfererAlert: {
+                    default: 2,
+                    name: _("Pilferer alert"),
+                    type: "select",
+                    attribute: "pilferer-alert",
+                    values: {
+                        2: _("When I am targeted"),
+                        3: _("Disabled"),
+                    },
+                    section: "gameFlow"
+                },
+
                 tooltipsOnToken: {
                     default: 1,
                     name: _("On flower tokens"),
@@ -1908,6 +1920,12 @@ function (dojo, declare) {
             this._counters[fromPid]['tokens_deck'].incValue(-1);
             this._counters[toPid]['tokens_recruit'].incValue(+1);
             this.slide(div, this.getTokenContainer(token),{duration:this._settingAnimationDuration*2});
+            
+            let prefAlert = this.settings.pilfererAlert;
+            if(prefAlert == 2 && fromPid == this.player_id){//When pref to display alert to targeted player
+                let notif_msg = this.format_string_recursive(n.log, n.args);
+                this.infoDialog(notif_msg, _('Alert'), () => {});
+            }
         },
         notif_spSower(n) {
             this.setNotifDuration(900);
