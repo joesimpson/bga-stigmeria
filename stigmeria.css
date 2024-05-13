@@ -844,6 +844,10 @@ body[data-tooltips_on_token="1"] .stig_token.tooltipable:hover {
   height: 1176px;
   background-image: url("img/actions/actions_en.jpg");
 }
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .help-marker {
+  transform: scale(calc(1 / var(--stig_sp_board_display_scale)));
+  transform-origin: top left;
+}
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .player-name {
   position: absolute;
   text-align: center;

@@ -31,7 +31,7 @@
                 border: 2px solid black;
                 box-shadow: 1px 1px 10px black;
                 position: relative;
-        
+
                 display: flex;
                 flex-wrap: wrap;
 
@@ -42,6 +42,12 @@
                 height: 1176px;
 
                 background-image: url('img/actions/actions_en.jpg');
+
+                .help-marker{
+                    //Keep around the same size for the help marker in help mode
+                    transform: scale(calc(1 / var(--stig_sp_board_display_scale)));
+                    transform-origin: top left;
+                }
                 
                 .player-name {
                     position: absolute;
