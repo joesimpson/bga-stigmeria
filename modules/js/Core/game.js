@@ -43,6 +43,8 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       this.alwaysFixTopActions = true;
       //Max percentage of screen to use with top bar :
       this.alwaysFixTopActionsMaximum = 30;
+      
+      this.tooltipsIdsToHide = [];
     },
 
     destroyExistingTooltip(elem) {
@@ -1130,7 +1132,8 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       dojo.connect($(id), 'mouseenter', () => {
         //BGA preference Disabled
         if(this.bHideTooltips) return;
-        
+        if(this.tooltipsIdsToHide.indexOf(id)>=0) return;
+
         if (!this._helpMode && !this._dragndropMode) {
           if (tooltip.showTimeout != null) clearTimeout(tooltip.showTimeout);
 

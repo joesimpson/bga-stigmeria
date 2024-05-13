@@ -2726,7 +2726,7 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
 .stig_sp_action_image[data-type="15"] {
   background-position-x: 548px;
   background-position-y: 517px;
-  height: 67px;
+  height: 72px;
   width: 62px;
   background-size: 1490%;
 }
@@ -2885,6 +2885,26 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
 .stig_sp_action_tooltip .stig_sp_action_image_resized .stig_sp_action_image_wrapper {
   transform: scale(2);
   transform-origin: top left;
+}
+.stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="14"] {
+  width: 120px;
+  height: 116px;
+}
+.stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="15"] {
+  width: 124px;
+  height: 144px;
+}
+.stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="16"] {
+  width: 192px;
+  height: 134px;
+}
+.stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="25"] {
+  width: 124px;
+  height: 134px;
+}
+.stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="32"] {
+  width: 200px;
+  height: 150px;
 }
 
 .stig_icon_container_die_log,

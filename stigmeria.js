@@ -169,6 +169,7 @@ function (dojo, declare) {
             this._displayRestartButtons = true;
             
             this.tooltipsOnTokens = [];
+            this.tooltipsOnSpecialActions = [];
 
         },
         
@@ -362,6 +363,17 @@ function (dojo, declare) {
                     },
                     section: "tooltips"
                 },
+                tooltipsOnSpAction: {
+                    default: 1,
+                    name: _("On special actions"),
+                    type: "select",
+                    attribute: "tooltips_on_sp_action",
+                    values: {
+                        1: _("Enabled"),
+                        2: _("Disabled"),
+                    },
+                    section: "tooltips"
+                },
                 undoStyle: { section: "buttons", type: 'pref', prefId: PREF_UNDO_STYLE },
 
                 actionsLang: { section: "layout", type: 'pref', prefId: PREF_ACTIONS_LANG },
@@ -414,28 +426,17 @@ function (dojo, declare) {
         },
         
         onChangeTooltipsOnTokenSetting(val) {
-            if (!this.isTooltipsOnTokenEnabled()) {
-                for (let i in this.tooltipsOnTokens){
-                    let tokenId = this.tooltipsOnTokens[i];
-                    if(this.tooltips[tokenId]){
-                        this.tooltips[tokenId].onShow = dojo.hitch(this.tooltips[tokenId], (function() {
-                            this.close();
-                        }
-                        ));
-                    }
-                }
-            }
-            else {
-                for (let i in this.tooltipsOnTokens){
-                    let tokenId = this.tooltipsOnTokens[i];
-                    if(this.tooltips[tokenId]){
-                        this.tooltips[tokenId].onShow = function() {};
-                    }
-                }
-            }
+            this.updateCustomTooltipSetting(this.isTooltipsOnTokenEnabled(),this.tooltipsOnTokens);
         },
         isTooltipsOnTokenEnabled() {
             return this.settings.tooltipsOnToken == 1;
+        },
+
+        onChangeTooltipsOnSpActionSetting(val) {
+            this.updateCustomTooltipSetting(this.isTooltipsOnSpActionEnabled(),this.tooltipsOnSpecialActions);
+        },
+        isTooltipsOnSpActionEnabled() {
+            return this.settings.tooltipsOnSpAction == 1;
         },
 
         ///////////////////////////////////////////////////
@@ -2109,7 +2110,35 @@ function (dojo, declare) {
             if(this.isFastMode()) time = 0;
             this.notifqueue.setSynchronousDuration(time);
         },
-                
+        
+        /**
+         * Hide a set a tooltips found in the array based on the boolean value
+         * @param {*} isEnabled 
+         * @param {*} tooltipsArray 
+         */
+        updateCustomTooltipSetting(isEnabled, tooltipsArray) {
+            for (let i in tooltipsArray){
+                let tokenId = tooltipsArray[i];
+                let index = this.tooltipsIdsToHide.indexOf(tokenId);
+                if(this.tooltips[tokenId]){
+                    if (!isEnabled) {
+                        /*
+                        For BGA standard tooltip
+                        this.tooltips[tokenId].onShow = dojo.hitch(this.tooltips[tokenId], (function() {
+                            this.close();
+                        }
+                        ));
+                        */
+                        if(index<0) this.tooltipsIdsToHide.push(tokenId);
+                    } else {
+                        //For BGA standard tooltip
+                        //this.tooltips[tokenId].onShow = function() {};
+                        if(index>=0) this.tooltipsIdsToHide.splice(index, 1);
+                    }
+                }
+            }
+           
+        },
         ////////////////////////////////////////
         //  ____  _
         // |  _ \| | __ _ _   _  ___ _ __ ___
@@ -2479,22 +2508,24 @@ function (dojo, declare) {
             this.tooltipsOnTokens.push(divToken.id);
             this.addCustomTooltip(divToken.id, tooltipDesc,150);
             if (!this.isTooltipsOnTokenEnabled()) {
-                this.tooltips[divToken.id].onShow = dojo.hitch(this.tooltips[divToken.id], (function() {
-                    this.close();
-                }
-                ));
+                //this.tooltips[divToken.id].onShow = dojo.hitch(this.tooltips[divToken.id], (function() {
+                //    this.close();
+                //}
+                //));
+                this.tooltipsIdsToHide.push(divToken.id);
             }
         },
         addSpecialActionCell(action) {
             debug("addSpecialActionCell",action);
             let playerGrid = $(`stig_sp_grid_${action.pId}`);
-            let tokenDivId = `stig_sp_action_cell_${action.pId}_${action.type}`;
-            if ( $(tokenDivId) ) return $(tokenDivId);
+            let cellDivId = `stig_sp_action_cell_${action.pId}_${action.type}`;
+            if ( $(cellDivId) ) return $(cellDivId);
             
-            let token = this.place('tplSpecialActionCell', action, playerGrid);
-            this.addCustomTooltip(token.id,this.getSpecialActionTooltip(action));
+            let cell = this.place('tplSpecialActionCell', action, playerGrid);
+            this.addCustomTooltip(cell.id,this.getSpecialActionTooltip(action));
+            this.tooltipsOnSpecialActions.push(cell.id);
 
-            return token;
+            return cell;
         },
         addSpecialActionToken(action) {
             debug("addSpecialActionToken",action);
@@ -2566,7 +2597,7 @@ function (dojo, declare) {
                     <div class="stig_icon_flower_violet stig_icon_flipped"></div>
                 </div>
                 <div class="stig_sp_action_desc">${desc}</div>
-                <div class="stig_sp_action_image_resized">
+                <div class="stig_sp_action_image_resized" data-type='${action.type}'>
                     <div class="stig_sp_action_image_wrapper">
                         <div class="stig_sp_action_image" data-type='${action.type}'></div>
                     </div>

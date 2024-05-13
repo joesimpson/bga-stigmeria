@@ -37,7 +37,7 @@
             //ACTION_TYPE_SWAP
             background-position-x: 548px;
             background-position-y: 517px;
-            height: 67px;
+            height: 72px;
             width: 62px;
             background-size: 1490%;
         }
@@ -231,11 +231,46 @@ body {
         position: relative;
         //Bigger than button icon
         $scale : 2;
-        width: calc($scale* 98px);
-        height: calc($scale* 58px);
+        //from .stig_sp_action_image
+        $imageWidth: 98px;
+        $imageHeight: 58px;
+        width: calc($scale* $imageWidth);
+        height: calc($scale* $imageHeight);
+
         .stig_sp_action_image_wrapper{
             transform: scale($scale);
             transform-origin: top left;
         }
+        //------- MODIFY IMAGE WRAPPER SIZE according to image type
+        &[data-type="14"]{//ACTION_TYPE_DIAGONAL
+            $imageWidth: 60px;
+            width: calc($scale* $imageWidth);
+            height: calc($scale* $imageHeight);
+        }
+        &[data-type="15"]{//ACTION_TYPE_SWAP
+            $imageHeight: 72px;
+            $imageWidth: 62px;
+            width: calc($scale* $imageWidth);
+            height: calc($scale* $imageHeight);
+        }
+        &[data-type="16"]{//ACTION_TYPE_MOVE_FAST
+            $imageHeight: 67px;
+            $imageWidth: 96px;
+            width: calc($scale* $imageWidth);
+            height: calc($scale* $imageHeight);
+        }
+        &[data-type="25"]{//ACTION_TYPE_COPY
+            $imageHeight: 67px;
+            $imageWidth: 62px;
+            width: calc($scale* $imageWidth);
+            height: calc($scale* $imageHeight);
+        }
+        &[data-type="32"]{//ACTION_TYPE_JEALOUSY
+            $imageHeight: 75px;
+            $imageWidth: 100px;
+            width: calc($scale* $imageWidth);
+            height: calc($scale* $imageHeight);
+        }
+        //-------------------------------------
     }
 }
