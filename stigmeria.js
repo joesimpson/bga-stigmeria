@@ -237,7 +237,7 @@ function (dojo, declare) {
          * Init preferences the first time we load the game with a specific locale
          */
         setupLanguageSettings(){
-            let lang = _('$locale'); // en, fr, etc.
+            let lang = dojo.locale; // en, fr, etc.
             debug("setupLanguageSettings", lang);
             let settingName = "LanguageInit";
             let isLanguageAlreadyInit = this.getConfig(settingName);
