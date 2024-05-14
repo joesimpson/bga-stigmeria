@@ -146,6 +146,9 @@ trait SpecialChoreographyTrait
         if(!$this->canMoveOutOnBoard($token)){
             throw new UnexpectedException(101,"You cannot move out this token");
         }
+        if(in_array($token->getId(),$movedTokensIds)){
+            throw new UnexpectedException(102,"You cannot move this token again");
+        }
 
         //EFFECT : 
         if($nbMovesDone ==0 ){
@@ -234,6 +237,7 @@ trait SpecialChoreographyTrait
         $spots = [];
         $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($playerId);
         foreach($boardTokens as $tokenId => $token){
+            if(in_array($token->getId(),$movedTokensIds)) continue;
             if($this->canMoveOutOnBoard($token)){
                 $spots[$tokenId][] = [ 'out' => true ];
             }
