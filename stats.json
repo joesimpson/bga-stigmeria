@@ -95,7 +95,7 @@
       }
       ,"actions_3": {
         "id": 33,
-        "name": "Move",
+        "name": "Move ",
         "type": "int"
       }
       ,"actions_j": {

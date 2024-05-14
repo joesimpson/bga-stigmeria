@@ -555,7 +555,8 @@ function (dojo, declare) {
                 if(!possibleActions.includes('actCommonDrawAndLand')){
                     $('btnCommonDrawAndPlace').classList.add('disabled');
                 }
-                this.addPrimaryActionButton('btnCommonMove',  _('Move'), () => this.takeAction('actCommonMove', {}));
+                //Move followed by a space to distinguish from BGA main site "Move"
+                this.addPrimaryActionButton('btnCommonMove',  _('Move '), () => this.takeAction('actCommonMove', {}));
                 if(!possibleActions.includes('actCommonMove')){
                     $('btnCommonMove').classList.add('disabled');
                 }
@@ -850,7 +851,8 @@ function (dojo, declare) {
                 if(!possibleActions.includes('actLand')){
                     $('btnPlace').classList.add("disabled");
                 }
-                this.addPrimaryActionButton('btnMove', _('Move'), () => this.takeAction('actMove', {}));
+                //Move followed by a space to distinguish from BGA main site "Move"
+                this.addPrimaryActionButton('btnMove', _('Move '), () => this.takeAction('actMove', {}));
                 if(!possibleActions.includes('actMove')){
                     $('btnMove').classList.add("disabled");
                 }
