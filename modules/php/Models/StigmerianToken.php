@@ -338,7 +338,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   {
     //NO pollen on central board
     if($this->getPId() == null) return;
-    if(Schemas::matchCurrentSchema($this)){
+    if(Schemas::matchCurrentSchema($this->asCoord())){
       $this->becomesPollen($player);
     }
   }

@@ -548,13 +548,13 @@ class Schemas
   }
 
   /**
-   * @param StigmerianToken $token
+   * @param TokenCoord $token
    * @return bool true if token is expected in ending current schema
    */
   public static function matchCurrentSchema($token)
   {
-    if(! array_key_exists($token->getType(),TOKEN_POLLENS)) return false;
-    $tokenFuturePollen =  TOKEN_POLLENS[$token->getType()];
+    if(! array_key_exists($token->type,TOKEN_POLLENS)) return false;
+    $tokenFuturePollen =  TOKEN_POLLENS[$token->type];
     $schema = Schemas::getCurrentSchema();
     if(! isset($schema)) return false;
     $notfound = $schema->end->filter( function ($expected) use ($token, $tokenFuturePollen) {
@@ -566,7 +566,7 @@ class Schemas
         ;
       }
     )->isEmpty();
-    //Game::get()->trace("matchCurrentSchema() notfound ? ".json_encode($notfound)." for ".json_encode($token->getUiData()));
+    //Game::get()->trace("matchCurrentSchema()  ? ".json_encode(!$notfound)." for ".json_encode($token->getUiData()));
     return !$notfound;
   }
 }

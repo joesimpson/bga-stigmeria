@@ -2,6 +2,7 @@
 
 namespace STIG\States;
 
+use STIG\Core\Game;
 use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Core\PGlobals;
@@ -194,7 +195,7 @@ trait SpecialFastMoveTrait
     /**
      * @param int $playerId
      * @param Collection $tokens of StigmerianToken
-     * @param StigmerianToken $token
+     * @param StigmerianToken $token Token to move
      * @param int $nMoves
      * @param bool $passiveDiagonal (optional) false by default
      * @return array List of possible spaces. Example [[ 'x' => 1, 'y' => 5 ],] where x is for col, y for row
@@ -204,10 +205,16 @@ trait SpecialFastMoveTrait
         if($token->isPollen()) return [];
 
         $startingCell = [ 'x' => $token->getCol(), 'y' => $token->getRow(), ];
-        $costCallback = function ($source, $target, $d) use ($tokens) {
+        $costCallback = function ($source, $target, $d) use ($tokens,$token) {
             // If there is a token => can't go there
             $existingToken = Tokens::findTokenOnBoardWithCoord($tokens,$target['y'], $target['x']);
             if(isset($existingToken)) return 10000;//not valid position
+
+            //A stigmerian token must stop as soon as it match the schema (pollen position), it cannot fly over it
+            $srcTokenCoord = new TokenCoord($token->getType(),$source['y'], $source['x']);
+            if(Schemas::matchCurrentSchema($srcTokenCoord)) return 10000;//not valid position
+            
+            //Game::get()->trace("Fast move possible from ".json_encode($source)." to ".json_encode($target));
             return 1;
         };
         $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$nMoves, $costCallback,$passiveDiagonal);
