@@ -869,6 +869,7 @@ function (dojo, declare) {
             if(!possibleActions.includes('actSpecial')){
                 $('btnSpecialAction').classList.add("disabled");
             }
+            //this.addCustomTooltip('btnSpecialAction',_('Play an unlocked special action from your actions board'));
             Object.values(args.pj).forEach((tokenColor) => {
                 let src = tokenColor.src;
                 let dest = tokenColor.dest;

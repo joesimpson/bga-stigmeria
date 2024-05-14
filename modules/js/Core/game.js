@@ -249,12 +249,14 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       if (this[methodName] !== undefined) this[methodName]();
     },
 
-    clearPossible() {
-      debug('clearPossible()' );
+    removeAllActionButtons() {
       this.removeActionButtons();
       dojo.empty('customActions');
       dojo.empty('restartAction');
+    },
 
+    clearPreAnimation() {
+      debug('clearPreAnimation()' );
       this._connections.forEach(dojo.disconnect);
       this._connections = [];
       this._selectableNodes.forEach((node) => {
@@ -262,6 +264,14 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
       });
       this._selectableNodes = [];
       dojo.query('.unselectable').removeClass('unselectable');
+      dojo.query('.selectable').removeClass('selectable');
+      dojo.query('.selected').removeClass('selected');
+    },
+
+    clearPossible() {
+      debug('clearPossible()' );
+      this.clearPreAnimation();
+      this.removeAllActionButtons();
     },
 
     /**
@@ -308,6 +318,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
               $('pagemaintitletext').innerHTML = msg;
             }
           }
+          //this.clearPreAnimation();
           let timing = this[functionName](args);
           if (timing === undefined) {
             if (notif[1] === undefined) {
