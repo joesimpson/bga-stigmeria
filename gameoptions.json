@@ -222,10 +222,25 @@
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "Random Competitive No Limit"
             },
+            "40": {
+                "name": "#40",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#40"
+            },
             "45": {
                 "name": "#45",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#45"
+            },
+            "47": {
+                "name": "#47",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#47"
+            },
+            "49": {
+                "name": "#49",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#49"
             }
         },
         "default": 1,

@@ -47,3 +47,8 @@ So we can easily regenerate the JSON version (now included in the workspace) fro
 - send the json file to distant BGA folder via FTP
 - Manage game : reload options (this will use the php options version)
 
+# Game schemas
+
+Schemas (from 1 to 49) are defined as text to generate image and avoid waste of space in img folder, + it allow us to define any unofficial schema we may want.
+
+See the list `getTypes()` in [Schemas.php](/modules/php/Managers/Schemas.php).

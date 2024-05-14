@@ -576,12 +576,12 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => totranslate('Random Competitive No Limit'),
                 ),
-                /*
                 OPTION_SCHEMA_40 => array( 
                   'name' => '#40', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#40',
                 ),
+                /*
                 OPTION_SCHEMA_41 => array( 
                   'name' => '#41', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
@@ -614,22 +614,24 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#46',
                 ),
+                */
                 OPTION_SCHEMA_47 => array( 
                   'name' => '#47', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#47',
                 ),
+                /*
                 OPTION_SCHEMA_48 => array( 
                   'name' => '#48', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#48',
                 ),
+                */
                 OPTION_SCHEMA_49 => array( 
                   'name' => '#49', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#49',
                 ),
-                */
             ),
     'default' => OPTION_SCHEMA_1,
     'displaycondition'=> [
