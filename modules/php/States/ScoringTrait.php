@@ -72,13 +72,21 @@ trait ScoringTrait
           }
 
           $scoreRecruits = SCORE_PER_RECRUIT*Tokens::countRecruits($pId);
-          if($scoreRecruits>0 && !Globals::isModeCompetitive()){
+          if($scoreRecruits>0 && !Globals::isModeCompetitive() && !Globals::isModeSoloNoLimit()){
             //In competitive mode this is a tieBreaker only ! (we don't want a player to win thanks to this, but if they are tied OK)
             $score += $scoreRecruits;
             Notifications::addPoints($player,$scoreRecruits,clienttranslate('${player_name} scores ${n} points for remaining tokens in recruit zone'));
           }
           
         }
+        if(Globals::isModeSoloNoLimit() && $turn > TURN_MAX){
+          //We loose points for each action after Turn Max
+          $turnsInExcess = ($turn - TURN_MAX);
+          $excess = $turnsInExcess * MAX_PERSONAL_ACTIONS_BY_TURN;
+          $score += -$excess;
+          Notifications::addPoints($player,-$excess,clienttranslate('${player_name} scores ${n} points for ${n2} turns in excess'),$turnsInExcess);
+        }
+
         $this->computeWinnerTieBreaker($player);
       }
       else {

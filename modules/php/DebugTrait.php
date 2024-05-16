@@ -303,14 +303,41 @@ trait DebugTrait
     $schema = Schemas::getCurrentSchema();
     Notifications::newRound($round,$schema,[]);
   }
+
+  //Direct successful schema and go to end of game (Remember to uncomment transition to state playerGameEnd)
   function debugSchemaEnd()
   {
     $player = Players::getCurrent();
     $schema = Schemas::getCurrentSchema();
     //----------------------------------------
+    // RESET Some values
+    $player->setScore(0);
+    Tokens::deleteAllAtLocation(TOKEN_LOCATION_PLAYER_BOARD,$player->id);
+    Globals::setWinnersIds([]);
+    //Add ALL ACTIONS for Solo no limit
+    foreach(ACTION_TYPES as $actionType){
+      $existing = PlayerActions::getPlayer($player->id,[$actionType])->first();
+      if(!$existing) PlayerActions::createAction([
+        'type'=>$actionType,
+        'location'=>ACTION_LOCATION_PLAYER_BOARD,
+        'player_id'=>$player->id,
+        'state' => ACTION_STATE_UNLOCKED_FOREVER,
+      ]);
+      else $existing->setState(ACTION_STATE_UNLOCKED_FOREVER);
+    }
+    //----------------------------------------
+    Globals::setTurn(10 + 3);
+    //----------------------------------------
+    $this->gamestate->jumpToState( ST_NEXT_TURN );
+    //$this->gamestate->setPlayersMultiactive( [$player->id], 'end' );
+    //$this->gamestate->initializePrivateState($player->id); 
+    //----------------------------------------
+    //Choose the turn and actions to reach that point
+    $player->setNbPersonalActionsDone(3);
+    $player->setNbCommonActionsDone(2);
+    //----------------------------------------
     //RESET BOARD to match :
     $tokens = [];
-    Tokens::deleteAllAtLocation(TOKEN_LOCATION_PLAYER_BOARD,$player->id);
     foreach($schema->end as $token){
       $tokens[] = [
         'type' => $token->type,
@@ -322,6 +349,8 @@ trait DebugTrait
       ];
     }
     Tokens::create($tokens);
+    //-------------------------------------------
+    $this->debugUI();
     //-------------------------------------------
     $isWin = $this->isSchemaFulfilled($player);
     //if($isWin) Notifications::message('Schema fulfilled !',[]);

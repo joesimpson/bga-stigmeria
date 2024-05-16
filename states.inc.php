@@ -67,9 +67,9 @@
  |      |       v
  |      \<----- nextTurn   <-------------------------------------------\
  |                |                                                    |
- |                FT (firstToken)                                      |
- |                |                                                    |
- |                v                                                    |
+ |                FT (firstToken)   soloGainSP                         |
+ |                |                     |                              |
+ |                v                     v                              |
  |              playerTurn                                             |
  |              |    |                                                 |
  |              |    v                                                 |
