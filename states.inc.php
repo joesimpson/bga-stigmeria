@@ -850,7 +850,7 @@ $machinestates = array(
             "loopback" => 96 
         ] 
     ],
-    //*/
+    */
    
     // Final state.
     // Please do not modify (and do not overload action/args methods).
