@@ -92,6 +92,7 @@ class Notifications
   public static function newTurn($turn){
     self::notifyAll('newTurn',clienttranslate('Starting turn #${n}'),[ 
         'n' => $turn,
+        'max' => Utils::countMaxActionsInTurn($turn),
       ],
     );
   }
@@ -170,6 +171,7 @@ class Notifications
     self::notifyAll('startTurn',clienttranslate('${player_name} enters turn #${n}'),[ 
         'player' => $player,
         'n' => $turn,
+        'max' => Utils::countMaxActionsInTurn($turn),
       ],
     );
   }

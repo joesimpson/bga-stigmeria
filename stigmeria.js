@@ -1499,7 +1499,7 @@ function (dojo, declare) {
             this.forEachPlayer((player) => {
                 if(!player.end){
                     this._counters[player.id]['actions'].setValue(0);
-                    this._counters[player.id]['actionsMax'].setValue(n.args.n);
+                    this._counters[player.id]['actionsMax'].setValue(n.args.max);
                     this.updateTurnMarker(player.id,n.args.n,1,false);
                 }
                 else {
@@ -1512,7 +1512,7 @@ function (dojo, declare) {
             debug('notif_startTurn: new turn for a player', n);
             let player_id = n.args.player_id;
             this._counters[player_id]['actions'].setValue(0);
-            this._counters[player_id]['actionsMax'].setValue(n.args.n);
+            this._counters[player_id]['actionsMax'].setValue(n.args.max);
             this.updateTurnMarker(player_id,n.args.n,1);
         },
         notif_endTurn(n) {
@@ -2181,7 +2181,7 @@ function (dojo, declare) {
                     pollensMax: this.createCounter(`stig_counter_${pId}_pollens_total`, this.getFlowerTotalPollens()),
                     actions: this.createCounter(`stig_counter_${pId}_actions`, player.npad),
                     //replace turn with player last turn when finished round
-                    actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, player.end ? player.turn : this.gamedatas.turn),
+                    actionsMax: this.createCounter(`stig_counter_${pId}_actions_total`, player.max),
                     unlockedActions: this.createCounter(`stig_counter_${pId}_unlockedActions`, player.ua),
                     lockedActions: this.createCounter(`stig_counter_${pId}_lockedActions`, player.la),
                 };

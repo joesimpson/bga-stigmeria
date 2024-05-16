@@ -84,7 +84,15 @@ abstract class Utils extends \APP_DbObject
      * @return int number of actions unused in turn
      */
     static function countRemainingActionsInTurn($refTurn,$done) {
-        $max = min(MAX_PERSONAL_ACTIONS_BY_TURN, $refTurn); //10 actions for turns 11,12,...
+        $max = self::countMaxActionsInTurn($refTurn);
         return $max - $done;
+    }
+
+    /**
+     * @param int $refTurn Turn to refer
+     * @return int number of actions to be played in turn
+     */
+    static function countMaxActionsInTurn($refTurn){
+        return min(MAX_PERSONAL_ACTIONS_BY_TURN, $refTurn); //10 actions for turns 11,12,...
     }
 }

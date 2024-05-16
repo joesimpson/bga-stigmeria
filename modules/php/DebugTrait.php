@@ -405,6 +405,15 @@ trait DebugTrait
   }
   function debugNewRound()
   {
+    $player = Players::getCurrent();
+    //----------------------------------------
+    // RESET Some values
+    $player->setScore(0);
+    PGlobals::setLastTurn($player->getId(),0);
+    Tokens::deleteAllAtLocation(TOKEN_LOCATION_PLAYER_BOARD,$player->id);
+    Globals::setWinnersIds([]);
+    $this->debugUI();
+    //----------------------------------------
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
   }
   function debugNewTurn()

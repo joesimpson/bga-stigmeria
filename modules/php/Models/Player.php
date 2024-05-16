@@ -73,6 +73,7 @@ class Player extends \STIG\Helpers\DB_Model
     
     $data['end'] = $this->finishedRound();
     $data['turn'] = $this->getLastTurn();
+    $data['max'] = $this->getMaxPersonalActions();
 
     return $data;
   }
@@ -216,6 +217,11 @@ class Player extends \STIG\Helpers\DB_Model
 
   public function countRemainingPersonalActions(){
     return Utils::countRemainingActionsInTurn(Globals::getTurn(),$this->getNbPersonalActionsDone());
+  }
+  public function getMaxPersonalActions(){
+    $refTurn = Globals::getTurn();
+    if($this->finishedRound()) $refTurn = $this->getLastTurn();
+    return Utils::countMaxActionsInTurn($refTurn);
   }
   
   public function countUnLockedActions(){
