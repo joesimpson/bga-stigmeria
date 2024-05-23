@@ -164,7 +164,7 @@ class Players extends \STIG\Helpers\DB_Manager
   public static function getNextId($player = null)
   {
     $player = $player ?? Players::getCurrent();
-    $pId = is_int($player) ? $player : $player->getId();
+    $pId = is_int($player) ? $player : (is_string($player) ? intval($player) : $player->getId() );
     $table = Game::get()->getNextPlayerTable();
     return $table[$pId];
   }

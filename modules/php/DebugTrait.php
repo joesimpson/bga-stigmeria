@@ -186,6 +186,9 @@ trait DebugTrait
     Notifications::message("debugElim nextP is $nextP ");
     $nextP2 = Players::getNextInactivePlayerInTurn(2373993,Globals::getTurn());
     Notifications::message("debugElim nextP is $nextP2 ");
+    
+    $nextP3 = Players::getNextInactivePlayerInTurn("2373993",Globals::getTurn());
+    Notifications::message("debugElim nextP is $nextP3 ");
   }
   function debugForceState()
   {
