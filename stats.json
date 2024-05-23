@@ -52,7 +52,7 @@
         "type": "int"
       }
       ,"tokens_deck": {
-        "id": 13,
+        "id": 15,
         "name": "Tokens in bag",
         "type": "int"
       }
