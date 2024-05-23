@@ -70,6 +70,7 @@ trait SpecialFulguranceTrait
         $player->giveExtraTime();
         Stats::inc("actions_s".ACTION_TYPE_FULGURANCE,$pId);
         Stats::inc("actions",$pId);
+        Stats::inc("tokens_deck",$player->getId(),-$k);
 
         if($this->returnToLastDriftState($pId,$playerAction, true)) return;
         

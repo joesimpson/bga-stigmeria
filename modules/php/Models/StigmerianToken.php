@@ -255,20 +255,27 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   public function moveToPlayerBag($playerCurrent,$playerDestination)
   {
     $fromBoard = false;
+    $fromHere = false;
+    $target = TOKEN_LOCATION_PLAYER_DECK.$playerDestination->getId();
     if($this->getLocation() == TOKEN_LOCATION_PLAYER_BOARD ){
       $fromBoard = true;
       $fromPlayer = $this->getPId();
+    } else if( $this->getLocation() == $target ){
+      $fromHere = true;
     }
     else if($this->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD ){
 
     }
-    $this->setLocation(TOKEN_LOCATION_PLAYER_DECK.$playerDestination->getId());
+    $this->setLocation($target);
     $this->setPId($playerDestination->getId());
     $this->setCol(null);
     $this->setRow(null);
 
     if($fromBoard){
       Stats::inc("tokens_board",$fromPlayer,-1);
+    }
+    if(!$fromHere){
+      Stats::inc("tokens_deck",$playerDestination->getId());
     }
     Notifications::putTokenInBag($playerCurrent,$this,$playerDestination);
   }

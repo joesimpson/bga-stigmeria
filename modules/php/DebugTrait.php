@@ -88,8 +88,9 @@ trait DebugTrait
   //
   //  // Change for your game
   //  // We are setting the current state to match the start of a player's turn if it's already game over
+  //  $state = ST_FIRST_TOKEN;
   //  $sql = [
-  //    "UPDATE global SET global_value=2 WHERE global_id=1 AND global_value=99"
+  //    "UPDATE global SET global_value=$state WHERE global_id=1 AND global_value=99"
   //  ];
   //  foreach ($players as $pId) {
   //
@@ -119,38 +120,49 @@ trait DebugTrait
   //  $this->reloadPlayersBasicInfos();
   //  $this->gamestate->reloadState();
   //}
-  ///**
-  // * STUDIO : Get the database matching a bug report
-  // */
-  //public function loadBugReportSQL(int $reportId, array $studioPlayersIds): void {
-  //  $this->trace("loadBugReportSQL($reportId, ".json_encode($studioPlayersIds));
-  //  $players = $this->getObjectListFromDb('SELECT player_id FROM player', true);
-  //
-  //  // Change for your game
-  //  // We are setting the current state to match the start of a player's turn if it's already game over
-  //  $sql = ['UPDATE global SET global_value=4 WHERE global_id=1 AND global_value=99'];
-  //  foreach ($players as $index => $pId) {
-  //    $studioPlayer = $studioPlayersIds[$index];
-  //
-  //    // All games can keep this SQL
-  //    $sql[] = "UPDATE player SET player_id=$studioPlayer WHERE player_id=$pId";
-  //    $sql[] = "UPDATE global SET global_value=$studioPlayer WHERE global_value=$pId";
-  //    $sql[] = "UPDATE stats SET stats_player_id=$studioPlayer WHERE stats_player_id=$pId";
-  //
-  //    // Add game-specific SQL update the tables for your game
-  //    $sql[] = "UPDATE token SET player_id=$studioPlayer WHERE player_id = $pId";
-  //    $sql[] = "UPDATE player_action SET player_id=$studioPlayer WHERE player_id = $pId";
-  //    $sql[] = "UPDATE global_variables SET `value` = REPLACE(`value`,'$pId','$studioPlayer')";
-  //    $sql[] = "UPDATE user_preferences SET player_id=$studioPlayer WHERE player_id = $pId";
-  //    $sql[] = "UPDATE `log` SET player_id=$studioPlayer WHERE player_id = $pId";
-  //  }
-  //
-  //  foreach ($sql as $q) {
-  //    $this->DbQuery($q);
-  //  }
-  //
-  //  $this->reloadPlayersBasicInfos();
-  //}
+  /**
+   * STUDIO : Get the database matching a bug report (when not empty)
+   */
+  public function loadBugReportSQL(int $reportId, array $studioPlayersIds): void {
+    $this->trace("loadBugReportSQL($reportId, ".json_encode($studioPlayersIds));
+    $players = $this->getObjectListFromDb('SELECT player_id FROM player', true);
+  
+    $sql = [];
+    //This table is modified with boilerplate
+    $sql[] = "ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;";
+
+    // Change for your game
+    // We are setting the current state to match the start of a player's turn if it's already game over
+    $state = ST_FIRST_TOKEN;
+    $sql[] = "UPDATE global SET global_value=$state WHERE global_id=1 AND global_value=99";
+    foreach ($players as $index => $pId) {
+      $studioPlayer = $studioPlayersIds[$index];
+  
+      // All games can keep this SQL
+      $sql[] = "UPDATE player SET player_id=$studioPlayer WHERE player_id=$pId";
+      $sql[] = "UPDATE global SET global_value=$studioPlayer WHERE global_value=$pId";
+      $sql[] = "UPDATE stats SET stats_player_id=$studioPlayer WHERE stats_player_id=$pId";
+  
+      // Add game-specific SQL update the tables for your game
+      $sql[] = "UPDATE token SET player_id=$studioPlayer WHERE player_id = $pId";
+      $sql[] = "UPDATE token SET token_location='player_deck_$studioPlayer' WHERE token_location='player_deck_$pId'";
+      $sql[] = "UPDATE player_action SET player_id=$studioPlayer WHERE player_id = $pId";
+      $sql[] = "UPDATE global_variables SET `value` = REPLACE(`value`,'$pId','$studioPlayer')";
+      
+      //REPLACE Player Globals :
+      $sql[] = "DELETE FROM pglobal_variables WHERE SUBSTRING_INDEX(`name`,'-',-1) = '$studioPlayer';";
+      $sql[] = "UPDATE pglobal_variables SET `name` = CONCAT ( SUBSTRING_INDEX(`name`,'-',1),  '-', '$studioPlayer' ) WHERE SUBSTRING_INDEX(`name`,'-',-1) = '$pId';";
+
+      $sql[] = "UPDATE user_preferences SET player_id=$studioPlayer WHERE player_id = $pId";
+      $sql[] = "UPDATE `log` SET player_id=$studioPlayer WHERE player_id = $pId";
+    }
+  
+    foreach ($sql as $q) {
+      $this->DbQuery($q);
+    }
+  
+    $this->reloadPlayersBasicInfos();
+  }
 
   ////////////////////////////////////////////////////
   /*
