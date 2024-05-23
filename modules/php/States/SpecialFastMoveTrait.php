@@ -183,7 +183,8 @@ trait SpecialFastMoveTrait
      */
     public function canMoveOutFastOnPlayerBoard($playerId,$boardTokens,$token,$nMoves)
     {
-        $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$boardTokens,$token, $nMoves);
+        $passiveDiagonal = PlayerActions::hasUnlockedPassiveDiagonal($playerId);
+        $possibleMoves = $this->listPossibleFastMovesOnBoardFromToken($playerId,$boardTokens,$token, $nMoves,$passiveDiagonal);
         $possibleMoveIndex = GridUtils::array_usearch($possibleMoves, function ($cell) {
             return isset($cell['out']) && $cell['out']== true;
         });
