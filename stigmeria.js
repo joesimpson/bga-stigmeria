@@ -298,7 +298,7 @@ function (dojo, declare) {
                   },
                 takePieceWidth: {
                     section: "layout",
-                  default: 40,
+                  default: 25,
                   name: _('Token width in upper selection'),
                   type: 'slider',
                   sliderConfig: {
@@ -1337,6 +1337,7 @@ function (dojo, declare) {
                 let player_name = player.name;
                 let playerContainer = `stig_select_piece_player_container_${player.id}`;
                 if(!$(playerContainer)) dojo.place(`<div id=${playerContainer} class='stig_select_piece_player_container'><div class="player-name" style="color:#${player_color};">${player_name}</div></div>` ,'stig_select_piece_container_perplayer');
+                if(this.player_id == player.id) $(playerContainer).classList.add('stig_current_player');
                 let elt = this.addToken(token, $(playerContainer), '_tmp');
                 this.onClick(`${elt.id}`, (evt) => {
                     let tokenIdInt = parseInt(token.id);

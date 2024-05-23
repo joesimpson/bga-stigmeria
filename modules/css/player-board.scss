@@ -1,4 +1,24 @@
 
+#stig_select_piece_container_perplayer{
+    display: flex;
+    flex-direction: column;
+    .stig_select_piece_player_container{
+        order: 2;
+        //max-width: fit-content;
+        outline: 3px dotted black;
+
+        &.stig_current_player{
+            order: 1;
+            outline: 3px solid blue;
+        }
+        .stig_token{
+            &.selected{
+                box-shadow: 0px 0px 7px 5px green;
+            }
+        }
+    }
+}
+
 #stig_main_zone{
 
     .stig_resizable_board {
