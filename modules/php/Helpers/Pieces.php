@@ -1,6 +1,8 @@
 <?php
 namespace STIG\Helpers;
 
+use STIG\Exceptions\MissingPieceException;
+
 /*
  * This is a generic class to manage game pieces.
  *
@@ -253,12 +255,15 @@ class Pieces extends DB_Manager
       ->get(false);
     if (count($result) != count($ids) && $raiseExceptionIfNotEnough) {
       // throw new \feException(print_r(\debug_print_backtrace()));
-      throw new \feException('Class Pieces: getMany, some pieces have not been found !' . json_encode($ids));
+      throw new MissingPieceException('Class Pieces: getMany, some pieces have not been found !' . json_encode($ids));
     }
 
     // Preserve ids order!
     $t = new Collection();
     foreach ($ids as $id) {
+      if (!isset($result[$id])){
+        continue;
+      }
       $t[$id] = $result[$id];
     }
 

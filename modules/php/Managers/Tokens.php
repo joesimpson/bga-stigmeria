@@ -5,6 +5,7 @@ namespace STIG\Managers;
 use STIG\Core\Game;
 use STIG\Core\PGlobals;
 use STIG\Core\Stats;
+use STIG\Exceptions\MissingPieceException;
 use STIG\Models\StigmerianToken;
 
 /* 
@@ -477,7 +478,15 @@ class Tokens extends \STIG\Helpers\Pieces
   public static function getLastLanded($pId){
     $lastLandedId = PGlobals::getLastLanded($pId);
     if(!isset($lastLandedId) || $lastLandedId ==0) return null;
-    $token = self::get($lastLandedId);
+        
+    $token = null;
+    try {
+      $token = self::get($lastLandedId, true);
+    }
+    catch(MissingPieceException $e){
+      //If that token doesn't exist anymore 
+      return null;
+    }
     if($token->pId != $pId || TOKEN_LOCATION_PLAYER_BOARD != $token->getLocation()){
       //if token has changed since it was landed
       return null;
