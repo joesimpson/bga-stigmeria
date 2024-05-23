@@ -3050,6 +3050,7 @@ function (dojo, declare) {
         formatLastDriftButton: function(actionType,possibleActions,enabledActions, callbackConfirm) {
             debug("formatLastDriftButton",actionType,possibleActions,enabledActions,callbackConfirm);
             let text = _('Last Drift');
+            let tooltipText = null;
             if(possibleActions.includes(actionType)){
                 let divText = `<div><div class='stig_ld_action_text'>`+_(text)+`</div><div class='stig_ld_action_image' data-type='${actionType}'></div></div>`;
                 this.addImageActionButton('btnStartLD'+actionType,divText , () => {
@@ -3059,6 +3060,20 @@ function (dojo, declare) {
                 if(!enabledActions.includes(actionType)){
                     $('btnStartLD'+actionType).classList.add('disabled');
                 }
+                switch(actionType){
+                    case ACTION_TYPE_LASTDRIFT_CENTRAL:
+                        tooltipText = _('Use the die on the common board');
+                        break;
+                    case ACTION_TYPE_LASTDRIFT_OPPONENT:
+                        tooltipText = _('Use the die against an other player');
+                        break;
+                    case ACTION_TYPE_LASTDRIFT_PERSONAL:
+                        tooltipText = _('Use the die on your own individual board');
+                        break;
+                }
+
+                if(tooltipText) this.addTooltip('btnStartLD'+actionType, '', tooltipText);
+
             }
         },
         ////////////////////////////////////////////////////////
