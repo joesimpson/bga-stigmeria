@@ -524,13 +524,11 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#31',
                 ),
-                /*
                 OPTION_SCHEMA_32 => array( 
                   'name' => '#32', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#32',
                 ),
-                */
                 OPTION_SCHEMA_33 => array( 
                   'name' => '#33', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
@@ -581,7 +579,6 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#40',
                 ),
-                /*
                 OPTION_SCHEMA_41 => array( 
                   'name' => '#41', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
@@ -602,31 +599,26 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#44',
                 ),
-                */
                 OPTION_SCHEMA_45 => array( 
                   'name' => '#45', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#45',
                 ),
-                /*
                 OPTION_SCHEMA_46 => array( 
                   'name' => '#46', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#46',
                 ),
-                */
                 OPTION_SCHEMA_47 => array( 
                   'name' => '#47', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#47',
                 ),
-                /*
                 OPTION_SCHEMA_48 => array( 
                   'name' => '#48', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#48',
                 ),
-                */
                 OPTION_SCHEMA_49 => array( 
                   'name' => '#49', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
