@@ -97,10 +97,25 @@
                 "description": "#1",
                 "tmdisplay": "#1"
             },
+            "2": {
+                "name": "#2",
+                "description": "#2",
+                "tmdisplay": "#2"
+            },
             "3": {
                 "name": "#3",
                 "description": "#3",
                 "tmdisplay": "#3"
+            },
+            "4": {
+                "name": "#4",
+                "description": "#4",
+                "tmdisplay": "#4"
+            },
+            "5": {
+                "name": "#5",
+                "description": "#5",
+                "tmdisplay": "#5"
             },
             "6": {
                 "name": "#6",
@@ -112,10 +127,20 @@
                 "description": "Random MarOnne (#7->#12) : Brown petals.",
                 "tmdisplay": "Random MarOnne"
             },
+            "7": {
+                "name": "#7",
+                "description": "#7",
+                "tmdisplay": "#7"
+            },
             "8": {
                 "name": "#8",
                 "description": "#8",
                 "tmdisplay": "#8"
+            },
+            "9": {
+                "name": "#9",
+                "description": "#9",
+                "tmdisplay": "#9"
             },
             "10": {
                 "name": "#10",
@@ -126,6 +151,11 @@
                 "name": "#11",
                 "description": "#11",
                 "tmdisplay": "#11"
+            },
+            "12": {
+                "name": "#12",
+                "description": "#12",
+                "tmdisplay": "#12"
             },
             "503": {
                 "name": "Random SiffloChamp",
@@ -142,6 +172,21 @@
                 "description": "#14",
                 "tmdisplay": "#14"
             },
+            "15": {
+                "name": "#15",
+                "description": "#15",
+                "tmdisplay": "#15"
+            },
+            "16": {
+                "name": "#16",
+                "description": "#16",
+                "tmdisplay": "#16"
+            },
+            "17": {
+                "name": "#17",
+                "description": "#17",
+                "tmdisplay": "#17"
+            },
             "18": {
                 "name": "#18",
                 "description": "#18",
@@ -152,6 +197,11 @@
                 "description": "Random DentD\u00eene (#19->#24) : Pink petals and permanent moves.",
                 "tmdisplay": "Random DentD\u00eene"
             },
+            "19": {
+                "name": "#19",
+                "description": "#19",
+                "tmdisplay": "#19"
+            },
             "20": {
                 "name": "#20",
                 "description": "#20",
@@ -161,6 +211,11 @@
                 "name": "#21",
                 "description": "#21",
                 "tmdisplay": "#21"
+            },
+            "22": {
+                "name": "#22",
+                "description": "#22",
+                "tmdisplay": "#22"
             },
             "23": {
                 "name": "#23",
@@ -187,10 +242,25 @@
                 "description": "#26",
                 "tmdisplay": "#26"
             },
+            "27": {
+                "name": "#27",
+                "description": "#27",
+                "tmdisplay": "#27"
+            },
             "28": {
                 "name": "#28",
                 "description": "#28",
                 "tmdisplay": "#28"
+            },
+            "29": {
+                "name": "#29",
+                "description": "#29",
+                "tmdisplay": "#29"
+            },
+            "30": {
+                "name": "#30",
+                "description": "#30",
+                "tmdisplay": "#30"
             },
             "506": {
                 "name": "Random Competitive",
@@ -212,10 +282,30 @@
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#33"
             },
+            "34": {
+                "name": "#34",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#34"
+            },
+            "35": {
+                "name": "#35",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#35"
+            },
             "36": {
                 "name": "#36",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#36"
+            },
+            "37": {
+                "name": "#37",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#37"
+            },
+            "38": {
+                "name": "#38",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#38"
             },
             "39": {
                 "name": "#39",

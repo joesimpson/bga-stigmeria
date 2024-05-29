@@ -325,32 +325,26 @@ $game_options = [
                   'description' => '#1', 
                   'tmdisplay' => '#1',
                 ),
-                /*
                 OPTION_SCHEMA_2 => array( 
                   'name' => '#2', 
                   'description' => '#2', 
                   'tmdisplay' => '#2',
                 ),
-                */
                 OPTION_SCHEMA_3 => array( 
                   'name' => '#3', 
                   'description' => '#3', 
                   'tmdisplay' => '#3',
                 ),
-                /*
                 OPTION_SCHEMA_4 => array( 
                   'name' => '#4', 
                   'description' => '#4', 
                   'tmdisplay' => '#4',
                 ),
-                */
-                /*
                 OPTION_SCHEMA_5 => array( 
                   'name' => '#5', 
                   'description' => '#5', 
                   'tmdisplay' => '#5',
                 ),
-                */
                 OPTION_SCHEMA_6 => array( 
                   'name' => '#6', 
                   'description' => '#6', 
@@ -361,25 +355,21 @@ $game_options = [
                   'description' => totranslate('Random MarOnne (#7->#12) : Brown petals.'), 
                   'tmdisplay' => totranslate('Random MarOnne'),
                 ),
-                /*
                 OPTION_SCHEMA_7 => array( 
                   'name' => '#7', 
                   'description' => '#7', 
                   'tmdisplay' => '#7',
                 ),
-                */
                 OPTION_SCHEMA_8 => array( 
                   'name' => '#8', 
                   'description' => '#8', 
                   'tmdisplay' => '#8',
                 ),
-                /*
                 OPTION_SCHEMA_9 => array( 
                   'name' => '#9', 
                   'description' => '#9', 
                   'tmdisplay' => '#9',
                 ),
-                */
                 OPTION_SCHEMA_10 => array( 
                   'name' => '#10', 
                   'description' => '#10', 
@@ -390,13 +380,11 @@ $game_options = [
                   'description' => '#11', 
                   'tmdisplay' => '#11',
                 ),
-                /*
                 OPTION_SCHEMA_12 => array( 
                   'name' => '#12', 
                   'description' => '#12', 
                   'tmdisplay' => '#12',
                 ),
-                */
                 OPTION_SCHEMA_RANDOM_SIFFLOCHAMP => array( 
                   'name' => totranslate('Random SiffloChamp'), 
                   'description' => totranslate('Random SiffloChamp (#13->#18) : Black and white petals.'), 
@@ -412,14 +400,11 @@ $game_options = [
                   'description' => '#14', 
                   'tmdisplay' => '#14',
                 ),
-                /*
                 OPTION_SCHEMA_15 => array( 
                   'name' => '#15', 
                   'description' => '#15', 
                   'tmdisplay' => '#15',
                 ),
-                */
-                /*
                 OPTION_SCHEMA_16 => array( 
                   'name' => '#16', 
                   'description' => '#16', 
@@ -430,7 +415,6 @@ $game_options = [
                   'description' => '#17', 
                   'tmdisplay' => '#17',
                 ),
-                */
                 OPTION_SCHEMA_18 => array( 
                   'name' => '#18', 
                   'description' => '#18', 
@@ -441,13 +425,11 @@ $game_options = [
                   'description' => totranslate('Random DentDîne (#19->#24) : Pink petals and permanent moves.'), 
                   'tmdisplay' => totranslate('Random DentDîne'),
                 ),
-                /*
                 OPTION_SCHEMA_19 => array( 
                   'name' => '#19', 
                   'description' => '#19', 
                   'tmdisplay' => '#19',
                 ),
-                */
                 OPTION_SCHEMA_20 => array( 
                   'name' => '#20', 
                   'description' => '#20', 
@@ -458,13 +440,11 @@ $game_options = [
                   'description' => '#21', 
                   'tmdisplay' => '#21',
                 ),
-                /*
                 OPTION_SCHEMA_22 => array( 
                   'name' => '#22', 
                   'description' => '#22', 
                   'tmdisplay' => '#22',
                 ),
-                */
                 OPTION_SCHEMA_23 => array( 
                   'name' => '#23', 
                   'description' => '#23', 
@@ -490,19 +470,16 @@ $game_options = [
                   'description' => '#26', 
                   'tmdisplay' => '#26',
                 ),
-                /*
                 OPTION_SCHEMA_27 => array( 
                   'name' => '#27', 
                   'description' => '#27', 
                   'tmdisplay' => '#27',
                 ),
-                */
                 OPTION_SCHEMA_28 => array( 
                   'name' => '#28', 
                   'description' => '#28', 
                   'tmdisplay' => '#28',
                 ),
-                /*
                 OPTION_SCHEMA_29 => array( 
                   'name' => '#29', 
                   'description' => '#29', 
@@ -513,7 +490,6 @@ $game_options = [
                   'description' => '#30', 
                   'tmdisplay' => '#30',
                 ),
-                */
                 OPTION_SCHEMA_RANDOM_COMPETITIVE => array( 
                   'name' => totranslate('Random Competitive'), 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
@@ -534,7 +510,6 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#33',
                 ),
-                /*
                 OPTION_SCHEMA_34 => array( 
                   'name' => '#34', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
@@ -545,13 +520,11 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#35',
                 ),
-                */
                 OPTION_SCHEMA_36 => array( 
                   'name' => '#36', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#36',
                 ),
-                /*
                 OPTION_SCHEMA_37 => array( 
                   'name' => '#37', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
@@ -562,7 +535,6 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#38',
                 ),
-                */
                 OPTION_SCHEMA_39 => array( 
                   'name' => '#39', 
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
