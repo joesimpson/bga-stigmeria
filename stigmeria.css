@@ -1078,13 +1078,15 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
 .stig_player_board[data_flower_type="4"] {
   background-image: url("img/flower4.jpg");
 }
-.stig_schema_board[data_flower_type="5"], .stig_schema_board[data_flower_type="6"], .stig_schema_board[data_flower_type="7"],
+.stig_schema_board[data_flower_type="5"], .stig_schema_board[data_flower_type="6"], .stig_schema_board[data_flower_type="7"], .stig_schema_board[data_flower_type="8"],
 .stig_central_board[data_flower_type="5"],
 .stig_central_board[data_flower_type="6"],
 .stig_central_board[data_flower_type="7"],
+.stig_central_board[data_flower_type="8"],
 .stig_player_board[data_flower_type="5"],
 .stig_player_board[data_flower_type="6"],
-.stig_player_board[data_flower_type="7"] {
+.stig_player_board[data_flower_type="7"],
+.stig_player_board[data_flower_type="8"] {
   background-image: url("img/flower5.jpg");
 }
 .stig_schema_board .stig_schema_number,

@@ -354,21 +354,23 @@ body[data-stig_stigmareine_auto_order="1"] {
     width: 1127px;
     height: 1176px;
 
-    &[data_flower_type='1']{
+    &[data_flower_type='1']{//OPTION_FLOWER_VERTIGHAINEUSE
         background-image: url('img/flower1.jpg');
     }
-    &[data_flower_type='2']{
+    &[data_flower_type='2']{//OPTION_FLOWER_MARONNE
         background-image: url('img/flower2.jpg');
     }
-    &[data_flower_type='3']{
+    &[data_flower_type='3']{//OPTION_FLOWER_SIFFLOCHAMP
         background-image: url('img/flower3.jpg');
     }
-    &[data_flower_type='4']{
+    &[data_flower_type='4']{//OPTION_FLOWER_DENTDINE
         background-image: url('img/flower4.jpg');
     }
-    &[data_flower_type='5'],
-    &[data_flower_type='6'],
-    &[data_flower_type='7']{
+    &[data_flower_type='5'],//OPTION_FLOWER_INSPIRACTRICE
+    &[data_flower_type='6'],//OPTION_FLOWER_COMPETITIVE
+    &[data_flower_type='7'],//OPTION_FLOWER_NO_LIMIT
+    &[data_flower_type='8'] //OPTION_FLOWER_NO_LIMIT_UNOFFICIAL
+    {
         background-image: url('img/flower5.jpg');
     }
     

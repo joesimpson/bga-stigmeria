@@ -624,6 +624,13 @@ $game_options = [
                   'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
                   'tmdisplay' => '#49',
                 ),
+                
+                OPTION_SCHEMA_UNOFFICIAL_101 => array( 
+                  'name' => totranslate('#101 (Unofficial)'), 
+                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'tmdisplay' => '#101',
+                  'alpha' => true, 
+                ),
             ),
     'default' => OPTION_SCHEMA_1,
     'displaycondition'=> [

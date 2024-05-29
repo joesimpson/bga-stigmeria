@@ -842,6 +842,21 @@ class Schemas
         new TokenCoord( TOKEN_POLLEN_BROWN,   10,5),
 
       ] ),
+      
+
+      OPTION_SCHEMA_UNOFFICIAL_101 => new Schema(OPTION_SCHEMA_UNOFFICIAL_101, OPTION_FLOWER_NO_LIMIT_UNOFFICIAL, OPTION_DIFFICULTY_4, [],[
+        
+          new TokenCoord( TOKEN_POLLEN_BLUE,      5,4),
+          new TokenCoord( TOKEN_POLLEN_WHITE,     5,5),
+          new TokenCoord( TOKEN_POLLEN_RED,       5,6),
+          new TokenCoord( TOKEN_POLLEN_BLUE,      6,4),
+          new TokenCoord( TOKEN_POLLEN_WHITE,     6,5),
+          new TokenCoord( TOKEN_POLLEN_RED,       6,6),
+          new TokenCoord( TOKEN_POLLEN_BLUE,      7,4),
+          new TokenCoord( TOKEN_POLLEN_WHITE,     7,5),
+          new TokenCoord( TOKEN_POLLEN_RED,       7,6),
+
+        ] ),
 
     ];
   }

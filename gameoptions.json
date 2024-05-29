@@ -276,6 +276,12 @@
                 "name": "#49",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#49"
+            },
+            "101": {
+                "name": "#101 (Unofficial)",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#101",
+                "alpha": true
             }
         },
         "default": 1,

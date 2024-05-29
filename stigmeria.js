@@ -77,6 +77,8 @@ function (dojo, declare) {
         TOKEN_STIG_BROWN,TOKEN_STIG_WHITE,TOKEN_STIG_BLACK,
     ];
     
+    const OPTION_FLOWER_NO_LIMIT_UNOFFICIAL = 8;
+    
     const PREF_SCHEMA_BOARD_ORDER = 100;
     const PREF_STIGMAREINE_BOARD_ORDER = 101;
     const PREF_STIGMAREINE_BOARD_AUTO_ORDER = 103;
@@ -2344,6 +2346,7 @@ function (dojo, declare) {
             let stars = '';
             let k = 0;
             while(k< schema.difficulty){ stars += `<i class="stig_difficulty_star"></i>`; k++;}
+            if(OPTION_FLOWER_NO_LIMIT_UNOFFICIAL == schema.type) stars += `<i class="stig_question_mark">?</i>`;
             return `<div class='stig_resizable_board' id='stig_schema_board_container_wrapper' data_schema='${schema.id}'>
             <div class='stig_schema_board_container'>
                 <div class="stig_schema_board" id='stig_schema_board_${schema.id}' data_flower_type="${schema.type}">

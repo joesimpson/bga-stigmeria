@@ -85,6 +85,8 @@ class Schema implements \JsonSerializable
       ||($this->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_DISCOVERY) 
       ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_NORMAL)
       ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_DISCOVERY)
+      ||($this->type == OPTION_FLOWER_NO_LIMIT_UNOFFICIAL && in_array($optionMode, [ OPTION_MODE_DISCOVERY, OPTION_MODE_NORMAL ])
+      )
     ) return false;
     return true;
   }
