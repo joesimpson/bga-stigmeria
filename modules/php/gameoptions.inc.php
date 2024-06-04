@@ -736,4 +736,15 @@ $game_preferences = [
     "default"=> PREF_ACTIONS_LANG_EN,
     'attribute' => 'stig_sp_action_lang',
   ],
+  
+  PREF_PANEL_ICONS_SIZE => [
+    'name' => totranslate('Player panel icons size'),
+    'needReload' => false,
+    'values' => [
+      PREF_PANEL_ICONS_SIZE_SMALL => [ 'name' => totranslate('Small') ],
+      PREF_PANEL_ICONS_SIZE_BIG => [ 'name' => totranslate('Big')],
+    ],
+    "default"=> PREF_PANEL_ICONS_SIZE_SMALL,
+    'attribute' => 'stig_panel_icon_size',
+  ],
 ];

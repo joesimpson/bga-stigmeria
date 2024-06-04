@@ -104,5 +104,19 @@
         },
         "default": 1,
         "attribute": "stig_sp_action_lang"
+    },
+    "108": {
+        "name": "Player panel icons size",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Small"
+            },
+            "2": {
+                "name": "Big"
+            }
+        },
+        "default": 1,
+        "attribute": "stig_panel_icon_size"
     }
 }

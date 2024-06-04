@@ -99,6 +99,8 @@ function (dojo, declare) {
     const PREF_ACTIONS_LANG_EN = 1;
     const PREF_ACTIONS_LANG_FR = 2;
 
+    const PREF_PANEL_ICONS_SIZE = 108;
+
     return declare("bgagame.stigmeria", [customgame.game], {
         constructor: function(){
             debug('stigmeria constructor');
@@ -379,6 +381,7 @@ function (dojo, declare) {
                 undoStyle: { section: "buttons", type: 'pref', prefId: PREF_UNDO_STYLE },
 
                 actionsLang: { section: "layout", type: 'pref', prefId: PREF_ACTIONS_LANG },
+                panelIconSize: { section: "layout", type: 'pref', prefId: PREF_PANEL_ICONS_SIZE },
             };
         },
         
@@ -439,6 +442,14 @@ function (dojo, declare) {
         },
         isTooltipsOnSpActionEnabled() {
             return this.settings.tooltipsOnSpAction == 1;
+        },
+        /** Listening for BGA user preference changes */
+        onPreferenceChange(pref, newValue) {
+            debug("onPreferenceChange",pref, newValue);
+            pref = parseInt(pref);
+            if(pref == PREF_PANEL_ICONS_SIZE ){
+                this.adaptPlayersPanels();
+            }
         },
 
         ///////////////////////////////////////////////////

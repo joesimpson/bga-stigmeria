@@ -644,6 +644,7 @@ body[data-tooltips_on_token="1"] .stig_token.tooltipable:hover {
   margin: 4px 0px;
   position: relative;
   text-align: center;
+  align-self: center;
 }
 .stig_panel .stig_player_infos .stig_player_resource .stig_reserve {
   position: absolute;
@@ -808,6 +809,67 @@ body[data-tooltips_on_token="1"] .stig_token.tooltipable:hover {
   flex-grow: 1;
   position: relative;
   text-align: center;
+}
+
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos {
+  font-size: 14px !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource {
+  margin: 0 !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_unlockedActions,
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_lockedActions,
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_jokers,
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_recruit,
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_tokens_deck {
+  font-size: 14px !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens,
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions {
+  font-size: 14px !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_actions_total,
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_resource_pollens_total {
+  font-size: 11px !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_tokens_recruit {
+  width: 25px !important;
+  height: 25px !important;
+  background-size: 80px !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container.stig_icon_container_pollens {
+  padding-right: 0.9em !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon .stig_subicon_tokens_recruit {
+  width: 1em !important;
+  height: 1em !important;
+  margin-right: -0.9em !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_tokens_deck {
+  width: 1.5em !important;
+  height: 2em !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_jokers {
+  width: 20px !important;
+  height: 20px !important;
+  background-position-x: 240px !important;
+  background-position-y: 17px !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_lockedActions, body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_unlockedActions {
+  width: 1.5em !important;
+  height: 1.5em !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon .stig_subicon_pollens {
+  width: 1em !important;
+  height: 1em !important;
+  margin-right: -0.9em !important;
+}
+body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_resource .stig_icon_container .stig_icon.stig_actions {
+  width: 20px !important;
+  height: 20px !important;
+  background-size: 185px !important;
+  background-position-x: 1147px !important;
+  background-position-y: 1147px !important;
 }
 
 #stig_select_piece_container_perplayer {

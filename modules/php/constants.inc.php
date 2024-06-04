@@ -378,6 +378,10 @@ const PREF_ACTIONS_LANG = 107;
 const PREF_ACTIONS_LANG_EN = 1;
 const PREF_ACTIONS_LANG_FR = 2;
 
+const PREF_PANEL_ICONS_SIZE = 108;
+const PREF_PANEL_ICONS_SIZE_SMALL = 1;
+const PREF_PANEL_ICONS_SIZE_BIG = 2;
+
 /*
  * State constants
  */

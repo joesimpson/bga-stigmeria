@@ -48,6 +48,7 @@
         margin: 4px 0px;
         position: relative;
         text-align: center;
+        align-self: center;
         .stig_reserve {
             position: absolute;
             top: 0%;
@@ -191,4 +192,79 @@
     }
 }
 
+}
+
+body[data-stig_panel_icon_size="1"]{//PREF_PANEL_ICONS_SIZE_SMALL
+    
+    .stig_panel{
+        .stig_player_infos {
+            font-size: 14px !important;
+            .stig_player_resource{
+                margin:0 !important;
+
+                .stig_resource_unlockedActions,
+                .stig_resource_lockedActions,
+                .stig_resource_jokers,
+                .stig_resource_tokens_recruit,
+                .stig_resource_tokens_deck {
+                    font-size: 14px !important;
+                }
+                .stig_resource_pollens,
+                .stig_resource_actions{
+                    font-size: 14px !important;
+                }
+                .stig_resource_actions_total,
+                .stig_resource_pollens_total {
+                    font-size: 11px !important;
+                }
+                
+                .stig_icon_container {
+                    &.stig_icon_container_tokens_recruit{
+                        width: 25px !important;
+                        height: 25px !important;
+                        background-size: 80px !important;
+                    }
+                    &.stig_icon_container_pollens{
+                        padding-right: 0.9em !important;
+                        
+                    }
+                    .stig_icon{
+                        .stig_subicon_tokens_recruit{
+                            width: 1em !important;
+                            height: 1em !important;
+                            margin-right: -0.9em !important;
+                        }
+                        &.stig_tokens_deck{
+                            width: 1.5em !important;
+                            height: 2em !important;
+                        }
+                        &.stig_jokers{
+                            width: 20px !important;
+                            height: 20px !important;
+                            background-position-x: 240px !important;
+                            background-position-y: 17px !important;
+                        }
+                        &.stig_lockedActions,
+                        &.stig_unlockedActions{
+                            width: 1.5em !important;
+                            height: 1.5em !important;
+                        }
+                        .stig_subicon_pollens{
+                            width: 1em !important;
+                            height: 1em !important;
+                            margin-right: -0.9em !important;
+                        }
+                        &.stig_actions{
+                            width: 20px !important;
+                            height: 20px !important;
+                            background-size: 185px !important;
+                            background-position-x: 1147px !important;
+                            background-position-y: 1147px !important;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 }
