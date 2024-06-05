@@ -92,6 +92,25 @@ body[data-stig_undo_style='2']{//PREF_UNDO_STYLE_ICON
         }
     }
 }
+#popin_multipleChoice_dialog_title{
+    .stig_confirm_dialog{
+        font-weight: normal;
+        //Because BGA adds a '150%' to the title (where we display all the text)
+        font-size: 66%;
+    }
+}
+.stig_confirm_dialog{
+    ul{
+        font-weight: bold;
+        li{
+            font-weight: normal;
+            margin-left: 2em;
+            list-style: disc;
+        }
+    }
+}
+
+
 .customimagebutton{
     border: medium none;
     display: flex;

@@ -521,12 +521,34 @@ function (dojo, declare) {
             
             let possibleActions = args.a;
             let nbActions = args.n;
+            let dieFaces = ''
+            for(let k=1;k<=12;k++) dieFaces += this.formatIcon("die_log",k,k);
             if(nbActions>0){
                 let actionName ='actLastDrift';
                 this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_PERSONAL,possibleActions,possibleActions
                 , (actionType) => {
-                        let confirmMessage = _('Are you sure to roll a die to apply on YOUR board ?')
-                        +' '+_('This is a free action to take before taking other actions.');
+                        let confirmMessage = `<div class="stig_confirm_dialog">
+                            ${_('Are you sure to roll a die to apply on YOUR board ?')}
+                            ${_('This is a free action to take before taking other actions.')}
+                            <br><br>
+                            <b><u>${_('Results for each die face (of this D12) : ')}</u></b>
+                                <ul>
+                                    <li>${bga_format(_('*Wind direction N, S, E, O :* move a stigmerian by one movement following the die direction (North, South, East, West). If the stigmerian goes out of the board, it moves to your recruitment area.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                    <li>${bga_format(_('*X :* Take out a stigmerian of the color on the die and put it back in the box.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                    <li>${bga_format(_('*Black :* Exceptionally play 1 special action that you have not yet unlocked, from the special actions list without paying its action cost.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                </ul>
+                                <br>${_('Reminder : all die faces are ')}
+                                <br> ${dieFaces}
+                            </div>`;
                         this.confirmationDialog(confirmMessage, () => {
                             this.takeAction(actionName, {act:actionType});
                         });
@@ -534,17 +556,58 @@ function (dojo, declare) {
                     
                 this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_CENTRAL,possibleActions,possibleActions
                 , (actionType) => {
-                        let confirmMessage = _('Are you sure to roll a die to apply on CENTRAL board ?')
-                        +' '+_('This is a free action to take before taking other actions.');
+                        let confirmMessage = `<div class="stig_confirm_dialog">
+                            ${_('Are you sure to roll a die to apply on CENTRAL board ?')}
+                            ${_('This is a free action to take before taking other actions.')}
+                            <br><br>
+                            <b><u>${_('Results for each die face (of this D12) : ')}</u></b>
+                                <ul>
+                                    <li>${bga_format(_('*Wind direction N, S, E, O :* move a stigmerian by one movement following the die direction (North, South, East, West). If the stigmerian goes out of the board, it moves to your recruitment area.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                    <li>${bga_format(_('*X :* Take out a stigmerian of the color on the die and put it back in the box.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                    <li>${bga_format(_('*Black :* Take a primary color token from the box and put it on the common board by respecting the landing rules.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                </ul>
+                                <br>${_('Reminder : all die faces are ')}
+                                <br> ${dieFaces}
+                            </div>`;
                         this.confirmationDialog(confirmMessage, () => {
                             this.takeAction(actionName, {act:actionType});
                         });
                     });
                 this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_OPPONENT,possibleActions,possibleActions
                 , (actionType) => {
-                        let confirmMessage = _('Are you sure to roll a die to apply on an opponent board ?')
-                        +' '+_('This is a free action to take before taking other actions.')
-                        +' '+_('Choose your target :');
+                        let confirmMessage = `<div class="stig_confirm_dialog">
+                            ${_('Are you sure to roll a die to apply on an opponent board ?')}
+                            ${_('This is a free action to take before taking other actions.')}
+                            <br><br>
+                            <b><u>${_('Results for each die face (of this D12) : ')}</u></b>
+                                <ul>
+                                    <li>${bga_format(_('*Wind direction N, S, E, O :* move a stigmerian by one movement following the die direction (North, South, East, West). If the stigmerian goes out of the board, it moves to your recruitment area.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                    <li>${bga_format(_('*X :* Take out a stigmerian of the color on the die and put it back in the box.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                    <li>${bga_format(_('*Black :* This opponent player unlocks 1 special action for free, available for the rest of the game.'), {
+                                        '*': (t) => '<b>' + t + '</b>'
+                                        })}
+                                    </li>
+                                </ul>
+                                <br>${_('Reminder : all die faces are ')}
+                                <br> ${dieFaces}
+                            <br>
+                            <br>${_('Choose your target :')}
+                            </div>`;
                         let choices = [_("Cancel")];
                         let choicesPid = [null,];
                         this.forEachPlayer(  (player) => {
@@ -851,12 +914,34 @@ function (dojo, declare) {
             
             let nbActions = args.n;
             let possibleActions = args.a;
+            let dieFaces = ''
+            for(let k=1;k<=12;k++) dieFaces += this.formatIcon("die_log",k,k);
             if(nbActions>0){
                 
                 this.formatLastDriftButton(ACTION_TYPE_LASTDRIFT_PERSONAL,possibleActions,possibleActions
                 , (actionType) => {
-                        let confirmMessage = _('Are you sure to roll a die to apply on YOUR board ?')
-                        +' '+_('This is a free action to take before taking other actions.');
+                        let confirmMessage = `<div class="stig_confirm_dialog">
+                        ${_('Are you sure to roll a die to apply on YOUR board ?')}
+                        ${_('This is a free action to take before taking other actions.')}
+                        <br><br>
+                        <b><u>${_('Results for each die face (of this D12) : ')}</u></b>
+                            <ul>
+                                <li>${bga_format(_('*Wind direction N, S, E, O :* move a stigmerian by one movement following the die direction (North, South, East, West). If the stigmerian goes out of the board, it moves to your recruitment area.'), {
+                                    '*': (t) => '<b>' + t + '</b>'
+                                    })}
+                                </li>
+                                <li>${bga_format(_('*X :* Take out a stigmerian of the color on the die and put it back in the box.'), {
+                                    '*': (t) => '<b>' + t + '</b>'
+                                    })}
+                                </li>
+                                <li>${bga_format(_('*Black :* Exceptionally play 1 special action that you have not yet unlocked, from the special actions list without paying its action cost.'), {
+                                    '*': (t) => '<b>' + t + '</b>'
+                                    })}
+                                </li>
+                            </ul>
+                            <br>${_('Reminder : all die faces are ')}
+                            <br> ${dieFaces}
+                        </div>`;
                         this.confirmationDialog(confirmMessage, () => {
                             this.takeAction('actLastDrift', {act:actionType});
                         });

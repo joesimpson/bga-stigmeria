@@ -3738,6 +3738,20 @@ body[data-stig_undo_style="2"] #btnTextRestartTurn {
   color: #000000;
 }
 
+#popin_multipleChoice_dialog_title .stig_confirm_dialog {
+  font-weight: normal;
+  font-size: 66%;
+}
+
+.stig_confirm_dialog ul {
+  font-weight: bold;
+}
+.stig_confirm_dialog ul li {
+  font-weight: normal;
+  margin-left: 2em;
+  list-style: disc;
+}
+
 .customimagebutton {
   border: medium none;
   display: flex;
