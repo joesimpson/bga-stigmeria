@@ -76,7 +76,7 @@ trait NextTurnTrait
     PlayerActions::setupNewTurn($players,$turn);
     $this->addCheckpoint(ST_NEXT_TURN);
 
-    if($turn ==1 && !Globals::isModeNoCentralBoard())
+    if(!Globals::isModeNoCentralBoard())
     {
       $firstPlayer = Globals::getFirstPlayer();
       Players::changeActive($firstPlayer);

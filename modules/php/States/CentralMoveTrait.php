@@ -75,6 +75,7 @@ trait CentralMoveTrait
         
         $player = Players::getCurrent();
         $pId = $player->id;
+        $this->addStep($pId, $player->getPrivateState());
 
         if($player->isCommonMoveDone()){
             throw new UnexpectedException(9,"You cannot do that action twice in the turn");
@@ -93,12 +94,22 @@ trait CentralMoveTrait
 
         //EFFECT :
         $token->moveToRecruitZoneCentral($player,$actionCost);
+        $goToFirstTokenCommonBoard = false;
+        if(0 == Tokens::countInLocation(TOKEN_LOCATION_CENTRAL_BOARD)){
+            //RULE : Player must add a new token on A5 when central board is empty
+            $goToFirstTokenCommonBoard = true;
+        }
 
         $player->incNbCommonActionsDone($actionCost);
         $player->setCommonMoveDone(true);
         Notifications::useActions($player);
         Stats::inc("actions_c2",$player->getId());
 
+        if($goToFirstTokenCommonBoard){
+            PGlobals::setState($pId, ST_TURN_CENTRAL_A5);
+            $this->gamestate->nextPrivateState($pId, 'centralA5');
+            return;
+        }
         PGlobals::setState($pId, ST_TURN_COMMON_BOARD);
         $this->gamestate->nextPrivateState($player->id, "continue");
     }

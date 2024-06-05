@@ -14,7 +14,7 @@ trait FirstTokenTrait
   public function argFT()
   { 
     $playerId = Globals::getFirstPlayer();
-    $possibles = STIG_PRIMARY_COLORS;
+    $possibles = $this->getListPossibleTokensForCentralA5();
     $coordName = GridUtils::getCoordName(FIRST_TOKEN_ROW,FIRST_TOKEN_COLUMN);
     $args  = [
       'L' => $coordName,
@@ -44,21 +44,30 @@ trait FirstTokenTrait
       $pId = $player->id;
       $this->addStep( $player->id, ST_FIRST_TOKEN);
  
-      if(!in_array($typeSource, STIG_PRIMARY_COLORS)){
-          throw new UnexpectedException(11,"You cannot select this color $typeSource");
+      $possibles = $this->getListPossibleTokensForCentralA5();
+      if(!in_array($typeSource, $possibles)){
+          throw new UnexpectedException(11,"You cannot select this color $typeSource, see ".json_encode($possibles));
       }
 
       //EFFECT
-      //CREATE TOKEN
-      $token = Tokens::createToken([
-          'type' => $typeSource,
-          'location' => TOKEN_LOCATION_CENTRAL_BOARD,
-          'y' => FIRST_TOKEN_ROW,
-          'x' => FIRST_TOKEN_COLUMN,
-      ]);
+      $token = Tokens::getAllCentralRecruits()->filter(function($token) use ($typeSource) {
+        return $typeSource == $token->getType();
+      })->first();
+      if(isset($token)){
+          //Move central Recruit
+          $token->moveToCentralBoard($player,FIRST_TOKEN_ROW,FIRST_TOKEN_COLUMN,0,false);
+      } else {
+          //CREATE TOKEN IF not from recruits
+          $token = Tokens::createToken([
+              'type' => $typeSource,
+              'location' => TOKEN_LOCATION_CENTRAL_BOARD,
+              'y' => FIRST_TOKEN_ROW,
+              'x' => FIRST_TOKEN_COLUMN,
+          ]);
+      }
       Notifications::firstToken($player,$token);
 
-      $this->addCheckpoint(ST_GENERATE_WIND);
+      $this->addCheckpoint(ST_PLAYER_TURN);
       $this->gamestate->nextState("next");
   }
 }

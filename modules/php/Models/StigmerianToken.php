@@ -126,7 +126,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    * @param int $row
    * @param int $column
    * @param int $actionCost
-   * @param bool $sendNotif (default false) : tells if we want to send a notif for this move
+   * @param bool $sendNotif (default true) : tells if we want to send a notif for this move
    */
   public function moveToPlayerBoard($player,$row,$column,$actionCost, $sendNotif = true)
   {
@@ -168,8 +168,9 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
    * @param int $row
    * @param int $column
    * @param int $actionCost
+   * @param bool $sendNotif (default true) : tells if we want to send a notif for this move
    */
-  public function moveToCentralBoard($player,$row,$column,$actionCost)
+  public function moveToCentralBoard($player,$row,$column,$actionCost, $sendNotif = true)
   {
     $fromBoard = false;
     if($this->getLocation() == TOKEN_LOCATION_CENTRAL_BOARD ){
@@ -187,17 +188,17 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
     $this->setRow($row);
 
     if($fromBoard){
-      Notifications::moveOnCentralBoard($player,$this,$fromCoord,$this->getCoordName(),$actionCost);
+      if($sendNotif) Notifications::moveOnCentralBoard($player,$this,$fromCoord,$this->getCoordName(),$actionCost);
     }
     else {
-      Notifications::moveToCentralBoard($player,$this,$actionCost);
+      if($sendNotif) Notifications::moveToCentralBoard($player,$this,$actionCost);
     }
   }
   
   /**
    * @param Player $player
    * @param int $actionCost
-   * @param bool $sendNotif (default false) : tells if we want to send a notif for this move
+   * @param bool $sendNotif (default true) : tells if we want to send a notif for this move
    */
   public function moveToRecruitZone($player,$actionCost, $sendNotif = true)
   {
@@ -231,7 +232,7 @@ class StigmerianToken extends \STIG\Helpers\DB_Model
   /**
    * @param Player $player
    * @param int $actionCost
-   * @param bool $sendNotif (default false) : tells if we want to send a notif for this move
+   * @param bool $sendNotif (default true) : tells if we want to send a notif for this move
    */
   public function moveToRecruitZoneCentral($player,$actionCost, $sendNotif = true)
   {

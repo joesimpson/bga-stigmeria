@@ -123,7 +123,7 @@ function (dojo, declare) {
                 ['endTurn', null],
                 ['updateFirstPlayer', 500],
                 ['useActions', null],
-                ['firstToken', 700],
+                ['firstToken', null],
                 ['drawToken', null],
                 ['drawTokenForCentral', null],
                 ['moveToCentralBoard', null],
@@ -684,6 +684,16 @@ function (dojo, declare) {
             //DISABLED by default
             $(`btnConfirm`).classList.add('disabled');
         },
+        onEnteringStateCentralA5: function(args)
+        {
+            debug( 'onEnteringStateCentralA5() ', args );
+            
+            Object.values(args.p).forEach((tokenColor) => {
+                this.addImageActionButton(`btnCentralA5_${tokenColor}`, `<div><div class='stig_button_token' data-type='${tokenColor}'></div> </div>`, () =>  {
+                    this.takeAction('actCentralA5', {t:tokenColor})
+                });
+            });
+        }, 
         onEnteringStateGainSpecialAction: function(args)
         {
             debug( 'onEnteringStateGainSpecialAction() ', args );
@@ -1638,6 +1648,7 @@ function (dojo, declare) {
             });
         },
         notif_firstToken(n) {
+            this.setNotifDuration(800);
             debug('notif_firstToken: token added on central board', n);
             let token = n.args.token;
             this.addToken(token, this.getVisibleTitleContainer());

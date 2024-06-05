@@ -48,6 +48,7 @@ class Stigmeria extends Table
     use STIG\States\CentralGainSpecialTrait;
     use STIG\States\CentralJokerTrait;
     use STIG\States\CentralLandTrait;
+    use STIG\States\CentralA5Trait;
     use STIG\States\CentralMoveTrait;
     use STIG\States\ChoiceTokenToLandTrait;
     use STIG\States\ChoiceTokenToMoveTrait;

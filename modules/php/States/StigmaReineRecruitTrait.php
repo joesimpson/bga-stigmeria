@@ -16,9 +16,7 @@ trait StigmaReineRecruitTrait
   public function argSRecruit($pId)
   { 
     $tokens = Tokens::getAllCentralRecruits();
-    $coordName = GridUtils::getCoordName(FIRST_TOKEN_ROW,FIRST_TOKEN_COLUMN);
     $args  = [
-      'L' => $coordName,
       'n' => ACTION_COST_CENTRAL_RECRUIT,
       'p' => $tokens,
     ];

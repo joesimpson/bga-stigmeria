@@ -276,6 +276,7 @@ $machinestates = array(
             'continue' => ST_TURN_COMMON_BOARD,
             'gainSp' => ST_TURN_CENTRAL_CHOICE_SP,
             'cancel' => ST_TURN_COMMON_BOARD,
+            'centralA5' => ST_TURN_CENTRAL_A5,
         ],
     ],
     ST_TURN_CENTRAL_CHOICE_SP => [
@@ -307,6 +308,20 @@ $machinestates = array(
         ],
     ],
     
+    ST_TURN_CENTRAL_A5 => [
+        "name" => "centralA5",
+        "args" => "argCentralA5",
+        "descriptionmyturn" => clienttranslate('${you} must select the token to be placed on ${L}'), 
+        "type" => "private",
+        "possibleactions" => [
+            "actCentralA5",
+            'actRestart',
+        ],
+        "transitions" => [
+            'next' => ST_TURN_COMMON_BOARD,
+        ],
+    ],
+    
     ST_TURN_LAST_DRIFT => array(
         "name" => "lastDrift",
         "descriptionmyturn" => clienttranslate('Last drift die roll ${die_face}, ${you} must apply the effect on ${player_name2} board'),
@@ -325,6 +340,7 @@ $machinestates = array(
             "next" => ST_TURN_COMMON_BOARD, 
             'gainSp' => ST_TURN_CENTRAL_CHOICE_SP,
             "backToTurn" => ST_TURN_PERSONAL_BOARD, 
+            'centralA5' => ST_TURN_CENTRAL_A5,
         ],
     ),
     

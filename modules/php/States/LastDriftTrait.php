@@ -236,6 +236,7 @@ trait LastDriftTrait
         }
 
         //EFFECT
+        $goToFirstTokenCommonBoard = false;
         $fromCoord = $token->getCoordName();
         if(isset($targetplayer)){
             $differentPlayer = $targetplayer->id != $pId;
@@ -247,9 +248,13 @@ trait LastDriftTrait
             else {
                 $token->moveToRecruitZone($player,0);
             }
-        } else {
+        } else {//Common board
             $token->moveToRecruitZone($player,0,false);
             Notifications::LDmoveOutRecruit($player, $token,$fromCoord);
+            if(0 == Tokens::countInLocation(TOKEN_LOCATION_CENTRAL_BOARD)){
+                //RULE : Player must add a new token on A5 when central board is empty
+                $goToFirstTokenCommonBoard = true;
+            }
         }
 
         $player->giveExtraTime();
@@ -265,6 +270,9 @@ trait LastDriftTrait
 
         if(Globals::isModeSoloNoLimit()){
             $this->gamestate->nextPrivateState($pId, 'backToTurn');
+        }
+        else if($goToFirstTokenCommonBoard){
+            $this->gamestate->nextPrivateState($pId, 'centralA5');
         }
         else {
             $this->gamestate->nextPrivateState($pId, 'next');
@@ -310,6 +318,7 @@ trait LastDriftTrait
         //EFFECT
         Notifications::lastDriftRemove($player,$token,$targetplayer); 
         Tokens::delete($token->id);
+        $goToFirstTokenCommonBoard = false;
 
         $player->giveExtraTime();
         Stats::inc("actions_s".$actionType,$pId);
@@ -322,12 +331,19 @@ trait LastDriftTrait
                 $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
             }
         }
-        else {
+        else {//central board
             $this->addCheckpoint(ST_TURN_COMMON_BOARD,$pId);
+            if(0 == Tokens::countInLocation(TOKEN_LOCATION_CENTRAL_BOARD)){
+                //RULE : Player must add a new token on A5 when central board is empty
+                $goToFirstTokenCommonBoard = true;
+            }
         }
 
         if(Globals::isModeSoloNoLimit()){
             $this->gamestate->nextPrivateState($pId, 'backToTurn');
+        }
+        else if($goToFirstTokenCommonBoard){
+            $this->gamestate->nextPrivateState($pId, 'centralA5');
         }
         else {
             $this->gamestate->nextPrivateState($pId, 'next');
