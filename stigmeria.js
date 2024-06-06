@@ -2659,6 +2659,8 @@ function (dojo, declare) {
         },
         getSpecialActionTooltip(action) {
             
+            let dieFaces = ''
+            for(let k=1;k<=12;k++) dieFaces += this.formatIcon("die_log",k,k);
             let VSactionDesc = _('VS: This is a Versus action.');
             let descriptionMap = new Map([
 
@@ -2697,7 +2699,10 @@ function (dojo, declare) {
 
                 //FROM Help board A12 :
                 [ACTION_TYPE_CHOREOGRAPHY, this.fsr(_('Once per turn you can move maximum X stigmerian tokens by one movement. (X is equal to the ongoing turn number minus 2).'),{})],
-                [ACTION_TYPE_FOGDIE, this.fsr(_('Once per turn, roll the die and take a stigmerian of the color indicated by the die face. Without using the recruit action, you have to land this token on your board, following the landing rules.'),{})],
+                [ACTION_TYPE_FOGDIE, this.fsr(_('Once per turn, roll the die and take a stigmerian of the color indicated by the die face. Without using the recruit action, you have to land this token on your board, following the landing rules.'),{})
+                    + "<br><br>"+ _('Reminder : all die faces are ')
+                    + "<br>"+ dieFaces
+                ],
                 [ACTION_TYPE_MIMICRY, this.fsr(_('Spend 3 action points to exchange the last stigmerian token that landed on the board by the same color of one of the adjacent colors. You cannot copy the same color many times on the same turn.'),{})],
                 [ACTION_TYPE_MOVE_FAST, this.fsr(_('Once per turn, you can move one stigmerian token by X movements maximum. (X is equal to the ongoing turn number minus 2).'),{})],
                 [ACTION_TYPE_PREDICTION, this.fsr(_('Once per turn, take 3 tokens of different colors from the box and add them to your bag. That allows you to be able to draw tokens of non primary colors to top put on the common board : in this case, these colors work exactly with the same rules than primary colors to unlock the special actions on the common board.'),{})],
