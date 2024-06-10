@@ -63,6 +63,17 @@ trait GiveTokensTrait
             return;
         }
 
+        $goToFirstTokenCommonBoard = false;
+        if(0 == Tokens::countInLocation(TOKEN_LOCATION_CENTRAL_BOARD)){
+            //RULE : Player must add a new token on A5 when central board is empty
+            $goToFirstTokenCommonBoard = true;
+        }
+
+        if($goToFirstTokenCommonBoard){
+            PGlobals::setState($pId, ST_TURN_CENTRAL_A5);
+            $this->gamestate->nextPrivateState($pId, 'centralA5');
+            return;
+        }
         PGlobals::setState($pId, ST_TURN_COMMON_BOARD);
         $this->gamestate->nextPrivateState($pId, "next");
     }

@@ -305,6 +305,7 @@ $machinestates = array(
         "transitions" => [
             'continue' => ST_TURN_CENTRAL_TOKEN_DISTRIBUTION,
             'next' => ST_TURN_COMMON_BOARD,
+            'centralA5' => ST_TURN_CENTRAL_A5,
         ],
     ],
     
