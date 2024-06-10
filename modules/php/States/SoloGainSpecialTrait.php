@@ -58,6 +58,7 @@ trait SoloGainSpecialTrait
     PGlobals::setNbSpActions($pId,$nbRemaining);
     Notifications::unlockSp($player,$action);
     Stats::inc("unlocked_sp",$pId);
+    $player->giveExtraTime();
 
     $this->gamestate->nextState("next");
   }

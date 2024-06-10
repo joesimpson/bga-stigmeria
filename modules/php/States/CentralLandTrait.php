@@ -54,6 +54,7 @@ trait CentralLandTrait
 
         $player->incNbCommonActionsDone($actionCost);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_c1",$player->getId());
 
         //EFFECT : PLACE the TOKEN 

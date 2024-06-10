@@ -65,6 +65,7 @@ trait PlayerDiceTrait
         $weatherTurn = $lastDie['turn'];
         $lastDie['die'] = $diceFace->type;
         Globals::setLastDie($lastDie);
+        $player->giveExtraTime();
 
         $this->addCheckpoint(ST_WEATHER_PLAYER_DICE);
         if( $diceFace->askPlayerNoChoice() ||$diceFace->askPlayerChoice() || $diceFace->askPlayerReroll()){
@@ -110,6 +111,7 @@ trait PlayerDiceTrait
         Globals::setWindDir($weatherTurn, $newWind);
         
         Notifications::weatherDiceChoice($weatherTurn,$player,$newWind);
+        $player->giveExtraTime();
         
         if($stateFrom == ST_WIND_EFFECT){
             $this->gamestate->nextState("nextEffect");

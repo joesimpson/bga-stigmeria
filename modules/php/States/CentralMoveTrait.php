@@ -57,6 +57,7 @@ trait CentralMoveTrait
         $player->incNbCommonActionsDone($actionCost);
         $player->setCommonMoveDone(true);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_c2",$player->getId());
 
         //EFFECT : PLACE the TOKEN 
@@ -103,6 +104,7 @@ trait CentralMoveTrait
         $player->incNbCommonActionsDone($actionCost);
         $player->setCommonMoveDone(true);
         Notifications::useActions($player);
+        $player->giveExtraTime();
         Stats::inc("actions_c2",$player->getId());
 
         if($goToFirstTokenCommonBoard){
