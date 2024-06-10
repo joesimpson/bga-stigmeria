@@ -83,6 +83,7 @@
         "name": "Targeted schema",
         "values": {
             "0": {
+                "nobeginner": true,
                 "name": "Random",
                 "description": "Random schema",
                 "tmdisplay": "Random schema"
@@ -93,33 +94,33 @@
                 "tmdisplay": "Random VertigHaineuse"
             },
             "1": {
-                "name": "#1",
-                "description": "#1",
+                "name": "#1 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#1"
             },
             "2": {
-                "name": "#2",
-                "description": "#2",
+                "name": "#2 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#2"
             },
             "3": {
-                "name": "#3",
-                "description": "#3",
+                "name": "#3 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#3"
             },
             "4": {
-                "name": "#4",
-                "description": "#4",
+                "name": "#4 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#4"
             },
             "5": {
-                "name": "#5",
-                "description": "#5",
+                "name": "#5 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#5"
             },
             "6": {
-                "name": "#6",
-                "description": "#6",
+                "name": "#6 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#6"
             },
             "502": {
@@ -128,33 +129,33 @@
                 "tmdisplay": "Random MarOnne"
             },
             "7": {
-                "name": "#7",
-                "description": "#7",
+                "name": "#7 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#7"
             },
             "8": {
-                "name": "#8",
-                "description": "#8",
+                "name": "#8 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#8"
             },
             "9": {
-                "name": "#9",
-                "description": "#9",
+                "name": "#9 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#9"
             },
             "10": {
-                "name": "#10",
-                "description": "#10",
+                "name": "#10 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#10"
             },
             "11": {
-                "name": "#11",
-                "description": "#11",
+                "name": "#11 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#11"
             },
             "12": {
-                "name": "#12",
-                "description": "#12",
+                "name": "#12 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#12"
             },
             "503": {
@@ -163,33 +164,33 @@
                 "tmdisplay": "Random SiffloChamp"
             },
             "13": {
-                "name": "#13",
-                "description": "#13",
+                "name": "#13 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#13"
             },
             "14": {
-                "name": "#14",
-                "description": "#14",
+                "name": "#14 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#14"
             },
             "15": {
-                "name": "#15",
-                "description": "#15",
+                "name": "#15 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#15"
             },
             "16": {
-                "name": "#16",
-                "description": "#16",
+                "name": "#16 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#16"
             },
             "17": {
-                "name": "#17",
-                "description": "#17",
+                "name": "#17 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#17"
             },
             "18": {
-                "name": "#18",
-                "description": "#18",
+                "name": "#18 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#18"
             },
             "504": {
@@ -198,33 +199,33 @@
                 "tmdisplay": "Random DentD\u00eene"
             },
             "19": {
-                "name": "#19",
-                "description": "#19",
+                "name": "#19 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#19"
             },
             "20": {
-                "name": "#20",
-                "description": "#20",
+                "name": "#20 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#20"
             },
             "21": {
-                "name": "#21",
-                "description": "#21",
+                "name": "#21 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#21"
             },
             "22": {
-                "name": "#22",
-                "description": "#22",
+                "name": "#22 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#22"
             },
             "23": {
-                "name": "#23",
-                "description": "#23",
+                "name": "#23 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#23"
             },
             "24": {
-                "name": "#24",
-                "description": "#24",
+                "name": "#24 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#24"
             },
             "505": {
@@ -233,142 +234,164 @@
                 "tmdisplay": "Random InspirActrice"
             },
             "25": {
-                "name": "#25",
-                "description": "#25",
+                "name": "#25 (*)",
+                "description": "Level * : Normal",
                 "tmdisplay": "#25"
             },
             "26": {
-                "name": "#26",
-                "description": "#26",
+                "name": "#26 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#26"
             },
             "27": {
-                "name": "#27",
-                "description": "#27",
+                "name": "#27 (**)",
+                "description": "Level ** : Difficult",
                 "tmdisplay": "#27"
             },
             "28": {
-                "name": "#28",
-                "description": "#28",
+                "name": "#28 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#28"
             },
             "29": {
-                "name": "#29",
-                "description": "#29",
+                "name": "#29 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#29"
             },
             "30": {
-                "name": "#30",
-                "description": "#30",
+                "name": "#30 (***)",
+                "description": "Level *** : Very difficult",
                 "tmdisplay": "#30"
             },
             "506": {
+                "nobeginner": true,
                 "name": "Random Competitive",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "Random Competitive"
             },
             "31": {
-                "name": "#31",
+                "nobeginner": true,
+                "name": "#31 (*)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#31"
             },
             "32": {
-                "name": "#32",
+                "nobeginner": true,
+                "name": "#32 (*)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#32"
             },
             "33": {
-                "name": "#33",
+                "nobeginner": true,
+                "name": "#33 (*)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#33"
             },
             "34": {
-                "name": "#34",
+                "nobeginner": true,
+                "name": "#34 (**)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#34"
             },
             "35": {
-                "name": "#35",
+                "nobeginner": true,
+                "name": "#35 (**)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#35"
             },
             "36": {
-                "name": "#36",
+                "nobeginner": true,
+                "name": "#36 (**)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#36"
             },
             "37": {
-                "name": "#37",
+                "nobeginner": true,
+                "name": "#37 (***)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#37"
             },
             "38": {
-                "name": "#38",
+                "nobeginner": true,
+                "name": "#38 (***)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#38"
             },
             "39": {
-                "name": "#39",
+                "nobeginner": true,
+                "name": "#39 (***)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#39"
             },
             "507": {
+                "nobeginner": true,
                 "name": "Random Competitive No Limit",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "Random Competitive No Limit"
             },
             "40": {
-                "name": "#40",
+                "nobeginner": true,
+                "name": "#40 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#40"
             },
             "41": {
-                "name": "#41",
+                "nobeginner": true,
+                "name": "#41 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#41"
             },
             "42": {
-                "name": "#42",
+                "nobeginner": true,
+                "name": "#42 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#42"
             },
             "43": {
-                "name": "#43",
+                "nobeginner": true,
+                "name": "#43 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#43"
             },
             "44": {
-                "name": "#44",
+                "nobeginner": true,
+                "name": "#44 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#44"
             },
             "45": {
-                "name": "#45",
+                "nobeginner": true,
+                "name": "#45 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#45"
             },
             "46": {
-                "name": "#46",
+                "nobeginner": true,
+                "name": "#46 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#46"
             },
             "47": {
-                "name": "#47",
+                "nobeginner": true,
+                "name": "#47 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#47"
             },
             "48": {
-                "name": "#48",
+                "nobeginner": true,
+                "name": "#48 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#48"
             },
             "49": {
-                "name": "#49",
+                "nobeginner": true,
+                "name": "#49 (****)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#49"
             },
             "101": {
-                "name": "#101 (Unofficial)",
+                "nobeginner": true,
+                "name": "#101 (Unofficial : France flag)",
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#101",
                 "alpha": true
