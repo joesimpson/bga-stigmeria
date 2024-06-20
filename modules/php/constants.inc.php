@@ -489,5 +489,6 @@ const ST_END_GAME = 99;
 
 
 /******************
- ****** STATS ******
+ ****** UTILS ******
  ******************/
+const LAST_DRIFT_WHEN_INACTIVE_PLAYER = 'INACTIVE';

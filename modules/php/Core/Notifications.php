@@ -967,7 +967,7 @@ class Notifications
    * @param Player $player2
    */
   public static function lastDriftOpponentChoice($player,$player2){
-    self::notifyAll('lastDriftOpponentChoice',clienttranslate('${player_name} lets ${player_name2} make the choice'),[ 
+    self::notifyAll('lastDriftOpponentChoice',clienttranslate('${player_name} lets ${player_name2} choose an action'),[ 
         'player' => $player,
         'player2' => $player2,
       ],

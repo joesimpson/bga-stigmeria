@@ -1014,6 +1014,9 @@ body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_
   background-position-x: 75%;
   background-position-y: 100%;
 }
+#stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell .stig_sp_action_token[data-state="5"] {
+  visibility: hidden;
+}
 #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="10"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="11"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="14"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="21"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="22"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="24"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="29"], #stig_main_zone .stig_resizable_action_board .stig_sp_action_board_container .stig_sp_action_board .stig_sp_grid .stig_sp_action_cell[data-type="30"] {
   grid-column-start: 1;
 }

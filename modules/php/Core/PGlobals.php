@@ -41,6 +41,8 @@ class PGlobals extends \STIG\Helpers\DB_Manager
     'lastDrift' => 'obj',
     //last drift used by P1 on P2, save P2 state here
     'lastDriftPreviousState' => 'obj',
+    //last drift used by P1 on P2, save P2 die here in case it is updated
+    'lastDriftPreviousDie' => 'int',
 
     'eliminated' => 'bool',
   ];
@@ -214,6 +216,7 @@ class PGlobals extends \STIG\Helpers\DB_Manager
       self::setLastDie($playerId,null);
       self::setLastDrift($playerId,null);
       self::setLastDriftPreviousState($playerId,null);
+      self::setLastDriftPreviousDie($playerId,null);
       self::setEliminated($playerId,false);
 
       //the first state to be activated:

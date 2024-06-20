@@ -12,6 +12,7 @@ use STIG\Managers\DiceRoll;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Players;
 use STIG\Managers\Tokens;
+use STIG\Models\DiceFace;
 use STIG\Models\StigmerianToken;
 
 trait PlayerTurnCommonBoardTrait
@@ -247,8 +248,10 @@ trait PlayerTurnCommonBoardTrait
 
         $args = $this->argLastDrift($pId);
         $autoSkip = $args['autoSkip']; 
-        if($args['opponent']){//Opponent needs to choose a special action
+        if($args['opponent']){
             Notifications::lastDriftOpponentChoice($player,$targetPlayer);
+            /* Old Rule : 
+            //Opponent needs to choose a special action
             if($targetPlayer->isMultiactive()){
                 //Player is already playing, we need to save their previous state to jump back after
                 $opponentState = $targetPlayer->getPrivateState();
@@ -257,7 +260,7 @@ trait PlayerTurnCommonBoardTrait
             else {
                 //Player has already played (previous turn or current turn)
                 // how to activate without using startTurn...?
-                PGlobals::setLastDriftPreviousState($targetPlayer->id, 'INACTIVE');
+                PGlobals::setLastDriftPreviousState($targetPlayer->id, LAST_DRIFT_WHEN_INACTIVE_PLAYER);
                 $this->gamestate->setPlayersMultiactive( [$targetPlayer->id], 'end' );
                 $this->gamestate->initializePrivateState($targetPlayer->id); 
             }
@@ -267,6 +270,33 @@ trait PlayerTurnCommonBoardTrait
             $this->gamestate->setPrivateState($targetPlayer->id, ST_TURN_CENTRAL_CHOICE_SP);
             $this->addCheckpoint($nextState,$pId);
             $this->gamestate->nextPrivateState($pId, $continueTransition);
+            */
+
+            //New Rule : Opponent needs to PLAY a special action
+            //Modify opponent die to manage datas the same way as when player rolls last drift on their own board :
+            $previousDie = PGlobals::getLastDie($targetPlayer->id);
+            PGlobals::setLastDriftPreviousDie($targetPlayer->id, $previousDie);
+            PGlobals::setLastDie($targetPlayer->id,$dieFace->type);
+            PGlobals::setLastDrift($targetPlayer->id, ['type' => ACTION_TYPE_LASTDRIFT_PERSONAL, 'pid' => $targetPlayer->id ]);
+
+            if($targetPlayer->isMultiactive()){
+                //Player is already playing, we need to save their previous state to jump back after
+                $opponentState = $targetPlayer->getPrivateState();
+                PGlobals::setLastDriftPreviousState($targetPlayer->id, $opponentState);
+            }
+            else {
+                //Player has already played (previous turn or current turn)
+                // how to activate without using startTurn...?
+                PGlobals::setLastDriftPreviousState($targetPlayer->id, LAST_DRIFT_WHEN_INACTIVE_PLAYER);
+                $this->gamestate->setPlayersMultiactive( [$targetPlayer->id], 'end' );
+                $this->gamestate->initializePrivateState($targetPlayer->id); 
+            }
+
+            $this->addCheckpoint(ST_TURN_LAST_DRIFT,$targetPlayer->id);
+            $this->gamestate->setPrivateState($targetPlayer->id, ST_TURN_LAST_DRIFT);
+            $this->addCheckpoint($nextState,$pId);
+            $this->gamestate->nextPrivateState($pId, $continueTransition);
+
         } else if($autoSkip){//when nothing needs to be done
             Notifications::lastDriftAutoSkip($player);
             $this->addCheckpoint($nextState,$pId);

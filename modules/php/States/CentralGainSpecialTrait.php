@@ -64,7 +64,7 @@ trait CentralGainSpecialTrait
         if(isset($fromState) && $fromState!='null'){
             PGlobals::setLastDriftPreviousState($pId, null);
             //If coming from last drift result -> end this step
-            if('INACTIVE' == $fromState){
+            if(LAST_DRIFT_WHEN_INACTIVE_PLAYER == $fromState){
                 $this->gamestate->setPlayerNonMultiactive( $pId, 'end' );
                 return;
             }

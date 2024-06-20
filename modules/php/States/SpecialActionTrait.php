@@ -165,7 +165,9 @@ trait SpecialActionTrait
         $jumpToState = false;
         if(!isset($playerAction)){
             $fromState = PGlobals::getLastDriftPreviousState($pId);
-            if(isset($fromState) && is_int($fromState) && $fromState >0 ){
+            if(isset($fromState) && ( is_int($fromState) && $fromState >0 
+             || LAST_DRIFT_WHEN_INACTIVE_PLAYER == $fromState  //IF coming from an opponent last drift when we were inactive
+             )){
                 //If coming from last drift result -> don't block, but create a one shot action
                 $playerAction = PlayerActions::createTemporaryAction($pId,$actionType);
                 $jumpToState = true;

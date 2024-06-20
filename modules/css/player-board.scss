@@ -153,8 +153,8 @@
                             position: absolute;
                             right: 0;
 
-                            &[data-state='0'],
-                            &[data-state='3'],
+                            &[data-state='0'], //ACTION_STATE_UNLOCKED_FOREVER
+                            &[data-state='3'], //ACTION_STATE_UNLOCKED_FOR_ONCE_GAME
                             &[data-state='4']{
                                 /** ACTION_STATE_UNLOCKED_FOR_ONCE_PER_TURN */
                                 /** see sprite type 23 */
@@ -162,10 +162,13 @@
                                 background-position-y: 100%;
                             }
                             &[data-state='1'],
-                            &[data-state='2']{
+                            &[data-state='2']{//ACTION_STATE_LOCKED_FOR_TURN
                                 /** ACTION_STATE_LOCKED see sprite type 24 */
                                 background-position-x: 75%;
                                 background-position-y: 100%;
+                            }
+                            &[data-state='5']{ // ACTION_STATE_UNLOCKED_ONE_SHOT TO be destroyed after use
+                                visibility: hidden;
                             }
                         }
                         // COLUMN 1

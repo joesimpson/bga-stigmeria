@@ -91,7 +91,11 @@ trait LastDriftTrait
             }
             else if($actionType == ACTION_TYPE_LASTDRIFT_OPPONENT){
                 $args['pid'] = $actionBoardPid;
-                if(count($this->listPossibleNewSpAction($actionBoardPid))==0){
+                //OLD RULE : actions to unlock for later
+                //$actions = $this->listPossibleNewSpAction($actionBoardPid);
+                //NEW RULE : actions to play right now
+                $actions = $this->listPossiblePlaySpAction($actionBoardPid);
+                if(count($actions)==0){
                     $autoSkip = true;
                 }
                 else {
@@ -404,6 +408,7 @@ trait LastDriftTrait
     
     /**
      * @param int $playerId
+     * @return array of action types (see ACTION_TYPES) which can be played + not yet unlocked by this player
      */
     public function listPossiblePlaySpAction($playerId){
         $lockedActions = [];
@@ -436,10 +441,22 @@ trait LastDriftTrait
             PlayerActions::delete($playerAction->getId());
         }
         $fromState = PGlobals::getLastDriftPreviousState($playerId);
-        if(isset($fromState) && is_int($fromState) && $fromState >0 ){
+        if(isset($fromState) 
+            && (is_int($fromState) && $fromState >0 
+            || LAST_DRIFT_WHEN_INACTIVE_PLAYER == $fromState ) //from opponent
+        ){
             //If coming from last drift result
-            PGlobals::setState($playerId, $fromState);
             PGlobals::setLastDriftPreviousState($playerId,null);
+            $previousDie = PGlobals::getLastDriftPreviousDie($playerId);
+            PGlobals::setLastDie($playerId,$previousDie);
+            PGlobals::setLastDriftPreviousDie($playerId, null);
+            
+            if(LAST_DRIFT_WHEN_INACTIVE_PLAYER == $fromState){
+                $this->gamestate->setPlayerNonMultiactive( $playerId, 'end' );
+                return true;
+            }
+            PGlobals::setState($playerId, $fromState);
+            
             if($addCheckpoint){
                 $this->addCheckpoint($fromState,$playerId);
             }
@@ -456,7 +473,10 @@ trait LastDriftTrait
      */
     public function checkCancelFromLastDrift(&$args,$player_id){
         $fromState = PGlobals::getLastDriftPreviousState($player_id);
-        if(isset($fromState) && is_int($fromState) && $fromState >0 ){
+        if(isset($fromState) 
+            && ( is_int($fromState) && $fromState >0
+            || LAST_DRIFT_WHEN_INACTIVE_PLAYER == $fromState  //IF coming from an opponent last drift when we were inactive
+        )){
             $args['cancel'] = false;
             return false;
         }

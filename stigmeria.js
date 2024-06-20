@@ -598,7 +598,7 @@ function (dojo, declare) {
                                         '*': (t) => '<b>' + t + '</b>'
                                         })}
                                     </li>
-                                    <li>${bga_format(_('*Black :* This opponent player unlocks 1 special action for free, available for the rest of the game.'), {
+                                    <li>${bga_format(_('*Black :* This opponent player plays 1 special action that they have not yet unlocked.'), {
                                         '*': (t) => '<b>' + t + '</b>'
                                         })}
                                     </li>
