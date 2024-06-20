@@ -113,7 +113,17 @@ trait LastDriftTrait
                 }
             }
         }
-        $args['player_name2'] = isset($actionBoardPid) ? Players::get($actionBoardPid)->getName() : 'StigmaReine';
+
+        $args['i18n'] = [];
+        $targetBoardName = '';
+        if(isset($actionBoardPid)){
+            $targetBoardName = Players::get($actionBoardPid)->getName();
+        }
+        else {
+            $targetBoardName = clienttranslate('StigmaReine');
+            $args['i18n'][] = "player_name2";
+        }
+        $args['player_name2'] = $targetBoardName;
         $args['a'] = $actions;
         $args['autoSkip'] = $autoSkip;
         $args['opponent'] = $opponentPlay;

@@ -3130,6 +3130,13 @@ function (dojo, declare) {
                     args.dir = this.formatIcon("wind_dir_log",dir_index,dir_index);
                     //args.dir_type = "";
                 }
+                let board_name = 'board_name';
+                if(board_name in args) {
+                    if(args.i18n && args.i18n.indexOf(board_name)>=0 ){
+                        args.board_name = this.coloredPlayerName(_(args.board_name));
+                    }
+                    else args.board_name = this.coloredPlayerName(args.board_name);
+                }
             }
             } catch (e) {
                 console.error(log, args, 'Exception thrown', e.stack);

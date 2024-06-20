@@ -989,7 +989,13 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
 
           let player_keys = Object.keys(args).filter((key) => key.substr(0, 11) == 'player_name');
           player_keys.forEach((key) => {
-            args[key] = this.coloredPlayerName(args[key]);
+            if(args.i18n && args.i18n.indexOf(key)>=0 ){
+              //If we want to mix player names and something to translate in the same arg
+              args[key] = this.coloredPlayerName(_(args[key]));
+            }
+            else {
+              args[key] = this.coloredPlayerName(args[key]);
+            }
           });
 
           //          args.You = this.coloredYou();

@@ -421,12 +421,20 @@ class Notifications
    */
   public static function LDmoveOutRecruit($player, $token,$from, $targetPlayer = null){
     $target_id = isset($targetPlayer) ? $targetPlayer->getId() : null;
-    $target_name = isset($targetPlayer) ? $targetPlayer->getName() : 'StigmaReine';
-    self::notifyAll('LDMOR',clienttranslate('${player_name} moves a ${token_color} stigmerian out of ${player_name2} board from ${L}: it is now in their recruit zone'),[ 
-        'i18n' => [ 'token_color'],
+    $target_name = '';
+    $argsToTranslate = [ 'token_color'];
+    if(isset($targetPlayer)){
+      $target_name = $targetPlayer->getName();
+    }
+    else {
+      $target_name = clienttranslate('StigmaReine');
+      $argsToTranslate[] = 'board_name';
+    }
+    self::notifyAll('LDMOR',clienttranslate('${player_name} moves a ${token_color} stigmerian out of ${board_name} board from ${L}: it is now in their recruit zone'),[ 
+        'i18n' => $argsToTranslate,
         'player' => $player,
         'player_id2' => $target_id,
-        'player_name2' => $target_name,
+        'board_name' => $target_name,
         'token' => $token->getUiData(),
         'L' => $from,
         'preserve' => [ 'token_type' ],
@@ -922,11 +930,19 @@ class Notifications
    * @param StigmerianToken $token
    */
   public static function lastDriftRemove($player,$token,$player2){
-    $target_name = isset($player2) ? $player2->getName() : 'StigmaReine';
-    self::notifyAll('lastDriftRemove',clienttranslate('${player_name} removes a ${token_color} ${token_type} at ${L1} on ${player_name2} board'),[ 
-        'i18n' => ['token_color'],
+    $target_name = '';
+    $argsToTranslate = [ 'token_color'];
+    if(isset($player2)){
+      $target_name = $player2->getName();
+    }
+    else {
+      $target_name = clienttranslate('StigmaReine');
+      $argsToTranslate[] = 'board_name';
+    }
+    self::notifyAll('lastDriftRemove',clienttranslate('${player_name} removes a ${token_color} ${token_type} at ${L1} on ${board_name} board'),[ 
+        'i18n' => $argsToTranslate,
         'player' => $player,
-        'player_name2' => $target_name,
+        'board_name' => $target_name,
         'L1' => $token->getCoordName(),
         'token' => $token->getUiData(),
         'token_color' => StigmerianToken::getTypeName($token->getType()),
@@ -943,10 +959,19 @@ class Notifications
    * @param Player $targetPlayer
    */
   public static function lastDriftDie($player,$dieFace,$targetPlayer){
-    $target_name = isset($targetPlayer) ? $targetPlayer->getName() : 'StigmaReine';
-    self::notifyAll('lastDriftDie',clienttranslate('${player_name} uses Last Drift on ${player_name2} board and gets a ${die_face}'),[ 
+    $target_name = '';
+    $argsToTranslate = [];
+    if(isset($targetPlayer)){
+      $target_name = $targetPlayer->getName();
+    }
+    else {
+      $target_name = clienttranslate('StigmaReine');
+      $argsToTranslate[] = 'board_name';
+    }
+    self::notifyAll('lastDriftDie',clienttranslate('${player_name} uses Last Drift on ${board_name} board and gets a ${die_face}'),[ 
+        'i18n' => $argsToTranslate,
         'player' => $player,
-        'player_name2' => $target_name,
+        'board_name' => $target_name,
         'die_face' => $dieFace->type,
       ],
     );
