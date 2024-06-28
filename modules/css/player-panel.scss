@@ -93,21 +93,23 @@
                 background-repeat: no-repeat;
                 border: 1px solid black;
                 //We could use flower1, but with a param, we can avoid loading a different image than the played flower :
-                &[data-flower_type='1']{
+                &[data-flower_type='1']{//OPTION_FLOWER_VERTIGHAINEUSE
                     background-image: url('img/flower1.jpg');
                 }
-                &[data-flower_type='2']{
+                &[data-flower_type='2']{//OPTION_FLOWER_MARONNE
                     background-image: url('img/flower2.jpg');
                 }
-                &[data-flower_type='3']{
+                &[data-flower_type='3']{//OPTION_FLOWER_SIFFLOCHAMP
                     background-image: url('img/flower3.jpg');
                 }
-                &[data-flower_type='4']{
+                &[data-flower_type='4']{//OPTION_FLOWER_DENTDINE
                     background-image: url('img/flower4.jpg');
                 }
-                &[data-flower_type='5'],
-                &[data-flower_type='6'],
-                &[data-flower_type='7']{
+                &[data-flower_type='5'],//OPTION_FLOWER_INSPIRACTRICE
+                &[data-flower_type='6'],//OPTION_FLOWER_COMPETITIVE
+                &[data-flower_type='7'],//OPTION_FLOWER_NO_LIMIT
+                &[data-flower_type='8'] //OPTION_FLOWER_NO_LIMIT_UNOFFICIAL
+                {
                     background-image: url('img/flower5.jpg');
                 }
             }
