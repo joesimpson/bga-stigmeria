@@ -78,16 +78,14 @@ class Schema implements \JsonSerializable
   /**
    * 
    * @param int $optionMode
-   * @return bool false when the type of the flower is not designed to be played with this mode rules,
+   * @return bool false when the type of the flower is not designed by the author to be played with this mode rules,
    *    true otherwise
    */
   public function isPlayableWithMode($optionMode)
   {
-    if (($this->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_NORMAL)
-      ||($this->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_DISCOVERY) 
-      ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_COMPETITIVE)
-      ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_NORMAL)
-      ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_DISCOVERY)
+    if (($optionMode == OPTION_MODE_COMPETITIVE && in_array($this->type, [ OPTION_FLOWER_VERTIGHAINEUSE, OPTION_FLOWER_MARONNE, OPTION_FLOWER_SIFFLOCHAMP, OPTION_FLOWER_DENTDINE, OPTION_FLOWER_INSPIRACTRICE,  ]))
+      ||($this->type == OPTION_FLOWER_COMPETITIVE && in_array($optionMode, [ OPTION_MODE_DISCOVERY, OPTION_MODE_NORMAL ]))
+      ||($this->type == OPTION_FLOWER_NO_LIMIT && in_array($optionMode, [ OPTION_MODE_DISCOVERY, OPTION_MODE_NORMAL, OPTION_MODE_COMPETITIVE ]))
       ||($this->type == OPTION_FLOWER_NO_LIMIT_UNOFFICIAL && in_array($optionMode, [ OPTION_MODE_DISCOVERY, OPTION_MODE_NORMAL ])
       )
     ) return false;

@@ -15,7 +15,7 @@
             },
             "3": {
                 "name": "Competitive",
-                "description": "You must have learned normal games ! Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.",
+                "description": "You must have learned normal games, this mode is designed to learn further with schemas 31 to 39. Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.",
                 "tmdisplay": "Competitive",
                 "nobeginner": true
             },
@@ -398,7 +398,249 @@
             }
         },
         "default": 1,
-        "displaycondition": []
+        "displaycondition": [],
+        "startcondition": {
+            "1": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "2": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "3": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "4": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "5": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "6": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "7": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "8": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "9": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "10": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "11": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "12": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "13": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "14": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "15": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "16": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "17": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "18": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "19": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "20": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "21": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "22": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "23": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "24": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "25": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "26": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "27": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "28": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "29": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ],
+            "30": [
+                {
+                    "type": "otheroptionisnot",
+                    "id": 100,
+                    "value": 3,
+                    "message": "Competitive mode is designed to be played on competitive flowers"
+                }
+            ]
+        }
     },
     "190": {
         "name": "Joker",

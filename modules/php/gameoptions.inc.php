@@ -26,6 +26,10 @@ namespace STIG;
 //Else near constants :
 require_once 'constants.inc.php';
 
+$warningNotCompetitiveSchema = totranslate("Competitive mode is designed to be played on competitive flowers");
+$warningCompetitiveSchema = totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.');
+$warningNoLimitSchema = totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.');
+
 $game_options = [
 
   OPTION_MODE => array(
@@ -47,7 +51,7 @@ $game_options = [
                 
                 OPTION_MODE_COMPETITIVE => array( 
                   'name' => totranslate('Competitive'), 
-                  'description' => totranslate('You must have learned normal games ! Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.'),
+                  'description' => totranslate('You must have learned normal games, this mode is designed to learn further with schemas 31 to 39. Compete with others to control the StigmaReine (central board) and unlock special actions. Reach the goal in 10 turns.'),
                   'tmdisplay' => totranslate('Competitive'),
                   'nobeginner' => true, 
                   ),
@@ -494,135 +498,135 @@ $game_options = [
                 OPTION_SCHEMA_RANDOM_COMPETITIVE => array( 
                   'nobeginner' => true, 
                   'name' => totranslate('Random Competitive'), 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => totranslate('Random Competitive'),
                 ),
                 OPTION_SCHEMA_31 => array( 
                   'nobeginner' => true, 
                   'name' => '#31 (*)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#31',
                 ),
                 OPTION_SCHEMA_32 => array( 
                   'nobeginner' => true, 
                   'name' => '#32 (*)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#32',
                 ),
                 OPTION_SCHEMA_33 => array( 
                   'nobeginner' => true, 
                   'name' => '#33 (*)',  
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#33',
                 ),
                 OPTION_SCHEMA_34 => array( 
                   'nobeginner' => true, 
                   'name' => '#34 (**)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#34',
                 ),
                 OPTION_SCHEMA_35 => array( 
                   'nobeginner' => true, 
                   'name' => '#35 (**)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#35',
                 ),
                 OPTION_SCHEMA_36 => array( 
                   'nobeginner' => true, 
                   'name' => '#36 (**)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#36',
                 ),
                 OPTION_SCHEMA_37 => array( 
                   'nobeginner' => true, 
                   'name' => '#37 (***)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#37',
                 ),
                 OPTION_SCHEMA_38 => array( 
                   'nobeginner' => true, 
                   'name' => '#38 (***)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#38',
                 ),
                 OPTION_SCHEMA_39 => array( 
                   'nobeginner' => true, 
                   'name' => '#39 (***)', 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#39',
                 ),
 
                 OPTION_SCHEMA_RANDOM_COMPETITIVE_NL => array( 
                   'nobeginner' => true, 
                   'name' => totranslate('Random Competitive No Limit'), 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => totranslate('Random Competitive No Limit'),
                 ),
                 OPTION_SCHEMA_40 => array( 
                   'nobeginner' => true, 
                   'name' => '#40 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#40',
                 ),
                 OPTION_SCHEMA_41 => array( 
                   'nobeginner' => true, 
                   'name' => '#41 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#41',
                 ),
                 OPTION_SCHEMA_42 => array( 
                   'nobeginner' => true, 
                   'name' => '#42 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#42',
                 ),
                 OPTION_SCHEMA_43 => array( 
                   'nobeginner' => true, 
                   'name' => '#43 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#43',
                 ),
                 OPTION_SCHEMA_44 => array( 
                   'nobeginner' => true, 
                   'name' => '#44 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#44',
                 ),
                 OPTION_SCHEMA_45 => array( 
                   'nobeginner' => true, 
                   'name' => '#45 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#45',
                 ),
                 OPTION_SCHEMA_46 => array( 
                   'nobeginner' => true, 
                   'name' => '#46 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#46',
                 ),
                 OPTION_SCHEMA_47 => array( 
                   'nobeginner' => true, 
                   'name' => '#47 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#47',
                 ),
                 OPTION_SCHEMA_48 => array( 
                   'nobeginner' => true, 
                   'name' => '#48 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#48',
                 ),
                 OPTION_SCHEMA_49 => array( 
                   'nobeginner' => true, 
                   'name' => '#49 (****)', 
-                  'description' => totranslate('WARNING: No Limit schemas cannot be fulfilled except in No Limit modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningNoLimitSchema, 
                   'tmdisplay' => '#49',
                 ),
                 
                 OPTION_SCHEMA_UNOFFICIAL_101 => array( 
                   'nobeginner' => true, 
                   'name' => totranslate('#101 (Unofficial : France flag)'), 
-                  'description' => totranslate('WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.'), 
+                  'description' => $warningCompetitiveSchema, 
                   'tmdisplay' => '#101',
                   'alpha' => true, 
                 ),
@@ -630,6 +634,39 @@ $game_options = [
     'default' => OPTION_SCHEMA_1,
     'displaycondition'=> [
       ],
+    'startcondition'=>  [
+      //Author said Competitive mode rules are to to be played on "normal" schemas, else we woul need to change the filter of unlockable actions (difficulty)
+      OPTION_SCHEMA_1 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_2 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_3 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_4 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_5 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_6 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_7 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_8 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_9 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_10 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_11 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_12 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_13 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_14 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_15 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_16 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_17 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_18 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_19 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_20 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_21 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_22 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_23 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_24 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_25 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_26 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_27 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_28 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_29 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+      OPTION_SCHEMA_30 => [ [ "type" => "otheroptionisnot", "id" => OPTION_MODE, "value"=> OPTION_MODE_COMPETITIVE, "message"=> $warningNotCompetitiveSchema,],], 
+    ],
   ), 
   
   OPTION_JOKER => array(
