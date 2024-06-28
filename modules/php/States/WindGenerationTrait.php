@@ -6,6 +6,7 @@ use STIG\Core\Globals;
 use STIG\Core\Notifications;
 use STIG\Managers\DiceRoll;
 use STIG\Managers\Players;
+use STIG\Managers\Schemas;
 use STIG\Models\DiceFace;
 
 trait WindGenerationTrait
@@ -81,6 +82,18 @@ trait WindGenerationTrait
       Globals::setWindDirection9(WIND_DIR_SOUTH);
       Globals::setWindDirection10(WIND_DIR_SOUTH);
       Globals::setWindDirection11(WIND_DIR_SOUTH);
+
+      //USE SCHEMA DEFINITION IF ANY (Only for unofficial ones)
+      $schema = Schemas::getCurrentSchema();
+      $schemaWinds = $schema->winds;
+      if(isset($schemaWinds) ){ 
+        for($k=1;$k<=TURN_MAX +1;$k++){
+          if(!isset($schemaWinds[$k-1])) continue;
+          $value = $schemaWinds[$k-1];
+          Globals::setWindDir($k,$value);
+        }
+      }
+
     }
     return true;
   }

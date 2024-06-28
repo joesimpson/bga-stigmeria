@@ -371,7 +371,7 @@ trait DebugTrait
   {
     $round = Globals::getRound();
     $schema = Schemas::getCurrentSchema();
-    Notifications::newRound($round,$schema,[]);
+    Notifications::newRound($round,$schema,[],[]);
   }
 
   //Direct successful schema and go to end of game (Remember to uncomment transition to state playerGameEnd)

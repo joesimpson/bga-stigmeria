@@ -37,19 +37,27 @@ class Schema implements \JsonSerializable
   public Collection $end;
 
   /**
+   * Wind directions when we want to override default
+   */
+  public array $winds;
+
+  /**
    * @param int $id
    * @param string $type
    * @param int $difficulty
    * @param array $start list of TokenCoord
    * @param array $end list of TokenCoord
+   * @param array $winds (Optional) list of int : wind directions 
    */
-  public function __construct($id,$type,$difficulty,$start,$end)
+  public function __construct($id,$type,$difficulty,$start,$end, $winds = [])
   {
     $this->id = $id;
     $this->type = $type;
     $this->difficulty = $difficulty;
     $this->start = new Collection($start);
     $this->end = new Collection($end);
+    $this->winds = $winds;
+
   }
 
   /**

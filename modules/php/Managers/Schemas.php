@@ -1265,7 +1265,20 @@ class Schemas
           new TokenCoord( TOKEN_POLLEN_WHITE,     7,5),
           new TokenCoord( TOKEN_POLLEN_RED,       7,6),
 
-        ] ),
+      ], [
+        WIND_DIR_SOUTH,
+        WIND_DIR_SOUTH,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+        WIND_DIR_EAST,
+
+      ] ),
 
     ];
   }
