@@ -19,7 +19,7 @@ trait DebugTrait
   /**
    * Function to call to regenerate JSON from PHP (when json file is removed)
    */
-  function debugJSON(){
+  function debug_JSON(){
     include dirname(__FILE__) . '/gameoptions.inc.php';
 
     $customOptions = $this->getTableOptions();
@@ -164,6 +164,61 @@ trait DebugTrait
     $this->reloadPlayersBasicInfos();
   }
 
+  ////////////////////////////////////////////////////
+  //Display a table of all schemas and in which mode it is playable
+  function debug_playableSchemas()
+  {
+    $modes = [ 
+      ['mode' => OPTION_MODE_DISCOVERY, 'name' => "Discovery",  ],
+      ['mode' => OPTION_MODE_NORMAL,    'name' => "Normal", ],
+      ['mode' => OPTION_MODE_COMPETITIVE, 'name'=> "Competitive", ],
+      ['mode' => OPTION_MODE_NOLIMIT   ,  'name'=> "NoLimit", ],
+      ['mode' => OPTION_MODE_SOLO_NOLIMIT, 'name'=> "SoloNoLimit", ],
+    ];
+    $schemas = Schemas::getTypes();
+
+    $table = [];
+    // Header line
+    $firstRow = array( '' );
+    foreach($modes as $mode){
+      $modeType = $mode['mode'];
+      $modeName = $mode['name'];
+
+      //$table[] = ['str' => "Mode $modeName",'args' => [], 'type' => 'header'];
+      $firstRow[] = array( 'str' => "$modeName",
+        'args' => [],
+        'type' => 'header'
+      );
+    }
+    $table[] = $firstRow;
+    foreach($schemas as $schema){
+      //$tableRow = ['str' => "Schema $schema->id",'args' => [],];
+      $tableRow = [];
+      $tableRow[] = "Schema $schema->id";
+      foreach($modes as $mode){
+        $modeType = $mode['mode'];
+        $modeName = $mode['name'];
+
+        $playable = $schema->isPlayableWithMode($modeType);
+        $tableRow[] = (!$playable) ? "NOO" : "y";
+        //if($playable) Notifications::message("<li>Schema $schema->id is playable with mode $modeName</li>");
+      }
+      $table[] = $tableRow;
+
+    }
+
+    //BGA Display table window 
+    $this->notifyAllPlayers( "tableWindow", '', [
+      "id" => 'debugPlayableSchemas',
+      "title" => "Playable Schemas",
+      "header" => ['str' => '',
+                  'args' => [  ],
+                ],
+      "table" => $table,
+      "closing" =>  "Close",
+    ]);
+
+  } 
   ////////////////////////////////////////////////////
   /*
   function debugStatsEx()
@@ -509,7 +564,7 @@ trait DebugTrait
       $query->delete()->run();
   }
   //*/
-  function debugUI(){
+  function debug_UI(){
     //players colors are not reloaded after using LOAD/SAVE buttons
     self::reloadPlayersBasicInfos();
     $player = Players::getCurrent();

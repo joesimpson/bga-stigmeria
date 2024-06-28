@@ -270,11 +270,6 @@ class Globals extends \STIG\Helpers\DB_Manager
     $schemasIds = $schemas
       //REMOVE IMPOSSSIBLE SCHEMAS COMBINATIONS
       ->filter( function ($schema) use ($optionMode) {
-        if (($schema->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_NORMAL)
-          ||($schema->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_DISCOVERY) 
-          ||($schema->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_NORMAL)
-          ||($schema->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_DISCOVERY)
-        ) return false;
         return $schema->isPlayableWithMode($optionMode);
       })
       //KEEP SELECTED types/ difficulty

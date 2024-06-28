@@ -76,13 +76,16 @@ class Schema implements \JsonSerializable
   }
 
   /**
+   * 
    * @param int $optionMode
-   * @return bool
+   * @return bool false when the type of the flower is not designed to be played with this mode rules,
+   *    true otherwise
    */
   public function isPlayableWithMode($optionMode)
   {
     if (($this->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_NORMAL)
       ||($this->type == OPTION_FLOWER_COMPETITIVE && $optionMode == OPTION_MODE_DISCOVERY) 
+      ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_COMPETITIVE)
       ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_NORMAL)
       ||($this->type == OPTION_FLOWER_NO_LIMIT && $optionMode == OPTION_MODE_DISCOVERY)
       ||($this->type == OPTION_FLOWER_NO_LIMIT_UNOFFICIAL && in_array($optionMode, [ OPTION_MODE_DISCOVERY, OPTION_MODE_NORMAL ])

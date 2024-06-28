@@ -41,7 +41,7 @@ Erased in JSON by BGA commit/build, so we keep the php in modules/php
 
 So we can easily regenerate the JSON version (now included in the workspace) from PHP version with these steps :
 
-- call the tchat debug function `debugJSON()`
+- call the chat debug function `debug_JSON()`
 - then browser inspect the notif and copy its DOM content. 
 - then copy this JSON to the json file 
 - send the json file to distant BGA folder via FTP
@@ -52,3 +52,5 @@ So we can easily regenerate the JSON version (now included in the workspace) fro
 Schemas (from 1 to 49) are defined as text to generate image and avoid waste of space in img folder, + it allow us to define any unofficial schema we may want.
 
 See the list `getTypes()` in [Schemas.php](/modules/php/Managers/Schemas.php).
+
+Run the debug function `debug_playableSchemas()` to see which schema is playable in which mode.
