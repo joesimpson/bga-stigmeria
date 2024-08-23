@@ -395,6 +395,13 @@
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#101",
                 "alpha": true
+            },
+            "102": {
+                "nobeginner": true,
+                "name": "#102 (Unofficial : Helvetica flag)",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#102",
+                "alpha": true
             }
         },
         "default": 1,

@@ -630,6 +630,13 @@ $game_options = [
                   'tmdisplay' => '#101',
                   'alpha' => true, 
                 ),
+                OPTION_SCHEMA_UNOFFICIAL_102 => array( 
+                  'nobeginner' => true, 
+                  'name' => totranslate('#102 (Unofficial : Helvetica flag)'), 
+                  'description' => $warningCompetitiveSchema, 
+                  'tmdisplay' => '#102',
+                  'alpha' => true, 
+                ),
             ),
     'default' => OPTION_SCHEMA_1,
     'displaycondition'=> [

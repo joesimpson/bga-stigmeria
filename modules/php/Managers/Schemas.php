@@ -1280,6 +1280,35 @@ class Schemas
 
       ] ),
 
+      OPTION_SCHEMA_UNOFFICIAL_102 => new Schema(OPTION_SCHEMA_UNOFFICIAL_102, OPTION_FLOWER_NO_LIMIT_UNOFFICIAL, OPTION_DIFFICULTY_3, [],[
+        new TokenCoord( TOKEN_POLLEN_RED,      4,3),
+        new TokenCoord( TOKEN_POLLEN_RED,      4,4),
+        new TokenCoord( TOKEN_POLLEN_RED,      4,5),
+        new TokenCoord( TOKEN_POLLEN_RED,      4,6),
+        new TokenCoord( TOKEN_POLLEN_RED,      4,7),
+        new TokenCoord( TOKEN_POLLEN_RED,      5,3),
+        new TokenCoord( TOKEN_POLLEN_RED,      5,4),
+        new TokenCoord( TOKEN_POLLEN_WHITE,    5,5),
+        new TokenCoord( TOKEN_POLLEN_RED,      5,6),
+        new TokenCoord( TOKEN_POLLEN_RED,      5,7),
+        new TokenCoord( TOKEN_POLLEN_RED,      6,3),
+        new TokenCoord( TOKEN_POLLEN_WHITE,    6,4),
+        new TokenCoord( TOKEN_POLLEN_WHITE,    6,5),
+        new TokenCoord( TOKEN_POLLEN_WHITE,    6,6),
+        new TokenCoord( TOKEN_POLLEN_RED,      6,7),
+        new TokenCoord( TOKEN_POLLEN_RED,      7,3),
+        new TokenCoord( TOKEN_POLLEN_RED,      7,4),
+        new TokenCoord( TOKEN_POLLEN_WHITE,    7,5),
+        new TokenCoord( TOKEN_POLLEN_RED,      7,6),
+        new TokenCoord( TOKEN_POLLEN_RED,      7,7),
+        new TokenCoord( TOKEN_POLLEN_RED,      8,3),
+        new TokenCoord( TOKEN_POLLEN_RED,      8,4),
+        new TokenCoord( TOKEN_POLLEN_RED,      8,5),
+        new TokenCoord( TOKEN_POLLEN_RED,      8,6),
+        new TokenCoord( TOKEN_POLLEN_RED,      8,7),
+      ], [
+      ] ),
+
     ];
   }
   
