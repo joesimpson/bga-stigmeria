@@ -452,6 +452,13 @@ function (dojo, declare) {
             }
         },
 
+        /**
+         * @deprecated : BGA function adaptPlayersPanels disappeared because they now use CSS
+        */
+        adaptPlayersPanels() {
+            debug("adaptPlayersPanels");
+        },
+
         ///////////////////////////////////////////////////
         //     _____ _______    _______ ______  _____ 
         //    / ____|__   __|/\|__   __|  ____|/ ____|
