@@ -637,6 +637,13 @@ $game_options = [
                   'tmdisplay' => '#102',
                   'alpha' => true, 
                 ),
+                OPTION_SCHEMA_UNOFFICIAL_BIKE => array( 
+                  'nobeginner' => true, 
+                  'name' => totranslate('#103 (Unofficial : Bike)'), 
+                  'description' => $warningCompetitiveSchema, 
+                  'tmdisplay' => '#103',
+                  'alpha' => true, 
+                ),
             ),
     'default' => OPTION_SCHEMA_1,
     'displaycondition'=> [

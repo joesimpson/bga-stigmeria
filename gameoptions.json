@@ -402,6 +402,13 @@
                 "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
                 "tmdisplay": "#102",
                 "alpha": true
+            },
+            "103": {
+                "nobeginner": true,
+                "name": "#103 (Unofficial : Bike)",
+                "description": "WARNING: Competitive schemas cannot be fulfilled except in Competitive modes. A random playable schema will be selected in other cases.",
+                "tmdisplay": "#103",
+                "alpha": true
             }
         },
         "default": 1,
