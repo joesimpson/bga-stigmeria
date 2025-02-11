@@ -77,7 +77,10 @@ trait PlayerTurnPersonalBoardTrait
         if(isset($nextPlayer)){
             $actions[] = 'actLetNextPlay';
         }
-        $actions[] = 'actSpecial';
+        //$actions[] = 'actSpecial';
+        $argSpecialAction = $this->argSpecialAction($player_id);
+        if(count($argSpecialAction['e']) > 0) $actions[] = 'actSpecial';
+
         $possibleJokers = [];
         if(Globals::getOptionJokers() > 0 && !$player->isJokerUsed() && Globals::isModeNoCentralBoard()){
             foreach (STIG_PRIMARY_COLORS as $colorSrc) {
