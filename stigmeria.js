@@ -243,9 +243,9 @@ function (dojo, declare) {
         setupLanguageSettings(){
             let lang = dojo.locale; // en, fr, etc.
             debug("setupLanguageSettings", lang);
-            let settingName = "LanguageInit";
-            let isLanguageAlreadyInit = this.getConfig(settingName);
-            if(isLanguageAlreadyInit) return;
+            let settingName = this.game_name + "LanguageInit";
+            let isLanguageAlreadyInit = this.getConfig(settingName, 0);
+            if(isLanguageAlreadyInit == 1 || this.isReadOnly() ) return;
 
             //Wait for when page is ready to simulate preference selection
             document.addEventListener("readystatechange", () => {
@@ -257,7 +257,7 @@ function (dojo, declare) {
                     this.setPreferenceValue(PREF_ACTIONS_LANG, PREF_ACTIONS_LANG_FR);
                 }
             });
-            localStorage.setItem(this.game_name + settingName, true);
+            localStorage.setItem(settingName, 1);
         },
         
         getSettingsSections: ()=>({
