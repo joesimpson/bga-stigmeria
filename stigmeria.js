@@ -2188,7 +2188,7 @@ function (dojo, declare) {
             if (!this.settings) return;
             const ROOT = document.documentElement;
     
-            const WIDTH = $('stig_main_zone').getBoundingClientRect()['width'];
+            const WIDTH = this.getBoundingClientRectIgnoreZoom($('stig_main_zone'))['width'];
             const HEIGHT = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 62;
             const BOARD_WIDTH = 1127;
             const BOARD_HEIGHT = 1176;
