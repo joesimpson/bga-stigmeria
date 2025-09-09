@@ -3217,7 +3217,8 @@ function (dojo, declare) {
         updatePlayerOrdering() {
             debug("updatePlayerOrdering");
             this.inherited(arguments);
-            dojo.place('player_board_config', 'player_boards', 'first');
+            //dojo.place('player_board_config', 'player_boards', 'first');
+            dojo.place('player_board_config', 'stig_config_holder', 'first');
         },
         setupInfoPanel() {
             debug("setupInfoPanel");
@@ -3246,8 +3247,8 @@ function (dojo, declare) {
             let turn = this.gamedatas.turn;
             let turnMax = TURN_MAX;
             return `
-            <div class='player-board' id="player_board_config">
-                <div id="player_config" class="player_board_content">
+            <div class='player-board-config' id="player_board_config">
+                <div id="player_config" class="player_board_config_content">
                 <div class="player_config_row" id="turn_counter_wrapper">
                   ${_('Turn')} <span id='stig_counter_turn'>${turn}</span> / <span id='stig_counter_turn_max'>${turnMax}</span>
                 </div>

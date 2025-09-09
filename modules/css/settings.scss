@@ -1,28 +1,41 @@
 /**
  * Player panel settings
- * AUTHOR : © Tisaac
+ * AUTHOR : © Tisaac + update after BGA guideline to remove it from right panel
  */
 #player_board_config {
     position: relative;
     border-image: none;
+    background-color: #ebd5bd;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px #0000004d;
+    padding: 5px 3px;
+    //width: 100%;
+    //position: absolute;
+    //z-index: 10;
+    //right: 0px;
+    //top: 0px;
 }
 
 #player_config {
+    flex-direction: row;
+    display: flex;
+
     .player_config_row {
         display: flex;
         justify-content: space-around;
         align-items: center;
-        padding: 6px 0px;
+        //padding: 6px 0px;
         border-bottom: 1px solid #80502e;
         &:last-child {
             border-bottom: none;
         }
+        margin: 0px 10px;
     }
 
     #turn_counter_wrapper {
         text-align: center;
-        margin: -5px -3px 0px;
-        background: #e3bc9280;
+        //margin: -5px -3px 0px;
+        //background: #e3bc9280;
         padding: 8px 0px 4px;
         border-bottom: 1px solid #8080808a;
         border-top-left-radius: 7px;
@@ -35,6 +48,9 @@
     }
     
     #help-mode-switch {
+        padding-right: 5px;
+        border-right: 1px solid black;
+
         .checkbox {
             display: none;
         }
@@ -80,6 +96,7 @@
     }
 
     #show-settings {
+        margin-left: 5px;
         height: 40px;
         width: 50px;
         display: flex;

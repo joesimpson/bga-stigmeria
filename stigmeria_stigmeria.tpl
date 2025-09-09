@@ -13,6 +13,7 @@
 
 <div id="stig_game_container">
     
+    <div id="stig_config_holder"></div>
     <div id="stig_select_piece_container"></div>
     <div id="stig_select_piece_container_perplayer"></div>
 

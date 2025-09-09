@@ -3078,27 +3078,33 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
 
 /**
  * Player panel settings
- * AUTHOR : © Tisaac
+ * AUTHOR : © Tisaac + update after BGA guideline to remove it from right panel
  */
 #player_board_config {
   position: relative;
   border-image: none;
+  background-color: #ebd5bd;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3019607843);
+  padding: 5px 3px;
 }
 
+#player_config {
+  flex-direction: row;
+  display: flex;
+}
 #player_config .player_config_row {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 6px 0px;
   border-bottom: 1px solid #80502e;
+  margin: 0px 10px;
 }
 #player_config .player_config_row:last-child {
   border-bottom: none;
 }
 #player_config #turn_counter_wrapper {
   text-align: center;
-  margin: -5px -3px 0px;
-  background: rgba(227, 188, 146, 0.5019607843);
   padding: 8px 0px 4px;
   border-bottom: 1px solid rgba(128, 128, 128, 0.5411764706);
   border-top-left-radius: 7px;
@@ -3108,6 +3114,10 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
   font-family: "Bernard MT Condensed";
   color: black;
   display: block;
+}
+#player_config #help-mode-switch {
+  padding-right: 5px;
+  border-right: 1px solid black;
 }
 #player_config #help-mode-switch .checkbox {
   display: none;
@@ -3146,6 +3156,7 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
   cursor: help;
 }
 #player_config #show-settings {
+  margin-left: 5px;
   height: 40px;
   width: 50px;
   display: flex;
@@ -3680,6 +3691,13 @@ body[data-modenocb=true] #settings-controls-container div[data-prefid="105"] {
 /**
     PREFIX FOR THIS GAME PROJECT : "stig"
 */
+#stig_game_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 #stig_main_zone {
   display: flex;
   justify-content: center;
