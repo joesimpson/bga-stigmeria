@@ -49,6 +49,7 @@
     }
     
     #help-mode-switch {
+        display: none;//Hidden and replaced by another switch in settings
         padding-right: 5px;
         border-right: 1px solid black;
 
@@ -233,6 +234,10 @@
             text-overflow: initial;
             white-space: normal;
             padding: 2px 4px 0px;
+
+            .iconHelp{
+                font-size: larger;
+            }
         }
 
         .row-value {

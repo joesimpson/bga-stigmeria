@@ -229,6 +229,7 @@ function (dojo, declare) {
             this.setupInfoPanel();
             this.setupSpecialActions();
 
+            localStorage.setItem('stigmeriaHelpMode', 0);//disable help mode
             this.inherited(arguments);
             this.setupLanguageSettings();
 
@@ -270,6 +271,7 @@ function (dojo, declare) {
         }),
         getSettingsConfig() {
             return {
+                helpMode: {section: "layout", type: 'switch', name: _('Toggle help/safe mode.') + `<i class="iconHelp fa fa-regular fa-question-circle "></i>`,},
                 //animationStyle: {section: "layout", type: 'pref', prefId: PREF_ANIMATIONS_STYLE },
                 schemaBoardOrder: {section: "layout", type: 'pref', prefId: PREF_SCHEMA_BOARD_ORDER },
                 centralBoardOrder: {section: "layout", type: 'pref', prefId: PREF_STIGMAREINE_BOARD_ORDER },
@@ -387,6 +389,9 @@ function (dojo, declare) {
             };
         },
         
+        onChangeHelpModeSetting(val) {
+            this.toggleHelpMode(val === 1);
+        },
         onChangeBoardWidthSetting(val) {
             this.updateLayout();
         },
