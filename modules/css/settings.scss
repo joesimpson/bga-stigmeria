@@ -25,7 +25,7 @@
         justify-content: space-around;
         align-items: center;
         //padding: 6px 0px;
-        border-bottom: 1px solid #80502e;
+        //border-bottom: 1px solid #80502e;
         &:last-child {
             border-bottom: none;
         }
@@ -37,14 +37,15 @@
         //margin: -5px -3px 0px;
         //background: #e3bc9280;
         padding: 8px 0px 4px;
-        border-bottom: 1px solid #8080808a;
-        border-top-left-radius: 7px;
-        border-top-right-radius: 7px;
+        //border-bottom: 1px solid #8080808a;
+        //border-top-left-radius: 7px;
+        //border-top-right-radius: 7px;
         font-weight: bold;
         font-size: 20px;
         font-family: "Bernard MT Condensed";
         color: black;
         display: block;
+        flex-grow: 1;
     }
     
     #help-mode-switch {

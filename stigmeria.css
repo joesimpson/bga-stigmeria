@@ -3097,7 +3097,6 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-bottom: 1px solid #80502e;
   margin: 0px 10px;
 }
 #player_config .player_config_row:last-child {
@@ -3106,14 +3105,12 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
 #player_config #turn_counter_wrapper {
   text-align: center;
   padding: 8px 0px 4px;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5411764706);
-  border-top-left-radius: 7px;
-  border-top-right-radius: 7px;
   font-weight: bold;
   font-size: 20px;
   font-family: "Bernard MT Condensed";
   color: black;
   display: block;
+  flex-grow: 1;
 }
 #player_config #help-mode-switch {
   padding-right: 5px;
@@ -3691,13 +3688,6 @@ body[data-modenocb=true] #settings-controls-container div[data-prefid="105"] {
 /**
     PREFIX FOR THIS GAME PROJECT : "stig"
 */
-#stig_game_container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 #stig_main_zone {
   display: flex;
   justify-content: center;
