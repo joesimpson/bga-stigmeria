@@ -4,3 +4,20 @@
     --stig_takePieceWidth: 56px;
     --stig_tokenLogWidth: 30px;
 }
+
+/**
+Icon extract in sprite with differents layers size (so % is not useful).
+ * iconPosX, iconPosY : position of icon in sprite
+ * width, height : dimensions of icon to be displayed
+ * layer_width, layer_height : dimensions of icon in sprite
+ * img_width, img_height : dimensions of total image
+*/
+@mixin stig_icon_extract_from_img($iconPosX,$iconPosY,$width,$height,$layer_width,$layer_height, $img_width, $img_height){
+    width: $width;
+    height: $height;
+    background-position-x: calc(math.div($width, $layer_width) * (0px - $iconPosX) );
+    background-position-y: calc(math.div($height, $layer_height ) * (0px - $iconPosY) );
+    background-size: 
+        math.percentage(math.div($img_width, $layer_width )) 
+        math.percentage(math.div($img_height,$layer_height ));
+}

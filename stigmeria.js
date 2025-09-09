@@ -954,7 +954,9 @@ function (dojo, declare) {
                         });
                     });
 
-                this.addPrimaryActionButton('btnDraw', _('Recruit'), () => { 
+                this.addImageActionButton('btnDraw'
+                    ,`<div><div class='stig_p_action_text'>`+_('Recruit')+`</div><div class='stig_p_action_image' data-type='draw'></div></div>`
+                    ,() => { 
                     this.confirmationDialog(_("Are you sure to draw a token from your bag ?"), () => {
                         this.takeAction('actDraw', {});
                     });
@@ -962,12 +964,16 @@ function (dojo, declare) {
                 if(!possibleActions.includes('actDraw')){
                     $('btnDraw').classList.add("disabled");
                 }
-                this.addPrimaryActionButton('btnPlace', _('Land'), () => this.takeAction('actLand', {}));
+                this.addImageActionButton('btnPlace'
+                    ,`<div><div class='stig_p_action_text'>`+_('Land')+`</div><div class='stig_p_action_image' data-type='land'></div></div>`
+                    , () => this.takeAction('actLand', {}));
                 if(!possibleActions.includes('actLand')){
                     $('btnPlace').classList.add("disabled");
                 }
                 //Move followed by a space to distinguish from BGA main site "Move"
-                this.addPrimaryActionButton('btnMove', _('Move '), () => this.takeAction('actMove', {}));
+                this.addImageActionButton('btnMove'
+                    ,`<div><div class='stig_p_action_text'>`+_('Move ')+`</div><div class='stig_p_action_image' data-type='move'></div></div>`
+                    , () => this.takeAction('actMove', {}));
                 if(!possibleActions.includes('actMove')){
                     $('btnMove').classList.add("disabled");
                 }

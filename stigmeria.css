@@ -20,6 +20,13 @@
   --stig_tokenLogWidth: 30px;
 }
 
+/**
+Icon extract in sprite with differents layers size (so % is not useful).
+ * iconPosX, iconPosY : position of icon in sprite
+ * width, height : dimensions of icon to be displayed
+ * layer_width, layer_height : dimensions of icon in sprite
+ * img_width, img_height : dimensions of total image
+*/
 #stig_select_piece_container,
 .stig_select_piece_player_container {
   display: flex;
@@ -2785,6 +2792,36 @@ body[data-stig_stigmareine_auto_order="1"] #stig_central_board_container_wrapper
   background-position-y: 75%;
 }
 
+.stig_p_action_image {
+  width: 39px;
+  height: 25px;
+  background-image: url("img/actions/actions_en.jpg");
+  background-size: 800%;
+  margin-left: 5px;
+  border-radius: 8px;
+}
+.stig_p_action_image[data-type=draw] {
+  width: 40px;
+  height: 25px;
+  background-position-x: -320px;
+  background-position-y: -447.3684210526px;
+  background-size: 1972.5% 3138.1578947368%;
+}
+.stig_p_action_image[data-type=land] {
+  width: 40px;
+  height: 25px;
+  background-position-x: -50px;
+  background-position-y: -520px;
+  background-size: 1643.75% 2981.25%;
+}
+.stig_p_action_image[data-type=move] {
+  width: 40px;
+  height: 25px;
+  background-position-x: -591.3043478261px;
+  background-position-y: -479.6610169492px;
+  background-size: 2058.2608695652% 4042.3728813559%;
+}
+
 .stig_sp_action_image {
   width: 98px;
   height: 58px;
@@ -2944,6 +2981,18 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
 .stig_icon_flower_violet.stig_icon_flipped {
   transform: scaleX(-1);
   margin-left: 3px;
+}
+
+#btnSpecialAction .stig_icon_flower_violet {
+  width: 27px;
+  height: 25px;
+  background-position-x: -1230.8275862069px;
+  background-position-y: -1636.7346938776px;
+  background-size: 5698.275862069% 6744.8979591837%;
+  margin-right: 0px;
+}
+#btnSpecialAction .stig_icon_flower_violet.stig_icon_flipped {
+  margin-left: 0px;
 }
 
 .stig_sp_action_tooltip {
@@ -3713,10 +3762,6 @@ body[data-modenocb=true] #settings-controls-container div[data-prefid="105"] {
 
 #btnLetNextPlay {
   background-color: lightgreen;
-}
-
-#btnEndTurn {
-  background-color: green;
 }
 
 .stig_selected_button {

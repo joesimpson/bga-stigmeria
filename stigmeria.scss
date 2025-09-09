@@ -13,6 +13,7 @@
  *
  */
 
+@use "sass:math";
 @import "modules/css/variables";
 @import "modules/css/token";
 @import "modules/css/player-panel";
@@ -58,7 +59,7 @@
     background-color: lightgreen;
 }
 #btnEndTurn{
-    background-color: green;
+    //background-color: green;
 }
 .stig_selected_button{
     background-color: rgb(255, 115, 0);

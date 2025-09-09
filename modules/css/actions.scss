@@ -1,3 +1,22 @@
+    .stig_p_action_image{
+        width: 39px;
+        height: 25px;
+        background-image: url("img/actions/actions_en.jpg");
+        background-size: 800%;
+        margin-left: 5px;
+        border-radius: 8px;
+
+        &[data-type="draw"]{
+            @include stig_icon_extract_from_img( 960px, 1360px, 40px, 25px, 120px, 76px, 2367px, 2385px);
+        }
+        &[data-type="land"]{
+            @include stig_icon_extract_from_img( 180px, 1664px, 40px, 25px, 144px, 80px, 2367px, 2385px);
+        }
+        &[data-type="move"]{
+            @include stig_icon_extract_from_img( 1700px, 1132px, 40px, 25px, 115px, 59px, 2367px, 2385px);
+        }
+
+    }
     .stig_sp_action_image{
         width: 98px;
         height: 58px;
@@ -203,6 +222,16 @@ body {
         margin-left: 3px;
     }
 }
+#btnSpecialAction{
+    .stig_icon_flower_violet {
+        @include stig_icon_extract_from_img( 2644px, 3208px, 27px, 25px, 58px, 49px, 3305px, 3305px);
+        margin-right: 0px;
+        &.stig_icon_flipped{
+            margin-left: 0px;
+        }
+    }
+}
+
 .stig_sp_action_tooltip{
     display: flex;
     flex-direction: column;
