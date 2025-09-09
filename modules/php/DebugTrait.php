@@ -220,12 +220,12 @@ trait DebugTrait
 
   } 
   ////////////////////////////////////////////////////
-  /*
-  function debugStatsEx()
+  
+  function debug_StatsEx()
   {
-    Stats::checkExistence();
+    Stats::check_Existence();
   } 
-  function debugElim()
+  function debug_Elim()
   {
     $player = Players::getCurrent();
     //Notifications::windElimination($player,null,'TEST');
@@ -245,30 +245,30 @@ trait DebugTrait
     $nextP3 = Players::getNextInactivePlayerInTurn("2373993",Globals::getTurn());
     Notifications::message("debugElim nextP is $nextP3 ");
   }
-  function debugForceState()
+  function debug_ForceState()
   {
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
     //$this->gamestate->jumpToState( ST_NEXT_TURN );
   }
-  function debugGoToNextPlayer()
+  function debug_GoToNextPlayer()
   {
     $this->gamestate->nextState( 'next' );
   }
 
-  function debugTokens()
+  function debug_Tokens()
   {
     $players = Players::getAll();
     Tokens::DB()->delete()->run();
     Tokens::setupNewGame($players, []);
   }
   
-  function debugShuffleTokens()
+  function debug_ShuffleTokens()
   {
     $player = Players::getCurrent();
     Tokens::shuffle(TOKEN_LOCATION_PLAYER_DECK.$player->id);
   }
   // Add many actions ! YEAH
-  function debugManyActions()
+  function debug_ManyActions()
   {
     $player = Players::getCurrent();
     $player->setNbPersonalActionsDone(-150);
@@ -292,7 +292,7 @@ trait DebugTrait
   }
 
   //Add Charmer action to current player and end a turn to see if we have a step AfterTurn
-  function debugActionCharmer()
+  function debug_ActionCharmer()
   {
 
     $turn = Globals::getTurn();
@@ -330,7 +330,7 @@ trait DebugTrait
     
   }
 
-  function debugNotifs(){
+  function debug_Notifs(){
     $player = Players::getCurrent();
     $next = Players::getNextId($player);
     $targetplayer = Players::get($next);
@@ -351,14 +351,14 @@ trait DebugTrait
 
     Notifications::spPilferer($player,$targetplayer,$token,0);
   }
-  function debugWind()
+  function debug_Wind()
   {
     $player = Players::getCurrent();
     $turn = Globals::getTurn();
     $this->doWindEffect($turn,$player);
     $this->doWindEffect($turn);
   }
-  function debugNewWind()
+  function debug_NewWind()
   {
     $this->generateWind();
     Notifications::newWinds(Globals::getAllWindDir());
@@ -367,7 +367,7 @@ trait DebugTrait
     Notifications::windBlows('S',new Collection([]),null); 
     Notifications::windBlows('N',new Collection([]),null); 
   }
-  function debugSchema()
+  function debug_Schema()
   {
     $round = Globals::getRound();
     $schema = Schemas::getCurrentSchema();
@@ -375,7 +375,7 @@ trait DebugTrait
   }
 
   //Direct successful schema and go to end of game (Remember to uncomment transition to state playerGameEnd)
-  function debugSchemaEnd()
+  function debug_SchemaEnd()
   {
     $player = Players::getCurrent();
     $schema = Schemas::getCurrentSchema();
@@ -433,7 +433,7 @@ trait DebugTrait
     //Game::get()->gamestate->setPrivateState($player->id, ST_TURN_PERSONAL_BOARD);
   }
 
-  function debugScoring(){
+  function debug_Scoring(){
     $players = Players::getAll();
     foreach($players as $pId =>$player){
       $player->setScore(0);
@@ -444,36 +444,36 @@ trait DebugTrait
     $this->computeSchemaScoring();
   }
 
-  function debugWinners()
+  function debug_Winners()
   {
     $winners = Players::getAll()->getIds();
     Globals::setWinnersIds($winners);
     Notifications::message('debugWinners',[ 'w'=> Globals::getWinnersIds()]);
   }
   
-  function debugPoints()
+  function debug_Points()
   {
     $player = Players::getCurrent();
     Notifications::addPoints($player,4);
     Notifications::addPoints($player,3,'TEST ${n} / ${n2}',9);
   }
   
-  function debugSchemas()
+  function debug_Schemas()
   {
     Notifications::message('debugSchemas',[ 'types'=> Schemas::getUiData()]);
   }
-  function debugNewRoundTokens()
+  function debug_NewRoundTokens()
   {
     Tokens::setupNewRound(Players::getAll(),Schemas::getCurrentSchema());
   }
-  function debugNewRoundActions()
+  function debug_NewRoundActions()
   {
     $schema = Schemas::getCurrentSchema();
     //$schema = Schemas::getTypes()[OPTION_SCHEMA_25];
     PlayerActions::setupNewRound(Players::getAll(),$schema);
     Notifications::message("",['a'=>PlayerActions::getAll()->ui()]);
   }
-  function debugNewRound()
+  function debug_NewRound()
   {
     $player = Players::getCurrent();
     //----------------------------------------
@@ -486,7 +486,7 @@ trait DebugTrait
     //----------------------------------------
     $this->gamestate->jumpToState( ST_NEXT_ROUND );
   }
-  function debugNewTurn()
+  function debug_NewTurn()
   {
     
     $player = Players::getCurrent();
@@ -499,12 +499,12 @@ trait DebugTrait
     PlayerActions::setupNewTurn($players,$turn);
     Notifications::newTurn($turn);
   }
-  function debugEndTurn()
+  function debug_EndTurn()
   {
     $player = Players::getCurrent();
     Notifications::endTurn($player);
   }
-  function debugCMD()
+  function debug_CMD()
   {
     $player = Players::getCurrent();
     $player->setCommonMoveDone(FALSE);
@@ -514,15 +514,26 @@ trait DebugTrait
     $this->gamestate->nextPrivateState($player->id, "continue");
   }
   
-  function debugResetJoker()
+  function debug_ResetJoker()
   {
     $player = Players::getCurrent();
     $player->setJokerUsed(false);
     $this->gamestate->nextPrivateState($player->id, "continue");
   }
+  
+  function debug_GainSpActions(int $nbActions)
+  {
+    $player = Players::getCurrent();
+    $pId = $player->getId();
+    PGlobals::setNbSpActions($pId,$nbActions);
+    PGlobals::setNbSpActionsMax($pId,$nbActions);
+    PGlobals::setState($pId, ST_TURN_CENTRAL_CHOICE_SP);
+    $player->setPrivateState(ST_TURN_CENTRAL_CHOICE_TOKEN_LAND);
+    $this->gamestate->nextPrivateState($pId, "gainSp");
+  }
 
   
-  function debugStats()
+  function debug_Stats()
   {
     $players = Players::setupNewRound();
     $round = Globals::getRound();
@@ -531,7 +542,7 @@ trait DebugTrait
     Stats::setupNewRound($players,$schema);
   }
 
-  function debugPathFinding(){
+  function debug_PathFinding(){
 
     $player = Players::getCurrent();
     $boardTokens =Tokens::getAllOnPersonalBoard($player->id );
@@ -550,13 +561,13 @@ trait DebugTrait
   }
   //----------------------------------------------------------------
   //Clear logs
-  function debugCLS(){
+  function debug_CLS(){
     $query = new QueryBuilder('gamelog', null, 'gamelog_packet_id');
     $query->delete()->run();
   }
   
   //Clear all logs
-  public static function debugClearLogs()
+  public static function debug_ClearLogs()
   {
       $query = new QueryBuilder('log', null, 'id');
       $query->delete()->run();

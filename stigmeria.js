@@ -77,6 +77,8 @@ function (dojo, declare) {
         TOKEN_STIG_BROWN,TOKEN_STIG_WHITE,TOKEN_STIG_BLACK,
     ];
     
+    const ACTION_STATE_UNLOCKED_FOREVER = 0;
+
     const OPTION_FLOWER_NO_LIMIT_UNOFFICIAL = 8;
     
     const PREF_SCHEMA_BOARD_ORDER = 100;
@@ -1099,14 +1101,25 @@ function (dojo, declare) {
             debug("formatSpecialActionButton",text,actionType,possibleActions,enabledActions,confirmMessage);
             if(possibleActions.includes(actionType)){
                 let divText = `<div><div class='stig_sp_action_text'>`+_(text)+`</div><div class='stig_sp_action_image' data-type='${actionType}'></div></div>`;
-                this.addImageActionButton('btnStartSp'+actionType,divText , () => {
+                let clickPerform = () => {
                     if(confirmMessage !=null) this.confirmationDialog(confirmMessage, () => {
                         this.takeAction(actionName, {act:actionType});
                     });
                     else this.takeAction(actionName, {act:actionType});
-                });
+                };
+                this.addImageActionButton('btnStartSp'+actionType,divText , clickPerform);
                 if(!enabledActions.includes(actionType)){
                     $('btnStartSp'+actionType).classList.add('disabled');
+                } else {
+                    //add possibility to click on special actions board
+                    let divSpAction = `stig_sp_action_cell_${this.player_id}_${actionType}`;
+                    if($(divSpAction)){
+                        let selectableToken = $(divSpAction).querySelector('.stig_sp_action_token');
+                        if(! selectableToken){
+                            selectableToken = this.addTempSpecialActionToken(actionType,this.player_id );
+                        }
+                        this.onClick(`${selectableToken.id}`, clickPerform);
+                    }
                 }
             }
         },
@@ -1530,6 +1543,7 @@ function (dojo, declare) {
             if($('stig_central_board_container_wrapper')) $('stig_central_board_container_wrapper').classList.remove('stig_current_play');
 
             [...document.querySelectorAll('.stig_selected')].forEach( o => o.classList.remove('stig_selected'));
+            [...document.querySelectorAll('.stig_temp_sp_action_token')].forEach( o => this.destroy(o));
         },
         
         onEnteringStateConfirmTurn(args) {
@@ -2662,6 +2676,14 @@ function (dojo, declare) {
             let elt = this.place('tplSpecialActionToken', action, tokenHolder);
             return elt;
         },
+        addTempSpecialActionToken(actionType,playerId) {
+            debug("addTempSpecialActionToken",actionType,playerId);
+            let tokenDivId = `stig_tmp_sp_action_${playerId}_${actionType}`;
+            if ( $(tokenDivId) ) return $(tokenDivId);
+            let tokenHolder = `stig_sp_action_cell_${playerId}_${actionType}`;
+            let elt = this.place('tplTempSpecialActionToken', {'pId':playerId, 'type': actionType, 'state':ACTION_STATE_UNLOCKED_FOREVER}, tokenHolder);
+            return elt;
+        },
         tplSpecialActionCell(action) {
             return `<div class="stig_sp_action_cell" id="stig_sp_action_cell_${action.pId}_${action.type}" data-type="${action.type}">
                 <div class="stig_sp_action_detail" id="stig_sp_action_detail_${action.pId}_${action.type}" data-type="${action.type}">
@@ -2669,6 +2691,9 @@ function (dojo, declare) {
         },
         tplSpecialActionToken(action) {
             return `<div class="stig_sp_action_token" id="stig_sp_action_${action.id}" data-id="${action.id}" data-pid="${action.pId}" data-type="${action.type}" data-state="${action.state}"></div>`;
+        },
+        tplTempSpecialActionToken(action) {
+            return `<div class="stig_sp_action_token stig_temp_sp_action_token" id="stig_temp_sp_action_${action.pId}_${action.type}" data-pid="${action.pId}" data-type="${action.type}" data-state="${action.state}"></div>`;
         },
         getSpecialActionTooltip(action) {
             

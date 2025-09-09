@@ -153,6 +153,10 @@
                             position: absolute;
                             right: 0;
 
+                            &.stig_temp_sp_action_token{
+                                opacity: 0.80;
+                            }
+
                             &[data-state='0'], //ACTION_STATE_UNLOCKED_FOREVER
                             &[data-state='3'], //ACTION_STATE_UNLOCKED_FOR_ONCE_GAME
                             &[data-state='4']{
@@ -169,6 +173,14 @@
                             }
                             &[data-state='5']{ // ACTION_STATE_UNLOCKED_ONE_SHOT TO be destroyed after use
                                 visibility: hidden;
+                            }
+
+                            &.selectable{
+                                border: 5px solid #0800ff;
+                                cursor: pointer;
+                                &:hover {
+                                    transform: scale(1.2);
+                                }
                             }
                         }
                         // COLUMN 1
