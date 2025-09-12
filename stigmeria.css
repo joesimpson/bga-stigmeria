@@ -886,6 +886,7 @@ body[data-stig_panel_icon_size="1"] .stig_panel .stig_player_infos .stig_player_
 #stig_select_piece_container_perplayer .stig_select_piece_player_container {
   order: 2;
   outline: 3px dotted black;
+  margin: 3px 0px;
 }
 #stig_select_piece_container_perplayer .stig_select_piece_player_container.stig_current_player {
   order: 1;

@@ -32,6 +32,7 @@ trait SetupTrait
     Stats::setupNewGame();
     Tokens::setupNewGame($players, $options);
     PGlobals::fetch();
+    Globals::fetch();
 
     $this->setGameStateInitialValue('logging', true);
       
@@ -40,7 +41,9 @@ trait SetupTrait
     Log::addEntry(['type' => 'engine']);
 
     // Activate first player (which is in general a good idea :) )
-    $this->activeNextPlayer();
+    if(!array_key_exists("DEBUG_SETUP",$options)){
+      $this->activeNextPlayer();
+    }
     /************ End of the game initialization *****/
   }
 }

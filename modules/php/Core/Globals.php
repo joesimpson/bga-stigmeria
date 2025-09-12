@@ -350,6 +350,19 @@ class Globals extends \STIG\Helpers\DB_Manager
     self::$initialized = true;
     self::$log = $tmp;
   }
+  
+  public static function cleanAll()
+  {
+    $tmp = self::$log;
+    self::$log = false;
+
+    foreach (self::$data
+      as $name => $variable) {
+      unset(self::$data[$name]);
+    }
+    self::$initialized = false;
+    self::$log = $tmp;
+  }
 
   /*
    * Create and store a global variable declared in this file but not present in DB yet
