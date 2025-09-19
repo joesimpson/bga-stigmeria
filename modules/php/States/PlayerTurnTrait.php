@@ -87,15 +87,22 @@ trait PlayerTurnTrait
         $this->gamestate->nextPrivateState($player->id, "continue");
     }
     
-    public function actEndTurn()
+    /**
+     * @param int $force_player_id : the id of current active player forcing the action
+     */
+    public function actEndTurn(int|null $force_player_id = null)
     {
-        self::checkAction( 'actEndTurn' ); 
-        
-        $player = Players::getCurrent();
+        if(isset($force_player_id)) {
+            $player = Players::get($force_player_id);
+        }
+        else {
+            self::checkAction( 'actEndTurn' ); 
+            $player = Players::getCurrent();
+        }
         $player_id = $player->getId();
         $player_name = $player->getName();
         $turn = Globals::getTurn();
-        self::trace("actEndTurn($player_id,$player_name,$turn )");
+        self::trace("actEndTurn($force_player_id, $player_id,$player_name,$turn )");
 
         //ACTIVATE NEXT PLAYER who did not already play this turn (ie. if some player did not click actLetNextPlay)
         //Don't go further than next player (Example 3 players after the current one, because it is not in the current player powers to let others play)

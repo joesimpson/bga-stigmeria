@@ -205,22 +205,26 @@ trait DebugTrait
   function debug_Elim()
   {
     $player = Players::getCurrent();
-    //Notifications::windElimination($player,null,'TEST');
-    $lastPlayer = Players::getRemainingPlayer();
-    if($lastPlayer  == $player->id ){
-      Notifications::message("debugElim getRemainingPlayer is current player ");
-    } else {
-      Notifications::message("debugElim getRemainingPlayer is $lastPlayer ");
-    }
-
-    Notifications::deckElimination($player);
-    $nextP = Players::getNextInactivePlayerInTurn($player->id,Globals::getTurn());
-    Notifications::message("debugElim nextP is $nextP ");
-    $nextP2 = Players::getNextInactivePlayerInTurn(2373993,Globals::getTurn());
-    Notifications::message("debugElim nextP is $nextP2 ");
+    //$lastPlayer = Players::getRemainingPlayer();
+    //if($lastPlayer  == $player->id ){
+    //  Notifications::message("debugElim getRemainingPlayer is current player ");
+    //} else {
+    //  Notifications::message("debugElim getRemainingPlayer is $lastPlayer ");
+    //}
+    //
+    //Notifications::deckElimination($player);
+    //$nextP = Players::getNextInactivePlayerInTurn($player->id,Globals::getTurn());
+    //Notifications::message("debugElim nextP is $nextP ");
+    //$nextP2 = Players::getNextInactivePlayerInTurn(2373993,Globals::getTurn());
+    //Notifications::message("debugElim nextP is $nextP2 ");
+    //
+    //$nextP3 = Players::getNextInactivePlayerInTurn("2373993",Globals::getTurn());
+    //Notifications::message("debugElim nextP is $nextP3 ");
     
-    $nextP3 = Players::getNextInactivePlayerInTurn("2373993",Globals::getTurn());
-    Notifications::message("debugElim nextP is $nextP3 ");
+    //Mark as eliminated for next end turn
+    PGlobals::setEliminated($player->id, true);
+    Notifications::message($player->id." will be eliminated at the end of that turn");
+    Notifications::windElimination($player,null,'TEST');
   }
   function debug_ForceState()
   {

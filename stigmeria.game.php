@@ -231,20 +231,23 @@ class Stigmeria extends Table
 //////////// Zombie
 ////////////
 
-    /*
-        zombieTurn:
-        
-        This method is called each time it is the turn of a player who has quit the game (= "zombie" player).
-        You can do whatever you want in order to make sure the turn of this player ends appropriately
-        (ex: pass).
-        
-        Important: your zombie code will be called when the player leaves the game. This action is triggered
-        from the main site and propagated to the gameserver from a server, not from a browser.
-        As a consequence, there is no current player associated to this action. In your zombieTurn function,
-        you must _never_ use getCurrentPlayerId() or getCurrentPlayerName(), otherwise it will fail with a "Not logged" error message. 
-    */
-
-    function zombieTurn( $state, $active_player )
+    /**
+     * This method is called each time it is the turn of a player who has quit the game (= "zombie" player).
+     * You can do whatever you want in order to make sure the turn of this player ends appropriately
+     * (ex: pass).
+     *
+     * Important: your zombie code will be called when the player leaves the game. This action is triggered
+     * from the main site and propagated to the gameserver from a server, not from a browser.
+     * As a consequence, there is no current player associated to this action. In your zombieTurn function,
+     * you must _never_ use `getCurrentPlayerId()` or `getCurrentPlayerName()`, otherwise it will fail with a
+     * "Not logged" error message.
+     *
+     * @param array{ type: string, name: string } $state
+     * @param int $active_player
+     * @return void
+     * @throws feException if the zombie mode is not supported at this game state.
+     */
+    protected function zombieTurn(array $state, int $active_player): void
     {
     	$statename = $state['name'];
     	
@@ -260,8 +263,19 @@ class Stigmeria extends Table
 
         if ($state['type'] === "multipleactiveplayer") {
             // Make sure player is in a non blocking status for role turn
+            switch($state['name']){
+                case "playerTurn":
+                    $this->actEndTurn($active_player);
+                    return;
+            }
             $this->gamestate->setPlayerNonMultiactive( $active_player, 'zombiePass' );
             
+            return;
+        }
+        
+        if ($state['type'] === "private") {
+            //All private states are currently linked to master state "playerTurn" and we need to play as if player click "End turn"
+            $this->actEndTurn($active_player);
             return;
         }
 
