@@ -24,6 +24,7 @@ define([
     "ebg/counter",
     g_gamethemeurl + 'modules/js/Core/game.js',
     g_gamethemeurl + 'modules/js/Core/modal.js',
+    g_gamethemeurl + "modules/bga-help/bga-help.js",
 ],
 function (dojo, declare) {
     const TURN_MAX = 10;
@@ -176,7 +177,18 @@ function (dojo, declare) {
             
             this.tooltipsOnTokens = [];
             this.tooltipsOnSpecialActions = [];
-
+            
+            // create the help manager
+            this.helpManager = new HelpManager(customgame.game, {
+                buttons: [
+                    new BgaHelpPopinButton({
+                        title: _("Help"),
+                        html: `
+                            ${this.formatSpecialActionsHelp()}
+                        `,
+                    })
+                ],
+            });
         },
         
         ///////////////////////////////////////////////////
@@ -2284,6 +2296,7 @@ function (dojo, declare) {
             }
            
         },
+
         ////////////////////////////////////////
         //  ____  _
         // |  _ \| | __ _ _   _  ___ _ __ ___
@@ -3241,6 +3254,48 @@ function (dojo, declare) {
                 if(tooltipText) this.addTooltip('btnStartLD'+actionType, '', tooltipText);
 
             }
+        },
+        
+        formatSpecialActionHelp: function(actionName, actionType)
+        {
+            return '<hr>'.concat(
+                this.getSpecialActionTooltip({'name':actionName, 'type':actionType})
+            );
+        },
+        formatSpecialActionsHelp: function()
+        {
+            debug( 'formatSpecialActionsHelp() ' );
+            return `<div class='stig_specialActionsHelp'>
+                <h1 class='stig_specialActionsHelp_title'>${_("Special actions board") }</h1>
+                <hr>
+                <h2 class='stig_sp_difficulty'>${_("Difficulty") } *</h2>
+                ${this.formatSpecialActionHelp(_('Pilferer'),ACTION_TYPE_PILFERER)}
+                ${this.formatSpecialActionHelp(_('Combination'),ACTION_TYPE_COMBINATION)}
+                ${this.formatSpecialActionHelp(_('Two Beats'),ACTION_TYPE_TWOBEATS)}
+                ${this.formatSpecialActionHelp(_('Diagonal'),ACTION_TYPE_DIAGONAL)}
+                ${this.formatSpecialActionHelp(_('Mixing'),ACTION_TYPE_MIXING)}
+                ${this.formatSpecialActionHelp(_('No harm No foul'),ACTION_TYPE_NSNK)}
+                ${this.formatSpecialActionHelp(_('Quarter Note'),ACTION_TYPE_BLACK)}
+                ${this.formatSpecialActionHelp(_('Sower'),ACTION_TYPE_SOWER)}
+                <hr>
+                <h2 class='stig_sp_difficulty'>${_("Difficulty") } **</h2>
+                ${this.formatSpecialActionHelp(_('Half Note'),ACTION_TYPE_WHITE)}
+                ${this.formatSpecialActionHelp(_('Charmer'),ACTION_TYPE_CHARMER)}
+                ${this.formatSpecialActionHelp(_('Copy'),ACTION_TYPE_COPY)}
+                ${this.formatSpecialActionHelp(_('Exchange'),ACTION_TYPE_SWAP)}
+                ${this.formatSpecialActionHelp(_('Fulgurance'),ACTION_TYPE_FULGURANCE)}
+                ${this.formatSpecialActionHelp(_('Jealousy'),ACTION_TYPE_JEALOUSY)}
+                <hr>
+                <h2 class='stig_sp_difficulty'>${_("Difficulty") } ***</h2>
+                ${this.formatSpecialActionHelp(_('Choreography'),ACTION_TYPE_CHOREOGRAPHY)}
+                ${this.formatSpecialActionHelp(_('Fog Die'),ACTION_TYPE_FOGDIE)}
+                ${this.formatSpecialActionHelp(_('Mimicry'),ACTION_TYPE_MIMICRY)}
+                ${this.formatSpecialActionHelp(_('Fast Step'),ACTION_TYPE_MOVE_FAST)}
+                ${this.formatSpecialActionHelp(_('Prediction'),ACTION_TYPE_PREDICTION)}
+                ${this.formatSpecialActionHelp(_('Rest'),ACTION_TYPE_REST)}
+                
+                </div>
+            `;
         },
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _

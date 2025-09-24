@@ -54,3 +54,8 @@ Schemas (from 1 to 49) are defined as text to generate image and avoid waste of 
 See the list `getTypes()` in [Schemas.php](/modules/php/Managers/Schemas.php).
 
 Run the debug function `debug_playableSchemas()` to see which schema is playable in which mode.
+
+# External modules
+
+Thoun `bga-help` from https://github.com/thoun/bga-help.
+
