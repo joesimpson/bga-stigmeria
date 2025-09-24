@@ -232,6 +232,7 @@ body {
     }
 }
 
+.stig_p_action_tooltip,
 .stig_sp_action_tooltip{
     display: flex;
     flex-direction: column;
@@ -269,6 +270,7 @@ body {
         .stig_sp_action_image_wrapper{
             transform: scale($scale);
             transform-origin: top left;
+            width: calc(math.div(1, $scale) * $imageWidth);
         }
         //------- MODIFY IMAGE WRAPPER SIZE according to image type
         &[data-type="14"]{//ACTION_TYPE_DIAGONAL
@@ -304,6 +306,22 @@ body {
     }
 }
 
+.stig_p_action_image_resized{
+    $scale : 2;
+    //from .stig_p_action_image
+    $imageWidth: 39px;
+    $imageHeight: 25px;
+    width: calc($scale* $imageWidth);
+    height: calc($scale* $imageHeight);
+
+    .stig_p_action_image_wrapper{
+        transform: scale($scale);
+        transform-origin: top left;
+        width: calc(math.div(1, $scale) * $imageWidth);
+    }
+}
+
+.stig_basicActionsHelp,
 .stig_specialActionsHelp {
     //BGA-help popin
     border: 1px solid;
@@ -315,35 +333,41 @@ body {
 
     .stig_sp_difficulty{
         text-align: left;
-        margin-left: 100px;
+        margin-left: 10px;
     }
 
+    .stig_p_action_tooltip,
     .stig_sp_action_tooltip {
         flex-direction: row;
         width: max-content;
         text-align: left;
     }
     
-    .stig_sp_action_image_resized{
+    .stig_sp_action_text{
         order: 1;
     }
-    .stig_sp_action_title{
+    .stig_p_action_image_resized,
+    .stig_sp_action_image_resized{
         order: 2;
     }
-    .stig_sp_action_desc{
-        order: 3;
-    }
     
+    .stig_sp_action_text{
+        width: 280px;
+    }
     .stig_sp_action_image_resized{
         min-width: 215px;
     }
+    .stig_p_action_image_resized{
+        margin-right: 15px;
+    }
     .stig_sp_action_title{
+        font-size: 1.5em;
         .stig_icon_flower_violet{
             display: none;
         }
     }
     .stig_sp_action_desc{
         font-size: 1em;
-        width: 350px;
+        //width: 350px;
     }
 }

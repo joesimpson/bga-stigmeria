@@ -183,9 +183,10 @@ function (dojo, declare) {
                 buttons: [
                     new BgaHelpPopinButton({
                         title: _("Help"),
-                        html: `
+                        html: `<div id='stig_help_popin'>
+                            ${this.formatBasicActionsHelp()}
                             ${this.formatSpecialActionsHelp()}
-                        `,
+                        </div>`,
                     })
                 ],
             });
@@ -2766,12 +2767,14 @@ function (dojo, declare) {
             ]);
             let desc = descriptionMap.get(action.type);
             return `<div class="stig_sp_action_tooltip" data-type="${action.type}">
-                <div class="stig_sp_action_title">
-                    <div class="stig_icon_flower_violet"></div>
-                    <div class="stig_sp_action_name">${_(action.name)}</div>
-                    <div class="stig_icon_flower_violet stig_icon_flipped"></div>
+                <div class="stig_sp_action_text">
+                    <div class="stig_sp_action_title">
+                        <div class="stig_icon_flower_violet"></div>
+                        <div class="stig_sp_action_name">${_(action.name)}</div>
+                        <div class="stig_icon_flower_violet stig_icon_flipped"></div>
+                    </div>
+                    <div class="stig_sp_action_desc">${desc}</div>
                 </div>
-                <div class="stig_sp_action_desc">${desc}</div>
                 <div class="stig_sp_action_image_resized" data-type='${action.type}'>
                     <div class="stig_sp_action_image_wrapper">
                         <div class="stig_sp_action_image" data-type='${action.type}'></div>
@@ -3256,6 +3259,35 @@ function (dojo, declare) {
             }
         },
         
+        formatBasicActionHelp: function(actionIconName,actionName, actionDesc)
+        {
+            return `
+                <div class='stig_p_action_tooltip'>
+                    <div class="stig_sp_action_text">
+                        <div class="stig_sp_action_title">
+                            <div class="stig_sp_action_name">${actionName}</div>
+                        </div>
+                        <div class="stig_sp_action_desc">${actionDesc}</div>
+                    </div>
+                    <div class='stig_p_action_image_resized'>
+                        <div class="stig_p_action_image_wrapper">
+                            <div class='stig_p_action_image' data-type='${actionIconName}'></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        },
+        formatBasicActionsHelp: function()
+        {
+            return `
+                <h1 class='stig_basicActionsHelp_title'>${_("Basic actions") }</h1>
+                <div class='stig_basicActionsHelp'>
+                    ${this.formatBasicActionHelp('draw',_('Recruit'),_('Take 1 stigmerian from your bag and place it in your recruit zone.'))}
+                    <hr>${this.formatBasicActionHelp('land',_('Land'),_('Take 1 stigmerian from your recruit zone and place it on your board (adjacent to others if any).'))}
+                    <hr>${this.formatBasicActionHelp('move',_('Move '),_('Move 1 stigmerian of one adjacent spot (no diagonal) on the board.'))}
+                </div>
+            `;
+        },
         formatSpecialActionHelp: function(actionName, actionType)
         {
             return '<hr>'.concat(
@@ -3264,36 +3296,34 @@ function (dojo, declare) {
         },
         formatSpecialActionsHelp: function()
         {
-            debug( 'formatSpecialActionsHelp() ' );
-            return `<div class='stig_specialActionsHelp'>
+            return `
                 <h1 class='stig_specialActionsHelp_title'>${_("Special actions board") }</h1>
-                <hr>
-                <h2 class='stig_sp_difficulty'>${_("Difficulty") } *</h2>
-                ${this.formatSpecialActionHelp(_('Pilferer'),ACTION_TYPE_PILFERER)}
-                ${this.formatSpecialActionHelp(_('Combination'),ACTION_TYPE_COMBINATION)}
-                ${this.formatSpecialActionHelp(_('Two Beats'),ACTION_TYPE_TWOBEATS)}
-                ${this.formatSpecialActionHelp(_('Diagonal'),ACTION_TYPE_DIAGONAL)}
-                ${this.formatSpecialActionHelp(_('Mixing'),ACTION_TYPE_MIXING)}
-                ${this.formatSpecialActionHelp(_('No harm No foul'),ACTION_TYPE_NSNK)}
-                ${this.formatSpecialActionHelp(_('Quarter Note'),ACTION_TYPE_BLACK)}
-                ${this.formatSpecialActionHelp(_('Sower'),ACTION_TYPE_SOWER)}
-                <hr>
-                <h2 class='stig_sp_difficulty'>${_("Difficulty") } **</h2>
-                ${this.formatSpecialActionHelp(_('Half Note'),ACTION_TYPE_WHITE)}
-                ${this.formatSpecialActionHelp(_('Charmer'),ACTION_TYPE_CHARMER)}
-                ${this.formatSpecialActionHelp(_('Copy'),ACTION_TYPE_COPY)}
-                ${this.formatSpecialActionHelp(_('Exchange'),ACTION_TYPE_SWAP)}
-                ${this.formatSpecialActionHelp(_('Fulgurance'),ACTION_TYPE_FULGURANCE)}
-                ${this.formatSpecialActionHelp(_('Jealousy'),ACTION_TYPE_JEALOUSY)}
-                <hr>
-                <h2 class='stig_sp_difficulty'>${_("Difficulty") } ***</h2>
-                ${this.formatSpecialActionHelp(_('Choreography'),ACTION_TYPE_CHOREOGRAPHY)}
-                ${this.formatSpecialActionHelp(_('Fog Die'),ACTION_TYPE_FOGDIE)}
-                ${this.formatSpecialActionHelp(_('Mimicry'),ACTION_TYPE_MIMICRY)}
-                ${this.formatSpecialActionHelp(_('Fast Step'),ACTION_TYPE_MOVE_FAST)}
-                ${this.formatSpecialActionHelp(_('Prediction'),ACTION_TYPE_PREDICTION)}
-                ${this.formatSpecialActionHelp(_('Rest'),ACTION_TYPE_REST)}
-                
+                <div class='stig_specialActionsHelp'>
+                    <h2 class='stig_sp_difficulty'>${_("Difficulty") } *</h2>
+                    ${this.formatSpecialActionHelp(_('Pilferer'),ACTION_TYPE_PILFERER)}
+                    ${this.formatSpecialActionHelp(_('Combination'),ACTION_TYPE_COMBINATION)}
+                    ${this.formatSpecialActionHelp(_('Two Beats'),ACTION_TYPE_TWOBEATS)}
+                    ${this.formatSpecialActionHelp(_('Diagonal'),ACTION_TYPE_DIAGONAL)}
+                    ${this.formatSpecialActionHelp(_('Mixing'),ACTION_TYPE_MIXING)}
+                    ${this.formatSpecialActionHelp(_('No harm No foul'),ACTION_TYPE_NSNK)}
+                    ${this.formatSpecialActionHelp(_('Quarter Note'),ACTION_TYPE_BLACK)}
+                    ${this.formatSpecialActionHelp(_('Sower'),ACTION_TYPE_SOWER)}
+                    <hr>
+                    <h2 class='stig_sp_difficulty'>${_("Difficulty") } **</h2>
+                    ${this.formatSpecialActionHelp(_('Half Note'),ACTION_TYPE_WHITE)}
+                    ${this.formatSpecialActionHelp(_('Charmer'),ACTION_TYPE_CHARMER)}
+                    ${this.formatSpecialActionHelp(_('Copy'),ACTION_TYPE_COPY)}
+                    ${this.formatSpecialActionHelp(_('Exchange'),ACTION_TYPE_SWAP)}
+                    ${this.formatSpecialActionHelp(_('Fulgurance'),ACTION_TYPE_FULGURANCE)}
+                    ${this.formatSpecialActionHelp(_('Jealousy'),ACTION_TYPE_JEALOUSY)}
+                    <hr>
+                    <h2 class='stig_sp_difficulty'>${_("Difficulty") } ***</h2>
+                    ${this.formatSpecialActionHelp(_('Choreography'),ACTION_TYPE_CHOREOGRAPHY)}
+                    ${this.formatSpecialActionHelp(_('Fog Die'),ACTION_TYPE_FOGDIE)}
+                    ${this.formatSpecialActionHelp(_('Mimicry'),ACTION_TYPE_MIMICRY)}
+                    ${this.formatSpecialActionHelp(_('Fast Step'),ACTION_TYPE_MOVE_FAST)}
+                    ${this.formatSpecialActionHelp(_('Prediction'),ACTION_TYPE_PREDICTION)}
+                    ${this.formatSpecialActionHelp(_('Rest'),ACTION_TYPE_REST)}
                 </div>
             `;
         },

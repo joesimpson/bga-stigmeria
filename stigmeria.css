@@ -3007,6 +3007,7 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
   margin-left: 0px;
 }
 
+.stig_p_action_tooltip,
 .stig_sp_action_tooltip {
   display: flex;
   flex-direction: column;
@@ -3014,6 +3015,7 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
   align-items: center;
   text-align: center;
 }
+.stig_p_action_tooltip .stig_sp_action_title,
 .stig_sp_action_tooltip .stig_sp_action_title {
   position: relative;
   display: flex;
@@ -3022,79 +3024,120 @@ body[data-stig_sp_action_lang="2"] .stig_sp_action_image {
   text-align: center;
   font-size: 2em;
 }
+.stig_p_action_tooltip .stig_sp_action_title .stig_sp_action_name,
 .stig_sp_action_tooltip .stig_sp_action_title .stig_sp_action_name {
   font-weight: bold;
 }
+.stig_p_action_tooltip .stig_sp_action_desc,
 .stig_sp_action_tooltip .stig_sp_action_desc {
   position: relative;
   font-size: 1.5em;
   margin: 10px;
 }
+.stig_p_action_tooltip .stig_sp_action_image_resized,
 .stig_sp_action_tooltip .stig_sp_action_image_resized {
   position: relative;
   width: 196px;
   height: 116px;
 }
+.stig_p_action_tooltip .stig_sp_action_image_resized .stig_sp_action_image_wrapper,
 .stig_sp_action_tooltip .stig_sp_action_image_resized .stig_sp_action_image_wrapper {
   transform: scale(2);
   transform-origin: top left;
+  width: 49px;
 }
+.stig_p_action_tooltip .stig_sp_action_image_resized[data-type="14"],
 .stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="14"] {
   width: 120px;
   height: 116px;
 }
+.stig_p_action_tooltip .stig_sp_action_image_resized[data-type="15"],
 .stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="15"] {
   width: 124px;
   height: 144px;
 }
+.stig_p_action_tooltip .stig_sp_action_image_resized[data-type="16"],
 .stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="16"] {
   width: 192px;
   height: 134px;
 }
+.stig_p_action_tooltip .stig_sp_action_image_resized[data-type="25"],
 .stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="25"] {
   width: 124px;
   height: 134px;
 }
+.stig_p_action_tooltip .stig_sp_action_image_resized[data-type="32"],
 .stig_sp_action_tooltip .stig_sp_action_image_resized[data-type="32"] {
   width: 200px;
   height: 150px;
 }
 
+.stig_p_action_image_resized {
+  width: 78px;
+  height: 50px;
+}
+.stig_p_action_image_resized .stig_p_action_image_wrapper {
+  transform: scale(2);
+  transform-origin: top left;
+  width: 19.5px;
+}
+
+.stig_basicActionsHelp,
 .stig_specialActionsHelp {
   border: 1px solid;
   width: max-content;
 }
+.stig_basicActionsHelp .stig_specialActionsHelp_title,
 .stig_specialActionsHelp .stig_specialActionsHelp_title {
   font-size: 130%;
   margin-left: 50px;
 }
+.stig_basicActionsHelp .stig_sp_difficulty,
 .stig_specialActionsHelp .stig_sp_difficulty {
   text-align: left;
-  margin-left: 100px;
+  margin-left: 10px;
 }
+.stig_basicActionsHelp .stig_p_action_tooltip,
+.stig_basicActionsHelp .stig_sp_action_tooltip,
+.stig_specialActionsHelp .stig_p_action_tooltip,
 .stig_specialActionsHelp .stig_sp_action_tooltip {
   flex-direction: row;
   width: max-content;
   text-align: left;
 }
-.stig_specialActionsHelp .stig_sp_action_image_resized {
+.stig_basicActionsHelp .stig_sp_action_text,
+.stig_specialActionsHelp .stig_sp_action_text {
   order: 1;
 }
-.stig_specialActionsHelp .stig_sp_action_title {
+.stig_basicActionsHelp .stig_p_action_image_resized,
+.stig_basicActionsHelp .stig_sp_action_image_resized,
+.stig_specialActionsHelp .stig_p_action_image_resized,
+.stig_specialActionsHelp .stig_sp_action_image_resized {
   order: 2;
 }
-.stig_specialActionsHelp .stig_sp_action_desc {
-  order: 3;
+.stig_basicActionsHelp .stig_sp_action_text,
+.stig_specialActionsHelp .stig_sp_action_text {
+  width: 280px;
 }
+.stig_basicActionsHelp .stig_sp_action_image_resized,
 .stig_specialActionsHelp .stig_sp_action_image_resized {
   min-width: 215px;
 }
+.stig_basicActionsHelp .stig_p_action_image_resized,
+.stig_specialActionsHelp .stig_p_action_image_resized {
+  margin-right: 15px;
+}
+.stig_basicActionsHelp .stig_sp_action_title,
+.stig_specialActionsHelp .stig_sp_action_title {
+  font-size: 1.5em;
+}
+.stig_basicActionsHelp .stig_sp_action_title .stig_icon_flower_violet,
 .stig_specialActionsHelp .stig_sp_action_title .stig_icon_flower_violet {
   display: none;
 }
+.stig_basicActionsHelp .stig_sp_action_desc,
 .stig_specialActionsHelp .stig_sp_action_desc {
   font-size: 1em;
-  width: 350px;
 }
 
 .stig_icon_container_die_log,
@@ -3908,6 +3951,12 @@ body[data-stig_undo_style="2"] #btnTextRestartTurn {
 }
 .stig_button_player_name[style*="color:#0000ff"], .stig_button_player_name[style*="color:#000000"], .stig_button_player_name[style*="color:#008000"], .stig_button_player_name[style*="color:#773300"], .stig_button_player_name[style*="color:#982fff"] {
   text-shadow: 2px 0px 2px white, 0px 2px 2px white, -2px 0px 2px white, 0px -2px 2px white;
+}
+
+#stig_help_popin {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .stig_icon_container_wind_dir_log,

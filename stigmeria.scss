@@ -178,6 +178,14 @@ body[data-stig_undo_style='2']{//PREF_UNDO_STYLE_ICON
     }
 }
 
+
+//bga-help
+#stig_help_popin{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
 //LOGS
 .stig_icon_container_wind_dir_log,
 .stig_subicon_wind_dir_log,
