@@ -177,19 +177,6 @@ function (dojo, declare) {
             
             this.tooltipsOnTokens = [];
             this.tooltipsOnSpecialActions = [];
-            
-            // create the help manager
-            this.helpManager = new HelpManager(customgame.game, {
-                buttons: [
-                    new BgaHelpPopinButton({
-                        title: _("Help"),
-                        html: `<div id='stig_help_popin'>
-                            ${this.formatBasicActionsHelp()}
-                            ${this.formatSpecialActionsHelp()}
-                        </div>`,
-                    })
-                ],
-            });
         },
         
         ///////////////////////////////////////////////////
@@ -249,6 +236,19 @@ function (dojo, declare) {
             //AFTER SETTINGS are ready :
             this.setupSchemaBoard();
             this.setupTokens();
+
+            // create the help manager
+            this.helpManager = new HelpManager(customgame.game, {
+                buttons: [
+                    new BgaHelpPopinButton({
+                        title: _("Help"),
+                        html: `<div id='stig_help_popin'>
+                            ${this.formatBasicActionsHelp()}
+                            ${this.formatSpecialActionsHelp()}
+                        </div>`,
+                    })
+                ],
+            });
 
             debug( "Ending specific game setup" );
         },
