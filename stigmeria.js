@@ -2179,13 +2179,13 @@ function (dojo, declare) {
         notif_windElimination(n) {
             debug('notif_windElimination', n);
             let player_id = n.args.player_id;
-            let divPanel = `overall_player_board_${player_id}`;
+            let divPanel = this.bga.playerPanels.getElement(player_id).parentNode.parentNode.parentNode;
             $(divPanel).classList.add('stig_eliminated');
         },
         notif_deckElimination(n) {
             debug('notif_deckElimination', n);
             let player_id = n.args.player_id;
-            let divPanel = `overall_player_board_${player_id}`;
+            let divPanel = this.bga.playerPanels.getElement(player_id).parentNode.parentNode.parentNode;
             $(divPanel).classList.add('stig_eliminated');
         },
         notif_schemaFulfilled(n) {
@@ -2313,7 +2313,8 @@ function (dojo, declare) {
             this.forEachPlayer((player) => {
                 let isCurrent = player.id == this.player_id;
                 let divPanel = `player_panel_content_${player.color}`;
-                if(player.eliminated == true) $(`overall_player_board_${player.id}`).classList.add('stig_eliminated');
+                let divSidePanel = this.bga.playerPanels.getElement(player.id).parentNode.parentNode.parentNode;
+                if(player.eliminated == true) divSidePanel.classList.add('stig_eliminated');
                 this.place('tplPlayerPanel', player, divPanel, 'after');
                 this.place('tplPlayerBoard', player, 'stig_player_boards');
                 this.place('tplSpecialActionsBoard', player, 'stig_sp_action_boards');
@@ -2364,7 +2365,8 @@ function (dojo, declare) {
             let pId = this.gamedatas.firstPlayer;
             debug("updateFirstPlayer()",pId);
             if(pId == null) return;
-            let divHolder = $(`overall_player_board_${pId}`).querySelector('.stig_first_player_holder');
+            let divSidePanel = this.bga.playerPanels.getElement(pId).parentNode.parentNode.parentNode;
+            let divHolder = divSidePanel.querySelector('.stig_first_player_holder');
             if(!$(`stig_first_player`) ){
                 dojo.place('<div id="stig_first_player"></div>', divHolder);
                 this.addCustomTooltip('stig_first_player', _('Starting player'));
