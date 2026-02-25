@@ -3,7 +3,7 @@ namespace STIG\Helpers;
 
 use STIG\Core\Globals;
 
-abstract class GridUtils extends \APP_DbObject
+abstract class GridUtils
 { 
 
     public static function createGrid($defaultValue = null)

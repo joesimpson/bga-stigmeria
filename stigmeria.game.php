@@ -31,8 +31,6 @@ $swdNamespaceAutoload = function ($class) {
 };
 spl_autoload_register($swdNamespaceAutoload, true, true);
   
-require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
-
 use STIG\Managers\Players;
 use STIG\Core\Globals;
 use STIG\Core\Preferences;
@@ -41,7 +39,7 @@ use STIG\Managers\PlayerActions;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
 
-class Stigmeria extends Table
+class Stigmeria extends Bga\GameFramework\Table
 {
     use STIG\DebugTrait;
     use STIG\States\AfterTurnTrait;

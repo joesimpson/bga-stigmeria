@@ -1,7 +1,7 @@
 <?php
 namespace STIG\Helpers;
 
-abstract class Utils extends \APP_DbObject
+abstract class Utils
 {
     public static function filter(&$data, $filter)
     {
