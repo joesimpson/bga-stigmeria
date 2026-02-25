@@ -114,12 +114,6 @@ class Stigmeria extends Table
       return self::$instance;
     }
 	
-    protected function getGameName( )
-    {
-		// Used for translations and stuff. Please do not modify.
-        return "stigmeria";
-    }	
-
     /*
         getAllDatas: 
         
