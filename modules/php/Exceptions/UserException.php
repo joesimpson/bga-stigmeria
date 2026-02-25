@@ -2,11 +2,11 @@
 namespace STIG\Exceptions;
 use STIG\Core\Game;
 
-class UserException extends \BgaUserException
+class UserException extends \Bga\GameFramework\UserException
 {
     public function __construct($str)
     {
-        parent::__construct(Game::get()->translate($str));
+        parent::__construct(($str));
     }
 }
 ?>
