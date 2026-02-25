@@ -1603,7 +1603,7 @@ function (dojo, declare) {
             this.setupSpecialActions();
             this.forEachPlayer((player) => {
                 let pId = player.id;
-                this.scoreCtrl[pId].toValue(player.score);
+                this.bga.playerPanels.getScoreCounter(pId).toValue(player.score);
                 this._counters[pId].tokens_recruit.toValue(player.tokens_recruit);
                 this._counters[pId].tokens_deck.toValue(player.tokens_deck);
                 this._counters[pId].pollens.toValue(player.pollens);
@@ -2199,7 +2199,7 @@ function (dojo, declare) {
             debug('notif_addPoints: scoring !', n);
             let points = n.args.n;
             let player_id = n.args.player_id;
-            this.scoreCtrl[ player_id ].incValue( points );
+            this.bga.playerPanels.getScoreCounter(player_id).incValue( points );
         },
 
         ///////////////////////////////////////////////////
