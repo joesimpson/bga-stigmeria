@@ -1,8 +1,28 @@
 <?php
 namespace STIG\Helpers;
 
+use STIG\Core\Game;
+use STIG\Exceptions\UserException;
+
 abstract class Utils
 {
+    public static function gameVersion() : int
+    {
+        $gameVersion = Game::get()->bga->tableOptions->get(BGA_GAMESTATE_GAMEVERSION);
+        return intval($gameVersion);
+    }
+    /**
+    * Check Server version to compare with client version : throw an error in case it 's not the same
+    * From https://en.doc.boardgamearena.com/BGA_Studio_Cookbook#Force_players_to_refresh_after_new_deploy
+    */
+    public static function checkVersion(int $clientVersion)
+    {
+        $gameVersion = Utils::gameVersion();
+        if ($clientVersion != $gameVersion) {
+            throw new UserException('!!!checkVersion');
+        }
+    }
+
     public static function filter(&$data, $filter)
     {
         $data = array_values(array_filter($data, $filter));

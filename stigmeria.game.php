@@ -35,6 +35,7 @@ use STIG\Managers\Players;
 use STIG\Core\Globals;
 use STIG\Core\Preferences;
 use STIG\Exceptions\UserException;
+use STIG\Helpers\Utils;
 use STIG\Managers\PlayerActions;
 use STIG\Managers\Schemas;
 use STIG\Managers\Tokens;
@@ -128,7 +129,7 @@ class Stigmeria extends Bga\GameFramework\Table
         // Gather all information about current game situation (visible by player $current_player_id).
         $firstPlayer = (Globals::isModeCompetitive() ? Globals::getFirstPlayer() : null);
         return [
-          'version'=> intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION]),
+          'version'=> Utils::gameVersion(),
           'prefs' => Preferences::getUiData($current_player_id),
           'players' => Players::getUiData($current_player_id),
           'tokens' => Tokens::getUiData($current_player_id),
@@ -191,9 +192,7 @@ class Stigmeria extends Bga\GameFramework\Table
     */
     public function checkVersion(int $clientVersion): void
     {
-        if ($clientVersion != intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION])) {
-            throw new UserException('!!!checkVersion');
-        }
+        Utils::checkVersion($clientVersion);
     }
 
     function actChangePreference($pref, $value)
