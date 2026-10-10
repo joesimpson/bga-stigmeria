@@ -159,7 +159,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
           (data) => resolve(data),
           (isError, message, code) => {
             if (isError && message == "!!!checkVersion") {
-              this.infoDialog(  _("A new version of this game is now available"),_("Reload Required"), () => {window.location.reload(true);},true);
+              this.infoDialog(  _("A new version of this game is now available"),_("Reload Required"), () => {window.location.reload(true);},false);
             }
             else if (isError) reject(message, code);
           }
